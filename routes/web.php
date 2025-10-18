@@ -6,5 +6,6 @@ use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\RutasController;
 
-Route::get('/', [RutasController::class, 'index']);
+Route::get('/', [RutasController::class, 'index'])->name('/');
 Route::get('/registrar',[PacienteController::class,'registrarpaciente']);
+Route::get('/citasprogramadas', [PacienteController::class, 'listado_citaspro'])->name('citasprogramadas');

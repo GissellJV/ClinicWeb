@@ -33,6 +33,7 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">Pedir cita</a></li>
                             <li><a class="dropdown-item" href="#">Registrarse como paciente</a></li>
+                            <li><a class="dropdown-item" href="{{ route('citasprogramadas') }}">Pacientes con citas programadas </a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
