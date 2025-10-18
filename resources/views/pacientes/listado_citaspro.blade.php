@@ -1,5 +1,6 @@
 @extends('layouts.plantilla')
 @section('contenido')
+    <br> <br> <br> <br> <br>
     <h1 class="text-center mb-4">Pacientes con Citas Programadas</h1>
 
     <table class="table table-bordered table-hover align-middle">
@@ -32,4 +33,10 @@
         </tr>
         </tbody>
     </table>
+
+    <br> <br>
+       <a href="{{'/'}}"> <button type="reset" class="btn btn-primary" >Clinic Web</button> </a>
+
+
+
 @endsection
