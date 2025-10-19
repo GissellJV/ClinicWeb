@@ -7,5 +7,6 @@ use Livewire\Volt\Volt;
 use App\Http\Controllers\RutasController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
-Route::get('/registrar',[PacienteController::class,'registrarpaciente']);
+Route::get('/registrar',[PacienteController::class,'registrarpaciente'])->name('pacientes.registrarpaciente');
+Route::post('/registrar',[PacienteController::class,'store'])->name('pacientes.store');
 Route::get('/citasprogramadas', [PacienteController::class, 'listado_citaspro'])->name('citasprogramadas');
