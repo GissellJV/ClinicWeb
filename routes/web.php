@@ -10,3 +10,5 @@ Route::get('/', [RutasController::class, 'index'])->name('/');
 Route::get('/registrar',[PacienteController::class,'registrarpaciente'])->name('pacientes.registrarpaciente');
 Route::post('/registrar',[PacienteController::class,'store'])->name('pacientes.store');
 Route::get('/citasprogramadas', [PacienteController::class, 'listado_citaspro'])->name('citasprogramadas');
+Route::get('/agendarcitas', [PacienteController::class, 'agendar_Citasonline'])->name('agendarcitas');
+

@@ -60,4 +60,9 @@ class PacienteController extends Controller
     public function listado_citaspro(){
         return view('pacientes.listado_citaspro');
     }
+
+    public function agendar_Citasonline(){
+        return view('pacientes.agendar_Citasonline');
+    }
+
 }
