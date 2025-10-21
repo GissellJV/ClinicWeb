@@ -1,5 +1,11 @@
-@extends('layouts.plantilla')
-@section('contenido')
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
 <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="card shadow p-4" style="width: 400px;">
         <h3 class="text-center mb-3">Recuperar Contraseña</h3>
@@ -20,4 +26,5 @@
         </div>
     </div>
 </div>
-@endsection
+</body>
+</html>
