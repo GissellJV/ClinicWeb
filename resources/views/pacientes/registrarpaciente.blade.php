@@ -17,11 +17,7 @@
         @csrf
 
 
-            @if(session('mensaje'))
-                <div class=" alert alert-success">
-                    {{session('mensaje')}}
-                </div>
-            @endif
+
 
         <!--NOMBRE COMPLETO-->
         <div class="row">
@@ -122,15 +118,12 @@
             @enderror
         </div>
 
-        <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
+
         <button type="submit" class="btn btn-primary">Registrar</button>
         <a class="btn btn-danger" href="{{route('/')}}">Cancelar</a>
     </form>
     </div>
      </div>
 
-
+@endsection
 

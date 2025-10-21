@@ -53,12 +53,22 @@ class PacienteController extends Controller
 
        //dirigirse a iniciar sesion // if($nuevoPaciente->save()){
 
-      return back()->with('mensaje', 'Registro exitoso, Inicia sesión');
+      return redirect()->route('pacientes.loginp')->with('mensaje', 'Registro exitoso, Inicia sesión');
 //}
     }
 
     public function listado_citaspro(){
         return view('pacientes.listado_citaspro');
+    }
+
+    public function loginp()
+    {
+        return view('pacientes.iniciodesesion');
+    }
+
+    public function recuperar_contra()
+    {
+        return view('pacientes.recuperar_contraseña');
     }
 
     public function agendar_Citasonline(){
