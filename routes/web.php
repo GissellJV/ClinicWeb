@@ -9,4 +9,5 @@ Route::get('/registrar',[PacienteController::class,'registrarpaciente'])->name('
 Route::post('/registrar',[PacienteController::class,'store'])->name('pacientes.store');
 Route::get('/citasprogramadas', [PacienteController::class, 'listado_citaspro'])->name('citasprogramadas');
 Route::get('/agendarcitas', [PacienteController::class, 'agendar_Citasonline'])->name('agendarcitas');
-
+Route::get('/loginpaciente', [PacienteController::class, 'loginp'])->name('pacientes.loginp');
+Route::get('/recuperar', [PacienteController::class, 'recuperar_contra'])->name('pacientes.recuperar_contra');
