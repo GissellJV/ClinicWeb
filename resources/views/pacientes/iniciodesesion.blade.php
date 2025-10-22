@@ -41,7 +41,7 @@
                 <img src="/imagenes/username-icon.svg" alt="usuario" style="height: 1rem">
             </span>
             <input class="form-control border-start-0 bg-light "
-                   placeholder="Número de teléfono"  name="telefono" type="text" value="{{old('telefono')}}">
+                   placeholder="Nombre de usuario"  name="telefono" type="text" value="{{old('telefono')}}">
         </div>
             @error('telefono')
             <div class="text-danger mt-1" style="font-size: 0.875rem;">
@@ -49,21 +49,22 @@
             </div>
             @enderror
         </div>
-
-            <div class="mt-1">
+        <div class="mt-1">
         <span class="input-group ">
             <span class="input-group-text bg-info bg-opacity-25 border-0">
                 <img src="imagenes\password-icon.svg" alt="contraseña" style="height: 1rem">
             </span>
             <input class="form-control border-start-0 bg-light" type="password" name="contraseña"
                    placeholder="Contraseña" >
+        </span>
+    </div>
 
             @error('contraseña')
             <div class="text-danger mt-1" style="font-size: 0.875rem;">
                 {{ $message }}
             </div>
             @enderror
-            </div>
+
 
 
         <div class="pt-3 text-center">
@@ -82,6 +83,7 @@
         </div>
     </div>
 </div>
+
 
 @endsection
 
