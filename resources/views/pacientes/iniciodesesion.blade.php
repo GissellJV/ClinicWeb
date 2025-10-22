@@ -35,7 +35,7 @@
                 <div class="pt-1" style="font-size:0.9rem"> Recordarme</div>
         </div>
         <div class="pt-1 text-center">
-            <a href="{{route('pacientes.recuperar_contra')}}" class="text-decoration-none text-dark
+            <a href="{{route('pacientes.enviar_codigo_recuperacion')}}" class="text-decoration-none text-dark
              fw-semibold fst-italic" style="font-size: 0.9rem " >¿Olvidaste tu contraseña?</a>
         </div>
 
