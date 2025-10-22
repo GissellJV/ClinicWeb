@@ -171,6 +171,7 @@
         margin-top: 10px;
     }
 </style>
+
     <div class="calendar-wrapper">
         <br><br><br><br>
         <h1>Agenda de Citas Médicas</h1>
