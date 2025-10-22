@@ -66,9 +66,9 @@ class PacienteController extends Controller
         return view('pacientes.iniciodesesion');
     }
 
-    public function recuperar_contra()
+    public function enviar_codigo_recuperacion()
     {
-        return view('pacientes.recuperar_contraseña');
+        return view('pacientes.enviar_codigo_recuperacion');
     }
 
     public function agendar_Citasonline(){
