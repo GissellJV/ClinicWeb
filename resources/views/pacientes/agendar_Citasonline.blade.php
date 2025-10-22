@@ -176,11 +176,11 @@
         <br><br><br><br>
         <h1>Agenda de Citas Médicas</h1>
 
-        <!-- Contenedor principal con flex -->
+
         <div class="calendar-container">
-            <!-- Controles -->
+
             <div class="controls">
-                <!-- Nombre del paciente -->
+
                 <label for="nombre">Nombre del Paciente:</label>
                 <input type="text" id="nombre" placeholder="Ingrese su nombre" style="padding:12px; width: 300px; border-radius:10px; border:1px solid #999; font-size:16px;">
 
@@ -195,10 +195,10 @@
                     <option value="dermatologia">Dermatología</option>
                 </select>
 
-                <br><br>
+                <br><br><br><br><br><br><br><br>
 
                 <!-- Botón para ir al listado -->
-                <a href="{{route('citasprogramadas')}}" class="btn btn-primary" style="padding: 10px 20px; font-size: 16px; border-radius: 8px; display:inline-block; margin-top:10px;">
+                <a href="{{route('citasprogramadas')}}" class="btn btn-primary " style=" font-size: 16px; border-radius: 8px; display:inline-block;">
                     Ver Citas Agendadas
                 </a>
             </div>
