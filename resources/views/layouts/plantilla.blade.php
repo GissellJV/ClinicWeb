@@ -29,7 +29,7 @@
                         <a class="nav-link active" aria-current="page" href="{{route('/')}}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Información sobre la clínica</a>
+                        <a class="nav-link" href="{{route('pacientes.informacion_Clinica')}}">Información sobre la clínica</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
