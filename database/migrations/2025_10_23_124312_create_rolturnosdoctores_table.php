@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('citas', function (Blueprint $table) {
+        Schema::create('rolturnosdoctores', function (Blueprint $table) {
             $table->id();
             $table->date('fecha');
-            $table->time('hora');
-            $table->string('estado');
+            $table->string('hora_turno');
+           $table->foreignId('empleado_id')->constrained();
+           $table->foreignId('cita_id')->constrained();
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('citas');
+        Schema::dropIfExists('rolturnosdoctores');
     }
 };

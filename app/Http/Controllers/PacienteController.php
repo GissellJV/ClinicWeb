@@ -112,5 +112,10 @@ class PacienteController extends Controller
     public function agendar_Citasonline(){
         return view('pacientes.agendar_Citasonline');
     }
+    public function informacionClinica()
+    {
+        return view('pacientes.informacion_clinica');
+    }
+
 
 }
