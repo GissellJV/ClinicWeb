@@ -71,6 +71,20 @@
 
 <div class="container">
     @yield('contenido')
+    <style>
+        .card.card-hover {
+            transition: transform 0.28s ease, box-shadow 0.28s ease;
+            will-change: transform, box-shadow;
+        }
+
+        .card.card-hover:hover,
+        .card.card-hover:focus {
+            transform: translateY(-10px) scale(1.01);
+            box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+            cursor: pointer;
+        }
+
+    </style>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
