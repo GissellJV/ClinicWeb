@@ -19,3 +19,4 @@ Route::post('/loginpaciente', [PacienteController::class, 'login'])->name('pacie
 
 Route::post('/logout', [PacienteController::class, 'logout'])->name('pacientes.logout');
 
+Route::get('/informacion', [PacienteController::class, 'informacion'])->name('pacientes.informacion_Clinica');
