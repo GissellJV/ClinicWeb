@@ -1,6 +1,21 @@
 @extends('layouts.plantilla')
 @section('contenido')
-        <div id="carouselExampleDark" class="carousel carousel-dark slide">
+
+    <style>
+        .card.card-hover {
+            transition: transform 0.28s ease, box-shadow 0.28s ease;
+            will-change: transform, box-shadow;
+        }
+
+        .card.card-hover:hover,
+        .card.card-hover:focus {
+            transform: translateY(-10px) scale(1.01);
+            box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+            cursor: pointer;
+        }
+
+    </style>
+        <div id="carouselExampleDark" class="carousel carousel-dark slide mp-10">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -31,5 +46,57 @@
                 <span class="visually-hidden">siguiente</span>
             </button>
         </div>
-
+        <div class="row mt-5">
+            <div class="card card-hover border-success mb-3 mx-3" style="max-width: 18rem;">
+                <div class="card-header bg-transparent border-success">Promoción Vigente</div>
+                <div class="card-body text-success">
+                    <h5 class="card-title">Descuento de Tercera Edad</h5>
+                    <p class="card-text">Descuento del 30% en todo gasto como ser:
+                    <ul>
+                        <li>Consultas generales y con especialista</li>
+                        <li>Examenes de laboratorio</li>
+                        <li>Rayos X</li>
+                    </ul></p>
+                </div>
+                <div class="card-footer bg-transparent border-success">ClinicWeb</div>
+            </div>
+            <div class="card card-hover border-success mb-3 mx-3" style="max-width: 18rem;">
+                <div class="card-header bg-transparent border-success">Promoción Vigente</div>
+                <div class="card-body text-success">
+                    <h5 class="card-title">Descuento de Cuarta Edad</h5>
+                    <p class="card-text">Descuento del 40% en todo gasto como ser:
+                    <ul>
+                        <li>Consultas generales y con especialista</li>
+                        <li>Examenes de laboratorio</li>
+                        <li>Rayos X</li>
+                        <li>Medicamentos</li>
+                    </ul></p>
+                </div>
+                <div class="card-footer bg-transparent border-success">ClinicWeb</div>
+            </div>
+            <div class="card card-hover border-success mb-3 mx-3" style="max-width: 18rem;">
+                <div class="card-header bg-transparent border-success">Promoción por mes de octubre</div>
+                <div class="card-body text-success">
+                    <h5 class="card-title">Control Total</h5>
+                    <p class="card-text">Precio 1,000 L. en todo gasto como ser:
+                    <ul>
+                        <li>Consultas con especialista</li>
+                        <li>Examenes de laboratorio</li>
+                        <li>Rayos X simples</li>
+                    </ul></p>
+                </div>
+                <div class="card-footer bg-transparent border-success">ClinicWeb</div>
+            </div>
+            <div class="card card-hover border-success mb-3 mx-3" style="max-width: 18rem;">
+                <div class="card-header bg-transparent border-success">Promoción Vigente hasta el 15 de noviembre</div>
+                <div class="card-body text-success">
+                    <h5 class="card-title">Control Estandar</h5>
+                    <p class="card-text">Precio 850 L. en todo gasto como ser:
+                    <ul>
+                        <li>Examenes de laboratorio</li>
+                    </ul></p>
+                </div>
+                <div class="card-footer bg-transparent border-success">ClinicWeb</div>
+            </div>
+        </div>
 @endsection
