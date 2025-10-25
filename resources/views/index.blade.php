@@ -1,20 +1,6 @@
 @extends('layouts.plantilla')
 @section('contenido')
 
-    <style>
-        .card.card-hover {
-            transition: transform 0.28s ease, box-shadow 0.28s ease;
-            will-change: transform, box-shadow;
-        }
-
-        .card.card-hover:hover,
-        .card.card-hover:focus {
-            transform: translateY(-10px) scale(1.01);
-            box-shadow: 0 14px 30px rgba(0,0,0,0.18);
-            cursor: pointer;
-        }
-
-    </style>
         <div id="carouselExampleDark" class="carousel carousel-dark slide mp-10">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
