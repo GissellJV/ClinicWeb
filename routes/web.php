@@ -3,6 +3,7 @@
 use App\Http\Controllers\PacienteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RutasController;
+use App\Http\Controllers\RecepcionistaController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 
@@ -19,4 +20,6 @@ Route::post('/loginpaciente', [PacienteController::class, 'login'])->name('pacie
 
 Route::post('/logout', [PacienteController::class, 'logout'])->name('pacientes.logout');
 
+//RUTAS RECEPCIONISTA
+Route::get('/busquedaexpediente',[RecepcionistaController::class,'buscarExpediente'])->name('recepcionista.busquedaexpediente');
 Route::get('/informacion', [PacienteController::class, 'informacion'])->name('pacientes.informacion_Clinica');
