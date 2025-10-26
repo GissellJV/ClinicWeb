@@ -4,6 +4,7 @@ use App\Http\Controllers\PacienteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RutasController;
 use App\Http\Controllers\RecepcionistaController;
+use App\Http\Controllers\CitaController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 
@@ -23,3 +24,7 @@ Route::post('/logout', [PacienteController::class, 'logout'])->name('pacientes.l
 //RUTAS RECEPCIONISTA
 Route::get('/busquedaexpediente',[RecepcionistaController::class,'buscarExpediente'])->name('recepcionista.busquedaexpediente');
 Route::get('/informacion', [PacienteController::class, 'informacion'])->name('pacientes.informacion_Clinica');
+
+Route::get('/mis-citas', [CitaController::class, 'misCitas'])->name('citas.mis-citas');
+Route::post('/cancelar-cita/{id}', [CitaController::class, 'cancelarCita'])->name('citas.cancelar');
+Route::post('/reprogramar-cita/{id}', [CitaController::class, 'reprogramarCita'])->name('citas.reprogramar');
