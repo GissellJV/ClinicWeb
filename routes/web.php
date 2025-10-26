@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RutasController;
 use App\Http\Controllers\RecepcionistaController;
 use App\Http\Controllers\CitaController;
+use App\Http\Controllers\ExpedienteController;
+use App\Http\Controllers\EmpleadoController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 
@@ -28,3 +30,14 @@ Route::get('/informacion', [PacienteController::class, 'informacion'])->name('pa
 Route::get('/mis-citas', [CitaController::class, 'misCitas'])->name('citas.mis-citas');
 Route::post('/cancelar-cita/{id}', [CitaController::class, 'cancelarCita'])->name('citas.cancelar');
 Route::post('/reprogramar-cita/{id}', [CitaController::class, 'reprogramarCita'])->name('citas.reprogramar');
+
+// Rutas para expedientes
+Route::get('/expedientes/crear', [ExpedienteController::class, 'crearExpediente'])->name('expedientes.crear');
+Route::get('/expedientes/crear/{paciente_id}', [ExpedienteController::class, 'crearExpediente'])->name('expedientes.crear.paciente');
+Route::post('/expedientes/guardar', [ExpedienteController::class, 'store'])->name('expedientes.guardar');
+Route::get('/expedientes/lista', [ExpedienteController::class, 'lista'])->name('expedientes.lista');
+
+// Rutas para empleados
+Route::get('/empleados/crear', [EmpleadoController::class, 'crear'])->name('empleados.crear');
+Route::post('/empleados/guardar', [EmpleadoController::class, 'store'])->name('empleados.guardar');
+Route::get('/empleados/lista', [EmpleadoController::class, 'lista'])->name('empleados.lista');
