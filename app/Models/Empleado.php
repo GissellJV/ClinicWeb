@@ -17,6 +17,7 @@ class Empleado extends Model
         'departamento',
         'fecha_ingreso'
     ];
+
     protected $casts = [
         'fecha_ingreso' => 'date'
     ];

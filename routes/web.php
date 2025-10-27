@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\PacienteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RutasController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\ExpedienteController;
 use App\Http\Controllers\EmpleadoController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
+Route::get('/promociones', [RutasController::class, 'index'])->name('promociones.index');
 
 Route::get('/registrar',[PacienteController::class,'registrarpaciente'])->name('pacientes.registrarpaciente');
 Route::post('/registrar',[PacienteController::class,'store'])->name('pacientes.store');
@@ -22,7 +24,15 @@ Route::post('/loginpaciente', [PacienteController::class, 'login'])->name('pacie
 
 Route::post('/logout', [PacienteController::class, 'logout'])->name('pacientes.logout');
 
+Route::get('/informacion', [PacienteController::class, 'informacion'])->name('pacientes.informacion_Clinica');
+Route::get('/comentarios', [ComentarioController::class, 'index'])->name('comentarios.index');
+Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');
+
+
 //RUTAS RECEPCIONISTA
+Route::get('/loginempleado', [loginempleadoController::class, 'loginempleado'])->name('empleados.loginempleado');
+Route::post('/loginempleados', [loginempleadoController::class, 'login'])->name('empleados.login');
+//Route::post('/logout', [LoginempleadoController::class, 'logout'])->name('empleados.logout');
 Route::get('/busquedaexpediente',[RecepcionistaController::class,'buscarExpediente'])->name('recepcionista.busquedaexpediente');
 Route::get('/informacion', [PacienteController::class, 'informacion'])->name('pacientes.informacion_Clinica');
 
