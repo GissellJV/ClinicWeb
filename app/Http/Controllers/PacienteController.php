@@ -22,7 +22,7 @@ class PacienteController extends Controller
             'numero_identidad' => 'required|string|size:13|regex:/^\d{4}\d{4}\d{5}$/|unique:pacientes',
             'genero' => 'required|in:Femenino,Masculino',
             'telefono' => 'required|string|min:8|max:15',
-            'contraseña' => 'required|string|min:8|confirmed',
+            'contraseña' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]/|confirmed',
 
         ], [
 
@@ -38,6 +38,11 @@ class PacienteController extends Controller
             'telefono.required' => 'Teléfono  obligatorio',
             'contraseña.required' => 'La contraseña es obligatoria',
             'contraseña.min' => 'La contraseña debe tener mínimo 8 caracteres',
+            'contraseña.regex' => 'La contraseña debe contener al menos:
+             - 8 caracteres
+             - Una letra mayúscula
+             - Una letra minúscula
+             - Un número',
             'contraseña.confirmed' => 'Las contraseñas no coinciden',
 
         ]);

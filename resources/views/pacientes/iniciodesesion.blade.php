@@ -65,21 +65,15 @@
             </div>
             @enderror
 
-
-
-        <div class="pt-3 text-center">
-            <a href="{{route('pacientes.enviar_codigo_recuperacion')}}" class="text-decoration-none fw-semibold
-             fw-semibold fst-italic" style="font-size: 0.9rem; color: #00bcd4;" >¿Olvidaste tu contraseña?</a>
-        </div>
             <br>
     <button type="submit" class="btn text-white w-100 fw-semibold shadow-sm pt-2 mb-3" style="background-color: #00bcd4; border: none;">Iniciar Sesión</button>
         </form>
     <div class="text-center">
         <span class="text-muted">¿No tienes una cuenta?</span>
              <a href="{{route('pacientes.registrarpaciente')}}" class="text-decoration-none fw-semibold ms-1" style="color: #00bcd4;" >Registrate</a>
-        <div class="pt-1 text-center">
-            <a href="{{route('pacientes.enviar_codigo_recuperacion')}}" class="text-decoration-none text-dark
-             fw-semibold fst-italic" style="font-size: 0.9rem " >¿Olvidaste tu contraseña?</a>
+        <div class="pt-3 text-center">
+            <a href="{{route('pacientes.enviar_codigo_recuperacion')}}" class="text-decoration-none
+             fw-semibold fst-italic" style="font-size: 0.9rem; color: #00bcd4;" >¿Olvidaste tu contraseña?</a>
         </div>
     </div>
 </div>

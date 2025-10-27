@@ -37,6 +37,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">Pedir cita</a></li>
+                            <li><a class="dropdown-item" href="{{ route('citas.mis-citas') }}">Mis Citas</a></li>
                             @if(!session('paciente_id'))
                             <li><a class="dropdown-item" href="{{route('pacientes.registrarpaciente')}}">Registrarse como paciente</a></li>
                             @endif
@@ -45,6 +46,18 @@
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item" href="#">Contactanos</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                             Administración
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('expedientes.crear') }}"> Nuevo Expediente</a></li>
+                            <li><a class="dropdown-item" href="{{ route('expedientes.lista') }}"> Lista Expedientes</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ route('empleados.crear') }}"> Registrar Empleado</a></li>
+                            <li><a class="dropdown-item" href="{{ route('empleados.lista') }}"> Lista Empleados</a></li>
                         </ul>
                     </li>
                 </ul>
