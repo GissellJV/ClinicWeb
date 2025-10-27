@@ -11,25 +11,28 @@ class Cita extends Model
 
     protected $fillable = [
         'paciente_id',
-        'empleado_id',
-        'rolturnosdoctores_id',
+        'paciente_nombre',
+        'doctor_nombre',
+        'especialidad',
         'fecha',
         'hora',
-        'estado'
-
+        'estado',
+        'mensaje'
     ];
+
 
     protected $casts = [
         'fecha' => 'date'
     ];
 
-    public function paciente()
-    {
-        return $this->belongsTo(Paciente::class);
-    }
-
     public function doctor()
     {
-        return $this->belongsTo(User::class, 'empleado_id');
+        return $this->belongsTo(Empleado::class, 'empleado_id');
     }
+
+    public function paciente()
+    {
+        return $this->belongsTo(Paciente::class, 'paciente_id');
+    }
+
 }

@@ -62,11 +62,39 @@ class PacienteController extends Controller
        //dirigirse a iniciar sesion // if($nuevoPaciente->save()){
 
       return redirect()->route('pacientes.loginp')->with('mensaje', 'Registro exitoso, Inicia sesión');
-//}
     }
 
-    public function listado_citaspro(){
-        return view('pacientes.listado_citaspro');
+    public function listado_citaspro(Request $request){
+
+        $pacientes = null;
+
+        if ($request->busqueda) {
+            $busqueda = $request->input('busqueda');
+            $filtro = $request->input('filtro');
+
+
+            $query = Paciente::query();
+
+
+            if ($filtro == 'nombre') {
+                $query->where('nombres', 'LIKE', "%{$busqueda}%");
+
+            } else {
+
+                $query->where(function ($q) use ($busqueda) {
+                    $q->where('nombres', 'LIKE', "%{$busqueda}%");
+                });
+            }
+
+
+            $query->orderBy('nombres', 'asc');
+
+
+            $pacientes = $query->paginate(10)->withQueryString();
+
+        }
+        return view('pacientes.listado_citaspro', compact('pacientes'));
+
     }
 
     public function loginp()
@@ -114,13 +142,17 @@ class PacienteController extends Controller
         return view('pacientes.enviar_codigo_recuperacion');
     }
 
-    public function agendar_Citasonline(){
-        return view('pacientes.agendar_Citasonline');
+    public function agendar_Citasonline()
+    {
+        $paciente = Paciente::find(session('paciente_id'));
+
+        return view('pacientes.agendar_Citasonline', compact('paciente'));
     }
     public function informacion()
     {
         return view('pacientes.informacion_clinica');
     }
+
 
 
 }
