@@ -45,7 +45,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Contactanos</a></li>
+                            <li><a class="dropdown-item" href="{{route('comentarios.index')}}">Comentarios</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

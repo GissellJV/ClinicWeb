@@ -97,7 +97,7 @@
                                     Departamento de imagenes radiologicas con equipo tecnologico,
                                     imagenes rayosx, tomografias y mamografias especializadas.
                                 </p>
-                                <p class="card-text"><small class="text-muted">Ultima modificación hace 3 minutos</small></p>
+
                             </div>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                                         Contamos con los mejores doctores reginales del occidente,
                                         con excelentes tratamientos.
                                     </p>
-                                    <p class="card-text"><small class="text-muted">Ultima modificación hace 3 minutos</small></p>
+
                                 </div>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                     <div class="card card-hover mb-3" style="max-width: 540px;">
                         <div class="row g-0">
                             <div class="col-md-4">
-                                <img src="informacion\dermatologia.jpg" style="height: 250px" class="img-fluid h-140 w-100 rounded-start" alt="...">
+                                <img src="informacion\dermatologia1.jpg" style="height: 250px" class="img-fluid h-140 w-100 rounded-start" alt="...">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
@@ -138,7 +138,7 @@
                                         Departamento encargado de tratar todo problema del organo mas grande de nuestro cuerpo,
                                         porque cuidarte es la manera en que te consientes.
                                     </p>
-                                    <p class="card-text"><small class="text-muted">Ultima modificación hace 3 minutos</small></p>
+
                                 </div>
                             </div>
                         </div>
@@ -157,7 +157,7 @@
                                         Departamento encargado de los niños de la casa con los mejores cuidados
                                         y excelentes servicios del programa niños sanos.
                                     </p>
-                                    <p class="card-text"><small class="text-muted">Ultima modificación hace 3 minutos</small></p>
+
                                 </div>
                             </div>
                         </div>
