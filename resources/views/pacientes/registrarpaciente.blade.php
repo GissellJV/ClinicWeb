@@ -103,8 +103,8 @@
 
         <div class="form-group mb-3" style="width: 100%; max-width: 22rem">
             <label for="exampleInputPassword1">Contraseña</label>
-            <input type="password" class="form-control" id="contraseña" name="contraseña">
-            @error('contraseña')
+            <input type="password" class="form-control" id="password" name="password">
+            @error('password')
             <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
@@ -112,8 +112,8 @@
         <!-- CONFIRMAR CONTRASEÑA -->
         <div class="form-group mb-3" style="width: 100%; max-width: 22rem">
             <label for="confirmarPassword" class="form-label">Confirmar Contraseña </label>
-            <input type="password" class="form-control" id="contraseña_confirmation" name="contraseña_confirmation">
-            @error('contraseña_confirmation')
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+            @error('password_confirmation')
             <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>

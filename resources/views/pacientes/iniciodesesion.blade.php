@@ -52,14 +52,14 @@
         <div class="mt-1">
         <span class="input-group ">
             <span class="input-group-text bg-info bg-opacity-25 border-0">
-                <img src="imagenes\password-icon.svg" alt="contraseña" style="height: 1rem">
+                <img src="imagenes\password-icon.svg" alt="password" style="height: 1rem">
             </span>
-            <input class="form-control border-start-0 bg-light" type="password" name="contraseña"
-                   placeholder="Contraseña" >
+            <input class="form-control border-start-0 bg-light" type="password" name="password"
+                   placeholder="password" >
         </span>
     </div>
 
-            @error('contraseña')
+            @error('password')
             <div class="text-danger mt-1" style="font-size: 0.875rem;">
                 {{ $message }}
             </div>

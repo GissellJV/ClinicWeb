@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ComentarioController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PacienteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RutasController;
@@ -20,6 +21,9 @@ Route::get('/agendarcitas', [PacienteController::class, 'agendar_Citasonline'])-
 
 Route::get('/loginpaciente', [PacienteController::class, 'loginp'])->name('pacientes.loginp');
 Route::get('/recuperar', [PacienteController::class, 'enviar_codigo_recuperacion'])->name('pacientes.enviar_codigo_recuperacion');
+Route::post('/recuperar', [PacienteController::class, 'enviarCodigoRecuperacion'])->name('enviarCodigoRecuperacion');
+Route::get('/restablecer/{token}', [PacienteController::class, 'cambio_contra'])->name('pacientes.cambio_contra');
+Route::post('/restablecer', [PacienteController::class, 'actualizarContra'])->name('password.update');
 Route::post('/loginpaciente', [PacienteController::class, 'login'])->name('pacientes.login');
 
 Route::post('/logout', [PacienteController::class, 'logout'])->name('pacientes.logout');
@@ -28,6 +32,8 @@ Route::get('/informacion', [PacienteController::class, 'informacion'])->name('pa
 Route::get('/comentarios', [ComentarioController::class, 'index'])->name('comentarios.index');
 Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');
 
+
+Route::get('/doctores', [DoctorController::class, 'visualizacion_Doctores'])->name('pacientes.visualizacion_Doctores');
 
 //RUTAS RECEPCIONISTA
 Route::get('/loginempleado', [loginempleadoController::class, 'loginempleado'])->name('empleados.loginempleado');
