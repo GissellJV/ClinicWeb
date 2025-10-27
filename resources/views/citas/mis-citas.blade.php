@@ -19,25 +19,24 @@
         @endif
 
         <div class="row">
-            @foreach($citas as $cita)
+            @forelse($citas as $cita)
                 <div class="col-md-6 mb-3">
-                    <div class="card">
+                    <div class="card shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">
-                                @if($cita->doctor)
-                                    Dr. {{ $cita->doctor->name }}
-                                @else
-                                    Doctor no asignado
-                                @endif
-                            </h5>
+                            <h5 class="card-title">{{ $cita->doctor_nombre ?? 'Doctor no asignado' }}</h5>
                             <p class="card-text">
+                                <strong>Paciente:</strong> {{ session('paciente_nombre') ?? 'No definido' }}<br>
                                 <strong>Fecha:</strong> {{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}<br>
                                 <strong>Hora:</strong> {{ $cita->hora }}<br>
+                                <strong>Especialidad:</strong> {{ $cita->especialidad ?? 'No definida' }}<br>
                                 <strong>Estado:</strong>
                                 <span class="badge bg-{{ $cita->estado == 'programada' ? 'success' : ($cita->estado == 'cancelada' ? 'danger' : 'warning') }}">
-                            {{ ucfirst($cita->estado) }}
-                        </span>
+                                {{ ucfirst($cita->estado) }}
+                            </span>
                             </p>
+                            @if($cita->mensaje)
+                                <div class="alert alert-info mt-2">{{ $cita->mensaje }}</div>
+                            @endif
 
                             @if($cita->estado == 'programada')
                                 <div class="btn-group">
@@ -98,3 +97,5 @@
         </div>
     </div>
 @endsection
+
+

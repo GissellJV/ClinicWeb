@@ -5,10 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Cita;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CitaController extends Controller
 {
+    //Vista del recepcionista
+    public function index()
+    {
+        $citas = Cita::with(['doctor', 'paciente'])
+
+            ->get();
+
+        return view('pacientes.listado_citaspro', compact('citas'));
+    }
+
+    //Vista del paciente
     public function misCitas()
     {
         $paciente_id = session('paciente_id');
@@ -25,18 +35,15 @@ class CitaController extends Controller
 
         $citas = Cita::with('doctor')
             ->where('paciente_id', $paciente->id)
-            ->orderBy('fecha', 'desc')
-            ->orderBy('hora', 'desc')
             ->get();
 
         return view('citas.mis-citas', compact('citas'));
     }
 
+    //  Cancelar cita
     public function cancelarCita($id)
     {
         $cita = Cita::findOrFail($id);
-
-        // Verificar que la cita pertenezca al paciente
         $paciente_id = session('paciente_id');
         $paciente = Paciente::find($paciente_id);
 
@@ -44,11 +51,17 @@ class CitaController extends Controller
             return redirect()->back()->with('error', 'No tienes permiso para cancelar esta cita');
         }
 
-        $cita->update(['estado' => 'cancelada']);
+        // Aquí se limpia el mensaje además de cambiar el estado
+        $cita->update([
+            'estado' => 'cancelada',
+            'mensaje' => null
+        ]);
 
         return redirect()->back()->with('success', 'Cita cancelada exitosamente');
     }
 
+
+    //  Reprogramar cita
     public function reprogramarCita(Request $request, $id)
     {
         $request->validate([
@@ -57,8 +70,6 @@ class CitaController extends Controller
         ]);
 
         $cita = Cita::findOrFail($id);
-
-        // Verificar permisos
         $paciente_id = session('paciente_id');
         $paciente = Paciente::find($paciente_id);
 
@@ -67,10 +78,70 @@ class CitaController extends Controller
         }
 
         $cita->update([
-            'fecha_cita' => $request->fecha,
-            'estado' => 'reprogramada'
+            'fecha' => $request->nueva_fecha,
+            'hora' => $request->nueva_hora,
+            'estado' => 'reprogramada',
+            'mensaje' => null
         ]);
 
         return redirect()->back()->with('success', 'Cita reprogramada exitosamente');
     }
+
+    //Confirmar cita (recepcionista)
+    public function confirmarCita($id)
+    {
+        // Buscar la cita
+        $cita = Cita::findOrFail($id);
+
+        // Verificar que la cita esté pendiente
+        if ($cita->estado !== 'pendiente') {
+            return redirect()->back()->with('error', 'La cita no se puede confirmar porque no está pendiente.');
+        }
+
+        // Obtener nombre del doctor seguro
+        $doctorNombre = $cita->doctor ? $cita->doctor->nombre : ($cita->doctor_nombre ?? 'Doctor no asignado');
+
+        // Actualizar estado y guardar mensaje
+        $cita->estado = 'programada';
+        $cita->mensaje = "Tu cita con el {$doctorNombre} ha sido confirmada para las {$cita->hora}.";
+        $cita->save();
+
+        return redirect()->back()->with('success', 'Cita confirmada correctamente.');
+    }
+
+    public function guardarDesdeCalendario(Request $request)
+    {
+        $request->validate([
+            'fecha' => 'required|date',
+            'hora' => 'required|string',
+            'doctor' => 'required|string',
+            'especialidad' => 'required|string',
+        ]);
+
+        $paciente_id = session('paciente_id');
+        $paciente_nombre = session('paciente_nombre');
+
+        if (!$paciente_id || !$paciente_nombre) {
+            return response()->json(['success' => false, 'message' => 'Debe iniciar sesión']);
+        }
+
+        try {
+            $cita = Cita::create([
+                'paciente_id' => $paciente_id,
+                'paciente_nombre' => $paciente_nombre, //
+                'doctor_nombre' => $request->doctor,
+                'especialidad' => $request->especialidad,
+                'fecha' => $request->fecha,
+                'hora' => $request->hora,
+                'estado' => 'pendiente',
+            ]);
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
 }
