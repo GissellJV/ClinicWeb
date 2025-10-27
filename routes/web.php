@@ -13,7 +13,6 @@ Route::get('/', [RutasController::class, 'index'])->name('/');
 Route::get('/registrar',[PacienteController::class,'registrarpaciente'])->name('pacientes.registrarpaciente');
 Route::post('/registrar',[PacienteController::class,'store'])->name('pacientes.store');
 
-Route::get('/citasprogramadas', [PacienteController::class, 'listado_citaspro'])->name('citasprogramadas');
 
 Route::get('/agendarcitas', [PacienteController::class, 'agendar_Citasonline'])->name('agendarcitas');
 
@@ -27,9 +26,23 @@ Route::post('/logout', [PacienteController::class, 'logout'])->name('pacientes.l
 Route::get('/busquedaexpediente',[RecepcionistaController::class,'buscarExpediente'])->name('recepcionista.busquedaexpediente');
 Route::get('/informacion', [PacienteController::class, 'informacion'])->name('pacientes.informacion_Clinica');
 
+
+Route::get('/recepcionista/citas', [CitaController::class, 'index'])->name('listadocitas');
+
+
+
+//citas
 Route::get('/mis-citas', [CitaController::class, 'misCitas'])->name('citas.mis-citas');
 Route::post('/cancelar-cita/{id}', [CitaController::class, 'cancelarCita'])->name('citas.cancelar');
 Route::post('/reprogramar-cita/{id}', [CitaController::class, 'reprogramarCita'])->name('citas.reprogramar');
+Route::post('/citas/{id}/confirmar', [CitaController::class, 'confirmarCita'])->name('citas.confirmar');
+Route::post('/citas/guardar', [CitaController::class, 'guardarDesdeCalendario'])->name('citas.guardar');
+Route::post('/citas/guardar-calendario', [CitaController::class, 'guardarDesdeCalendario'])->name('citas.guardar.calendario');
+
+
+
+
+
 
 // Rutas para expedientes
 Route::get('/expedientes/crear', [ExpedienteController::class, 'crearExpediente'])->name('expedientes.crear');

@@ -36,12 +36,12 @@
                             Paciente
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Pedir cita</a></li>
+                            <li><a class="dropdown-item" href="{{route('agendarcitas')}}">Agendar cita</a></li>
                             <li><a class="dropdown-item" href="{{ route('citas.mis-citas') }}">Mis Citas</a></li>
                             @if(!session('paciente_id'))
                             <li><a class="dropdown-item" href="{{route('pacientes.registrarpaciente')}}">Registrarse como paciente</a></li>
                             @endif
-                            <li><a class="dropdown-item" href="{{ route('citasprogramadas') }}">Pacientes con citas programadas </a></li>
+                            <li><a class="dropdown-item" href="{{ route('listadocitas') }}">Pacientes con citas programadas </a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
