@@ -24,6 +24,12 @@
                         <a class="nav-link active" aria-current="page" href="">Inicio</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('expedientes.crear') }}">Nuevo Expediente</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('expedientes.lista') }}">Expedientes</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#">Información sobre la clínica</a>
                     </li>
                     <li class="nav-item dropdown">
