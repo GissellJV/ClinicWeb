@@ -75,6 +75,7 @@
         .card.card-hover {
             transition: transform 0.28s ease, box-shadow 0.28s ease;
             will-change: transform, box-shadow;
+            border-color: #007bff;
         }
 
         .card.card-hover:hover,

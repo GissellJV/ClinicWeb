@@ -4,8 +4,8 @@
     <div class="container mt-5 pt-5 text-center">
 
 {{--Acordion donde esta la informacion de la clinica una de mision y vision, los valores--}}
-        <div class="accordion accordion-flush" id="accordionFlushExample">
-            <div class="accordion-item">
+        <div class="accordion accordion-flush"  id="accordionFlushExample">
+            <div class="accordion-item" style="border-color: #007bff;">
                 <h1 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                        <strong>Visión y Misión</strong>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="accordion-item">
+            <div class="accordion-item" style="border-color: #007bff;">
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
                         <strong>Nuestros Valores</strong>
@@ -56,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <div class="accordion-item">
+            <div class="accordion-item" style="border-color: #007bff;">
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
                         <strong>¿Quienes somos?</strong>
