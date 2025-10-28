@@ -25,13 +25,32 @@
             @endif
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{route('/')}}">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('pacientes.informacion_Clinica')}}">Información sobre la clínica</a>
                     </li>
+                    <li class="nav-item">
+                        @if(!session('paciente_id'))
+                            <a class="nav-link" href="{{route('pacientes.registrarpaciente')}}">Registrarse como paciente</a>
+                            <a class="nav-link" href="{{route('pacientes.visualizacion_Doctores')}}">Doctores disponibles</a>
+
+                        @endif
+                    </li>
+
                     <li class="nav-item dropdown">
+                        @if(!session('paciente_id'))
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Acceder
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{route('pacientes.loginp')}}">Paciente</a></li>
+
+                                <li><a class="dropdown-item" href="{{route('empleados.loginempleado')}}">Recepcionista</a></li>
+                            </ul>
+                        @else
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Paciente
                         </a>
@@ -41,26 +60,14 @@
                             @if(!session('paciente_id'))
                             <li><a class="dropdown-item" href="{{route('pacientes.registrarpaciente')}}">Registrarse como paciente</a></li>
                             @endif
-                            <li><a class="dropdown-item" href="{{ route('listadocitas') }}">Pacientes con citas programadas </a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="{{route('comentarios.index')}}">Comentarios</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                             Administración
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('expedientes.crear') }}"> Nuevo Expediente</a></li>
-                            <li><a class="dropdown-item" href="{{ route('expedientes.lista') }}"> Lista Expedientes</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{{ route('empleados.crear') }}"> Registrar Empleado</a></li>
-                            <li><a class="dropdown-item" href="{{ route('empleados.lista') }}"> Lista Empleados</a></li>
-                        </ul>
-                    </li>
+
+                    @endif
+                    <a class="nav-link" href="{{route('comentarios.index')}}">Comentarios
+                    </a>
                 </ul>
+
                 @if(session('paciente_id'))
                     <form action="{{route('pacientes.logout')}}" method="POST" class="mt-3">
                         @csrf
@@ -68,10 +75,6 @@
                             Cerrar Sesión
                         </button>
                     </form>
-                @else
-                    <a href="{{route('pacientes.loginp')}}" class="btn btn-primary w-100 mt-3">
-                        Iniciar Sesión
-                    </a>
                 @endif
                 <form class="d-flex mt-3" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>

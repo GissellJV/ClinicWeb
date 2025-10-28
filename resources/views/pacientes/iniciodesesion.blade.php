@@ -18,12 +18,7 @@
             <img src="/imagenes/login-icono.png" alt="login-icono" style="height: 8rem">
 
         </div>
-        @if(session('mensaje'))
-            <div class=" alert alert-primary alert-dismissible fade show">
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                {{session('mensaje')}}
-            </div>
-        @endif
+
 
         @if(session('error'))
             <div class="alert alert-danger">
@@ -55,7 +50,7 @@
                 <img src="imagenes\password-icon.svg" alt="password" style="height: 1rem">
             </span>
             <input class="form-control border-start-0 bg-light" type="password" name="password"
-                   placeholder="password" >
+                   placeholder="Contraseña" >
         </span>
     </div>
 

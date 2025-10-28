@@ -73,6 +73,11 @@ class PacienteController extends Controller
 
     public function listado_citaspro(Request $request){
 
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('empleados.loginempleado')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
         $pacientes = null;
 
         if ($request->busqueda) {
@@ -141,8 +146,7 @@ class PacienteController extends Controller
     public function logout(Request $request)
     {
         $request->session()->flush();
-        return redirect()->route('pacientes.loginp')
-            ->with('mensaje', 'Sesión cerrada con exito');
+        return redirect()->route('/');
     }
     public function enviar_codigo_recuperacion()
     {
@@ -151,6 +155,11 @@ class PacienteController extends Controller
 
     public function agendar_Citasonline()
     {
+        if (!session('paciente_id')) {
+                    return redirect()->route('pacientes.loginp')
+              ->with('error', 'Debes iniciar sesión primero');
+      }
+
         $paciente = Paciente::find(session('paciente_id'));
 
         return view('pacientes.agendar_Citasonline', compact('paciente'));

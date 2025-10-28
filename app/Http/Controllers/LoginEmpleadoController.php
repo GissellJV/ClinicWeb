@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empleado;
 use App\Models\LoginEmpleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class LoginempleadoController extends Controller
+class LoginEmpleadoController extends Controller
 {
-    public function loginempleado(Request $request)
+    public function loginempleado()
     {
+<<<<<<< HEAD:app/Http/Controllers/LoginempleadoController.php
         return view('empleados.loginempleado');
+=======
+        return view('empleados.InicioEmpleado');
+>>>>>>> origin/main:app/Http/Controllers/LoginEmpleadoController.php
     }
     public function login(Request $request){
 
@@ -22,16 +27,19 @@ class LoginempleadoController extends Controller
             'password.required'=>'Ingresa la contraseña'
         ]);
 
-        $empleado= LoginEmpleado::where('telefono',$request->input('telefono'))->first();
+        $loginEmpleado = LoginEmpleado::where('telefono',$request->input('telefono'))->first();
 
-        if($empleado && Hash::check($request->password, $empleado->password)){
+        if($loginEmpleado && Hash::check($request->password, $loginEmpleado->password)){
+
+            $empleado = Empleado::find($loginEmpleado->empleado_id);
 
             session([
                 'empleado_id' => $empleado->id,
-                'empleado_nombre' => $empleado->empleado_nombre . ' ' . $empleado->empleado_apellido,
+                'empleado_nombre' => $empleado->nombre . ' ' . $empleado->apellido,
+                'cargo' => $empleado->cargo
             ]);
 
-            return redirect()->route('recepcionistas.busquedaexpediente')
+            return redirect()->route('recepcionista.busquedaexpediente')
                 ->with('mensaje', '¡Bienvenido ' . $empleado->empleado_nombre . ' ' . $empleado->empleado_apellido . '!');
         }
 
@@ -45,7 +53,7 @@ class LoginempleadoController extends Controller
     public function logout(Request $request)
     {
         $request->session()->flush();
-        return redirect()->route('empleados.inicioEmpleado')
+        return redirect()->route('/')
             ->with('mensaje', 'Sesión cerrada con exito');
     }
     public function enviar_codigo_recuperacion()

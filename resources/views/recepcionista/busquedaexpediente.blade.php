@@ -1,7 +1,11 @@
 @extends('layouts.plantillaRecepcion')
 @section('contenido')
     <div class="container mt-5 pt-5">
-        <h2 class="text-primary-emphasis">Búsqueda de Expedientes</h2>
+        <h2 class="text-primary-emphasis">Búsqueda de Expedientes
+            <a href="{{ route('expedientes.crear') }}" class="btn btn-light btn-sm">
+                + Nuevo Expediente
+            </a></h2>
+
         <br>
 
 
@@ -24,7 +28,7 @@
                                 <option value="todos" {{ request('filtro') == 'todos' ? 'selected' : '' }}> Todos </option>
                                 <option value="nombre" {{ request('filtro') == 'nombre' ? 'selected' : '' }}> Nombre </option>
                                 <option value="apellido" {{ request('filtro') == 'apellido' ? 'selected' : '' }}> Apellido </option>
-                                <option value="identidad" {{ request('filtro') == 'identidad' ? 'selected' : '' }}> Identidad </option>
+                                <option value="numero_expediente" {{ request('filtro') == 'numero_expediente' ? 'selected' : '' }}> N° Expediente </option>
                             </select>
                         </div>
 
@@ -41,7 +45,7 @@
             <div class="row justify-content-center mb-3" style="margin-top: 140px;">
                 <div class="col-12 col-md-10 col-lg-8">
                     <div class="alert alert-info" role="alert">
-                        Se encontraron <strong>{{ $pacientes->total() }}</strong> pacientes
+                        Se encontraron <strong>{{ $expedientes->total() }}</strong> pacientes
                     </div>
                 </div>
             </div>
@@ -53,18 +57,20 @@
                 <table class="table table-hover">
                     <thead class="table-light">
                     <tr>
-                        <th scope="col">Numero Identidad</th>
+                        <th scope="col">N° Expediente</th>
                         <th scope="col">Nombre Completo</th>
                         <th scope="col">Teléfono</th>
+                        <th scope="col">Fecha Creación</th>
                         <th scope="col">Acciones</th>
                     </tr>
                     </thead>
                     <tbody class="table-group-divider">
-                    @forelse($pacientes as $paciente)
+                    @forelse($expedientes as $paciente)
                         <tr>
-                            <td>{{$paciente->numero_identidad}}</td>
-                            <td>{{$paciente->nombres}} {{$paciente->apellidos}}</td>
+                            <td>{{ $paciente->expediente->numero_expediente }}</td>
+                            <td>{{ $paciente->nombres}} {{ $paciente->apellidos }}</td>
                             <td>{{$paciente->telefono}}</td>
+                            <td>{{ $paciente->expediente->created_at->format('d/m/Y') }} </td>
                             <td>
                                 <a class="btn btn-primary btn-sm"
                                    href="#">
@@ -90,7 +96,7 @@
 
 
             <div class="d-flex justify-content-left">
-                {{ $pacientes->links('pagination::bootstrap-5') }}
+                {{ $expedientes->links('pagination::bootstrap-5') }}
             </div>
         @else
 

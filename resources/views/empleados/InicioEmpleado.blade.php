@@ -33,7 +33,7 @@
 
 
             <div class="text-center fs-3 fw-bold mb-4" style="color: #00bcd4;" >Iniciar sesión</div>
-            <form action="{{route('empleados.loginempleado')}}" method="POST">
+            <form action="{{route('empleados.login')}}" method="POST">
                 @csrf
                 <div class="mt-4">
                     <div class="input-group ">
@@ -54,7 +54,7 @@
             <span class="input-group-text bg-info bg-opacity-25 border-0">
                 <img src="imagenes\password-icon.svg" alt="contraseña" style="height: 1rem">
             </span>
-            <input class="form-control border-start-0 bg-light" type="password" name="contraseña"
+            <input class="form-control border-start-0 bg-light" type="password" name="password"
                    placeholder="Contraseña" >
         </span>
                 </div>
@@ -68,14 +68,7 @@
                 <br>
                 <button type="submit" class="btn text-white w-100 fw-semibold shadow-sm pt-2 mb-3" style="background-color: #00bcd4; border: none;">Iniciar Sesión</button>
             </form>
-            <div class="text-center">
-                <span class="text-muted">¿No tienes una cuenta?</span>
-                <a href="{{route('pacientes.registrarpaciente')}}" class="text-decoration-none fw-semibold ms-1" style="color: #00bcd4;" >Registrate</a>
-                <div class="pt-3 text-center">
-                    <a href="{{route('pacientes.enviar_codigo_recuperacion')}}" class="text-decoration-none
-             fw-semibold fst-italic" style="font-size: 0.9rem; color: #00bcd4;" >¿Olvidaste tu contraseña?</a>
-                </div>
-            </div>
+
         </div>
 
 

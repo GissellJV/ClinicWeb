@@ -1,4 +1,4 @@
-@extends('layouts.plantillaDoctor')
+@extends('layouts.plantilla')
 
 @section('contenido')
     <div class="row mt-5 pt-5">

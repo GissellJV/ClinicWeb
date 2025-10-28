@@ -21,5 +21,10 @@ class Paciente extends Model
     protected $hidden = [
         'password'
     ];
+
+    public function expediente()
+    {
+        return $this->hasOne(Expediente::class);
+    }
 }
 

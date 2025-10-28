@@ -1,5 +1,4 @@
-@extends('layouts.plantilla')
-
+@extends('layouts.plantillaRecepcion')
 @section('contenido')
     <br><br><br><br><br>
 
@@ -69,7 +68,7 @@
     </table>
 
     <div class="text-center mt-4">
-        <a href="{{ url('/') }}">
+        <a href="{{route('recepcionista.busquedaexpediente')}}">
             <button type="button" class="btn btn-primary">Volver al Inicio</button>
         </a>
     </div>
