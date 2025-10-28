@@ -53,12 +53,8 @@ class ExpedienteController extends Controller
             'observaciones' => $request->observaciones,
         ]);
 
-        return redirect()->route('expedientes.lista')->with('success', 'Expediente creado exitosamente.');
+        return redirect()->route('recepcionista.busquedaexpediente');
     }
 
-    public function lista()
-    {
-        $expedientes = Expediente::with('paciente')->orderBy('created_at', 'desc')->get();
-        return view('expedientes.lista', compact('expedientes'));
-    }
+
 }

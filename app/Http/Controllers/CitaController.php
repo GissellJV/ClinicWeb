@@ -11,6 +11,11 @@ class CitaController extends Controller
     //Vista del recepcionista
     public function index()
     {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('empleados.loginempleado')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
         $citas = Cita::with(['doctor', 'paciente'])
 
             ->get();
@@ -21,6 +26,11 @@ class CitaController extends Controller
     //Vista del paciente
     public function misCitas()
     {
+        if (!session('paciente_id')) {
+            return redirect()->route('pacientes.loginp')
+                ->with('error', 'Debes iniciar sesión primero');
+        }
+
         $paciente_id = session('paciente_id');
 
         if (!$paciente_id) {
@@ -42,7 +52,13 @@ class CitaController extends Controller
 
     //  Cancelar cita
     public function cancelarCita($id)
+
     {
+        if (!session('paciente_id')) {
+            return redirect()->route('pacientes.loginp')
+                ->with('error', 'Debes iniciar sesión primero');
+        }
+
         $cita = Cita::findOrFail($id);
         $paciente_id = session('paciente_id');
         $paciente = Paciente::find($paciente_id);
@@ -64,6 +80,11 @@ class CitaController extends Controller
     //  Reprogramar cita
     public function reprogramarCita(Request $request, $id)
     {
+        if (!session('paciente_id')) {
+            return redirect()->route('pacientes.loginp')
+                ->with('error', 'Debes iniciar sesión primero');
+        }
+
         $request->validate([
             'nueva_fecha' => 'required|date|after:today',
             'nueva_hora' => 'required'
@@ -90,6 +111,10 @@ class CitaController extends Controller
     //Confirmar cita (recepcionista)
     public function confirmarCita($id)
     {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('empleados.loginempleado')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
         // Buscar la cita
         $cita = Cita::findOrFail($id);
 

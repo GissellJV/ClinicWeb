@@ -9,6 +9,7 @@ use App\Http\Controllers\RecepcionistaController;
 use App\Http\Controllers\CitaController;
 use App\Http\Controllers\ExpedienteController;
 use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\LoginEmpleadoController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 Route::get('/promociones', [RutasController::class, 'index'])->name('promociones.index');
@@ -36,9 +37,9 @@ Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comen
 Route::get('/doctores', [DoctorController::class, 'visualizacion_Doctores'])->name('pacientes.visualizacion_Doctores');
 
 //RUTAS RECEPCIONISTA
-Route::get('/loginempleado', [loginempleadoController::class, 'loginempleado'])->name('empleados.loginempleado');
-Route::post('/loginempleados', [loginempleadoController::class, 'login'])->name('empleados.login');
-//Route::post('/logout', [LoginempleadoController::class, 'logout'])->name('empleados.logout');
+Route::get('/loginempleado', [LoginEmpleadoController::class, 'loginempleado'])->name('empleados.loginempleado');
+Route::post('/loginempleado',[LoginEmpleadoController::class, 'login'])->name('empleados.login');
+Route::post('/logoutE', [LoginEmpleadoController::class, 'logout'])->name('empleados.logout');
 Route::get('/busquedaexpediente',[RecepcionistaController::class,'buscarExpediente'])->name('recepcionista.busquedaexpediente');
 Route::get('/informacion', [PacienteController::class, 'informacion'])->name('pacientes.informacion_Clinica');
 
@@ -64,7 +65,6 @@ Route::post('/citas/guardar-calendario', [CitaController::class, 'guardarDesdeCa
 Route::get('/expedientes/crear', [ExpedienteController::class, 'crearExpediente'])->name('expedientes.crear');
 Route::get('/expedientes/crear/{paciente_id}', [ExpedienteController::class, 'crearExpediente'])->name('expedientes.crear.paciente');
 Route::post('/expedientes/guardar', [ExpedienteController::class, 'store'])->name('expedientes.guardar');
-Route::get('/expedientes/lista', [ExpedienteController::class, 'lista'])->name('expedientes.lista');
 
 // Rutas para empleados
 Route::get('/empleados/crear', [EmpleadoController::class, 'crear'])->name('empleados.crear');

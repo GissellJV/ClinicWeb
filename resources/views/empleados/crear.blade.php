@@ -68,6 +68,27 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
+                                        <label for="telefono" class="form-label">Número de Telefono *</label>
+                                        <input type="text" class="form-control" id="telefono" name="telefono"
+                                               value="{{ old('telefono') }}" required>
+                                        <small class="form-text text-muted">Debe contener 8 digitos</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">Contraseña *</label>
+                                        <input type="password" class="form-control" id="password" name="password"
+                                               value="{{ old('password') }}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
                                         <label for="cargo" class="form-label">Cargo *</label>
                                         <select class="form-select" id="cargo" name="cargo" required>
                                             <option value="">Seleccione un cargo</option>

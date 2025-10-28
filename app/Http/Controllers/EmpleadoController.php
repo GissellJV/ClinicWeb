@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\LoginEmpleado;
 
 class EmpleadoController extends Controller
 {
@@ -25,15 +26,25 @@ class EmpleadoController extends Controller
             'cargo' => 'required|string',
             'departamento' => 'required|string',
             'fecha_ingreso' => 'required|date',
+            'telefono' => 'required|string|min:8|max:15',
+            'password' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]/'
         ]);
 
-        Empleado::create([
+        $empleado = Empleado::create([
             'nombre' => $request->nombre,
             'apellido' => $request->apellido,
             'numero_identidad' => $request->numero_identidad,
             'cargo' => $request->cargo,
             'departamento' => $request->departamento,
             'fecha_ingreso' => $request->fecha_ingreso,
+        ]);
+
+        // Crear el login asociado
+        $empleado->loginEmpleado()->create([
+            'empleado_nombre' => $request->nombre,
+            'empleado_apellido' => $request->apellido,
+            'telefono' => $request->telefono,
+            'password' => bcrypt($request->password),
         ]);
 
         return redirect()->route('empleados.lista')->with('success', 'Empleado registrado exitosamente.');

@@ -185,7 +185,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                        <a href="{{ route('expedientes.lista') }}" class="btn btn-secondary me-md-2">
+                                        <a href="{{ route('recepcionista.busquedaexpediente') }}" class="btn btn-secondary me-md-2">
                                             Cancelar
                                         </a>
                                         <button type="submit" class="btn btn-primary">

@@ -18,6 +18,12 @@ class Empleado extends Model
         'fecha_ingreso'
     ];
 
+    // Relación: Un empleado tiene un login
+    public function loginEmpleado()
+    {
+        return $this->hasOne(LoginEmpleado::class, 'empleado_id');
+    }
+
     protected $casts = [
         'fecha_ingreso' => 'date'
     ];
