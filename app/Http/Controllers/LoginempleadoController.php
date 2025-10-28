@@ -10,7 +10,7 @@ class LoginempleadoController extends Controller
 {
     public function loginempleado(Request $request)
     {
-        return view('empleados.busquedaexpedientes');
+        return view('empleados.loginempleado');
     }
     public function login(Request $request){
 

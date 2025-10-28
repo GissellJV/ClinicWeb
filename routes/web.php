@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\LoginempleadoController;
 use App\Http\Controllers\PacienteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RutasController;
@@ -38,7 +39,7 @@ Route::get('/doctores', [DoctorController::class, 'visualizacion_Doctores'])->na
 //RUTAS RECEPCIONISTA
 Route::get('/loginempleado', [loginempleadoController::class, 'loginempleado'])->name('empleados.loginempleado');
 Route::post('/loginempleados', [loginempleadoController::class, 'login'])->name('empleados.login');
-//Route::post('/logout', [LoginempleadoController::class, 'logout'])->name('empleados.logout');
+Route::post('/logout', [LoginempleadoController::class, 'logout'])->name('empleados.logout');
 Route::get('/busquedaexpediente',[RecepcionistaController::class,'buscarExpediente'])->name('recepcionista.busquedaexpediente');
 Route::get('/informacion', [PacienteController::class, 'informacion'])->name('pacientes.informacion_Clinica');
 
