@@ -8,6 +8,9 @@ class LoginEmpleado extends Model
 {
     protected $table = 'loginempleados';
     protected $fillable=[
+        'empleado_id',
+        'empleado_nombre',
+        'empleado_apellido',
         'telefono',
         'password',
     ];
@@ -15,4 +18,11 @@ class LoginEmpleado extends Model
     protected $hidden = [
         'password'
     ];
+
+    // Relación: Un login pertenece a un empleado
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'empleado_id');
+    }
+
 }
