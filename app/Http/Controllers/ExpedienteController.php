@@ -56,5 +56,22 @@ class ExpedienteController extends Controller
         return redirect()->route('recepcionista.busquedaexpediente');
     }
 
+    public function verExpediente($id)
+    {
 
+        if (!session('empleado_id')) {
+            return redirect()->route('empleados.loginempleado')->with('error', 'Debes iniciar sesión primero');
+        }
+
+        $expediente = Expediente::with('paciente')->findOrFail($id);
+
+        $cargo = session('cargo');
+
+
+        if ($cargo === 'Recepcionista') {
+            return view('recepcionista.visualizarexpediente', compact('expediente'));
+        } elseif ($cargo === 'Doctor') {
+            return view('doctor.visualizarexpediente', compact('expediente'));
+        }
+    }
 }
