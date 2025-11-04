@@ -15,7 +15,7 @@
         <div class="bg-white p-5 rounded-4 shadow " style="width: 25rem; border-top: 4px solid #00bcd4;">
             <div class="d-flex justify-content-center">
                 <!--LOGO DE LA CLINICA-->
-                <img src="/imagenes/login-icono.png" alt="login-icono" style="height: 8rem">
+                <img src="/imagenes/login-icon.png" alt="login-icono" style="height: 8rem">
 
             </div>
             @if(session('mensaje'))

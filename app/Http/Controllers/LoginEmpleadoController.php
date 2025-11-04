@@ -35,8 +35,19 @@ class LoginEmpleadoController extends Controller
                 'cargo' => $empleado->cargo
             ]);
 
-            return redirect()->route('recepcionista.busquedaexpediente')
-                ->with('mensaje', '¡Bienvenido ' . $empleado->empleado_nombre . ' ' . $empleado->empleado_apellido . '!');
+            $mensaje = '¡Bienvenido ' . $empleado->nombre . ' ' . $empleado->apellido . '!';
+            $cargo = strtolower($empleado->cargo);
+
+            if ($cargo == 'doctor') {
+                return redirect()->route('doctor.dashboard')->with('mensaje', $mensaje);
+            }
+            elseif ($cargo == 'recepcionista') {
+                return redirect()->route('recepcionista.busquedaexpediente')->with('mensaje', $mensaje);
+            }
+            else {
+                return redirect()->route('empleado.dashboard')->with('mensaje', $mensaje);
+            }
+
         }
 
         return back()
@@ -48,9 +59,12 @@ class LoginEmpleadoController extends Controller
     // Cerrar sesión
     public function logout(Request $request)
     {
-        $request->session()->flush();
+        $nombreEmpleado = session('empleado_nombre');
+        $request->session()->forget(['empleado_id', 'empleado_nombre', 'cargo']);
+        $request->session()->regenerate();
+
         return redirect()->route('/')
-            ->with('mensaje', 'Sesión cerrada con exito');
+            ->with('mensaje', 'Has cerrado sesión correctamente.');
     }
     public function enviar_codigo_recuperacion()
     {

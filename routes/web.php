@@ -57,14 +57,11 @@ Route::post('/citas/guardar', [CitaController::class, 'guardarDesdeCalendario'])
 Route::post('/citas/guardar-calendario', [CitaController::class, 'guardarDesdeCalendario'])->name('citas.guardar.calendario');
 
 
-
-
-
-
 // Rutas para expedientes
 Route::get('/expedientes/crear', [ExpedienteController::class, 'crearExpediente'])->name('expedientes.crear');
 Route::get('/expedientes/crear/{paciente_id}', [ExpedienteController::class, 'crearExpediente'])->name('expedientes.crear.paciente');
 Route::post('/expedientes/guardar', [ExpedienteController::class, 'store'])->name('expedientes.guardar');
+Route::get('/ver-expediente/{id}', [ExpedienteController::class, 'verExpediente'])->name('expedientes.visualizar');
 
 // Rutas para empleados
 Route::get('/empleados/crear', [EmpleadoController::class, 'crear'])->name('empleados.crear');
