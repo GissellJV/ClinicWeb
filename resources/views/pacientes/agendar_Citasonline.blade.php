@@ -2,31 +2,28 @@
 
 @section('contenido')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <style>
         body {
-            background: #f6f8fa;
+            background: #f6faf9;
             font-family: 'Poppins', sans-serif;
         }
-
         .calendar-wrapper {
             max-width: 1200px;
             margin: 50px auto;
             text-align: center;
         }
-
         h1 {
             color: #333;
             margin-bottom: 20px;
             font-weight: 600;
         }
-
         .calendar-container {
             display: flex;
             align-items: flex-start;
             justify-content: center;
             gap: 30px;
         }
-
         .controls {
             text-align: left;
         }
@@ -36,7 +33,6 @@
             margin-bottom: 8px;
             color: #333;
         }
-
         .controls input,
         .controls select {
             padding: 12px 18px;
@@ -47,17 +43,14 @@
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+        .controls input { margin-bottom: 10px; }
 
-        .controls input {
-            margin-bottom: 10px;
-        }
         .year-calendar {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
             gap: 20px;
             flex: 1;
         }
-
         .month {
             background: white;
             border-radius: 12px;
@@ -65,13 +58,9 @@
             overflow: hidden;
             transition: transform 0.3s ease;
         }
-
-        .month:hover {
-            transform: scale(1.03);
-        }
-
+        .month:hover { transform: scale(1.03); }
         .month-header {
-            background: #007bff;
+            background: rgb(68, 160, 141);
             color: white;
             padding: 10px;
             font-weight: 500;
@@ -82,17 +71,13 @@
             text-align: center;
             padding: 10px;
         }
-
         .day {
             padding: 8px;
             cursor: pointer;
             border-radius: 6px;
             transition: 0.2s;
         }
-
-        .day:hover {
-            background: #e8f1ff;
-        }
+        .day:hover { background: #e8f1ff; }
 
         /* Modal */
         .modal {
@@ -113,12 +98,10 @@
             overflow-y: auto;
             animation: fadeIn 0.3s ease;
         }
-
         @keyframes fadeIn {
             from {opacity: 0; transform: scale(0.8);}
             to {opacity: 1; transform: scale(1);}
         }
-
         .doctor-card {
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -126,7 +109,6 @@
             margin-bottom: 12px;
             background: #f9f9f9;
         }
-
         .doctor-nombre {
             font-weight: bold;
             color: #2c3e50;
@@ -137,7 +119,6 @@
             gap: 8px;
             margin-top: 8px;
         }
-
         .hora {
             padding: 6px 10px;
             border-radius: 20px;
@@ -145,12 +126,10 @@
             font-size: 14px;
             transition: 0.3s;
         }
-
         .hora.disponible {
             background: #d4edda;
             color: #155724;
         }
-
         .hora.ocupada {
             background: #f8d7da;
             color: #721c24;
@@ -171,6 +150,10 @@
         <br><br><br><br>
         <h1>Agenda de Citas Médicas</h1>
 
+        <br>
+        <div id="alert-container" class="container mt-3" style="max-width: 700px;"></div>
+
+        <br>
         <div class="calendar-container">
             <div class="controls">
                 <label>Nombre del Paciente:</label>
@@ -217,6 +200,7 @@
             const cerrarModalDoctores = document.getElementById('cerrar-modal-doctores');
             const especialidadSelect = document.getElementById('especialidad');
             const nombreLabel = document.getElementById('nombre');
+            const alertContainer = document.getElementById('alert-container');
             const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
             const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -225,6 +209,7 @@
 
             const doctores = {
                 medicina: {
+
                     'Dr. Juan Pérez': ['08:00 AM','09:00 AM','10:00 AM'],
                     'Dr. Luis Gómez': ['01:00 PM','02:00 PM','03:00 PM']
                 },
@@ -237,6 +222,24 @@
                     'Dra. Elena Martínez': ['01:00 PM','02:00 PM','03:00 PM']
                 }
             };
+
+            // Función para mostrar alertas Bootstrap
+            function mostrarAlerta(tipo, mensaje) {
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${tipo} alert-dismissible fade show mt-2`;
+                alert.role = 'alert';
+                alert.innerHTML = `
+            ${mensaje}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+                alertContainer.appendChild(alert);
+
+                setTimeout(() => {
+                    alert.classList.remove('show');
+                    alert.classList.add('fade');
+                    setTimeout(() => alert.remove(), 300);
+                }, 4000);
+            }
 
             // --- Generar calendario ---
             meses.forEach((mes, index) => {
@@ -270,8 +273,8 @@
                     dayDiv.addEventListener('click', ()=>{
                         const esp=especialidadSelect.value;
                         const nombrePaciente=nombreLabel.textContent.trim();
-                        if(!esp){alert('Seleccione una especialidad primero.');return;}
-                        if(!nombrePaciente){alert('No se encontró el nombre del paciente.');return;}
+                        if(!esp){mostrarAlerta('warning','Seleccione una especialidad primero.');return;}
+                        if(!nombrePaciente){mostrarAlerta('danger','No se encontró el nombre del paciente.');return;}
                         abrirModalDoctores(esp,fecha,nombrePaciente);
                     });
                     daysDiv.appendChild(dayDiv);
@@ -300,7 +303,6 @@
                         div.classList.add('hora','disponible');
 
                         div.addEventListener('click', async ()=>{
-                            // Guardar cita en la base de datos
                             const response = await fetch("{{ route('citas.guardar') }}", {
                                 method:"POST",
                                 headers:{
@@ -316,12 +318,13 @@
                             });
 
                             const data = await response.json();
-                            if(data.success){
-                                alert(`Cita agendada con ${nombre} el ${FormatoFecha(fecha)} a las ${hora}`);
-                                modalDoctores.style.display='none';
-                            }else{
-                                alert(' Error: '+data.message);
+                            if (data.success) {
+                                mostrarAlerta('success', 'Tu cita ha sido agendada exitosamente.');
+                                modalDoctores.style.display = 'none';
+                            } else {
+                                mostrarAlerta('danger', 'Error: ' + data.message);
                             }
+
                         });
 
                         horasDiv.appendChild(div);
