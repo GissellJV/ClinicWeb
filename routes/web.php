@@ -10,6 +10,7 @@ use App\Http\Controllers\CitaController;
 use App\Http\Controllers\ExpedienteController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\LoginEmpleadoController;
+use App\Http\Controllers\RecetaController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 Route::get('/promociones', [RutasController::class, 'index'])->name('promociones.index');
@@ -67,3 +68,8 @@ Route::get('/ver-expediente/{id}', [ExpedienteController::class, 'verExpediente'
 Route::get('/empleados/crear', [EmpleadoController::class, 'crear'])->name('empleados.crear');
 Route::post('/empleados/guardar', [EmpleadoController::class, 'store'])->name('empleados.guardar');
 Route::get('/empleados/lista', [EmpleadoController::class, 'lista'])->name('empleados.lista');
+
+
+
+
+Route::get('/recetamedica', [RecetaController::class, 'recetamedica'])->name('recetamedica');
