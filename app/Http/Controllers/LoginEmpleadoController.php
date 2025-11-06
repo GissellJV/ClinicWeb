@@ -39,10 +39,13 @@ class LoginEmpleadoController extends Controller
             $cargo = strtolower($empleado->cargo);
 
             if ($cargo == 'doctor') {
-                return redirect()->route('doctor.dashboard')->with('mensaje', $mensaje);
+                return redirect()->route('doctor.receta')->with('mensaje', $mensaje);
             }
             elseif ($cargo == 'recepcionista') {
                 return redirect()->route('recepcionista.busquedaexpediente')->with('mensaje', $mensaje);
+            }
+            elseif ($cargo == 'enfermero') {
+                return redirect()->route('enfermeria.principal')->with('mensaje', $mensaje);
             }
             else {
                 return redirect()->route('empleado.dashboard')->with('mensaje', $mensaje);

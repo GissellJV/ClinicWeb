@@ -1,4 +1,4 @@
-@extends('layouts.plantilla')
+@extends('layouts.plantillaDoctor')
 
 @section('contenido')
     <div class=" d-flex justify-content-center align-items-center vh-100">

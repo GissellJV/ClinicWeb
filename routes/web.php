@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\EnfermeriaController;
 use App\Http\Controllers\PacienteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RutasController;
@@ -69,7 +70,10 @@ Route::get('/empleados/crear', [EmpleadoController::class, 'crear'])->name('empl
 Route::post('/empleados/guardar', [EmpleadoController::class, 'store'])->name('empleados.guardar');
 Route::get('/empleados/lista', [EmpleadoController::class, 'lista'])->name('empleados.lista');
 
-
-
-
 Route::get('/recetamedica', [RecetaController::class, 'recetamedica'])->name('recetamedica');
+
+//Ruta para doctores
+Route::get('/doctor-principal', [DoctorController::class, 'receta'])->name('doctor.receta');
+
+//Ruta para enfermeros
+Route::get('/enfermeria-principal', [EnfermeriaController::class, 'principal'])->name('enfermeria.principal');

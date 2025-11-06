@@ -243,55 +243,55 @@
 
     <div class="card-body p-4 bg-white">
 
-    <div class="tab-content active" id="Paciente" >
+        <div class="tab-content active" id="Paciente" >
 
-        <div class="card-header-custom">
-            <img src="{{ asset('imagenes/usuario.png') }}" alt="usuario" style="height: 25px; width: 25px; filter: grayscale(1) brightness(0.5);">
-            <h5 class="mb-0">Información general del paciente</h5>
+            <div class="card-header-custom">
+                <img src="{{ asset('imagenes/usuario.png') }}" alt="usuario" style="height: 25px; width: 25px; filter: grayscale(1) brightness(0.5);">
+                <h5 class="mb-0">Información general del paciente</h5>
+            </div>
+
+            <table class="info-table">
+                <tbody>
+
+                <tr>
+                    <td class="info-item" style="grid-column: 1 / -1;">
+                        <span class="info-label">Nombre:</span>
+                        <div class="info-value">{{ $expediente->paciente->nombres }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="info-item" style="grid-column: 1 / -1;">
+                        <span class="info-label">Apellido:</span>
+                        <div class="info-value">{{ $expediente->paciente->apellidos }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class=" info-item" style="grid-column: 1 / -1;">
+                        <span class="info-label">Género:</span>
+                        <div class="info-value">{{ $expediente->paciente->genero }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="info-item" style="grid-column: 1 / -1;">
+                        <span class="info-label">Fecha de Nacimiento:</span>
+                        <div class="info-value">{{ $expediente->paciente->fecha_nacimiento }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="info-item" style="grid-column: 1 / -1;">
+                        <span class="info-label">Número de identidad:</span>
+                        <div class="info-value">{{ $expediente->paciente->numero_identidad }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="info-item" style="grid-column: 1 / -1;">
+                        <span class="info-label">Teléfono:</span>
+                        <div class="info-value">{{ $expediente->paciente->telefono }}</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-
-        <table class="info-table">
-            <tbody>
-
-            <tr>
-                <td class="info-item" style="grid-column: 1 / -1;">
-                    <span class="info-label">Nombre:</span>
-                    <div class="info-value">{{ $expediente->paciente->nombres }}</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="info-item" style="grid-column: 1 / -1;">
-                    <span class="info-label">Apellido:</span>
-                    <div class="info-value">{{ $expediente->paciente->apellidos }}</div>
-                </td>
-            </tr>
-            <tr>
-                <td class=" info-item" style="grid-column: 1 / -1;">
-                    <span class="info-label">Género:</span>
-                    <div class="info-value">{{ $expediente->paciente->genero }}</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="info-item" style="grid-column: 1 / -1;">
-                    <span class="info-label">Fecha de Nacimiento:</span>
-                    <div class="info-value">{{ $expediente->paciente->fecha_nacimiento }}</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="info-item" style="grid-column: 1 / -1;">
-                    <span class="info-label">Número de identidad:</span>
-                    <div class="info-value">{{ $expediente->paciente->numero_identidad }}</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="info-item" style="grid-column: 1 / -1;">
-                    <span class="info-label">Teléfono:</span>
-                    <div class="info-value">{{ $expediente->paciente->telefono }}</div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
 
         <div class="tab-content" id="signos">
             <div class="card-header-custom">
@@ -367,10 +367,10 @@
 
 
         <div class="tab-content" id="antecedentes">
-                <div class="card-header-custom">
-                    <img src="{{ asset('imagenes/ante.png') }}" alt="antecedentes" style="height: 25px; width: 24px; filter: grayscale(1) brightness(0.5);">
-                    <h5 class="mb-0">Antecedentes</h5>
-                </div>
+            <div class="card-header-custom">
+                <img src="{{ asset('imagenes/ante.png') }}" alt="antecedentes" style="height: 25px; width: 24px; filter: grayscale(1) brightness(0.5);">
+                <h5 class="mb-0">Antecedentes</h5>
+            </div>
 
             <table class="info-table">
                 <tbody>
@@ -419,7 +419,7 @@
                 </tbody>
             </table>
         </div>
-</div>
+    </div>
 </div>
 <br><br>
 

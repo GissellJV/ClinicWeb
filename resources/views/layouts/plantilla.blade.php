@@ -48,7 +48,7 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{route('pacientes.loginp')}}">Paciente</a></li>
 
-                                <li><a class="dropdown-item" href="{{route('empleados.loginempleado')}}">Recepcionista</a></li>
+                                <li><a class="dropdown-item" href="{{route('empleados.loginempleado')}}">Empleado</a></li>
                             </ul>
                         @else
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
