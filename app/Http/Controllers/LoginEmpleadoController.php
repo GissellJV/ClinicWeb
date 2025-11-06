@@ -11,6 +11,7 @@ class LoginEmpleadoController extends Controller
 {
     public function loginempleado()
     {
+
         return view('empleados.InicioEmpleado');
     }
     public function login(Request $request){

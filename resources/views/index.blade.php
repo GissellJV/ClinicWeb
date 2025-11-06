@@ -59,32 +59,4 @@
         @endforelse
     </div>
 
-    <div class="container mt-5">
-        <h2 class="text-center mb-4">Contáctanos - ClinicWeb</h2>
-
-        <div class="row ">
-            <div class="col-md-6">
-                <div class="card border-primary mb-3">
-                    <div class="card-header bg-primary text-white">Información de Contacto</div>
-                    <div class="card-body">
-                        <p><strong>Dirección:</strong> Av. Salud 123, Colonia Centro, Ciudad Danli</p>
-                        <p><strong>Teléfono:</strong> +504 1234-5678</p>
-                        <p><strong>Correo electrónico:</strong> contacto@clinicweb.com</p>
-                        <p><strong>Horario de atención:</strong>24/7</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                    <div class="card border-primary mb-3">
-                        <div class="card-header bg-primary text-white">Redes Sociales</div>
-                        <div class="card-body">
-                            <p><strong>Facebook:</strong> <a href="#">facebook.com/clinicweb</a></p>
-                            <p><strong>Instagram:</strong> <a href="#">instagram.com/clinicweb</a></p>
-                            <p><strong>Twitter:</strong> <a href="#">twitter.com/clinicweb</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </div>
-
 @endsection
