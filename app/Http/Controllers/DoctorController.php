@@ -14,4 +14,10 @@ class DoctorController extends Controller
         return view('pacientes.visualizacion_Doctores', compact('doctores'));
     }
 
+    public function receta()
+    {
+        return view('empleados.recetamedica');
+
+    }
+
 }

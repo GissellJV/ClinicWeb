@@ -167,6 +167,4 @@ class CitaController extends Controller
         }
     }
 
-
-
 }

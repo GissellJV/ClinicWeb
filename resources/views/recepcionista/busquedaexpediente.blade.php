@@ -17,7 +17,7 @@
                         <div class="col-12 col-md-6">
                             <input class="form-control" type="search" name="busqueda"
                                    value="{{ request('busqueda') }}"
-                                   placeholder="Ingrese nombre, apellido o identidad"
+                                   placeholder="Ingrese nombre, apellido o expediente"
                                    aria-label="Buscar">
                         </div>
 
@@ -67,15 +67,28 @@
                     <tbody class="table-group-divider">
                     @forelse($expedientes as $paciente)
                         <tr>
-                            <td>{{ $paciente->expediente->numero_expediente }}</td>
+                            <td>{{ $paciente->expediente->numero_expediente  ?? 'Sin expediente' }}</td>
                             <td>{{ $paciente->nombres}} {{ $paciente->apellidos }}</td>
                             <td>{{$paciente->telefono}}</td>
-                            <td>{{ $paciente->expediente->created_at->format('d/m/Y') }} </td>
                             <td>
-                                <a class="btn btn-primary btn-sm"
-                                   href="#">
+                                @if($paciente->expediente && $paciente->expediente->created_at)
+                                {{ $paciente->expediente->created_at->format('d/m/Y') }}
+                                @else
+                                    N/A
+                                @endif
+                            </td>
+                            <td>
+                                @if($paciente->expediente)
+                                <a  class="btn btn-primary btn-sm"
+                                   href="{{route('expedientes.visualizar', $paciente->expediente->id)}}">
                                     <i class="bi bi-eye"></i> Ver Expediente
                                 </a>
+                                @else
+                                    <a class="btn btn-success btn-sm"
+                                       href="{{ route('expedientes.crear', ['paciente_id' => $paciente->id]) }}">
+                                        <i class="bi bi-plus"></i> Crear Expediente
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @empty

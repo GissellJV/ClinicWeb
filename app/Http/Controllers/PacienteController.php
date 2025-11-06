@@ -28,7 +28,7 @@ class PacienteController extends Controller
             'fecha_nacimiento' => 'required|date|before:today',
             'numero_identidad' => 'required|string|size:13|regex:/^\d{4}\d{4}\d{5}$/|unique:pacientes',
             'genero' => 'required|in:Femenino,Masculino',
-            'telefono' => 'required|string|min:8|max:15',
+            'telefono' => 'required|string|size:8|regex:/^[2389]\d{7}$/',
             'password' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]/|confirmed',
 
         ], [
@@ -42,14 +42,12 @@ class PacienteController extends Controller
             'numero_identidad.regex' => 'El formato del número de identidad no es valido',
             'numero_identidad.size' => 'El número de identidad debe tener 13 dígitos',
             'numero_identidad.unique' => 'El número de identidad ya ha sido registrado',
-            'telefono.required' => 'Teléfono  obligatorio',
+            'telefono.required' => 'El número de teléfono  obligatorio',
+            'telefono.regex' => 'El número de telefono no es valido',
+            'telefono.size' => 'El número de telefono debe tener 8 dígitos',
             'password.required' => 'La contraseña es obligatoria',
             'password.min' => 'La contraseña debe tener mínimo 8 caracteres',
-            'password.regex' => 'La contraseña debe contener al menos:
-             - 8 caracteres
-             - Una letra mayúscula
-             - Una letra minúscula
-             - Un número',
+            'password.regex' => 'Mínimo 8 caracteres, incluye mayúsculas, minúsculas y números',
             'password.confirmed' => 'Las contraseñas no coinciden',
 
         ]);
