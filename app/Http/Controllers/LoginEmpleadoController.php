@@ -11,11 +11,8 @@ class LoginEmpleadoController extends Controller
 {
     public function loginempleado()
     {
-<<<<<<< HEAD:app/Http/Controllers/LoginempleadoController.php
-        return view('empleados.loginempleado');
-=======
+
         return view('empleados.InicioEmpleado');
->>>>>>> origin/main:app/Http/Controllers/LoginEmpleadoController.php
     }
     public function login(Request $request){
 
