@@ -9,37 +9,56 @@
 <body>
 <nav class="navbar bg-body-tertiary fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">ClinicWeb</a>
+        <a class="navbar-brand" href="{{route('/')}}">ClinicWeb</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">ClinicWeb</h5>
+                <a href="{{route('/')}}" class="text-decoration-none text-dark"><h5 class="offcanvas-title" id="offcanvasNavbarLabel" >ClinicWeb</h5></a>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
+
+            @if(session('cargo') && session('cargo') == 'Recepcionista')
+                <div class="alert alert-info mb-3">
+                    <strong>Bienvenido: </strong> {{session('empleado_nombre')}}
+                </div>
+            @endif
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="">Inicio</a>
+                        <a class="nav-link active" aria-current="page" href="{{route('/')}}">Inicio</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Información sobre la clínica</a>
+                        <a class="nav-link" href="{{route('pacientes.informacion_Clinica')}}">Información sobre la clínica</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Paciente
+                            Recepcionista
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Pedir cita</a></li>
-                            <li><a class="dropdown-item" href="#">Registrarse como paciente</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Contactanos</a></li>
+                            <!--LA CONDICION DE RECEPCIONISTA-->
+
+                            <li><a class="dropdown-item" href="{{route('recepcionista.busquedaexpediente')}}">Busqueda de Expediente</a></li>
+                            <li><a class="dropdown-item" href="{{route('expedientes.crear')}}">Registrar Expediente</a></li>
+                            <li><a class="dropdown-item" href="{{route('empleados.crear')}}">Registrar Empleado</a></li>
+                            <li><a class="dropdown-item" href="{{ route('listadocitas') }}">Citas Programadas</a></li>
+
                         </ul>
                     </li>
                 </ul>
+
+                @if(session('empleado_id'))
+                    <form action="{{route('empleados.logout')}}" method="POST" class="mt-3">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger w-100">
+                            Cerrar Sesión
+                        </button>
+                    </form>
+                @endif
+
+
                 <form class="d-flex mt-3" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
                     <button class="btn btn-outline-success" type="submit">Buscar</button>
