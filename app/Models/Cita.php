@@ -12,14 +12,15 @@ class Cita extends Model
     protected $fillable = [
         'paciente_id',
         'paciente_nombre',
+        'empleado_id',
         'doctor_nombre',
         'especialidad',
         'fecha',
         'hora',
         'estado',
-        'mensaje'
+        'mensaje',
+        'motivo'
     ];
-
 
     protected $casts = [
         'fecha' => 'date'
@@ -34,5 +35,4 @@ class Cita extends Model
     {
         return $this->belongsTo(Paciente::class, 'paciente_id');
     }
-
 }
