@@ -47,6 +47,7 @@ Route::get('/informacion', [PacienteController::class, 'informacion'])->name('pa
 
 
 Route::get('/recepcionista/citas', [CitaController::class, 'index'])->name('listadocitas');
+Route::get('/citas/agendar', [CitaController::class, 'agendar'])->name('citas.agendar');
 
 
 
@@ -77,3 +78,14 @@ Route::get('/doctor-principal', [DoctorController::class, 'receta'])->name('doct
 
 //Ruta para enfermeros
 Route::get('/enfermeria-principal', [EnfermeriaController::class, 'principal'])->name('enfermeria.principal');
+
+
+// Agendar citas - Recepcionista
+Route::get('/recepcionista/agendar-cita', [CitaController::class, 'crearCitaRecepcionista'])->name('recepcionista.citas.crear');
+Route::post('/recepcionista/agendar-cita', [CitaController::class, 'guardarCitaRecepcionista'])->name('recepcionista.citas.guardar');
+Route::get('/recepcionista/doctores-especialidad/{especialidad}', [CitaController::class, 'getDoctoresPorEspecialidad']);
+Route::post('/recepcionista/verificar-disponibilidad', [CitaController::class, 'verificarDisponibilidad']);
+
+// ver citas del doctor
+Route::get('/doctor/mis-citas', [CitaController::class, 'misCitasDoctor'])->name('doctor.citas');
+Route::put('/doctor/cita/{id}/completar', [CitaController::class, 'completarCita'])->name('doctor.cita.completar');

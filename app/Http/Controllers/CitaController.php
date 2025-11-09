@@ -4,10 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\Cita;
 use App\Models\Paciente;
+use App\Models\Empleado;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class CitaController extends Controller
 {
+    // AGENDAR CITAS RECEPCIONISTA
+    public function agendar()
+    {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('empleados.loginempleado')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
+        $pacientes = Paciente::all();
+        $especialidades = [
+            'Medicina General',
+            'Pediatría',
+            'Ginecología',
+            'Cardiología',
+            'Dermatología'
+        ];
+
+        return view('recepcionista.agendar-cita', compact('pacientes', 'especialidades'));
+    }
+
     //Vista del recepcionista
     public function index()
     {
@@ -16,9 +38,7 @@ class CitaController extends Controller
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
 
-        $citas = Cita::with(['doctor', 'paciente'])
-
-            ->get();
+        $citas = Cita::with(['doctor', 'paciente'])->get();
 
         return view('pacientes.listado_citaspro', compact('citas'));
     }
@@ -52,7 +72,6 @@ class CitaController extends Controller
 
     //  Cancelar cita
     public function cancelarCita($id)
-
     {
         if (!session('paciente_id')) {
             return redirect()->route('pacientes.loginp')
@@ -67,7 +86,6 @@ class CitaController extends Controller
             return redirect()->back()->with('error', 'No tienes permiso para cancelar esta cita');
         }
 
-        // Aquí se limpia el mensaje además de cambiar el estado
         $cita->update([
             'estado' => 'cancelada',
             'mensaje' => null
@@ -75,7 +93,6 @@ class CitaController extends Controller
 
         return redirect()->back()->with('success', 'Cita cancelada exitosamente');
     }
-
 
     //  Reprogramar cita
     public function reprogramarCita(Request $request, $id)
@@ -115,18 +132,15 @@ class CitaController extends Controller
             return redirect()->route('empleados.loginempleado')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
-        // Buscar la cita
+
         $cita = Cita::findOrFail($id);
 
-        // Verificar que la cita esté pendiente
         if ($cita->estado !== 'pendiente') {
             return redirect()->back()->with('error', 'La cita no se puede confirmar porque no está pendiente.');
         }
 
-        // Obtener nombre del doctor seguro
         $doctorNombre = $cita->doctor ? $cita->doctor->nombre : ($cita->doctor_nombre ?? 'Doctor no asignado');
 
-        // Actualizar estado y guardar mensaje
         $cita->estado = 'programada';
         $cita->mensaje = "Tu cita con el {$doctorNombre} ha sido confirmada para las {$cita->hora}.";
         $cita->save();
@@ -153,7 +167,7 @@ class CitaController extends Controller
         try {
             $cita = Cita::create([
                 'paciente_id' => $paciente_id,
-                'paciente_nombre' => $paciente_nombre, //
+                'paciente_nombre' => $paciente_nombre,
                 'doctor_nombre' => $request->doctor,
                 'especialidad' => $request->especialidad,
                 'fecha' => $request->fecha,
@@ -167,4 +181,137 @@ class CitaController extends Controller
         }
     }
 
+    // GUARDAR CITA RECEPCIONISTA
+    public function guardarCitaRecepcionista(Request $request)
+    {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('empleados.loginempleado')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
+        $request->validate([
+            'paciente_id' => 'required|exists:pacientes,id',
+            'especialidad' => 'required|string',
+            'empleado_id' => 'required|exists:empleados,id',
+            'fecha' => 'required|date|after_or_equal:today',
+            'hora' => 'required',
+            'motivo' => 'required|string|max:500'
+        ]);
+
+        // Verificar disponibilidad
+        $citaExistente = Cita::where('empleado_id', $request->empleado_id)
+            ->where('fecha', $request->fecha)
+            ->where('hora', $request->hora)
+            ->whereIn('estado', ['pendiente', 'programada'])
+            ->first();
+
+        if ($citaExistente) {
+            return back()->with('error', 'El horario seleccionado ya está ocupado. Por favor, elija otro.')
+                ->withInput();
+        }
+
+        // Obtener datos del paciente y doctor
+        $paciente = Paciente::findOrFail($request->paciente_id);
+        $doctor = Empleado::findOrFail($request->empleado_id);
+
+        // Crear la cita
+        Cita::create([
+            'paciente_id' => $request->paciente_id,
+            'paciente_nombre' => $paciente->nombres . ' ' . $paciente->apellidos,
+            'empleado_id' => $request->empleado_id,
+            'doctor_nombre' => 'Dr. ' . $doctor->nombre,
+            'especialidad' => $request->especialidad,
+            'fecha' => $request->fecha,
+            'hora' => $request->hora,
+            'motivo' => $request->motivo,
+            'estado' => 'programada'
+        ]);
+
+        return redirect()->route('listadocitas')
+            ->with('success', '¡Cita agendada exitosamente!');
+    }
+
+    public function getDoctoresPorEspecialidad($especialidad)
+    {
+        $doctores = Empleado::where('cargo', 'Doctor')
+            ->where('especialidad', $especialidad)
+            ->get(['id', 'nombre', 'especialidad']);
+
+        return response()->json($doctores);
+    }
+
+    public function verificarDisponibilidad(Request $request)
+    {
+        $citaExistente = Cita::where('empleado_id', $request->empleado_id)
+            ->where('fecha', $request->fecha)
+            ->where('hora', $request->hora)
+            ->whereIn('estado', ['pendiente', 'programada'])
+            ->exists();
+
+        return response()->json(['disponible' => !$citaExistente]);
+    }
+
+   // VER CITAS DEL DOCTOR
+
+    public function misCitasDoctor(Request $request)
+    {
+        if (!session('cargo') || session('cargo') != 'Doctor') {
+            return redirect()->route('empleados.loginempleado')
+                ->with('error', 'Debes iniciar sesión como Doctor');
+        }
+
+        $empleado_id = session('empleado_id');
+
+        // Query base
+        $query = Cita::with(['paciente'])
+            ->where('empleado_id', $empleado_id);
+
+        // Aplicar filtros
+        if ($request->filled('fecha')) {
+            $query->whereDate('fecha', $request->fecha);
+        }
+
+        if ($request->filled('estado')) {
+            $query->where('estado', $request->estado);
+        }
+
+        // Ordenamiento
+        if ($request->filled('orden')) {
+            if ($request->orden == 'fecha_asc') {
+                $query->orderBy('fecha', 'asc')->orderBy('hora', 'asc');
+            } else {
+                $query->orderBy('fecha', 'desc')->orderBy('hora', 'desc');
+            }
+        } else {
+            $query->orderBy('fecha', 'asc')->orderBy('hora', 'asc');
+        }
+
+        $citas = $query->paginate(10);
+
+        // Contar citas de hoy
+        $citasHoy = Cita::where('empleado_id', $empleado_id)
+            ->whereDate('fecha', Carbon::today())
+            ->whereIn('estado', ['programada', 'pendiente'])
+            ->count();
+
+        return view('doctor.mis-citas', compact('citas', 'citasHoy'));
+    }
+
+    public function completarCita($id)
+    {
+        if (!session('cargo') || session('cargo') != 'Doctor') {
+            return redirect()->route('empleados.loginempleado')
+                ->with('error', 'Debes iniciar sesión como Doctor');
+        }
+
+        $cita = Cita::where('id', $id)
+            ->where('empleado_id', session('empleado_id'))
+            ->firstOrFail();
+
+        $cita->update([
+            'estado' => 'completada'
+        ]);
+
+        return redirect()->back()->with('success', 'Cita marcada como completada');
+    }
 }

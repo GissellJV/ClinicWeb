@@ -11,7 +11,7 @@ class EmpleadoController extends Controller
 {
     public function crear()
     {
-        if (!session('cargo') || session('cargo') != 'recepcionista') {
+        if (!session('cargo') || strtolower(session('cargo')) != 'recepcionista') {
             return redirect()->route('empleados.loginempleado')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
