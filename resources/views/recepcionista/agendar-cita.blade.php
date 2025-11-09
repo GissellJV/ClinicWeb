@@ -1,4 +1,4 @@
-@extends('layouts.plantilla')
+@extends('layouts.plantillaRecepcion')
 
 @section('contenido')
     <style>

@@ -87,5 +87,6 @@ Route::get('/recepcionista/doctores-especialidad/{especialidad}', [CitaControlle
 Route::post('/recepcionista/verificar-disponibilidad', [CitaController::class, 'verificarDisponibilidad']);
 
 // ver citas del doctor
+
 Route::get('/doctor/mis-citas', [CitaController::class, 'misCitasDoctor'])->name('doctor.citas');
 Route::put('/doctor/cita/{id}/completar', [CitaController::class, 'completarCita'])->name('doctor.cita.completar');

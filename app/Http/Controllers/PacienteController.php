@@ -155,7 +155,7 @@ class PacienteController extends Controller
     {
         if (!session('paciente_id')) {
                     return redirect()->route('pacientes.loginp')
-              ->with('error', 'Debes iniciar sesión primero');
+              ->with('error', 'Debes iniciar sesión para agendar una cita');
       }
 
         $paciente = Paciente::find(session('paciente_id'));
