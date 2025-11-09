@@ -38,8 +38,8 @@
                         </a>
                         <ul class="dropdown-menu">
                             <!--LA CONDICION DE DOCTOR-->
-                            <li><a class="dropdown-item" href="#"></a></li>
-                            <li><a class="dropdown-item" href="#"></a></li>
+                            <li><a class="dropdown-item" href="{{route('doctor.citas')}}">Citas programadas</a></li>
+                            <li><a class="dropdown-item" href="{{route('recetamedica')}}">Generar Receta</a></li>
                         </ul>
                     </li>
                 </ul>

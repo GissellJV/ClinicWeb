@@ -66,6 +66,11 @@ Route::get('/expedientes/crear/{paciente_id}', [ExpedienteController::class, 'cr
 Route::post('/expedientes/guardar', [ExpedienteController::class, 'store'])->name('expedientes.guardar');
 Route::get('/ver-expediente/{id}', [ExpedienteController::class, 'verExpediente'])->name('expedientes.visualizar');
 
+// rutas de agregar datos vitales del expediente y de actualizar consulta
+Route::post('/expedientes/{id}/actualizar-signos', [ExpedienteController::class, 'actualizarSignos'])->name('expedientes.actualizarSignos');
+Route::post('/expedientes/{id}/actualizar-consulta', [ExpedienteController::class, 'actualizarConsulta'])->name('expedientes.actualizarConsulta');
+
+
 // Rutas para empleados
 Route::get('/empleados/crear', [EmpleadoController::class, 'crear'])->name('empleados.crear');
 Route::post('/empleados/guardar', [EmpleadoController::class, 'store'])->name('empleados.guardar');
@@ -87,5 +92,6 @@ Route::get('/recepcionista/doctores-especialidad/{especialidad}', [CitaControlle
 Route::post('/recepcionista/verificar-disponibilidad', [CitaController::class, 'verificarDisponibilidad']);
 
 // ver citas del doctor
+
 Route::get('/doctor/mis-citas', [CitaController::class, 'misCitasDoctor'])->name('doctor.citas');
 Route::put('/doctor/cita/{id}/completar', [CitaController::class, 'completarCita'])->name('doctor.cita.completar');
