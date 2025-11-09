@@ -1,4 +1,23 @@
 <style>
+    .card-header-custom {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #e0e0e0;
+        min-height: 60px;
+        position: relative;
+    }
+
+    /* Contenedor izquierdo con imagen y título */
+    .card-header-custom > div:first-child,
+    .card-header-custom > img:first-child {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
     /* Botones */
     .btn-actualizar {
         background-color: white;
@@ -28,13 +47,36 @@
         justify-content: flex-end;
         gap: 10px;
     }
+    /* Igualar inputs con info-value */
+    input[type="number"].form-control,
+    input[type="text"].form-control,
+    select.form-control,
+    textarea.form-control {
+        padding: 0.875rem 1rem;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        min-height: 48px;
+        color: #333;
+        font-size: 1rem;
+    }
 
     /* Inputs y textarea deshabilitados con estilo claro */
-    input:disabled, textarea:disabled {
+    input:disabled[type="number"].form-control,
+    input:disabled[type="text"].form-control,
+    select:disabled.form-control,
+    textarea:disabled.form-control {
         background-color: #f8f9fa;
+        border: 1px solid #e0e0e0;
     }
 
     /* Inputs y textarea habilitados */
+    input:enabled[type="number"].form-control,
+    input:enabled[type="text"].form-control,
+    select:enabled.form-control,
+    textarea:enabled.form-control {
+        border: 1px solid #4ecdc4;
+    }
+
     input, textarea {
         transition: 0.3s;
     }
@@ -57,8 +99,10 @@
 
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #ffffff;
+        background:whitesmoke;
         min-height: 100vh;
+        display: flex;
+
     }
 
     .navbar-brand-top i {
@@ -290,6 +334,7 @@
         <div class="tab-content active" id="Paciente" >
 
             <div class="card-header-custom">
+
                 <img src="{{ asset('imagenes/usuario.png') }}" alt="usuario" style="height: 25px; width: 25px; filter: grayscale(1) brightness(0.5);">
                 <h5 class="mb-0">Información general del paciente</h5>
             </div>
@@ -392,6 +437,7 @@
             </form>
         </div>
 
+        <!-- INFORMACION MEDICA -->
         <div class="tab-content" id="informacion">
             <div class="card-header-custom" style="display: flex; align-items: center; justify-content: space-between;">
                 <div style="display: flex; align-items: center; gap: 10px;">
@@ -428,6 +474,7 @@
             </form>
         </div>
 
+        <!-- HISTORIAL CLINICO -->
         <div class="tab-content" id="antecedentes">
             <div class="card-header-custom">
                 <img src="{{ asset('imagenes/ante.png') }}" alt="antecedentes" style="height: 25px; width: 24px; filter: grayscale(1) brightness(0.5);">
@@ -483,6 +530,7 @@
         </table>
     </div>
 </div>
+</div>
 
 <br><br>
 
@@ -534,4 +582,3 @@
         });
     });
 </script>
-
