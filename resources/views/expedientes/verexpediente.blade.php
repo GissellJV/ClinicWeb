@@ -1,4 +1,47 @@
 <style>
+    /* Botones */
+    .btn-actualizar {
+        background-color: white;
+        color: #4ecdc4;
+        border: 2px solid #4ecdc4;
+        transition: 0.3s;
+    }
+    .btn-actualizar:hover {
+        background-color: #4ecdc4;
+        color: white;
+    }
+
+    .btn-guardar {
+        background-color: #4ecdc4;
+        color: white;
+        border: 2px solid #4ecdc4;
+        transition: 0.3s;
+    }
+    .btn-guardar:hover {
+        background-color: #3eb2aa;
+        color: white;
+    }
+
+    /* Alinear botones a la derecha */
+    .text-end {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    /* Inputs y textarea deshabilitados con estilo claro */
+    input:disabled, textarea:disabled {
+        background-color: #f8f9fa;
+    }
+
+    /* Inputs y textarea habilitados */
+    input, textarea {
+        transition: 0.3s;
+    }
+    input:enabled, textarea:enabled {
+        background-color: #ffffff;
+        border: 1px solid #4ecdc4;
+    }
     * {
         margin: 0;
         padding: 0;
@@ -294,116 +337,125 @@
         </div>
 
         <div class="tab-content" id="signos">
-            <div class="card-header-custom">
-                <img src="{{ asset('imagenes/signosVi.png') }}" alt="signos" style="height: 27px; width: 26px; filter: grayscale(1) brightness(0.5);">
-
-                <h5 class="mb-0">Parámetros Vitales del Paciente</h5>
+            <div class="card-header-custom d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-2">
+                    <img src="{{ asset('imagenes/signosVi.png') }}" alt="signos"
+                         style="height: 27px; width: 26px; filter: grayscale(1) brightness(0.5);">
+                    <h5 class="mb-0">Parámetros Vitales del Paciente</h5>
+                </div>
+                <button type="button" id="btnEditarSignos" class="btn btn-actualizar">
+                    Actualizar
+                </button>
             </div>
-            <table class="info-table">
-                <tbody>
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Peso:</span>
-                        <div class="info-value">{{$expediente->peso}}</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Altura:</span>
-                        <div class="info-value">{{$expediente->altura}}</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Presión Arterial:</span>
-                        <div class="info-value">{{$expediente->presion_arterial}}</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;" >
-                        <span class="info-label">Frecuencia Cardíaca:</span>
-                        <div class="info-value">{{$expediente->frecuencia_cardiaca}}</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Temperatura:</span>
-                        <div class="info-value">{{$expediente->temperatura}}</div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
 
+            <form id="formSignos" method="POST" action="{{ route('expedientes.actualizarSignos', $expediente->id) }}">
+                @csrf
+                <table class="info-table">
+                    <tbody>
+                    <tr>
+                        <td class="info-item" style="grid-column: 1 / -1;">
+                            <span class="info-label">Peso:</span>
+                            <input type="number" class="form-control" name="peso" value="{{ $expediente->peso }}" disabled step="any" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="info-item" style="grid-column: 1 / -1;">
+                            <span class="info-label">Altura:</span>
+                            <input type="number" class="form-control" name="altura" value="{{ $expediente->altura }}" disabled step="any" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="info-item" style="grid-column: 1 / -1;">
+                            <span class="info-label">Presión Arterial:</span>
+                            <input type="text" class="form-control" name="presion_arterial" value="{{ $expediente->presion_arterial }}" disabled required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="info-item" style="grid-column: 1 / -1;">
+                            <span class="info-label">Frecuencia Cardíaca:</span>
+                            <input type="text" class="form-control" name="frecuencia_cardiaca" value="{{ $expediente->frecuencia_cardiaca }}" disabled required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="info-item" style="grid-column: 1 / -1;">
+                            <span class="info-label">Temperatura:</span>
+                            <input type="number" class="form-control" name="temperatura" value="{{ $expediente->temperatura }}" disabled step="any" required>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!-- Botón guardar alineado a la derecha -->
+                <div class="text-end mt-3">
+                    <button type="submit" id="btnGuardarSignos" class="btn btn-guardar d-none">Guardar</button>
+                </div>
+            </form>
+        </div>
 
         <div class="tab-content" id="informacion">
-            <div class="card-header-custom">
-                <img src="{{ asset('imagenes/registroC.png') }}" alt="usuario" style="height: 25px; width: 25px; filter: grayscale(1) brightness(0.5);">
+            <div class="card-header-custom d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Registro de Consulta Médica</h5>
+                <button type="button" id="btnEditarConsulta" class="btn btn-actualizar">Actualizar</button>
             </div>
-            <table class="info-table">
-                <tbody>
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Síntomas Actuales:</span>
-                        <div class="info-value">{{$expediente->sintomas_actuales}}</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Diagnóstico:</span>
-                        <div class="info-value">{{$expediente->diagnostico}}</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Tratamiento:</span>
-                        <div class="info-value">{{$expediente->tratamiento}}</div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+
+            <form id="formConsulta" method="POST" action="{{ route('expedientes.actualizarConsulta', $expediente->id) }}">
+                @csrf
+                <table class="info-table">
+                    <tbody>
+                    <tr>
+                        <td class="info-item" style="grid-column: 1 / -1;">
+                            <span class="info-label">Síntomas Actuales:</span>
+                            <textarea name="sintomas_actuales" rows="3" disabled>{{ $expediente->sintomas_actuales }}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="info-item" style="grid-column: 1 / -1;">
+                            <span class="info-label">Diagnóstico:</span>
+                            <textarea name="diagnostico" rows="3" disabled>{{ $expediente->diagnostico }}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="info-item" style="grid-column: 1 / -1;">
+                            <span class="info-label">Tratamiento:</span>
+                            <textarea name="tratamiento" rows="3" disabled>{{ $expediente->tratamiento }}</textarea>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </form>
         </div>
 
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                function habilitarEdicion(btnEditarId, formId, btnGuardarId) {
+                    const btnEditar = document.getElementById(btnEditarId);
+                    const form = document.getElementById(formId);
+                    const btnGuardar = document.getElementById(btnGuardarId);
+                    const inputs = form.querySelectorAll('input, textarea');
+                    let modoEdicion = false;
 
-        <div class="tab-content" id="antecedentes">
-            <div class="card-header-custom">
-                <img src="{{ asset('imagenes/ante.png') }}" alt="antecedentes" style="height: 25px; width: 24px; filter: grayscale(1) brightness(0.5);">
-                <h5 class="mb-0">Antecedentes</h5>
-            </div>
+                    btnEditar.addEventListener('click', function() {
+                        if (!modoEdicion) {
+                            inputs.forEach(i => i.disabled = false);
+                            btnEditar.textContent = 'Guardar';
+                            btnEditar.classList.remove('btn-actualizar');
+                            btnEditar.classList.add('btn-guardar');
+                            btnGuardar.classList.remove('d-none');
+                            modoEdicion = true;
+                        } else {
+                            form.submit();
+                        }
+                    });
+                }
 
-            <table class="info-table">
-                <tbody>
+                habilitarEdicion('btnEditarSignos', 'formSignos', 'btnGuardarSignos');
+                habilitarEdicion('btnEditarConsulta', 'formConsulta', 'btnGuardarConsulta');
+            });
+        </script>
 
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Alergias:</span>
-                        <div class="info-value">{{$expediente->alergias}}</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Medicamentos Actuales:</span>
-                        <div class="info-value">{{$expediente->medicamentos_actuales}}</div>
-                    </td>
 
-                </tr>
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Antecedentes Familiares:</span>
-                        <div class="info-value">{{$expediente->antecedentes_familiares}}</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Antecedentes Personales:</span>
-                        <div class="info-value">{{$expediente->antecedentes_personales}}</div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
 
-            <div class="card-header-custom mt-4">
+        <div class="card-header-custom mt-4">
                 <img src="{{ asset('imagenes/notas.png') }}" alt="notas" style="height: 25px; width: 24px; filter: grayscale(1) brightness(0.5);">
                 <h5 class="mb-0">Notas Adicionales</h5>
             </div>
