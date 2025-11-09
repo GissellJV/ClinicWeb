@@ -74,4 +74,38 @@ class ExpedienteController extends Controller
             return view('doctor.visualizarexpediente', compact('expediente'));
         }
     }
+    public function actualizarSignos(Request $request, $id)
+    {
+        $request->validate([
+            'peso' => 'required|numeric',
+            'altura' => 'required|numeric',
+            'temperatura' => 'required|numeric',
+            'presion_arterial' => 'required',
+            'frecuencia_cardiaca' => 'required',
+        ]);
+
+        $expediente = Expediente::findOrFail($id);
+        $expediente->peso = $request->peso;
+        $expediente->altura = $request->altura;
+        $expediente->temperatura = $request->temperatura;
+        $expediente->presion_arterial = $request->presion_arterial;
+        $expediente->frecuencia_cardiaca = $request->frecuencia_cardiaca;
+        $expediente->save();
+
+        return redirect()->back()->with('success_signos', 'Signos vitales actualizados correctamente.');
+    }
+
+    public function actualizarConsulta(Request $request, $id)
+    {
+        $expediente = Expediente::findOrFail($id);
+        $expediente->sintomas_actuales = $request->sintomas_actuales;
+        $expediente->diagnostico = $request->diagnostico;
+        $expediente->tratamiento = $request->tratamiento;
+        $expediente->save();
+
+        return redirect()->back()->with('success_consulta', 'Registro médico actualizado correctamente.');
+    }
+
+
+
 }
