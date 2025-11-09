@@ -1,3 +1,5 @@
+@extends('layouts.plantillaRecepcion')
+    @section('contenido')
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -380,14 +382,23 @@
                 <div class="form-group">
                     <label for="paciente_id">Seleccionar Paciente *</label>
                     <div class="input-wrapper">
+                        @if($pacienteSeleccionado)
+                            {{-- SI YA EXISTE UN PACIENTE SELECCIONADO, DESDE EL BOTON CREAR EXPEDIENTE--}}
+
+                            <input type="text" class="form-control"
+                                   value="{{ $pacienteSeleccionado->nombres }} - {{ $pacienteSeleccionado->numero_identidad }}"
+                                   readonly>
+                            <input type="hidden" name="paciente_id" value="{{ $pacienteSeleccionado->id }}">
+                        @else
                         <select class="form-select" id="paciente_id" name="paciente_id" required>
                             <option value="">Seleccione un paciente</option>
                             @foreach($pacientes as $paciente)
                                 <option value="{{ $paciente->id }}" {{ $paciente_id == $paciente->id ? 'selected' : '' }}>
-                                    {{ $paciente->nombre }} - {{ $paciente->numero_identidad }}
+                                    {{ $paciente->nombres }} - {{ $paciente->numero_identidad }}
                                 </option>
                             @endforeach
                         </select>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -536,3 +547,4 @@
 </script>
 </body>
 </html>
+@endsection

@@ -85,7 +85,7 @@
                                 </a>
                                 @else
                                     <a class="btn btn-success btn-sm"
-                                       href="{{ route('expedientes.crear', ['paciente_id' => $paciente->id]) }}">
+                                       href="{{ route('expedientes.crear.paciente', ['paciente_id' => $paciente->id]) }}">
                                         <i class="bi bi-plus"></i> Crear Expediente
                                     </a>
                                 @endif

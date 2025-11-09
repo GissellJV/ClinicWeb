@@ -48,7 +48,7 @@ class CitaController extends Controller
     {
         if (!session('paciente_id')) {
             return redirect()->route('pacientes.loginp')
-                ->with('error', 'Debes iniciar sesión primero');
+                ->with('error', 'Debes iniciar sesión para visualizar tus citas');
         }
 
         $paciente_id = session('paciente_id');
@@ -127,6 +127,7 @@ class CitaController extends Controller
 
     //Confirmar cita (recepcionista)
     public function confirmarCita($id)
+
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
             return redirect()->route('empleados.loginempleado')

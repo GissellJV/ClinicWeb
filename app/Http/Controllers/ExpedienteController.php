@@ -10,10 +10,23 @@ class ExpedienteController extends Controller
 {
     public function crearExpediente($paciente_id = null)
     {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('empleados.loginempleado')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
         $pacientes = Paciente::all();
         $numero_expediente = Expediente::generarNumeroExpediente();
 
-        return view('expedientes.crear', compact('pacientes', 'numero_expediente', 'paciente_id'));
+        $pacienteSeleccionado = null;
+        if (!$paciente_id) {
+            $paciente_id = request('paciente_id');
+        }
+
+        if ($paciente_id) {
+            $pacienteSeleccionado = Paciente::find($paciente_id);
+        }
+        return view('expedientes.crear', compact('pacientes', 'numero_expediente', 'paciente_id', 'pacienteSeleccionado'));
     }
 
     public function store(Request $request)
@@ -60,7 +73,7 @@ class ExpedienteController extends Controller
     {
 
         if (!session('empleado_id')) {
-            return redirect()->route('empleados.loginempleado')->with('error', 'Debes iniciar sesión primero');
+            return redirect()->route('empleados.loginempleado')->with('error', 'Debes iniciar sesion como Recepcionista');
         }
 
         $expediente = Expediente::with('paciente')->findOrFail($id);

@@ -45,6 +45,8 @@
                             <li><a class="dropdown-item" href="{{route('citas.agendar')}}">Agendar Cita</a></li>
                             <li><a class="dropdown-item" href="{{route('empleados.crear')}}">Registrar Empleado</a></li>
                             <li><a class="dropdown-item" href="{{ route('listadocitas') }}">Citas Programadas</a></li>
+                            <li><a class="dropdown-item" href="#">Asistencia de Pacientes</a></li>
+                            <li><a class="dropdown-item" href="#">Turnos de Doctores </a></li>
 
                         </ul>
                     </li>

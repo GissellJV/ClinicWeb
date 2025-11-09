@@ -1,4 +1,23 @@
 <style>
+    .card-header-custom {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #e0e0e0;
+        min-height: 60px;
+        position: relative;
+    }
+
+    /* Contenedor izquierdo con imagen y título */
+    .card-header-custom > div:first-child,
+    .card-header-custom > img:first-child {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
     /* Botones */
     .btn-actualizar {
         background-color: white;
@@ -28,13 +47,36 @@
         justify-content: flex-end;
         gap: 10px;
     }
+    /* Igualar inputs con info-value */
+    input[type="number"].form-control,
+    input[type="text"].form-control,
+    select.form-control,
+    textarea.form-control {
+        padding: 0.875rem 1rem;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        min-height: 48px;
+        color: #333;
+        font-size: 1rem;
+    }
 
     /* Inputs y textarea deshabilitados con estilo claro */
-    input:disabled, textarea:disabled {
+    input:disabled[type="number"].form-control,
+    input:disabled[type="text"].form-control,
+    select:disabled.form-control,
+    textarea:disabled.form-control {
         background-color: #f8f9fa;
+        border: 1px solid #e0e0e0;
     }
 
     /* Inputs y textarea habilitados */
+    input:enabled[type="number"].form-control,
+    input:enabled[type="text"].form-control,
+    select:enabled.form-control,
+    textarea:enabled.form-control {
+        border: 1px solid #4ecdc4;
+    }
+
     input, textarea {
         transition: 0.3s;
     }
@@ -57,8 +99,10 @@
 
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #ffffff;
+        background:whitesmoke;
         min-height: 100vh;
+        display: flex;
+
     }
 
     .navbar-brand-top i {
@@ -286,16 +330,17 @@
 
     <div class="card-body p-4 bg-white">
 
+        <!-- INFORMACION DEL PCIENTE -->
         <div class="tab-content active" id="Paciente" >
 
             <div class="card-header-custom">
+
                 <img src="{{ asset('imagenes/usuario.png') }}" alt="usuario" style="height: 25px; width: 25px; filter: grayscale(1) brightness(0.5);">
                 <h5 class="mb-0">Información general del paciente</h5>
             </div>
 
             <table class="info-table">
                 <tbody>
-
                 <tr>
                     <td class="info-item" style="grid-column: 1 / -1;">
                         <span class="info-label">Nombre:</span>
@@ -335,10 +380,10 @@
                 </tbody>
             </table>
         </div>
-
+        <!-- SIGNOS VITALES -->
         <div class="tab-content" id="signos">
-            <div class="card-header-custom d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center gap-2">
+            <div class="card-header-custom" style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 10px;">
                     <img src="{{ asset('imagenes/signosVi.png') }}" alt="signos"
                          style="height: 27px; width: 26px; filter: grayscale(1) brightness(0.5);">
                     <h5 class="mb-0">Parámetros Vitales del Paciente</h5>
@@ -347,6 +392,7 @@
                     Actualizar
                 </button>
             </div>
+
 
             <form id="formSignos" method="POST" action="{{ route('expedientes.actualizarSignos', $expediente->id) }}">
                 @csrf
@@ -391,9 +437,13 @@
             </form>
         </div>
 
+        <!-- INFORMACION MEDICA -->
         <div class="tab-content" id="informacion">
-            <div class="card-header-custom d-flex justify-content-between align-items-center">
+            <div class="card-header-custom" style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                <img src="{{ asset('imagenes/registroC.png') }}" alt="usuario" style="height: 25px; width: 25px; filter: grayscale(1) brightness(0.5);">
                 <h5 class="mb-0">Registro de Consulta Médica</h5>
+                </div>
                 <button type="button" id="btnEditarConsulta" class="btn btn-actualizar">Actualizar</button>
             </div>
 
@@ -404,26 +454,85 @@
                     <tr>
                         <td class="info-item" style="grid-column: 1 / -1;">
                             <span class="info-label">Síntomas Actuales:</span>
-                            <textarea name="sintomas_actuales" rows="3" disabled>{{ $expediente->sintomas_actuales }}</textarea>
+                            <textarea  class="form-control" name="sintomas_actuales" rows="3" disabled>{{ $expediente->sintomas_actuales }}</textarea>
                         </td>
                     </tr>
                     <tr>
                         <td class="info-item" style="grid-column: 1 / -1;">
                             <span class="info-label">Diagnóstico:</span>
-                            <textarea name="diagnostico" rows="3" disabled>{{ $expediente->diagnostico }}</textarea>
+                            <textarea class="form-control" name="diagnostico" rows="3" disabled>{{ $expediente->diagnostico }}</textarea>
                         </td>
                     </tr>
                     <tr>
                         <td class="info-item" style="grid-column: 1 / -1;">
                             <span class="info-label">Tratamiento:</span>
-                            <textarea name="tratamiento" rows="3" disabled>{{ $expediente->tratamiento }}</textarea>
+                            <textarea class="form-control" name="tratamiento" rows="3" disabled>{{ $expediente->tratamiento }}</textarea>
                         </td>
                     </tr>
                     </tbody>
                 </table>
-
             </form>
         </div>
+
+        <!-- HISTORIAL CLINICO -->
+        <div class="tab-content" id="antecedentes">
+            <div class="card-header-custom">
+                <img src="{{ asset('imagenes/ante.png') }}" alt="antecedentes" style="height: 25px; width: 24px; filter: grayscale(1) brightness(0.5);">
+                <h5 class="mb-0">Antecedentes</h5>
+            </div>
+
+
+            <table class="info-table">
+            <tbody>
+
+            <tr>
+                <td class="info-item" style="grid-column: 1 / -1;">
+                    <span class="info-label">Alergias:</span>
+                    <div class="info-value">{{$expediente->alergias}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="info-item" style="grid-column: 1 / -1;">
+                    <span class="info-label">Medicamentos Actuales:</span>
+                    <div class="info-value">{{$expediente->medicamentos_actuales}}</div>
+                </td>
+
+            </tr>
+            <tr>
+                <td class="info-item" style="grid-column: 1 / -1;">
+                    <span class="info-label">Antecedentes Familiares:</span>
+                    <div class="info-value">{{$expediente->antecedentes_familiares}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="info-item" style="grid-column: 1 / -1;">
+                    <span class="info-label">Antecedentes Personales:</span>
+                    <div class="info-value">{{$expediente->antecedentes_personales}}</div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="card-header-custom mt-4">
+            <img src="{{ asset('imagenes/notas.png') }}" alt="notas" style="height: 25px; width: 24px; filter: grayscale(1) brightness(0.5);">
+            <h5 class="mb-0">Notas Adicionales</h5>
+        </div>
+
+        <table class="info-table">
+            <tbody>
+            <tr>
+                <td class="info-item" style="grid-column: 1 / -1;">
+                    <span class="info-label">Observaciones Generales:</span>
+                    <div class="info-value">{{$expediente->observaciones}}</div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+<br><br>
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -455,26 +564,6 @@
 
 
 
-        <div class="card-header-custom mt-4">
-                <img src="{{ asset('imagenes/notas.png') }}" alt="notas" style="height: 25px; width: 24px; filter: grayscale(1) brightness(0.5);">
-                <h5 class="mb-0">Notas Adicionales</h5>
-            </div>
-
-            <table class="info-table">
-                <tbody>
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Observaciones Generales:</span>
-                        <div class="info-value">{{$expediente->observaciones}}</div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-<br><br>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const tabs = document.querySelectorAll('.tab');
@@ -493,4 +582,3 @@
         });
     });
 </script>
-
