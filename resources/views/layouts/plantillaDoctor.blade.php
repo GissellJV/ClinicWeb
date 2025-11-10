@@ -5,11 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('titulo')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        .navbar-toggler {
+            background-color: white;
+            color: white;
+            border: 2px solid #4ecdc4;
+            border-radius: 8px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .navbar-toggler:hover {
+            background-color: #34b5ad;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+        .navbar-brand img {
+            height: 3rem;
+            width: auto;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%2334b5ad' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+        .navbar-toggler:hover .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        .btn-close-offcanvas i {
+            font-size: 1.25rem;
+            line-height: 1;
+        }
+
+
+        .nav-link {
+            color: #4ecdc4 !important;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover{
+            color: #34b5ad !important;
+            text-decoration: underline;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .dropdown-menu {
+            border-radius: 0.75rem;
+            border: none;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar bg-body-tertiary fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{route('/')}}">ClinicWeb</a>
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ route('/') }}" style="color: #4ecdc4;">
+            <img src="/imagenes/login-icon.png" alt="login-icono">
+        </a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

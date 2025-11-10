@@ -2,14 +2,95 @@
 
 @section('contenido')
 
-    <div id="carouselExampleDark" class="carousel carousel-dark slide mp-10">
+    <style>
+        /* --- Estilos generales --- */
+        body {
+            background-color: #f9fafa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* --- Carrusel --- */
+        #carouselExampleDark {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .carousel-caption h5 {
+            color: #ffffff;
+            background: rgba(78, 205, 196, 0.85);
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .carousel-caption p {
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.4);
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 8px;
+            margin-top: 8px;
+            font-size: 0.95rem;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: rgba(78, 205, 196, 0.8);
+            border-radius: 50%;
+            padding: 15px;
+        }
+
+        /* --- Tarjetas de promociones --- */
+        .card {
+            border-radius: 12px;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            border: 1px solid #4ecdc4 !important;
+            background-color: #ffffff;
+        }
+
+        .card-header {
+            background-color: #e7f8f7 !important;
+            color: #00897b;
+            font-weight: 600;
+            text-align: center;
+            border-bottom: 1px solid #4ecdc4;
+        }
+
+        .card-body {
+            text-align: center;
+            color: #333;
+        }
+
+        .card-footer {
+            background-color: #f8fdfd !important;
+            color: #4ecdc4;
+            font-weight: 500;
+            text-align: center;
+            border-top: 1px solid #4ecdc4;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(78, 205, 196, 0.35);
+        }
+
+        /* --- Texto vacío --- */
+        p.text-center.mt-4 {
+            color: #6c757d;
+            font-style: italic;
+        }
+    </style>
+
+    <div id="carouselExampleDark" class="carousel carousel-dark slide">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active" data-bs-interval="2000">
-                {{-- Imagen que muestra TODAS las promociones --}}
                 <a href="{{ route('promociones.index') }}">
                     <img src="{{ asset('promociones/promo1.jpg') }}" class="d-block w-100" alt="Todas las promociones">
                 </a>
@@ -20,7 +101,6 @@
             </div>
 
             <div class="carousel-item" data-bs-interval="2000">
-                {{-- Imagen que muestra solo las promociones de octubre --}}
                 <a href="{{ route('promociones.index', ['mes' => 'octubre']) }}">
                     <img src="{{ asset('promociones/promo3.jpg') }}" class="d-block w-100" alt="Promociones de octubre">
                 </a>
@@ -44,15 +124,15 @@
     {{-- Tarjetas dinámicas desde PHP --}}
     <div class="row mt-5 justify-content-center">
         @forelse ($promociones as $promo)
-            <div class="card card-hover border-success mb-3 mx-3" style="max-width: 18rem;">
-                <div class="card-header bg-transparent border-success">
+            <div class="card card-hover mb-4 mx-3" style="max-width: 18rem;">
+                <div class="card-header">
                     {{ $promo['mes'] === 'octubre' ? 'Promoción por mes de octubre' : 'Promoción Vigente' }}
                 </div>
-                <div class="card-body text-success">
+                <div class="card-body">
                     <h5 class="card-title">{{ $promo['titulo'] }}</h5>
                     <p class="card-text">{{ $promo['descripcion'] }}</p>
                 </div>
-                <div class="card-footer bg-transparent border-success">ClinicWeb</div>
+                <div class="card-footer">ClinicWeb</div>
             </div>
         @empty
             <p class="text-center mt-4">No hay promociones disponibles.</p>

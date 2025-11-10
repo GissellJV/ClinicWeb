@@ -25,7 +25,7 @@
             @csrf
             <!--NOMBRE COMPLETO-->
             <div class="mb-3">
-                <label for="exampleInputEmail1">Nombre Completo</label>
+                <label for="exampleInputEmail1" class="form-label">Nombre Completo</label>
                 <div class="row g-2">
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Nombres" value="{{old('nombres')}}">
@@ -52,13 +52,13 @@
                     </div>
             <!--GENERO-->
             <div class="mb-3">
-                <label for="exampleInputEmail1">Genero</label>
+                <label for="exampleInputEmail1" class="form-label">Genero</label>
                 <div class="row g-2">
 
                     <div class="col-6">
-                        <div class="form-check">
+                        <div class="form-check" >
                             <input class="form-check-input" type="radio" name="genero" id="femenino" value="Femenino" {{ old('genero') == 'Femenino' ? 'checked' : '' }}  >
-                            <label class="form-check-label" for="femenino">
+                            <label class="form-check-label" for="femenino" >
                                 Femenino
                             </label>
                         </div>
@@ -78,7 +78,7 @@
             </div>
             <!--Numero de identidad-->
             <div class="mb-3">
-                <label for="exampleInputPassword1">Número de identidad</label>
+                <label for="exampleInputPassword1" class="form-label">Número de identidad</label>
                 <input type="text" class="form-control" id="numero_identidad" name="numero_identidad" placeholder="0000000000000" >
                 @error('numero_identidad')
                 <small class="text-danger">{{ $message }}</small>

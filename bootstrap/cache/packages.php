@@ -1,85 +1,99 @@
 <?php return array (
-  'laravel/fortify' => 
+  'barryvdh/laravel-dompdf' =>
+
+
   array (
-    'providers' => 
+    'aliases' =>
+    array (
+      'PDF' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
+      'Pdf' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
+    ),
+    'providers' =>
+    array (
+      0 => 'Barryvdh\\DomPDF\\ServiceProvider',
+    ),
+  ),
+  'laravel/fortify' =>
+  array (
+    'providers' =>
     array (
       0 => 'Laravel\\Fortify\\FortifyServiceProvider',
     ),
   ),
-  'laravel/pail' => 
+  'laravel/pail' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Laravel\\Pail\\PailServiceProvider',
     ),
   ),
-  'laravel/sail' => 
+  'laravel/sail' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Laravel\\Sail\\SailServiceProvider',
     ),
   ),
-  'laravel/tinker' => 
+  'laravel/tinker' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
     ),
   ),
-  'livewire/flux' => 
+  'livewire/flux' =>
   array (
-    'aliases' => 
+    'aliases' =>
     array (
       'Flux' => 'Flux\\Flux',
     ),
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Flux\\FluxServiceProvider',
     ),
   ),
-  'livewire/livewire' => 
+  'livewire/livewire' =>
   array (
-    'aliases' => 
+    'aliases' =>
     array (
       'Livewire' => 'Livewire\\Livewire',
     ),
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Livewire\\LivewireServiceProvider',
     ),
   ),
-  'livewire/volt' => 
+  'livewire/volt' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Livewire\\Volt\\VoltServiceProvider',
     ),
   ),
-  'nesbot/carbon' => 
+  'nesbot/carbon' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Carbon\\Laravel\\ServiceProvider',
     ),
   ),
-  'nunomaduro/collision' => 
+  'nunomaduro/collision' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
-  'nunomaduro/termwind' => 
+  'nunomaduro/termwind' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Termwind\\Laravel\\TermwindServiceProvider',
     ),
   ),
-  'pestphp/pest-plugin-laravel' => 
+  'pestphp/pest-plugin-laravel' =>
   array (
-    'providers' => 
+    'providers' =>
     array (
       0 => 'Pest\\Laravel\\PestServiceProvider',
     ),
