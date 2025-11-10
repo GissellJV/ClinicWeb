@@ -7,146 +7,297 @@
         small.text-danger {
             font-size: 0.875em;
         }
+
+        .container-empleado {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .card-empleado {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card-header-empleado {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            padding: 30px 40px;
+            color: white;
+        }
+
+        .card-header-empleado h4 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .card-body-empleado {
+            padding: 50px 60px;
+        }
+
+        .form-row-custom {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-group-custom {
+            margin-bottom: 30px;
+        }
+
+        .form-group-custom label {
+            display: block;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+
+        .form-control-custom,
+        .form-select-custom {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e8f4f3;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            background: #f8fffe;
+        }
+
+        .form-control-custom:focus,
+        .form-select-custom:focus {
+            outline: none;
+            border-color: #4ECDC4;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.1);
+        }
+
+        /* Ocultar el ícono de calendario en inputs tipo date */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            display: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="date"]::-webkit-inner-spin-button,
+        input[type="date"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .input-group-custom {
+            display: flex;
+        }
+
+        .input-group-text-custom {
+            background: #4ECDC4;
+            color: white;
+            padding: 16px 20px;
+            border: 2px solid #4ECDC4;
+            border-radius: 12px 0 0 12px;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .input-group-custom .form-control-custom {
+            border-radius: 0 12px 12px 0;
+            border-left: none;
+        }
+
+        .btn-group-custom {
+            display: flex;
+            gap: 20px;
+            justify-content: flex-end;
+            margin-top: 40px;
+        }
+
+        .btn-custom {
+            padding: 16px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom {
+            background: #4ECDC4;
+            color: white;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .btn-primary-custom:hover {
+            background: #45b8b0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+        }
+
+        .btn-secondary-custom {
+            background: #f8f9fa;
+            color: #6c757d;
+            border: 2px solid #e9ecef;
+        }
+
+        .btn-secondary-custom:hover {
+            background: #e9ecef;
+        }
+
+        .alert-success-custom {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-row-custom {
+                grid-template-columns: 1fr;
+            }
+
+            .card-body-empleado {
+                padding: 30px 25px;
+            }
+
+            .card-header-empleado {
+                padding: 25px 25px;
+            }
+
+            .card-header-empleado h4 {
+                font-size: 1.4rem;
+            }
+        }
     </style>
-    <div class="container mt-5 pt-4">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0">Registrar Nuevo Empleado</h4>
+
+    <div class="container-empleado">
+        <div class="card-empleado">
+            <div class="card-header-empleado">
+                <h4>Registrar Nuevo Empleado</h4>
+            </div>
+            <div class="card-body-empleado">
+                @if(session('success'))
+                    <div class="alert-success-custom">
+                        {{ session('success') }}
                     </div>
-                    <div class="card-body">
-                        @if(session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
+                @endif
 
+                <form action="{{ route('empleados.guardar') }}" method="POST">
+                    @csrf
 
-                        <form action="{{ route('empleados.guardar') }}" method="POST">
-                            @csrf
+                    <!-- Nombre y Apellido -->
+                    <div class="form-row-custom">
+                        <div class="form-group-custom">
+                            <label for="nombre">Nombre *</label>
+                            <input type="text" class="form-control-custom" id="nombre" name="nombre"
+                                   value="{{ old('nombre') }}" placeholder="Ingrese el nombre">
+                            @error('nombre')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="nombre" class="form-label">Nombre *</label>
-                                        <input type="text" class="form-control" id="nombre" name="nombre"
-                                               value="{{ old('nombre') }}">
-                                        @error('nombre')
-                                        <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="apellido" class="form-label">Apellido *</label>
-                                        <input type="text" class="form-control" id="apellido" name="apellido"
-                                               value="{{ old('apellido') }}">
-                                        @error('apellido')
-                                        <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="numero_identidad" class="form-label">Número de Identidad *</label>
-                                        <input type="text" class="form-control" id="numero_identidad" name="numero_identidad"
-                                               value="{{ old('numero_identidad') }}">
-                                        @error('numero_identidad')
-                                        <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="fecha_ingreso" class="form-label">Fecha de Ingreso</label>
-                                        <input type="date" class="form-control" id="fecha_ingreso" name="fecha_ingreso"
-                                               value="{{ old('fecha_ingreso') }}" >
-                                        @error('fecha_ingreso')
-                                        <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="telefono" class="form-label">Número de Telefono </label>
-                                        <div class="input-group">
-                                            <span class="input-group-text">+504</span>
-                                            <input type="text" class="form-control" id="telefono" name="telefono"
-                                               value="{{ old('telefono') }}" >
-                                        </div>
-                                        @error('telefono')
-                                        <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="password" class="form-label">Contraseña </label>
-                                        <input type="password" class="form-control" id="password" name="password"
-                                               value="{{ old('password') }}" >
-                                        @error('password')
-                                        <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="cargo" class="form-label">Cargo </label>
-                                        <select class="form-select" id="cargo" name="cargo" >
-                                            <option value="">Seleccione un cargo</option>
-                                            @foreach($cargos as $cargo)
-                                                <option value="{{ $cargo }}" {{ old('cargo') == $cargo ? 'selected' : '' }}>
-                                                    {{ $cargo }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('cargo')
-                                        <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="departamento" class="form-label">Departamento </label>
-                                        <select class="form-select" id="departamento" name="departamento" >
-                                            <option value="">Seleccione un departamento</option>
-                                            @foreach($departamentos as $depto)
-                                                <option value="{{ $depto }}" {{ old('departamento') == $depto ? 'selected' : '' }}>
-                                                    {{ $depto }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('departamento')
-                                        <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a href="{{ route('empleados.lista') }}" class="btn btn-secondary me-md-2">
-                                    Cancelar
-                                </a>
-                                <button type="submit" class="btn btn-primary">
-                                    Registrar Empleado
-                                </button>
-                            </div>
-                        </form>
+                        <div class="form-group-custom">
+                            <label for="apellido">Apellido *</label>
+                            <input type="text" class="form-control-custom" id="apellido" name="apellido"
+                                   value="{{ old('apellido') }}" placeholder="Ingrese el apellido">
+                            @error('apellido')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
                     </div>
-                </div>
+
+                    <!-- Número de Identidad y Fecha de Ingreso -->
+                    <div class="form-row-custom">
+                        <div class="form-group-custom">
+                            <label for="numero_identidad">Número de Identidad *</label>
+                            <input type="text" class="form-control-custom" id="numero_identidad" name="numero_identidad"
+                                   value="{{ old('numero_identidad') }}" placeholder="0000-0000-00000">
+                            @error('numero_identidad')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="form-group-custom">
+                            <label for="fecha_ingreso">Fecha de Ingreso</label>
+                            <input type="date" class="form-control-custom" id="fecha_ingreso" name="fecha_ingreso"
+                                   value="{{ old('fecha_ingreso') }}">
+                            @error('fecha_ingreso')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Número de Teléfono y Contraseña -->
+                    <div class="form-row-custom">
+                        <div class="form-group-custom">
+                            <label for="telefono">Número de Teléfono</label>
+                            <div class="input-group-custom">
+                                <span class="input-group-text-custom">+504</span>
+                                <input type="text" class="form-control-custom" id="telefono" name="telefono"
+                                       value="{{ old('telefono') }}" placeholder="0000-0000">
+                            </div>
+                            @error('telefono')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="form-group-custom">
+                            <label for="password">Contraseña</label>
+                            <input type="password" class="form-control-custom" id="password" name="password"
+                                   placeholder="Mínimo 8 caracteres">
+                            @error('password')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Cargo y Departamento -->
+                    <div class="form-row-custom">
+                        <div class="form-group-custom">
+                            <label for="cargo">Cargo</label>
+                            <select class="form-select-custom" id="cargo" name="cargo">
+                                <option value="">Seleccione un cargo</option>
+                                @foreach($cargos as $cargo)
+                                    <option value="{{ $cargo }}" {{ old('cargo') == $cargo ? 'selected' : '' }}>
+                                        {{ $cargo }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('cargo')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="form-group-custom">
+                            <label for="departamento">Departamento</label>
+                            <select class="form-select-custom" id="departamento" name="departamento">
+                                <option value="">Seleccione un departamento</option>
+                                @foreach($departamentos as $depto)
+                                    <option value="{{ $depto }}" {{ old('departamento') == $depto ? 'selected' : '' }}>
+                                        {{ $depto }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('departamento')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="btn-group-custom">
+                        <a href="{{ route('empleados.lista') }}" class="btn-custom btn-secondary-custom">
+                            Cancelar
+                        </a>
+                        <button type="submit" class="btn-custom btn-primary-custom">
+                            Registrar Empleado
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
