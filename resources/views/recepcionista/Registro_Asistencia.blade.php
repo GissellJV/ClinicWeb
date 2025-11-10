@@ -1,3 +1,5 @@
+@extends('layouts.plantillaRecepcion')
+        @section('contenido')
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -72,82 +74,6 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg fixed-top shadow-sm bg-white">
-    <div class="container">
-        <!-- Logo -->
-        <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ route('/') }}" style="color: #4ecdc4;">
-            <i class="bi bi-hospital me-2"></i> ClinicWeb
-        </a>
-
-        <!-- Botón para móviles -->
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarClinic"
-                aria-controls="navbarClinic" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Opciones -->
-        <div class="collapse navbar-collapse" id="navbarClinic">
-            <ul class="navbar-nav ms-auto align-items-center">
-
-                <li class="nav-item">
-                    <a class="nav-link fw-semibold text-custom" href="{{ route('/') }}">Inicio</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link fw-semibold text-custom" href="{{ route('pacientes.informacion_Clinica') }}">Información</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link fw-semibold text-custom" href="{{ route('comentarios.index') }}">Comentarios</a>
-                </li>
-
-                @if(!session('paciente_id'))
-                    <li class="nav-item">
-                        <a class="nav-link fw-semibold text-custom" href="{{ route('pacientes.visualizacion_Doctores') }}">Doctores</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle fw-semibold text-custom" href="#" id="loginDropdown"
-                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-box-arrow-in-right me-1"></i> Acceder
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{{ route('pacientes.loginp') }}"><i class="bi bi-person"></i> Paciente</a></li>
-                            <li><a class="dropdown-item" href="{{ route('empleados.loginempleado') }}"><i class="bi bi-person-badge"></i> Empleado</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="btn btn-custom ms-2 fw-semibold" href="{{ route('pacientes.registrarpaciente') }}">
-                            <i class="bi bi-pencil-square me-1"></i> Registrarse
-                        </a>
-                    </li>
-                @else
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle fw-semibold text-custom d-flex align-items-center" href="#" id="userDropdown"
-                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle me-1"></i> {{ session('paciente_nombre') }}
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{{ route('agendarcitas') }}"><i class="bi bi-calendar-plus"></i> Agendar cita</a></li>
-                            <li><a class="dropdown-item" href="{{ route('citas.mis-citas') }}"><i class="bi bi-calendar-check"></i> Mis citas</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form action="{{ route('pacientes.logout') }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item text-danger fw-semibold">
-                                        <i class="bi bi-box-arrow-right"></i> Cerrar sesión
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
-                @endif
-            </ul>
-        </div>
-    </div>
-</nav>
-
 <br>
 <br>
 <br>
@@ -160,28 +86,28 @@
             <div class="stat-card mint">
                 <i class="bi bi-emoji-smile fs-1"></i>
                 <h5>Niños</h5>
-                <h3>58</h3>
+                <h3>{{$ninos->count()}}</h3>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stat-card aqua">
                 <i class="bi bi-person-hearts fs-1"></i>
                 <h5>Adolescentes</h5>
-                <h3>74</h3>
+                <h3>{{$adolescentes->count()}}</h3>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stat-card turq">
                 <i class="bi bi-person-badge fs-1"></i>
                 <h5>Adultos</h5>
-                <h3>120</h3>
+                <h3>{{$adultos->count()}}</h3>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stat-card soft">
                 <i class="bi bi-person-wheelchair fs-1"></i>
                 <h5>Tercera edad</h5>
-                <h3>32</h3>
+                <h3>{{$terceraEdad->count()}}</h3>
             </div>
         </div>
     </div>
@@ -204,43 +130,58 @@
 
     <!-- Registro y filtros -->
     <div class="chart-container">
-        <div class="input-group mb-3">
-            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-            <input type="text" class="form-control border-start-0" placeholder="Buscar paciente...">
-        </div>
+        <form method="GET">
+            <div class="input-group mb-3">
+                <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                <input type="text" name="buscar" class="form-control border-start-0" placeholder="Buscar paciente..." value="{{ request('buscar') }}">
+            </div>
+        </form>
 
         <ul class="nav nav-tabs filter-tabs mb-3">
-            <li class="nav-item"><a class="nav-link active" href="#">Recientes</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Hoy</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Semana</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Mes</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Año</a></li>
+            <li class="nav-item"><a class="nav-link {{ $filtro == 'recientes' ? 'active' : '' }}" href="?filtro=recientes">Recientes</a></li>
+            <li class="nav-item"><a class="nav-link {{ $filtro == 'hoy' ? 'active' : '' }}" href="?filtro=hoy">Hoy</a></li>
+            <li class="nav-item"><a class="nav-link {{ $filtro == 'semana' ? 'active' : '' }}" href="?filtro=semana">Semana</a></li>
+            <li class="nav-item"><a class="nav-link {{ $filtro == 'mes' ? 'active' : '' }}" href="?filtro=mes">Mes</a></li>
+            <li class="nav-item"><a class="nav-link {{ $filtro == 'anio' ? 'active' : '' }}" href="?filtro=anio">Año</a></li>
         </ul>
+
 
         <table class="table table-hover align-middle">
             <thead>
             <tr>
                 <th>Nombre</th>
                 <th>Edad</th>
-                <th>Motivo</th>
+                <th>Doctor/Especialista</th>
+                <th>Especialidad</th>
+                <th>Fecha</th>
                 <th>Hora</th>
+                <th>Estado</th>
             </tr>
             </thead>
             <tbody>
-            <tr><td>Juan Pérez</td><td>10</td><td>Consulta general</td><td>08:45</td></tr>
-            <tr><td>María López</td><td>28</td><td>Chequeo anual</td><td>09:20</td></tr>
-            <tr><td>José Martínez</td><td>65</td><td>Control de presión</td><td>10:05</td></tr>
+            @foreach ($citas as $cita)
+                <tr>
+                    <td>{{ $cita->paciente_nombre }}</td>
+                    <td>{{ $cita->paciente->edad }} años</td>
+                    <td>{{ $cita->doctor_nombre }}</td>
+                    <td>{{ $cita->especialidad }}</td>
+                    <td>{{ $cita->fecha }}</td>
+                    <td>{{ $cita->hora }}</td>
+                    <td>{{ ucfirst($cita->estado) }}</td>
+                </tr>
+            @endforeach
             </tbody>
+            {{ $pacientes->links() }}
         </table>
     </div>
 </div>
 
-<!-- Menú lateral derecho -->
+<!-- Menú lateral derecho
 <div class="right-menu">
     <button><i class="bi bi-bell"></i></button>
     <button><i class="bi bi-gear"></i></button>
     <button><i class="bi bi-person-circle"></i></button>
-</div>
+</div>-->
 
 <script>
     // Gráfico de barras
@@ -248,10 +189,10 @@
     new Chart(ctx1, {
         type: 'bar',
         data: {
-            labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+            labels: @json($labelsVisitas),
             datasets: [{
                 label: 'Visitas',
-                data: [45, 60, 50, 80, 75, 30, 20],
+                data: @json($dataVisitas),
                 backgroundColor: '#00bfa6'
             }]
         },
@@ -265,7 +206,7 @@
         data: {
             labels: ['Niños', 'Adolescentes', 'Adultos', 'Tercera Edad'],
             datasets: [{
-                data: [58, 74, 120, 32],
+                data: [{{$ninos->count()}}, {{$adolescentes->count()}}, {{$adultos->count()}}, {{$terceraEdad->count()}}],
                 backgroundColor: ['#00bfa6', '#4cd7c6', '#82e9de', '#b2f5ea']
             }]
         },
@@ -276,3 +217,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+@endsection
