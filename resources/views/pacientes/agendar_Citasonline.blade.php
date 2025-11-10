@@ -135,14 +135,16 @@
             color: #721c24;
             cursor: not-allowed;
         }
-        button {
-            background: #007bff;
+        .button {
+            background: #44a08d;
             color: white;
             border: none;
             padding: 8px 16px;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             margin-top: 10px;
+            font-size:16px;
+            display:inline-block;"
         }
     </style>
 
@@ -173,7 +175,7 @@
 
                 <br><br><br><br><br><br><br><br>
 
-                <a href="{{ route('citas.mis-citas') }}" class="btn btn-primary" style="font-size:16px; border-radius:8px; display:inline-block;">
+                <a href="{{ route('citas.mis-citas') }}" class="button" >
                     Mis Citas
                 </a>
             </div>
