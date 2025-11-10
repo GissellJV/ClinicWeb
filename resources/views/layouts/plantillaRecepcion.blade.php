@@ -44,7 +44,7 @@
             line-height: 1;
         }
 
-       
+
         .nav-link {
             color: #4ecdc4 !important;
             transition: color 0.3s ease;
@@ -118,7 +118,7 @@
                             <li><a class="dropdown-item" href="{{route('citas.agendar')}}">Agendar Cita</a></li>
                             <li><a class="dropdown-item" href="{{route('empleados.crear')}}">Registrar Empleado</a></li>
                             <li><a class="dropdown-item" href="{{ route('listadocitas') }}">Citas Programadas</a></li>
-                            <li><a class="dropdown-item" href="#">Asistencia de Pacientes</a></li>
+                            <li><a class="dropdown-item" href="{{route('recepcionista.registroPaciente')}}">Asistencia de Pacientes</a></li>
                             <li><a class="dropdown-item" href="#">Turnos de Doctores </a></li>
 
                         </ul>

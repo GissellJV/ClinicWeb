@@ -311,6 +311,7 @@
 
         h1 {
             font-size: 1.5rem;
+            font-weight: bold;
         }
 
         .card-body {
@@ -319,7 +320,7 @@
     }
 </style>
 <div class="container-fluid p-0" style="margin-top: 100px;">
-    <h1>Visualización de Expediente</h1>
+    <h1 class="text-info-emphasis">Visualización de Expediente</h1>
     <br>
     <div class="tabs d-flex border-bottom">
         <div class="tab active" data-tab="Paciente">Paciente</div>

@@ -1,4 +1,5 @@
 @extends('layouts.plantillaRecepcion')
+<link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
     @section('contenido')
 <!DOCTYPE html>
 <html lang="es">
