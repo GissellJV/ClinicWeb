@@ -1,5 +1,7 @@
 <?php return array (
+
   'barryvdh/laravel-dompdf' =>
+
   array (
     'aliases' =>
     array (

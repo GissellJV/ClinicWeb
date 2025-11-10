@@ -218,8 +218,12 @@
                 transform: translateY(-3px);
             }
             .navbar-brand img {
-                height: 3rem; /* ajusta según necesites */
-                width: auto;  /* mantiene proporción */
+                height: 3rem;
+                width: auto;
+            }
+            .navbar-brand {
+                margin-left: -96px; /* ajusta valor según necesites */
+                padding-left: 0;
             }
 
         </style>
