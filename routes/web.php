@@ -80,7 +80,12 @@ Route::get('/empleados/crear', [EmpleadoController::class, 'crear'])->name('empl
 Route::post('/empleados/guardar', [EmpleadoController::class, 'store'])->name('empleados.guardar');
 Route::get('/empleados/lista', [EmpleadoController::class, 'lista'])->name('empleados.lista');
 
+
+
+
+
 Route::get('/recetamedica', [RecetaController::class, 'recetamedica'])->name('recetamedica');
+Route::post('/recetamedica/pdf', [RecetaController::class, 'generarPDF'])->name('receta.pdf');
 
 //Ruta para doctores
 Route::get('/doctor-principal', [DoctorController::class, 'receta'])->name('doctor.receta');

@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('recetas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('doctor_id')->constrained('empleados')->onDelete('cascade');
+            $table->foreignId('paciente_id')->constrained('pacientes')->onDelete('cascade');
+            $table->string('medicamento');
+            $table->string('dosis');
+            $table->string('duracion');
+            $table->text('observaciones')->nullable();
+            $table->timestamp('fecha_emision')->useCurrent();
             $table->timestamps();
         });
     }
