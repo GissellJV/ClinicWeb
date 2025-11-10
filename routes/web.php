@@ -49,6 +49,10 @@ Route::get('/informacion', [PacienteController::class, 'informacion'])->name('pa
 Route::get('/recepcionista/citas', [CitaController::class, 'index'])->name('listadocitas');
 Route::get('/citas/agendar', [CitaController::class, 'agendar'])->name('citas.agendar');
 
+//registro pacientes
+Route::get('/asistenciapaciente', [RecepcionistaController::class, 'registroPaciente'])->name('recepcionista.registroPaciente');
+
+
 
 
 //citas
