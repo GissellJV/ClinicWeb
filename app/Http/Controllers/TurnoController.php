@@ -69,4 +69,11 @@ class TurnoController extends Controller
         $turno = RolTurnoDoctor::with(['empleado', 'cita'])->findOrFail($id);
         return response()->json($turno);
     }
+
+    public function verMas($id)
+    {
+        $turno = RolTurnoDoctor::with(['empleado', 'departamento'])->findOrFail($id);
+
+        return view('recepcionista.vermas', compact('turno'));
+    }
 }
