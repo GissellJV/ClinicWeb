@@ -4,14 +4,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            background: #f0f4f8;
+            background:whitesmoke;
+            display: flex;
             min-height: 100vh;
             padding: 20px;
         }
 
         .citas-container {
+            margin-top: 100px;
             max-width: 1200px;
-            margin: 40px auto;
+
         }
 
         .header {
