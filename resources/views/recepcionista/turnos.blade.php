@@ -223,8 +223,8 @@
                     <tbody id="tablaTurnos">
                     @forelse ($turnos as $turno)
                         <tr>
-                            <td>{{ $turno->doctor->nombre }} {{ $turno->doctor->apellido }}</td>
-                            <td>{{ $turno->doctor->especialidad->nombre }}</td>
+                            <td>{{ $turno->empleado->nombre }} {{ $turno->empleado->apellido }}</td>
+                            <td>{{ $turno->empleado->departamento}}</td>
                             <td>{{ $turno->hora_turno }}</td>
                             <td>
                                 <span class="badge bg-success">Disponible</span>

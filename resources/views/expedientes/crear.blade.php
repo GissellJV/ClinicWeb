@@ -328,30 +328,26 @@
                 padding: 10px;
             }
 
-            .expediente-container {
+          .formulario  .expediente-container {
                 margin: 10px auto;
+
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+                padding: 2.5rem;
+                max-width: 600px;
+                border-top: 5px solid #4ecdc4;
+                position: relative;
             }
         }
     </style>
 </head>
 <body>
 <!-- Botón de navegación navbar-toggler -->
-<div style="max-width: 1200px; margin: 0 auto 20px auto;">
-    <a href="{{ route('recepcionista.busquedaexpediente') }}" class="navbar-toggler">
-        <span class="navbar-toggler-icon"></span>
-        Menú Principal
-    </a>
-</div>
+<div class="formulario">
+<h1 class="text-center">Crear Nuevo Expediente Médico</h1>
 
-<div class="expediente-container">
-    <div class="expediente-header">
-        <div class="logo-container">
-            <div class="logo"></div>
-            <div class="logo-text">ClinicWeb</div>
-        </div>
-        <h1>Crear Nuevo Expediente Médico</h1>
-        <p>Complete la información médica del paciente</p>
-    </div>
+<div class="form-container" style="margin: 10px auto; max-width: 900px">
 
     <div class="expediente-form">
         @if(session('success'))
@@ -521,15 +517,16 @@
 
             <!-- BOTONES ORIGINALES -->
             <div class="button-group">
-                <a href="{{ route('recepcionista.busquedaexpediente') }}" class="btn btn-secondary">
+                <a href="{{ route('recepcionista.busquedaexpediente') }}" class="btn-cancel" style="text-decoration-line: none">
                     Cancelar
                 </a>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn-register">
                     Guardar Expediente
                 </button>
             </div>
         </form>
     </div>
+</div>
 </div>
 
 <script>

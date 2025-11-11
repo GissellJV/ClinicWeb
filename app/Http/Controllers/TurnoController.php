@@ -15,16 +15,16 @@ class TurnoController extends Controller
             return redirect()->route('empleados.loginempleado')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
-        $query = RolTurnoDoctor::with(['doctor.especialidad', 'cita']);
+        $query = RolTurnoDoctor::with(['empleado', 'cita']);
 
-        if ($request->filled('doctor')) {
-            $query->whereHas('doctor', function ($q) use ($request) {
+        if ($request->filled('empleado')) {
+            $query->whereHas('empleado', function ($q) use ($request) {
                 $q->where('nombre', 'like', '%' . $request->doctor . '%');
             });
         }
 
-        if ($request->filled('especialidad')) {
-            $query->whereHas('doctor.especialidad', function ($q) use ($request) {
+        if ($request->filled('cargo')) {
+            $query->whereHas('empleado.cargo', function ($q) use ($request) {
                 $q->where('nombre', 'like', '%' . $request->especialidad . '%');
             });
         }
