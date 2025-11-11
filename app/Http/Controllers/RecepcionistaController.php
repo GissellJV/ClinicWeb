@@ -24,10 +24,7 @@ class RecepcionistaController extends Controller
             $busqueda = $request->input('busqueda');
             $filtro = $request->input('filtro', 'todos');
 
-
             $query = Paciente::query();
-
-
 
             if ($filtro == 'nombre') {
                 $query->where('nombres', 'LIKE', "%{$busqueda}%");

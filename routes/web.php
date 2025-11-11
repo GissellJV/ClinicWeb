@@ -4,6 +4,7 @@ use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\EnfermeriaController;
 use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\TurnoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RutasController;
 use App\Http\Controllers\RecepcionistaController;
@@ -52,8 +53,9 @@ Route::get('/citas/agendar', [CitaController::class, 'agendar'])->name('citas.ag
 //registro pacientes
 Route::get('/asistenciapaciente', [RecepcionistaController::class, 'registroPaciente'])->name('recepcionista.registroPaciente');
 
-
-
+//visualizacion de turnos doctores
+Route::get('/turnos', [TurnoController::class, 'index'])->name('recepcionista.index');
+Route::post('/turnos', [TurnoController::class, 'store'])->name('recepcionista.store');
 
 //citas
 Route::get('/mis-citas', [CitaController::class, 'misCitas'])->name('citas.mis-citas');
