@@ -38,7 +38,7 @@
         </form>
 
         <div class="mt-3 text-center">
-            <a href="{{route('pacientes.loginp')}}">Volver al inicio de sesión</a>
+            <a href="{{route('empleados.loginempleado')}}">Volver al inicio de sesión</a>
         </div>
     </div>
 </div>

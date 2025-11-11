@@ -152,6 +152,11 @@
         .btn-login:active {
             transform: translateY(0);
         }
+        .footer-links {
+            text-align: center;
+            margin-top: 1.5rem;
+            background: transparent;
+        }
 
         .footer-links p {
             color: #666;
@@ -238,6 +243,11 @@
                 <br>
                 <button type="submit" class="btn-login">Iniciar Sesión</button>
             </form>
+            <div class="footer-links">
+
+                <a href="{{route('pacientes.enviar_codigo_recuperacion')}}" class="forgot-password">¿Olvidaste tu contraseña?</a>
+
+            </div>
 
         </div>
 

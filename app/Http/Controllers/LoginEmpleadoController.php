@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Empleado;
 use App\Models\LoginEmpleado;
+use App\Models\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,51 +15,70 @@ class LoginEmpleadoController extends Controller
 
         return view('empleados.InicioEmpleado');
     }
-    public function login(Request $request){
 
-        $request->validate([
-            'telefono' => 'required|string',
-            'password' => 'required|string',
-        ],[
-            'telefono.required'=>'Ingresa el número de teléfono',
-            'password.required'=>'Ingresa la contraseña'
-        ]);
+        public function login(Request $request)
+        {
 
-        $loginEmpleado = LoginEmpleado::where('telefono',$request->input('telefono'))->first();
-
-        if($loginEmpleado && Hash::check($request->password, $loginEmpleado->password)){
-
-            $empleado = Empleado::find($loginEmpleado->empleado_id);
-
-            session([
-                'empleado_id' => $empleado->id,
-                'empleado_nombre' => $empleado->nombre . ' ' . $empleado->apellido,
-                'cargo' => $empleado->cargo
+            $request->validate([
+                'telefono' => 'required|string',
+                'password' => 'required|string',
+            ], [
+                'telefono.required' => 'Ingresa el número de teléfono',
+                'password.required' => 'Ingresa la contraseña'
             ]);
 
-            $mensaje = '¡Bienvenido ' . $empleado->nombre . ' ' . $empleado->apellido . '!';
-            $cargo = strtolower($empleado->cargo);
+            $telefono = $request->input('telefono');
+            $password = $request->password;
 
-            if ($cargo == 'doctor') {
-                return redirect()->route('doctor.receta')->with('mensaje', $mensaje);
-            }
-            elseif ($cargo == 'recepcionista') {
-                return redirect()->route('recepcionista.busquedaexpediente')->with('mensaje', $mensaje);
-            }
-            elseif ($cargo == 'enfermero') {
-                return redirect()->route('enfermeria.principal')->with('mensaje', $mensaje);
-            }
-            else {
-                return redirect()->route('empleado.dashboard')->with('mensaje', $mensaje);
+            // Primero intentar login como empleado
+            $loginEmpleado = LoginEmpleado::where('telefono', $telefono)->first();
+
+            if ($loginEmpleado && Hash::check($password, $loginEmpleado->password)) {
+
+                $empleado = Empleado::find($loginEmpleado->empleado_id);
+
+                session([
+                    'empleado_id' => $empleado->id,
+                    'empleado_nombre' => $empleado->nombre . ' ' . $empleado->apellido,
+                    'cargo' => $empleado->cargo,
+                    'tipo_usuario' => 'empleado' // Identificador del tipo de usuario
+                ]);
+
+                $mensaje = '¡Bienvenido ' . $empleado->nombre . ' ' . $empleado->apellido . '!';
+                $cargo = strtolower($empleado->cargo);
+
+                if ($cargo == 'doctor') {
+                    return redirect()->route('doctor.receta')->with('mensaje', $mensaje);
+                } elseif ($cargo == 'recepcionista') {
+                    return redirect()->route('recepcionista.busquedaexpediente')->with('mensaje', $mensaje);
+                } elseif ($cargo == 'enfermero') {
+                    return redirect()->route('enfermeria.principal')->with('mensaje', $mensaje);
+                } else {
+                    return redirect()->route('empleado.dashboard')->with('mensaje', $mensaje);
+                }
             }
 
+            // Si no es empleado, intentar login como paciente
+            $paciente = Paciente::where('telefono', $telefono)->first();
+
+            if ($paciente && Hash::check($password, $paciente->password)) {
+
+                session([
+                    'paciente_id' => $paciente->id,
+                    'paciente_nombre' => $paciente->nombres . ' ' . $paciente->apellidos,
+                    'tipo_usuario' => 'paciente' // Identificador del tipo de usuario
+                ]);
+
+                return redirect()->route('agendarcitas')
+                    ->with('mensaje', '¡Bienvenido ' . $paciente->nombres . '!');
+            }
+
+            // Si no coincide con ninguno
+            return back()
+                ->with('error', 'El número de teléfono o la contraseña son incorrectos.')
+                ->withInput($request->only('telefono'));
         }
 
-        return back()
-            ->with('error', 'El número de teléfono o la contraseña son incorrectos.')
-            ->withInput($request->only('telefono'));
-
-    }
 
     // Cerrar sesión
     public function logout(Request $request)

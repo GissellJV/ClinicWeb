@@ -119,7 +119,7 @@
                             <li><a class="dropdown-item" href="{{route('empleados.crear')}}">Registrar Empleado</a></li>
                             <li><a class="dropdown-item" href="{{ route('listadocitas') }}">Citas Programadas</a></li>
                             <li><a class="dropdown-item" href="{{route('recepcionista.registroPaciente')}}">Asistencia de Pacientes</a></li>
-                            <li><a class="dropdown-item" href="#">Turnos de Doctores </a></li>
+                            <li><a class="dropdown-item" href="{{route('recepcionista.index')}}">Turnos de Doctores </a></li>
 
                         </ul>
                     </li>

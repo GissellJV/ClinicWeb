@@ -46,14 +46,11 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-semibold text-custom" href="#" id="loginDropdown"
-                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link  fw-semibold text-custom" href="{{ route('empleados.loginempleado') }}" id="loginDropdown"
+                               role="button" >
                                 <i class="bi bi-box-arrow-in-right me-1"></i> Acceder
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="{{ route('pacientes.loginp') }}"><i class="bi bi-person"></i> Paciente</a></li>
-                                <li><a class="dropdown-item" href="{{ route('empleados.loginempleado') }}"><i class="bi bi-person-badge"></i> Empleado</a></li>
-                            </ul>
+
                         </li>
 
                         <li class="nav-item">
