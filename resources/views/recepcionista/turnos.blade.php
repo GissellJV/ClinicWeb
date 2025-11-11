@@ -224,7 +224,7 @@
                     @forelse ($turnos as $turno)
                         <tr>
                             <td>{{ $turno->empleado->nombre }} {{ $turno->empleado->apellido }}</td>
-                            <td>{{ $turno->empleado->departamento}}</td>
+                            <td>{{ $turno->empleado->departamento->nombre}}</td>
                             <td>{{\Carbon\Carbon::parse($turno->fecha)->format('d/m/Y') }}</td>
                             <td>{{ $turno->hora_turno }}</td>
                             <td>{{$turno->cita->estado}}</td>

@@ -1,96 +1,117 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
+    <title>Detalles del Turno</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
         body {
             background: #f7fdfc;
             font-family: 'Segoe UI', sans-serif;
         }
 
-        .stat-card {
-            border: none;
-            border-radius: 15px;
-            color: white;
-            padding: 1.2rem;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        .header-title {
+            color: #00bfa6;
+            font-weight: 800;
+            border-left: 6px solid #00bfa6;
+            padding-left: 12px;
         }
-
-        .mint { background-color: #00bfa6 !important; }
-        .aqua { background-color: #4cd7c6 !important; }
-        .turq { background-color: #82e9de !important; color: #004b46 !important; }
-        .soft { background-color: #b2f5ea !important; color: #004b46 !important; }
 
         .card-custom {
+            background: white;
             border-radius: 18px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            padding: 2rem;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
             border: none;
         }
 
-        .btn-primary {
-            background-color: #00bfa6 !important;
-            border-color: #00bfa6 !important;
+        .detail-label {
+            color: #009e8e;
+            font-weight: 600;
         }
 
-        .btn-primary:hover {
+        .detail-value {
+            color: #004b46;
+            font-size: 1.05rem;
+        }
+
+        .btn-mint {
+            background-color: #00bfa6 !important;
+            border-color: #00bfa6 !important;
+            color: white !important;
+            padding: 0.55rem 1.3rem;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .btn-mint:hover {
             background-color: #009e8e !important;
             border-color: #009e8e !important;
+            color: #fff !important;
         }
 
-        .btn-outline-primary {
-            color: #00bfa6 !important;
-            border-color: #00bfa6 !important;
-        }
-
-        .btn-outline-primary:hover {
-            background-color: #00bfa6 !important;
-            color: white !important;
-        }
-
-        .btn-outline-info {
-            color: #4cd7c6 !important;
-            border-color: #4cd7c6 !important;
-        }
-
-        .btn-outline-info:hover {
-            background-color: #4cd7c6 !important;
-            color: white !important;
-        }
-
-        .btn-outline-danger {
-            color: #e74c3c !important;
-            border-color: #e74c3c !important;
-        }
-
-        .btn-outline-danger:hover {
-            background-color: #e74c3c !important;
-            color: white !important;
-        }
-
-        table thead {
-            background: #b2f5ea !important;
-            color: #004b46 !important;
-        }
     </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <h2>Detalles completos del turno #{{ $turno->id }}</h2>
 
-        <div class="card mt-3 p-4">
-            <p><strong>Empleado:</strong> {{ $turno->empleado->nombre }} {{ $turno->empleado->apellido }}</p>
-            <p><strong>Departamento:</strong> {{ $turno->departamento->nombre }}</p>
-            <p><strong>Fecha:</strong> {{ \Carbon\Carbon::parse($turno->fecha)->format('d/m/Y') }}</p>
-            <p><strong>Hora:</strong> {{ $turno->hora_turno }}</p>
-            <p><strong>Estado:</strong> {{ $turno->estado }}</p>
+<div class="container mt-5">
 
-            <a href="{{ route('recepcionista.index') }}" class="btn btn-secondary mt-3">Volver</a>
+    <!-- Título -->
+    <h2 class="header-title mb-4">
+        <i class="bi bi-calendar-week"></i> Detalles completos del turno #{{ $turno->id }}
+    </h2>
+
+    <!-- Tarjeta principal -->
+    <div class="card-custom">
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <span class="detail-label">Empleado:</span>
+                <p class="detail-value">
+                    {{ $turno->empleado->nombre }} {{ $turno->empleado->apellido }}
+                </p>
+            </div>
+
+            <div class="col-md-6">
+                <span class="detail-label">Departamento:</span>
+                <p class="detail-value">
+                    {{ $turno->departamento->nombre }}
+                </p>
+            </div>
         </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <span class="detail-label">Fecha:</span>
+                <p class="detail-value">
+                    {{ \Carbon\Carbon::parse($turno->fecha)->format('d/m/Y') }}
+                </p>
+            </div>
+
+            <div class="col-md-4">
+                <span class="detail-label">Hora:</span>
+                <p class="detail-value">{{ $turno->hora_turno }}</p>
+            </div>
+
+            <div class="col-md-4">
+                <span class="detail-label">Estado:</span>
+                <p class="detail-value">{{ $turno->estado }}</p>
+            </div>
+        </div>
+
+        <!-- Botón regresar -->
+        <a href="{{ route('recepcionista.index') }}" class="btn btn-mint mt-3">
+            <i class="bi bi-arrow-left"></i> Volver
+        </a>
+
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 </body>
 </html>
+
