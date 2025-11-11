@@ -131,13 +131,16 @@
     </div>
 
     <!-- Registro y filtros -->
-    <div class="chart-container">
-        <form method="GET">
+     <div class="chart-container">
+         <!--<form method="GET">
             <div class="input-group mb-3">
                 <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
                 <input type="text" name="buscar" class="form-control border-start-0" placeholder="Buscar paciente..." value="{{ request('buscar') }}">
             </div>
-        </form>
+        </form>-->
+         <div class="chart-container">
+             <h5 class="mb-3">Registro de visitas</h5>
+         </div>
 
         <ul class="nav nav-tabs filter-tabs mb-3">
             <li class="nav-item"><a class="nav-link {{ $filtro == 'recientes' ? 'active' : '' }}" href="?filtro=recientes">Recientes</a></li>
@@ -215,6 +218,9 @@
         options: { responsive: true, cutout: '70%' }
     });
 </script>
+
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
