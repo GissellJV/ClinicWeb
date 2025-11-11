@@ -11,8 +11,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            background: #f7fdfc;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background:whitesmoke;
+            display: flex;
+
         }
 
         .stat-card {

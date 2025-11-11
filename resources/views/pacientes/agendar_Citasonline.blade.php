@@ -5,8 +5,9 @@
 
     <style>
         body {
-            background: #f6faf9;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background:whitesmoke;
+            display: flex;
         }
         .calendar-wrapper {
             max-width: 1200px;
@@ -135,21 +136,28 @@
             color: #721c24;
             cursor: not-allowed;
         }
-        .button {
-            background: #44a08d;
-            color: white;
+        .btn-citas {
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
             border: none;
-            padding: 8px 16px;
             border-radius: 8px;
-            cursor: pointer;
-            margin-top: 10px;
-            font-size:16px;
-            display:inline-block;"
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
         }
     </style>
 
     <div class="calendar-wrapper">
-        <br><br><br><br>
+        <br>
         <h1>Agenda de Citas Médicas</h1>
 
         <br>
@@ -158,14 +166,14 @@
         <br>
         <div class="calendar-container">
             <div class="controls">
-                <label>Nombre del Paciente:</label>
+                <label class="form-label">Nombre del Paciente:</label>
                 <label id="nombre" style="padding:12px; width: 300px; border-radius:10px; border:1px solid #999; font-size:16px;">
                     {{ session('paciente_nombre') }}
                 </label>
 
                 <br><br>
 
-                <label for="especialidad">Especialidad:</label>
+                <label for="especialidad" class="form-label" >Especialidad:</label>
                 <select id="especialidad">
                     <option value="">Seleccione una especialidad</option>
                     <option value="medicina">Medicina General</option>
@@ -175,7 +183,7 @@
 
                 <br><br><br><br><br><br><br><br>
 
-                <a href="{{ route('citas.mis-citas') }}" class="button" >
+                <a href="{{ route('citas.mis-citas') }}" class="btn btn-citas" >
                     Mis Citas
                 </a>
             </div>
