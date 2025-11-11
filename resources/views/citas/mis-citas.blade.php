@@ -3,8 +3,17 @@
 @section('titulo', 'Mis Citas')
 
 @section('contenido')
-    <div class="container mt-5 pt-4">
-        <h2>Mis Citas</h2>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background:whitesmoke;
+            display: flex;
+
+        }
+    </style>
+    <div class="container mt-5">
+        <h1 class="text-center ">Mis Citas</h1>
 
         @if(session('success'))
             <div class="alert alert-success">

@@ -1,6 +1,14 @@
 @extends('layouts.plantilla')
 
 @section('contenido')
+
+    <style>
+        body{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background:whitesmoke;
+            display: flex;
+        }
+    </style>
     <div class="row mt-5 pt-5">
         @forelse($doctores as $doctor)
             <div class="col-md-6 mb-4">

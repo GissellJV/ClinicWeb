@@ -1,8 +1,29 @@
 @extends('layouts.plantillaRecepcion')
 @section('contenido')
+
+    <style>
+        body {
+            background:whitesmoke;
+            display: flex;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .btn-inicio{
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+    </style>
     <br><br><br><br><br>
 
-    <h1 class="text-center mb-4">Pacientes con Citas Programadas</h1>
+    <h1 class="text-center ">Pacientes con Citas Programadas</h1>
 
     @if(session('success'))
         <div class="alert alert-success text-center">{{ session('success') }}</div>
@@ -67,9 +88,9 @@
         </tbody>
     </table>
 
-    <div class="text-center mt-4">
+    <div class="text-center">
         <a href="{{route('recepcionista.busquedaexpediente')}}">
-            <button type="button" class="btn btn-primary">Volver al Inicio</button>
+            <button  type="submit" class="btn btn-inicio">Volver al Inicio</button>
         </a>
     </div>
 @endsection

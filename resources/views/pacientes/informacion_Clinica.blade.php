@@ -2,10 +2,10 @@
 @section('contenido')
 
     <style>
-        <style>
         body {
-            background-color: #fafafa;
-            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background:whitesmoke;
+            display: flex;
             color: #2b2b2b;
         }
 
@@ -109,7 +109,6 @@
                 border-bottom: 3px solid #4ecdc4;
             }
         }
-    </style>
 
     </style>
 
