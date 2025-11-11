@@ -111,7 +111,7 @@ class PacienteController extends Controller
     {
         return view('pacientes.iniciodesesion');
     }
-    public function login(Request $request){
+  /*  public function login(Request $request){
 
         $request->validate([
             'telefono' => 'required|string',
@@ -139,6 +139,7 @@ class PacienteController extends Controller
             ->withInput($request->only('telefono'));
 
     }
+  */
 
     // Cerrar sesión
     public function logout(Request $request)
@@ -154,7 +155,7 @@ class PacienteController extends Controller
     public function agendar_Citasonline()
     {
         if (!session('paciente_id')) {
-                    return redirect()->route('pacientes.loginp')
+                    return redirect()->route('empleados.loginempleado')
               ->with('error', 'Debes iniciar sesión para agendar una cita');
       }
 
@@ -233,7 +234,7 @@ class PacienteController extends Controller
             'password' => Hash::make($request->password),
         ]);
         DB::table('password_reset_tokens')->where('token', $request->token)->delete();
-        return redirect('/loginpaciente')->with('status', 'Tu contraseña se ha cambiado exitosamente.');
+        return redirect('/loginempleado')->with('status', 'Tu contraseña se ha cambiado exitosamente.');
     }
 
 

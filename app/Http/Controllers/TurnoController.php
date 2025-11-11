@@ -11,6 +11,10 @@ class TurnoController extends Controller
 {
     public function index(Request $request)
     {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('empleados.loginempleado')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
         $query = RolTurnoDoctor::with(['doctor.especialidad', 'cita']);
 
         if ($request->filled('doctor')) {
@@ -38,6 +42,10 @@ class TurnoController extends Controller
 
     public function store(Request $request)
     {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('empleados.loginempleado')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
         $request->validate([
             'empleado_id' => 'required|exists:empleados,id',
             'cita_id'     => 'required|exists:citas,id',
@@ -57,6 +65,7 @@ class TurnoController extends Controller
 
     public function show($id)
     {
+
         $turno = RolTurnoDoctor::with(['empleado', 'cita'])->findOrFail($id);
         return response()->json($turno);
     }

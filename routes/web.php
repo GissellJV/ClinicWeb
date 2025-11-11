@@ -23,7 +23,7 @@ Route::post('/registrar',[PacienteController::class,'store'])->name('pacientes.s
 
 Route::get('/agendarcitas', [PacienteController::class, 'agendar_Citasonline'])->name('agendarcitas');
 
-Route::get('/loginpaciente', [PacienteController::class, 'loginp'])->name('pacientes.loginp');
+//Route::get('/loginpaciente', [PacienteController::class, 'loginp'])->name('pacientes.loginp');
 Route::get('/recuperar', [PacienteController::class, 'enviar_codigo_recuperacion'])->name('pacientes.enviar_codigo_recuperacion');
 Route::post('/recuperar', [PacienteController::class, 'enviarCodigoRecuperacion'])->name('enviarCodigoRecuperacion');
 Route::get('/restablecer/{token}', [PacienteController::class, 'cambio_contra'])->name('pacientes.cambio_contra');

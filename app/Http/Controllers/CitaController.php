@@ -47,7 +47,7 @@ class CitaController extends Controller
     public function misCitas()
     {
         if (!session('paciente_id')) {
-            return redirect()->route('pacientes.loginp')
+            return redirect()->route('empleados.loginempleado')
                 ->with('error', 'Debes iniciar sesión para visualizar tus citas');
         }
 
@@ -74,7 +74,7 @@ class CitaController extends Controller
     public function cancelarCita($id)
     {
         if (!session('paciente_id')) {
-            return redirect()->route('pacientes.loginp')
+            return redirect()->route('empleados.loginempleado')
                 ->with('error', 'Debes iniciar sesión primero');
         }
 
@@ -97,8 +97,9 @@ class CitaController extends Controller
     //  Reprogramar cita
     public function reprogramarCita(Request $request, $id)
     {
+
         if (!session('paciente_id')) {
-            return redirect()->route('pacientes.loginp')
+            return redirect()->route('empleados.loginempleado')
                 ->with('error', 'Debes iniciar sesión primero');
         }
 
