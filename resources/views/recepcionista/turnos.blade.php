@@ -225,13 +225,12 @@
                         <tr>
                             <td>{{ $turno->empleado->nombre }} {{ $turno->empleado->apellido }}</td>
                             <td>{{ $turno->empleado->departamento}}</td>
+                            <td>{{\Carbon\Carbon::parse($turno->fecha)->format('d/m/Y') }}</td>
                             <td>{{ $turno->hora_turno }}</td>
-                            <td>
-                                <span class="badge bg-success">Disponible</span>
-                            </td>
+                            <td>{{$turno->cita->estado}}</td>
 
                             <td class="text-center">
-                                <button class="btn btn-outline-info btn-sm" onclick="verDetalles({{ $turno->id }})">
+                                <!-- <button class="btn btn-outline-info btn-sm" onclick="verDetalles({{ $turno->id }})">
                                     <i class="bi bi-eye"></i>
                                 </button>
 
@@ -241,7 +240,11 @@
 
                                 <button class="btn btn-outline-danger btn-sm" onclick="eliminarTurno({{ $turno->id }})">
                                     <i class="bi bi-trash"></i>
+                                </button> -->
+                                <button class="btn btn-outline-success btn-sm mt-1" onclick="verMas({{ $turno->id }})">
+                                    Ver más
                                 </button>
+
                             </td>
                         </tr>
 
@@ -307,3 +310,9 @@
         }
     </script>
 @endsection
+
+<script>
+    function verMas(id) {
+        window.location.href = '/turnos/${id}/vermas';
+    }
+</script>
