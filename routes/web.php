@@ -99,7 +99,7 @@ Route::get('/enfermeria-principal', [EnfermeriaController::class, 'principal'])-
 // Agendar citas - Recepcionista
 Route::get('/recepcionista/agendar-cita', [CitaController::class, 'crearCitaRecepcionista'])->name('recepcionista.citas.crear');
 Route::post('/recepcionista/agendar-cita', [CitaController::class, 'guardarCitaRecepcionista'])->name('recepcionista.citas.guardar');
-Route::get('/recepcionista/doctores-especialidad/{especialidad}', [CitaController::class, 'getDoctoresPorEspecialidad']);
+Route::get('/recepcionista/doctores-especialidad/{departamento}', [CitaController::class, 'getDoctoresPorEspecialidad']);
 Route::post('/recepcionista/verificar-disponibilidad', [CitaController::class, 'verificarDisponibilidad']);
 
 // ver citas del doctor
