@@ -11,34 +11,40 @@ class TurnoController extends Controller
 {
     public function index(Request $request)
     {
+        // Verificación de sesión
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
             return redirect()->route('empleados.loginempleado')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
-        $query = RolTurnoDoctor::with(['doctor.especialidad', 'cita']);
 
+        // Construcción del query
+        $query = Cita::query();
+
+        // Filtrar por doctor
         if ($request->filled('doctor')) {
-            $query->whereHas('doctor', function ($q) use ($request) {
-                $q->where('nombre', 'like', '%' . $request->doctor . '%');
-            });
+            $query->where('doctor_nombre', 'like', '%' . $request->doctor . '%');
         }
 
+        // Filtrar por especialidad
         if ($request->filled('especialidad')) {
-            $query->whereHas('doctor.especialidad', function ($q) use ($request) {
-                $q->where('nombre', 'like', '%' . $request->especialidad . '%');
-            });
+            $query->where('especialidad', 'like', '%' . $request->especialidad . '%');
         }
 
+        // Filtrar por fecha exacta
         if ($request->filled('fecha')) {
-            $query->where('fecha', $request->fecha);
+            $query->whereDate('fecha', $request->fecha);
         }
 
+        // Paginación
         $turnos = $query->paginate(10);
+
+        // Datos extra para la vista
         $doctores = Empleado::where('cargo', 'Doctor')->get();
         $citas = Cita::with('paciente')->get();
 
         return view('recepcionista.turnos', compact('turnos', 'doctores', 'citas'));
     }
+
 
     public function store(Request $request)
     {
@@ -60,7 +66,7 @@ class TurnoController extends Controller
             'hora_turno'  => $request->hora_turno
         ]);
 
-        return redirect()->route('rol-turnos.index')->with('success', 'Turno creado correctamente.');
+        return redirect()->route('recepcionista.index')->with('success', 'Turno creado correctamente.');
     }
 
     public function show($id)

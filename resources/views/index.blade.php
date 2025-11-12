@@ -1,4 +1,28 @@
-@extends('layouts.plantilla')
+@php
+//Determinar plantilla según tipo de usuario logueado
+
+if (session('tipo_usuario') === 'paciente') {
+    $layout = 'layouts.plantilla';
+} elseif (session('tipo_usuario') === 'empleado') {
+    switch (session('cargo')) {
+    case 'Recepcionista':
+    $layout = 'layouts.plantillaRecepcion';
+    break;
+    case 'Doctor':
+    $layout = 'layouts.plantillaDoctor';
+    break;
+    case 'Enfermero':
+    $layout = 'layouts.plantillaEnfermero';
+    break;
+    default:
+    $layout = 'layouts.plantilla'; // fallback
+    }
+    } else {
+    $layout = 'layouts.plantilla'; // visitante
+    }
+@endphp
+
+@extends($layout)
 
 @section('contenido')
 

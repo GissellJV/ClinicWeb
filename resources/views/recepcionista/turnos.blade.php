@@ -3,307 +3,328 @@
 
     <style>
         body {
-            background: #f7fdfc;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background:whitesmoke;
+            display: flex;
+
+        }
+        .formulario .register-section {
+            padding: 1rem 1rem 3rem 1rem;
         }
 
-        .stat-card {
-            border: none;
-            border-radius: 15px;
-            color: white;
-            padding: 1.2rem;
+        .formulario .form-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            margin: 0 auto;
+            border-top: 5px solid #4ecdc4;
+            position: relative;
+        }
+
+        .formulario .form-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 2rem;
             text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .mint { background-color: #00bfa6 !important; }
-        .aqua { background-color: #4cd7c6 !important; }
-        .turq { background-color: #82e9de !important; color: #004b46 !important; }
-        .soft { background-color: #b2f5ea !important; color: #004b46 !important; }
+        .formulario .form-label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
 
-        .card-custom {
-            border-radius: 18px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+        .formulario .form-control {
+            color: #555;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .formulario .form-control:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
+            background: white;
+        }
+
+        .formulario .form-control::placeholder {
+            color: #999;
+        }
+
+        /* RADIO BOTONES */
+        .formulario .form-check-input:checked {
+            background-color: #4ecdc4;
+            border-color: #4ecdc4;
+        }
+
+        .formulario .form-check-input:focus {
+            box-shadow: 0 0 0 0.25rem rgba(78, 205, 196, 0.25);
+            border-color: #4ecdc4;
+        }
+
+        /* INPUTS */
+        .formulario .input-group-text {
+            background: #e8f8f7;
+            border: 2px solid #e0e0e0;
+            border-right: none;
+            color: #4ecdc4;
+            font-weight: 600;
+        }
+
+        .formulario .input-group .form-control {
+            border-left: none;
+        }
+
+        .formulario .input-group:focus-within .input-group-text {
+            border-color: #4ecdc4;
+        }
+
+        .formulario .input-group:focus-within .form-control {
+            border-color: #4ecdc4;
+        }
+
+        /*MENSAJES DE ERROR*/
+        .formulario small.text-danger {
+            font-size: 0.875rem;
+            display: block;
+            margin-top: 0.5rem;
+        }
+
+        /* BOTONES */
+        .formulario .btn-register {
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
             border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
         }
 
-        .btn-primary {
-            background-color: #00bfa6 !important;
-            border-color: #00bfa6 !important;
+        .formulario .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
         }
 
-        .btn-primary:hover {
-            background-color: #009e8e !important;
-            border-color: #009e8e !important;
+        .formulario .btn-cancel {
+            padding: 0.875rem 2rem;
+            background: white;
+            border: 2px solid #dc3545;
+            border-radius: 8px;
+            color: #dc3545;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
         }
 
-        .btn-outline-primary {
-            color: #00bfa6 !important;
-            border-color: #00bfa6 !important;
+        .formulario .btn-cancel:hover {
+            background: #dc3545;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
         }
 
-        .btn-outline-primary:hover {
-            background-color: #00bfa6 !important;
-            color: white !important;
+        @media (max-width: 768px) {
+            .formulario .form-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .formulario .form-title {
+                font-size: 1.5rem;
+            }
         }
 
-        .btn-outline-info {
-            color: #4cd7c6 !important;
-            border-color: #4cd7c6 !important;
-        }
-
-        .btn-outline-info:hover {
-            background-color: #4cd7c6 !important;
-            color: white !important;
-        }
-
-        .btn-outline-danger {
-            color: #e74c3c !important;
-            border-color: #e74c3c !important;
-        }
-
-        .btn-outline-danger:hover {
-            background-color: #e74c3c !important;
-            color: white !important;
-        }
-
-        table thead {
-            background: #b2f5ea !important;
-            color: #004b46 !important;
-        }
     </style>
 
     <br><br><br>
 
-    <div class="container py-4">
+    <div class="container py-4 formulario">
 
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2 class="fw-bold mint p-2 px-3 text-white rounded">Turnos de Doctores</h2>
+        <div class="register-section">
+            <div class="form-container">
 
-            <button class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalNuevoTurno">
-                <i class="bi bi-calendar-plus"></i> Nuevo Turno
-            </button>
+                <h2 class="form-title">Turnos de Doctores</h2>
 
-            <!-- MODAL MODERNO -->
-            <div class="modal fade" id="modalNuevoTurno" data-bs-backdrop="static" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content shadow-lg border-0 rounded-4">
-
-                        <!-- Header -->
-                        <div class="modal-header bg-primary text-white rounded-top-4">
-                            <h5 class="modal-title d-flex align-items-center gap-2">
-                                <i class="bi bi-calendar-check"></i>
-                                Asignar Nuevo Turno
-                            </h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <!-- Form -->
-                        <form action="{{ route('recepcionista.store') }}" method="POST">
-                            @csrf
+                <!-- Modal Ver Detalles -->
+                <div class="modal fade" id="verDetallesModal" tabindex="-1" aria-labelledby="verDetallesModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content border-0 shadow-lg rounded-4">
+                            <div class="modal-header bg-mint text-white rounded-top-4">
+                                <h5 class="modal-title fw-bold" id="verDetallesModalLabel">
+                                    <i class="bi bi-calendar-check me-2"></i>Detalles del Turno
+                                </h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
 
                             <div class="modal-body">
-
-                                <!-- Sección: Información del Turno -->
-                                <h6 class="fw-bold text-primary mb-3">
-                                    <i class="bi bi-person-badge"></i> Información del Turno
-                                </h6>
-
                                 <div class="row g-3">
 
-                                    <!-- Doctor -->
                                     <div class="col-md-6">
-                                        <label class="form-label fw-semibold">Doctor</label>
-                                        <select name="empleado_id" class="form-select shadow-sm" required>
-                                            <option value="">Seleccione un doctor</option>
-                                            @foreach ($doctores as $doc)
-                                                <option value="{{ $doc->id }}">{{ $doc->nombre }} {{ $doc->apellido }}</option>
-                                            @endforeach
-                                        </select>
+                                        <label class="form-label fw-semibold text-muted mb-0">Doctor</label>
+                                        <div class="form-control bg-light-subtle border-0 shadow-sm" id="detalleEmpleado">—</div>
                                     </div>
 
-                                    <!-- Cita -->
                                     <div class="col-md-6">
-                                        <label class="form-label fw-semibold">Cita</label>
-                                        <select name="cita_id" class="form-select shadow-sm" required>
-                                            <option value="">Seleccione una cita</option>
-                                            @foreach ($citas as $cita)
-                                                <option value="{{ $cita->id }}">
-                                                    Cita #{{ $cita->id }} – {{ $cita->paciente->nombre ?? 'Paciente' }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                        <label class="form-label fw-semibold text-muted mb-0">Especialidad</label>
+                                        <div class="form-control bg-light-subtle border-0 shadow-sm" id="detalleDepartamento">—</div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold text-muted mb-0">Paciente</label>
+                                        <div class="form-control bg-light-subtle border-0 shadow-sm" id="detallePaciente">—</div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold text-muted mb-0">Fecha</label>
+                                        <div class="form-control bg-light-subtle border-0 shadow-sm" id="detalleFecha">—</div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold text-muted mb-0">Hora</label>
+                                        <div class="form-control bg-light-subtle border-0 shadow-sm" id="detalleHora">—</div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="form-label fw-semibold text-muted mb-0">Estado</label>
+                                        <div class="form-control bg-light-subtle border-0 shadow-sm" id="detalleEstado">—</div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="form-label fw-semibold text-muted mb-0">Mensaje</label>
+                                        <div class="form-control bg-light-subtle border-0 shadow-sm" id="detalleMensaje">—</div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="form-label fw-semibold text-muted mb-0">Motivo</label>
+                                        <div class="form-control bg-light-subtle border-0 shadow-sm" id="detalleMotivo">—</div>
                                     </div>
 
                                 </div>
-
-                                <hr class="my-4">
-
-                                <!-- Sección: Fecha y Hora -->
-                                <h6 class="fw-bold text-primary mb-3">
-                                    <i class="bi bi-clock-history"></i> Fecha y Hora
-                                </h6>
-
-                                <div class="row g-3">
-                                    <!-- Fecha -->
-                                    <div class="col-md-6">
-                                        <label class="form-label fw-semibold">Fecha del turno</label>
-                                        <input type="date" name="fecha" class="form-control shadow-sm" required>
-                                    </div>
-
-                                    <!-- Hora -->
-                                    <div class="col-md-6">
-                                        <label class="form-label fw-semibold">Hora del turno</label>
-                                        <input type="time" name="hora_turno" class="form-control shadow-sm" required>
-                                    </div>
-                                </div>
-
                             </div>
 
-                            <!-- Footer -->
-                            <div class="modal-footer d-flex justify-content-between">
-                                <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
-                                    <i class="bi bi-x-circle"></i> Cancelar
-                                </button>
-
-                                <button type="submit" class="btn btn-primary px-4">
-                                    <i class="bi bi-check-circle"></i> Guardar Turno
-                                </button>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary btn-cancel" data-bs-dismiss="modal">Cerrar</button>
                             </div>
-
-                        </form>
-
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const verDetallesModal = document.getElementById('verDetallesModal');
+                        verDetallesModal.addEventListener('show.bs.modal', event => {
+                            const button = event.relatedTarget;
 
-        <div class="card card-custom soft mb-3">
-            <div class="card-body">
-                <form method="GET" action="{{ route('recepcionista.index') }}" class="row g-3">
+                            // Leer los datos del botón
+                            const doctor = button.getAttribute('data-empleado');
+                            const especialidad = button.getAttribute('data-departamento');
+                            const paciente = button.getAttribute('data-paciente');
+                            const fecha = button.getAttribute('data-fecha');
+                            const hora = button.getAttribute('data-hora');
+                            const estado = button.getAttribute('data-estado');
+                            const mensaje = button.getAttribute('data-mensaje');
+                            const motivo = button.getAttribute('data-motivo');
 
-                    <div class="col-md-4">
-                        <label class="form-label fw-semibold">Doctor</label>
+                            // Asignarlos dentro del modal
+                            document.getElementById('detalleEmpleado').textContent = doctor;
+                            document.getElementById('detalleDepartamento').textContent = especialidad;
+                            document.getElementById('detallePaciente').textContent = paciente;
+                            document.getElementById('detalleFecha').textContent = fecha;
+                            document.getElementById('detalleHora').textContent = hora;
+                            document.getElementById('detalleEstado').textContent = estado;
+                            document.getElementById('detalleMensaje').textContent = mensaje;
+                            document.getElementById('detalleMotivo').textContent = motivo;
+                        });
+                    });
+                </script>
+
+                <!-- Filtro -->
+                <form method="GET" action="{{ route('recepcionista.index') }}" class="row g-2 mt-4">
+
+                    <div class="col">
+                        <label class="form-label">Doctor</label>
                         <input type="text" name="doctor" class="form-control" value="{{ request('doctor') }}">
                     </div>
 
-                    <div class="col-md-4">
-                        <label class="form-label fw-semibold">Especialidad</label>
+                    <div class="col">
+                        <label class="form-label">Especialidad</label>
                         <input type="text" name="especialidad" class="form-control" value="{{ request('especialidad') }}">
                     </div>
 
-                    <div class="col-md-3">
-                        <label class="form-label fw-semibold">Fecha</label>
+                    <div class="col">
+                        <label class="form-label">Fecha</label>
                         <input type="date" name="fecha" class="form-control" value="{{ request('fecha') }}">
                     </div>
 
-                    <div class="col-md-1 d-flex align-items-end">
-                        <button class="btn btn-primary w-100 shadow-sm">Filtrar</button>
+                    <div class="col-auto d-flex align-items-end">
+                        <button class="btn btn-register shadow-sm">Filtrar</button>
                     </div>
 
                 </form>
-            </div>
-        </div>
 
-        <div class="card card-custom">
-            <div class="card-body">
 
-                <table class="table table-hover align-middle">
-                    <thead>
-                    <tr>
-                        <th>Doctor</th>
-                        <th>Especialidad</th>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>Estado</th>
-                        <th class="text-center">Acciones</th>
-                    </tr>
-                    </thead>
-
-                    <tbody id="tablaTurnos">
-                    @forelse ($turnos as $turno)
+                <!-- Tabla -->
+                <div class="mt-5">
+                    <table class="table table-hover align-middle">
+                        <thead>
                         <tr>
-                            <td>{{ $turno->doctor->nombre }} {{ $turno->doctor->apellido }}</td>
-                            <td>{{ $turno->doctor->especialidad->nombre }}</td>
-                            <td>{{ $turno->hora_turno }}</td>
-                            <td>
-                                <span class="badge bg-success">Disponible</span>
-                            </td>
-
-                            <td class="text-center">
-                                <button class="btn btn-outline-info btn-sm" onclick="verDetalles({{ $turno->id }})">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-
-                                <button class="btn btn-outline-primary btn-sm" onclick="editarTurno({{ $turno->id }})">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-
-                                <button class="btn btn-outline-danger btn-sm" onclick="eliminarTurno({{ $turno->id }})">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </td>
+                            <th>Doctor</th>
+                            <th>Especialidad</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Paciente</th>
+                            <th>Estado</th>
+                            <th class="text-center">Acciones</th>
                         </tr>
+                        </thead>
 
-                    @empty
-                        <tr>
-                            <td colspan="6" class="text-center text-muted">No hay turnos registrados</td>
-                        </tr>
-                    @endforelse
-                    </tbody>
+                        <tbody id="tablaTurnos">
+                        @forelse ($citas as $cita)
+                            <tr>
+                                <td>{{ $cita->doctor_nombre }}</td>
+                                <td>{{ $cita->especialidad }}</td>
+                                <td>{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}</td>
+                                <td>{{ $cita->hora }}</td>
+                                <td>{{ $cita->paciente_nombre }}</td>
+                                <td>{{ $cita->estado }}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-outline-info btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#verDetallesModal"
+                                            data-empleado="{{ $cita->doctor_nombre }}"
+                                            data-departamento="{{ $cita->especialidad }}"
+                                            data-paciente="{{ $cita->paciente_nombre }}"
+                                            data-fecha="{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}"
+                                            data-hora="{{ $cita->hora }}"
+                                            data-estado="{{ $cita->estado }}"
+                                            data-mensaje="{{ $cita->mensaje }}"
+                                            data-motivo="{{ $cita->motivo }}">
+                                        Ver más
+                                    </button>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="text-center text-muted">No hay turnos registrados</td>
+                            </tr>
+                        @endforelse
+                        </tbody>
+                    </table>
 
-                </table>
-
-                <div class="mt-3">
-                    {{ $turnos->links() }}
+                    <div class="mt-3">
+                        {{ $turnos->links() }}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- MODAL: Ver Detalles -->
-    <div class="modal fade" id="modalDetalles" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content rounded-3 shadow">
-
-                <div class="modal-header mint text-white">
-                    <h5 class="modal-title">Detalles del Turno</h5>
-                    <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body" id="contenidoDetalles">
-                    <!-- AJAX -->
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-@endsection
-
-@section('scripts')
-    <script>
-        function verDetalles(id) {
-            fetch(`/turnos/${id}`)
-                .then(r => r.json())
-                .then(data => {
-                    let html = `
-                    <h5 class="fw-bold">${data.doctor.nombre} ${data.doctor.apellido}</h5>
-                    <p><strong>Especialidad:</strong> ${data.doctor.especialidad.nombre}</p>
-                    <p><strong>Fecha:</strong> ${data.fecha}</p>
-                    <p><strong>Hora:</strong> ${data.hora}</p>
-                    <hr>
-                    <h6 class="fw-bold">Pacientes asignados</h6>
-                    <ul>
-                        ${data.pacientes.length > 0
-                        ? data.pacientes.map(p => `<li>${p.nombre} ${p.apellido}</li>`).join('')
-                        : "<p class='text-muted'>Sin pacientes asignados</p>"
-                    }
-                    </ul>
-                `;
-                    document.getElementById('contenidoDetalles').innerHTML = html;
-                    new bootstrap.Modal('#modalDetalles').show();
-                });
-        }
-    </script>
 @endsection

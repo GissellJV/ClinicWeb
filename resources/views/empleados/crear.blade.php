@@ -1,4 +1,5 @@
 @extends('layouts.plantillaRecepcion')
+<link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 
 @section('titulo', 'Registrar Empleado')
 
@@ -173,12 +174,10 @@
             }
         }
     </style>
+    <div class="formulario">
+            <h1 class="text-center">Registrar Nuevo Empleado</h1>
+    <div class="form-container" style="margin: 10px auto; max-width: 900px">
 
-    <div class="container-empleado">
-        <div class="card-empleado">
-            <div class="card-header-empleado">
-                <h4>Registrar Nuevo Empleado</h4>
-            </div>
             <div class="card-body-empleado">
                 @if(session('success'))
                     <div class="alert-success-custom">
@@ -299,6 +298,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+
+    </div>
     </div>
 @endsection
