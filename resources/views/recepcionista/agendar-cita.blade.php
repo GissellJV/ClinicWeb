@@ -210,26 +210,24 @@
             </div>
 
             <!-- Especialidad -->
-            <div class="form-group">
-                <label class="form-label" for="especialidad"> Especialidad</label>
-                <select class="form-control" id="especialidad" name="especialidad" required>
-                    <option value="">Seleccionar especialidad</option>
-                    @foreach($especialidades as $especialidad)
-                        <option value="{{ $especialidad }}">{{ $especialidad }}</option>
-                    @endforeach
-                </select>
-            </div>
+            <label for="especialidad">Especialidad</label>
+            <select id="especialidad" name="especialidad" class="form-control" required>
+                <option value="">Seleccionar especialidad</option>
+                @foreach($especialidades as $especialidad)
+                    <option value="{{ $especialidad }}">{{ $especialidad }}</option>
+                @endforeach
+            </select>
 
             <!-- Doctor -->
-            <div class="form-group">
-                <label class="form-label" for="empleado_id">️ Doctor</label>
-                <select class="form-control" id="empleado_id" name="empleado_id" required disabled>
-                    <option value="">Primero seleccione una especialidad</option>
-                </select>
-                <div class="loading" id="loadingDoctores">
-                    <i class="fas fa-spinner fa-spin"></i> Cargando doctores...
-                </div>
-            </div>
+            <label for="empleado_id">Doctor</label>
+            <select id="empleado_id" name="empleado_id" class="form-control" required>
+                <option value="">Seleccionar doctor</option>
+                @foreach($doctores as $doctor)
+                    <option value="{{ $doctor->id }}">{{ $doctor->nombre }}</option>
+                @endforeach
+            </select>
+            <div id="loadingDoctores" class="loading" style="display:none;">Cargando doctores...</div>
+
 
             <!-- Fecha de la Cita -->
             <div class="form-group">
@@ -289,34 +287,27 @@
             const doctorSelect = document.getElementById('empleado_id');
             const loading = document.getElementById('loadingDoctores');
 
+            doctorSelect.innerHTML = '<option value="">Seleccionar doctor</option>';
+
             if (especialidad) {
                 loading.style.display = 'block';
-                doctorSelect.disabled = true;
-                doctorSelect.innerHTML = '<option value="">Cargando doctores...</option>';
-
                 fetch(`/recepcionista/doctores-especialidad/${especialidad}`)
                     .then(response => response.json())
                     .then(data => {
-                        doctorSelect.innerHTML = '<option value="">Seleccionar doctor</option>';
                         data.forEach(doctor => {
                             const option = document.createElement('option');
                             option.value = doctor.id;
-                            option.textContent = `${doctor.nombre} ${doctor.apellido}`;
+                            option.textContent = doctor.nombre;
                             doctorSelect.appendChild(option);
                         });
-                        doctorSelect.disabled = false;
-                        loading.style.display = 'none';
                     })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        doctorSelect.innerHTML = '<option value="">Error al cargar doctores</option>';
+                    .catch(error => console.error('Error:', error))
+                    .finally(() => {
                         loading.style.display = 'none';
                     });
-            } else {
-                doctorSelect.innerHTML = '<option value="">Primero seleccione una especialidad</option>';
-                doctorSelect.disabled = true;
             }
         });
+
 
         // Validación de fecha mínima (hoy)
         document.getElementById('fecha_cita').min = new Date().toISOString().split('T')[0];

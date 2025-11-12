@@ -13,21 +13,14 @@ class CitaController extends Controller
     // AGENDAR CITAS RECEPCIONISTA
     public function agendar()
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
-            return redirect()->route('empleados.loginempleado')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
-        }
-
         $pacientes = Paciente::all();
-        $especialidades = [
-            'Medicina General',
-            'Pediatría',
-            'Ginecología',
-            'Cardiología',
-            'Dermatología'
-        ];
+        $doctores = Empleado::where('cargo', 'Doctor')->get();
+        $especialidades = Empleado::where('cargo', 'Doctor')
+            ->select('departamento')
+            ->distinct()
+            ->pluck('departamento');
 
-        return view('recepcionista.agendar-cita', compact('pacientes', 'especialidades'));
+        return view('recepcionista.agendar-cita', compact('pacientes', 'doctores', 'especialidades'));
     }
 
     //Vista del recepcionista
@@ -233,11 +226,11 @@ class CitaController extends Controller
             ->with('success', '¡Cita agendada exitosamente!');
     }
 
-    public function getDoctoresPorEspecialidad($especialidad)
+    public function getDoctoresPorEspecialidad($departamento)
     {
         $doctores = Empleado::where('cargo', 'Doctor')
-            ->where('especialidad', $especialidad)
-            ->get(['id', 'nombre', 'especialidad']);
+            ->where('departamento', $departamento)
+            ->get(['id', 'nombre', 'departamento']);
 
         return response()->json($doctores);
     }
