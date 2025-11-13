@@ -270,10 +270,33 @@
                         <input type="text" name="doctor" class="form-control" value="{{ request('doctor') }}">
                     </div>
 
-                    <div class="col">
-                        <label class="form-label">Especialidad</label>
-                        <input type="text" name="especialidad" class="form-control" value="{{ request('especialidad') }}">
+                    <div class="col-md-4 dropdown">
+                        <label class="form-label fw-semibold">Especialidad</label>
+                        <button class="form-control text-start dropdown-toggle bg-white"
+                                type="button"
+                                id="dropdownEspecialidad"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                style="color: #495057; border: 1px solid #ced4da;">
+                            {{ request('especialidad') ?? 'Seleccione una especialidad' }}
+                        </button>
+
+                        <ul class="dropdown-menu w-100" aria-labelledby="dropdownEspecialidad">
+                            <li><a class="dropdown-item" href="#" onclick="seleccionarEspecialidad('')">Seleccione una especialidad</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            @foreach($especialidads as $esp)
+                                <li><a class="dropdown-item" href="#" onclick="seleccionarEspecialidad('{{ $esp }}')">{{ $esp }}</a></li>
+                            @endforeach
+                        </ul>
                     </div>
+                    <input type="hidden" name="especialidad" id="inputEspecialidad" value="{{ request('especialidad') }}">
+                    <script>
+                        function seleccionarEspecialidad(valor) {
+                            document.getElementById('inputEspecialidad').value = valor;
+                            document.getElementById('dropdownEspecialidad').innerText = valor || 'Seleccione una especialidad';
+                        }
+                    </script>
+
 
                     <div class="col">
                         <label class="form-label">Fecha</label>
@@ -336,7 +359,7 @@
                     </table>
 
                     <div class="mt-3">
-                        {{ $turnos->links() }}
+                        {{ $citas->links() }}
                     </div>
                 </div>
             </div>
