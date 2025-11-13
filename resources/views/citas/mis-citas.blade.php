@@ -11,9 +11,13 @@
             display: flex;
 
         }
+
+        .text-info-emphasis{
+            font-weight: bold;
+        }
     </style>
     <div class="container mt-5">
-        <h1 class="text-center ">Mis Citas</h1>
+        <h1 class="text-center text-info-emphasis">Mis Citas</h1>
 
         @if(session('success'))
             <div class="alert alert-success">
@@ -26,6 +30,8 @@
                 {{ session('error') }}
             </div>
         @endif
+
+        <br>
 
         <div class="row">
             @forelse($citas as $cita)

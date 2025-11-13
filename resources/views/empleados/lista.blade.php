@@ -1,4 +1,5 @@
 @extends('layouts.plantillaRecepcion')
+<link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 
 @section('titulo', 'Lista de Empleados')
 
@@ -111,7 +112,7 @@
         .table-container {
             overflow-x: auto;
             border-radius: 12px;
-            border: 1px solid #e8f4f3;
+            border: 1px solid #c3ede7;
         }
 
         .table-custom {
@@ -121,7 +122,7 @@
         }
 
         .table-custom thead {
-            background: #f8fffe;
+            background: #c3ede7;
         }
 
         .table-custom thead th {
@@ -239,7 +240,7 @@
         }
 
         .stat-mini {
-            background: #f8fffe;
+            background: #c3ede7;
             padding: 15px 25px;
             border-radius: 12px;
             border: 2px solid #e8f4f3;
@@ -256,7 +257,7 @@
         .stat-mini-text span {
             display: block;
             font-size: 0.8rem;
-            color: #7f8c8d;
+            color: rgba(28, 27, 27, 0.95);
         }
 
         .stat-mini-text strong {
@@ -290,27 +291,28 @@
                 margin-bottom: 5px;
             }
         }
+
+        .text-info-emphasis{
+            font-weight: bold;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background:whitesmoke;
+            display: flex;
+
+        }
+
     </style>
 
-    <div class="empleados-container">
-        <div class="empleados-header">
-            <h1>Lista de Empleados</h1>
-            <p>Gestiona todo el personal de la clínica</p>
-        </div>
+    <div class="formulario">
+        <br> <br>
 
-        <div class="card-empleados">
-            <div class="card-header-empleados">
-                <h4>
-                    <i class="fas fa-users"></i>
-                    Empleados Registrados
-                </h4>
-                <a href="{{ route('empleados.crear') }}" class="btn-nuevo">
-                    <i class="fas fa-plus"></i>
-                    Nuevo Empleado
-                </a>
-            </div>
-
-            <div class="card-body-empleados">
+    <h1 class="text-center text-info-emphasis">Lista de Empleados
+        <a href="{{ route('empleados.crear') }}" class="btn btn-light btn-sm">
+            Nuevo Empleado
+        </a></h1>
+        <br> <br>
                 @if(session('success'))
                     <div class="alert-success-custom">
                         <i class="fas fa-check-circle"></i>
@@ -423,6 +425,5 @@
                     </div>
                 @endif
             </div>
-        </div>
     </div>
 @endsection

@@ -343,12 +343,26 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .table thead th {
+            background: #4ecdc4 ;
+        }
+
+        .table.table-hover tbody tr:hover,
+        .table.table-hover tbody tr:hover td {
+            background: rgb(222, 251, 249);
+            color: rgba(28, 27, 27, 0.95);
+        }
+
+        .text-info-emphasis{
+            font-weight: bold;
+        }
     </style>
 
     <div class="citas-container">
         <!-- Header -->
         <div class="header">
-            <h1>Mis Citas Programadas</h1>
+            <h1 class="text-center text-info-emphasis">Mis Citas Programadas</h1>
             <p>Gestiona y revisa tus citas médicas</p>
         </div>
 

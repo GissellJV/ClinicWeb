@@ -61,7 +61,7 @@
 <body>
 
 <div class="receta-container">
-    <h2>Receta Médica</h2>
+    <h1 class="text-center text-info-emphasis">Receta Médica</h1>
 
     <div class="campo"><span class="label">Paciente:</span> {{ $nombre_paciente }}</div>
     <div class="campo"><span class="label">Medicamento:</span> {{ $medicamento }}</div>
