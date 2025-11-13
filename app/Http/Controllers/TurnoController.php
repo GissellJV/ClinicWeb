@@ -18,7 +18,7 @@ class TurnoController extends Controller
         }
 
         // Construcción del query
-        $query = Cita::query();
+        $query = Cita::with(['doctor', 'paciente']);
 
         // Filtrar por doctor
         if ($request->filled('doctor')) {
@@ -36,13 +36,16 @@ class TurnoController extends Controller
         }
 
         // Paginación
-        $turnos = $query->paginate(10);
+        $citas = $query->paginate(10);
 
         // Datos extra para la vista
         $doctores = Empleado::where('cargo', 'Doctor')->get();
-        $citas = Cita::with('paciente')->get();
+        $especialidads = Cita::select('especialidad')
+            ->whereNotNull('especialidad')
+            ->distinct()
+            ->pluck('especialidad');
 
-        return view('recepcionista.turnos', compact('turnos', 'doctores', 'citas'));
+        return view('recepcionista.turnos', compact( 'doctores', 'citas', 'especialidads'));
     }
 
 
