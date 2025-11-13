@@ -18,7 +18,7 @@
     <br><br><br>
     <div class="formulario">
       <div class="register-section">
-          <h1 class="text-center " >Regístrate para Agendar tu Cita</h1>
+          <h1 class="text-center text-info-emphasis" >Regístrate para Agendar tu Cita</h1>
          <div class="form-container">
 
           <form method="post" action="{{route('pacientes.store')}}">

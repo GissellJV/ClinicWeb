@@ -1,56 +1,113 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-</head>
-<body>
-<div class="container d-flex justify-content-center align-items-center vh-100">
+@extends('layouts.plantilla')
+
+    @section('contenido')
+
+
+    <style>
+        #cambiar-password-page {
+            padding-top: 0 !important;
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background:whitesmoke;
+
+
+        }
+        .btn-cambiar{
+            width: 100%;
+            padding: 0.31rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border: none;
+            border-radius: 7px;
+            color: white;
+            margin-top: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+        .btn-cambiar:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+        small.text-danger {
+            font-size: 0.875em;
+        }
+    </style>
+
+    <div id="cambiar-password-page">
+        <div class="container d-flex justify-content-center align-items-center vh-80">
     <div class="card shadow p-4" style="width: 400px;">
-        <h3 class="text-center mb-3">Establecer contraseña nueva</h3>
+        <h3 class="text-center mb-3 text-info-emphasis">Establecer contraseña nueva</h3>
         <p class="text-muted text-center">Establece la nueva contraseña para tu cuenta.</p>
 
         <form action="{{ route('password.update') }}" method="POST">
             @csrf
 
-            <input type="hidden" name="token" value="{{ $token }}">
+            <input type="hidden" class="form-control" name="token" value="{{ $token }}">
 
-            <div>
+            <div class="mb-3">
                 <label for="password" class="form-label">Nueva contraseña:</label>
-                <input type="password" name="password" id="password" required>
+                <input type="password" class="form-control" name="password" id="password" >
+                @error('password')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
 
-            <div>
+            <div class="mb-3">
                 <label for="password_confirmation" class="form-label">Confirmar contraseña:</label>
-                <input type="password" name="password_confirmation" id="password_confirmation" required>
+                <input type="password"  class="form-control" name="password_confirmation" id="password_confirmation">
+                @error('password_confirmation')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">Cambiar contraseña</button>
+        <button type="submit" class="btn-cambiar">Cambiar contraseña</button>
         </form>
 
         <div class="mt-3 text-center">
-            <a href="{{route('pacientes.loginp')}}">Volver al inicio de sesión</a>
+            <a href="{{route('empleados.loginempleado')}}" style= "text-decoration-line: none; margin-bottom: 0.5rem; color: #4ecdc4; font-weight: 600" >Volver al inicio de sesión</a>
         </div>
     </div>
-</div>
-
-
-@if ($errors->any())
-    <div style="color: red;">
-        @foreach ($errors->all() as $error)
-            <p>{{ $error }}</p>
-        @endforeach
+        </div>
     </div>
-@endif
 
-@if (session('status'))
-    <div style="color: green;">
-        {{ session('status') }}
-    </div>
-@endif
+        <script>
+            window.addEventListener('DOMContentLoaded', function() {
+                window.scrollTo(0, 0);
+            });
+        </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-</body>
-</html>
+    <!-- Alertas -->
+    @if (session('error'))
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            window.scrollTo(0, 0);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error') }}',
+                confirmButtonColor: '#4ecdc4'
+            });
+        </script>
+    @endif
+
+    @if (session('status'))
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            window.scrollTo(0, 0);
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '{{ session('status') }}',
+                confirmButtonColor: '#4ecdc4'
+            });
+        </script>
+    @endif
+
+
+@endsection

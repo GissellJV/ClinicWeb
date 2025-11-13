@@ -13,6 +13,11 @@ class CitaController extends Controller
     // AGENDAR CITAS RECEPCIONISTA
     public function agendar()
     {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('empleados.loginempleado')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
         $pacientes = Paciente::all();
         $doctores = Empleado::where('cargo', 'Doctor')->get();
         $especialidades = Empleado::where('cargo', 'Doctor')

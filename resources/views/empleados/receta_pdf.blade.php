@@ -76,6 +76,11 @@
 
     <div class="firma">
         <div class="linea-firma"></div>
+        @if(session('cargo') && session('cargo') == 'Doctor')
+            <div class="alert alert-info mb-3">
+                {{session('empleado_nombre')}}
+            </div>
+        @endif
         <p>Médico responsable</p>
     </div>
 
