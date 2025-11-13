@@ -110,7 +110,7 @@
                     <form action="{{route('empleados.logout')}}" method="POST" class="mt-3">
                         @csrf
                         <button type="submit" class="btn btn-outline-danger w-100">
-                            Cerrar Sesión
+                            Cerrar
                         </button>
                     </form>
                 @endif

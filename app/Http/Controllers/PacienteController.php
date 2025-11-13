@@ -168,8 +168,12 @@ class PacienteController extends Controller
 
     {
         $request->validate([
-            'telefono' => 'required|digits_between:7,8'
-        ]);
+            'telefono' => 'required|string|size:8|regex:/^[2389]\d{7}$/'
+        ],[
+            'telefono.required' => 'El número de teléfono es obligatorio',
+            'telefono.regex' => 'El número de telefono no es valido',
+            'telefono.size' => 'El número de telefono debe tener 8 dígitos',
+            ]);
 
         $pacientes = DB::table('pacientes')->where('telefono', $request->input('telefono'))->first();
         if (!$pacientes) {
@@ -201,7 +205,7 @@ class PacienteController extends Controller
                 'channel' => 'whatsapp',
             ]);
         if ($response->failed()) {
-            return back()->withErrors(['whatsapp' => 'Error al enviar el mensaje: ' . $response->body()]);
+            return redirect('/recuperar')->with('error', 'Error al enviar el mensaje. Por favor, intenta nuevamente.');
         }
 
         return redirect('/recuperar')->with('status', 'Se ha enviado el enlace de recuperación por WhatsApp.');
@@ -211,7 +215,7 @@ class PacienteController extends Controller
     {
         $tokenData = DB::table('password_reset_tokens')->where('token', $token)->first();
         if (!$tokenData) {
-            return redirect('/recuperar')->withErrors(['token' => 'El enlace no es válido o ha expirado.']);
+            return redirect('/recuperar')->with(['error' => 'El enlace no es válido o ha expirado.']);
         }
         return view('pacientes.cambio_contra', ['token' => $token]);
     }
@@ -220,8 +224,15 @@ class PacienteController extends Controller
     {
         $request->validate([
             'token' => 'required',
-            'password' => 'required|min:8|confirmed',
-        ]);
+            'password' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]/|confirmed',
+        ],[
+                'password.required' => 'La contraseña es obligatoria',
+                'password.min' => 'La contraseña debe tener mínimo 8 caracteres',
+                'password.regex' => 'Mínimo 8 caracteres, incluye mayúsculas, minúsculas y números',
+                'password.confirmed' => 'Las contraseñas no coinciden',
+
+            ]
+        );
         $tokenData = DB::table('password_reset_tokens')->where('token', $request->token)->first();
         if (!$tokenData) {
             return redirect('/recuperar')->withErrors(['token' => 'El enlace de recuperación no es válido o ha expirado.']);

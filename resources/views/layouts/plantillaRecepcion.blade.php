@@ -99,7 +99,6 @@
             <div class="offcanvas-body">
                 <ul class="navbar-nav flex-grow-1 pe-3">
                     <li><a class="nav-link {{ request()->routeIs('recepcionista.busquedaexpediente') ? 'active' : '' }}" href="{{ route('recepcionista.busquedaexpediente') }}">Búsqueda de Expediente</a></li>
-                    <li><a class="nav-link {{ request()->routeIs('expedientes.crear') ? 'active' : '' }}" href="{{ route('expedientes.crear') }}">Registrar Expediente</a></li>
                     <li><a class="nav-link {{ request()->routeIs('citas.agendar') ? 'active' : '' }}" href="{{ route('citas.agendar') }}">Agendar Cita</a></li>
                     <li><a class="nav-link {{ request()->routeIs('empleados.crear') ? 'active' : '' }}" href="{{ route('empleados.crear') }}">Registrar Empleado</a></li>
                     <li><a class="nav-link {{ request()->routeIs('listadocitas') ? 'active' : '' }}" href="{{ route('listadocitas') }}">Citas Programadas</a></li>
