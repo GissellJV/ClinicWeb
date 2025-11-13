@@ -20,10 +20,27 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
         }
-    </style>
-    <br><br><br><br><br>
 
-    <h1 class="text-center ">Pacientes con Citas Programadas</h1>
+
+        .table thead th {
+            background: #4ecdc4 ;
+        }
+
+        .table.table-hover tbody tr:hover,
+        .table.table-hover tbody tr:hover td {
+            background: rgb(222, 251, 249);
+            color: rgba(28, 27, 27, 0.95);
+        }
+
+        .text-info-emphasis{
+            font-weight: bold;
+        }
+
+
+    </style>
+    <br><br>
+
+    <h1 class="text-center text-info-emphasis ">Pacientes con Citas Programadas</h1>
 
     @if(session('success'))
         <div class="alert alert-success text-center">{{ session('success') }}</div>
@@ -33,8 +50,10 @@
         <div class="alert alert-danger text-center">{{ session('error') }}</div>
     @endif
 
-    <table class="table table-bordered table-hover align-middle text-capitalize">
-        <thead class="table-primary">
+    <br>
+
+    <table class="table table-bordered table-hover align-middle text-capitalize" >
+        <thead >
         <tr>
             <th>Paciente</th>
             <th>Doctor</th>

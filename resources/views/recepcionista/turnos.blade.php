@@ -3,9 +3,11 @@
 
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background:whitesmoke;
             display: flex;
+            min-height: 100vh;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
         }
         .formulario .register-section {
@@ -22,11 +24,11 @@
             position: relative;
         }
 
-        .formulario .form-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 2rem;
+        .stat-card {
+            border: none;
+            border-radius: 15px;
+            color: white;
+            padding: 1.2rem;
             text-align: center;
         }
 
@@ -144,16 +146,29 @@
             }
         }
 
+        .table thead th {
+            background: #4ecdc4 ;
+        }
+
+        .table.table-hover tbody tr:hover,
+        .table.table-hover tbody tr:hover td {
+            background: rgb(222, 251, 249);
+            color: rgba(28, 27, 27, 0.95);
+        }
+        .text-info-emphasis{
+            font-weight: bold;
+        }
+
     </style>
 
     <br><br><br>
-
+    <h1 class="text-center text-info-emphasis">Turnos de Doctores</h1>
     <div class="container py-4 formulario">
 
         <div class="register-section">
             <div class="form-container">
 
-                <h2 class="form-title">Turnos de Doctores</h2>
+
 
                 <!-- Modal Ver Detalles -->
                 <div class="modal fade" id="verDetallesModal" tabindex="-1" aria-labelledby="verDetallesModalLabel" aria-hidden="true">

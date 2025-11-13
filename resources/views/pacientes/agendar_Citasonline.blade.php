@@ -154,11 +154,15 @@
             margin-bottom: 0.5rem;
             font-size: 0.95rem;
         }
+
+        .text-info-emphasis{
+            font-weight: bold;
+        }
     </style>
 
     <div class="calendar-wrapper">
         <br>
-        <h1>Agenda de Citas Médicas</h1>
+        <h1 class="text-center text-info-emphasis">Agenda de Citas Médicas</h1>
 
         <br>
         <div id="alert-container" class="container mt-3" style="max-width: 700px;"></div>

@@ -172,6 +172,11 @@
             font-weight: bold;
         }
 
+        .table thead th {
+            background: #4ecdc4 ;
+        }
+
+
     </style>
     <div class="container mt-5 pt-5">
         <h2 class="text-info-emphasis">Búsqueda de Expedientes
@@ -230,7 +235,7 @@
          {{-- Mostrar tabla con resultados --}}
 
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-hover ">
                     <thead class="table-light">
                     <tr>
                         <th scope="col">N° Expediente</th>

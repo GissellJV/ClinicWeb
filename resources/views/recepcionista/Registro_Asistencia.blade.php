@@ -72,6 +72,16 @@
             background: #00bfa6;
             color: white;
         }
+
+        .table thead th {
+            background: #4ecdc4 ;
+        }
+
+        .table.table-hover tbody tr:hover,
+        .table.table-hover tbody tr:hover td {
+            background: rgb(222, 251, 249);
+            color: rgba(28, 27, 27, 0.95);
+        }
     </style>
 </head>
 <body>

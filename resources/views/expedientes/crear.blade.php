@@ -16,7 +16,9 @@
         }
 
         body {
-            background: #f0f4f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background:whitesmoke;
+            display: flex;
             min-height: 100vh;
             padding: 20px;
         }
@@ -26,8 +28,6 @@
             padding: 0.25rem 0.75rem;
             font-size: 1.25rem;
             line-height: 1;
-            background-color: transparent;
-            border: 1px solid transparent;
             border-radius: 0.375rem;
             transition: box-shadow 0.15s ease-in-out;
             margin-bottom: 20px;
@@ -328,24 +328,16 @@
                 padding: 10px;
             }
 
-          .formulario  .expediente-container {
-                margin: 10px auto;
-
-                background: white;
-                border-radius: 20px;
-                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-                padding: 2.5rem;
-                max-width: 600px;
-                border-top: 5px solid #4ecdc4;
-                position: relative;
-            }
+        }
+        .text-info-emphasis{
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 <!-- Botón de navegación navbar-toggler -->
 <div class="formulario">
-<h1 class="text-center">Crear Nuevo Expediente Médico</h1>
+<h1 class="text-center text-info-emphasis">Crear Nuevo Expediente Médico</h1>
 
 <div class="form-container" style="margin: 10px auto; max-width: 900px">
 
@@ -387,7 +379,7 @@
                                    readonly>
                             <input type="hidden" name="paciente_id" value="{{ $pacienteSeleccionado->id }}">
                         @else
-                        <select class="form-select" id="paciente_id" name="paciente_id" required>
+                        <select class="form-control" id="paciente_id" name="paciente_id" required>
                             <option value="">Seleccione un paciente</option>
                             @foreach($pacientes as $paciente)
                                 <option value="{{ $paciente->id }}" {{ $paciente_id == $paciente->id ? 'selected' : '' }}>
