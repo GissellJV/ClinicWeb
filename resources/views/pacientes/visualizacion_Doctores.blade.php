@@ -15,12 +15,16 @@
                 <div class="card mb-3 shadow-sm" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="{{ $doctor->foto_url }}" class="img-fluid rounded-start" alt="{{ $doctor->nombre }}">
+                            <img
+                                src="{{ $doctor->foto_url ? asset('storage/' . $doctor->foto_url) : asset('VisualizacionDoctores/doctorDefault.png') }}"
+                                class="img-fluid rounded-start"
+                                alt="{{ $doctor->nombre }}"
+                            >
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">{{ $doctor->nombre }}</h5>
-                                <p class="card-text"><strong>Especialidad:</strong> {{ $doctor->especialidad }}</p>
+                                <h5 class="card-title">{{ $doctor->nombre }}  {{ $doctor->apellido }}</h5>
+                                <p class="card-text"><strong>Especialidad:</strong> {{ $doctor->departamento }}</p>
                                 <p class="card-text"><strong>Horario:</strong> {{ $doctor->horario }}</p>
                                 <p class="card-text">
                                     <small class="text-body-secondary">Disponible ahora</small>
