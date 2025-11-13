@@ -61,7 +61,7 @@
 <body>
 
 <div class="receta-container">
-    <h2>Receta Médica</h2>
+    <h1 class="text-center text-info-emphasis">Receta Médica</h1>
 
     <div class="campo"><span class="label">Paciente:</span> {{ $nombre_paciente }}</div>
     <div class="campo"><span class="label">Medicamento:</span> {{ $medicamento }}</div>
@@ -76,6 +76,11 @@
 
     <div class="firma">
         <div class="linea-firma"></div>
+        @if(session('cargo') && session('cargo') == 'Doctor')
+            <div class="alert alert-info mb-3">
+                {{session('empleado_nombre')}}
+            </div>
+        @endif
         <p>Médico responsable</p>
     </div>
 

@@ -64,11 +64,15 @@
                 font-size: 20px;
             }
         }
+
+        .text-info-emphasis{
+            font-weight: bold;
+        }
     </style>
     <br> <br> <br>
     <div class="formulario">
         <div class="register-section" style="margin-top: 70px">
-            <h1 class="text-center">Receta Médica</h1>
+            <h1 class="text-center text-info-emphasis">Receta Médica</h1>
         <div class="form-container" >
 
                     <form method="POST" action="{{ route('receta.pdf') }}">

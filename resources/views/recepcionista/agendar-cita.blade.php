@@ -1,5 +1,5 @@
 @extends('layouts.plantillaRecepcion')
-
+<link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 @section('contenido')
     <style>
         .agendar-container {
@@ -18,16 +18,9 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .header-section h1 {
-            margin: 0;
-            font-size: 2rem;
-            font-weight: 600;
-        }
 
-        .header-section p {
-            margin: 10px 0 0 0;
-            opacity: 0.9;
-        }
+
+
 
         .agendar-form {
             background: white;
@@ -41,27 +34,7 @@
             margin-bottom: 20px;
         }
 
-        .form-label {
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 8px;
-            display: block;
-        }
 
-        .form-control {
-            width: 100%;
-            padding: 10px 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            border-color: #82e9de;
-            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
-            outline: none;
-        }
 
         .button-group {
             display: flex;
@@ -70,38 +43,41 @@
             margin-top: 30px;
         }
 
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
 
         .btn-primary {
-            background: #82e9de;
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border: none;
+            border-radius: 8px;
             color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
         }
 
         .btn-primary:hover {
-            background: #82e9de;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgb(130, 233, 222);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
         }
 
         .btn-secondary {
-            background: #6c757d;
-            color: white;
+            padding: 0.875rem 2rem;
+            background: white;
+            border: 2px solid #dc3545;
+            border-radius: 8px;
+            color: #dc3545;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
         }
 
         .btn-secondary:hover {
-            background: #545b62;
+            background: #dc3545;
+            color: white;
             transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
         }
 
         .alert-success {
@@ -150,33 +126,16 @@
             background: #82e9de;
             color: white;
         }
-        select.form-control {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 0.5rem center;
-            background-repeat: no-repeat;
-            background-size: 1.5em 1.5em;
-            padding-right: 2.5rem;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-        }
-        .form-label::before {
-            content: "•";
-            color: #82e9de;
-            font-weight: bold;
-            display: inline-block;
-            width: 1em;
-            margin-right: 5px;
-        }
-        .form-control:required {
-            border-left: 3px solid #82e9de;
+
+        small.text-danger {
+            font-size: 0.875em;
         }
     </style>
+<div class="formulario">
 
-    <div class="agendar-container">
-        <div class="header-section">
-            <h1> Agendar Cita - Recepción</h1>
-            <p>Registra una nueva cita médica para el paciente</p>
+        <div class="register-section">
+            <h1 class=" text-center text-info-emphasis"> Agendar Cita - Recepción</h1>
+
         </div>
 
         @if(session('success'))
@@ -192,8 +151,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-
-        <form class="agendar-form" method="POST" action="{{ route('recepcionista.citas.guardar') }}" id="agendarForm">
+    <div class="form-container">
+        <form class="" method="POST" action="{{ route('recepcionista.citas.guardar') }}" id="agendarForm">
             @csrf
 
             <!-- Selección de Paciente -->
@@ -207,37 +166,42 @@
                         </option>
                     @endforeach
                 </select>
+
             </div>
 
             <!-- Especialidad -->
             <div class="form-group">
-                <label class="form-label" for="especialidad"> Especialidad</label>
-                <select class="form-control" id="especialidad" name="especialidad" required>
-                    <option value="">Seleccionar especialidad</option>
-                    @foreach($especialidades as $especialidad)
-                        <option value="{{ $especialidad }}">{{ $especialidad }}</option>
-                    @endforeach
-                </select>
+            <label for="especialidad" class="form-label">Especialidad</label>
+            <select id="especialidad" name="especialidad" class="form-control" required>
+                <option value="">Seleccionar especialidad</option>
+                @foreach($especialidades as $especialidad)
+                    <option value="{{ $especialidad }}">{{ $especialidad }}</option>
+                @endforeach
+            </select>
             </div>
 
             <!-- Doctor -->
             <div class="form-group">
-                <label class="form-label" for="empleado_id">️ Doctor</label>
-                <select class="form-control" id="empleado_id" name="empleado_id" required disabled>
-                    <option value="">Primero seleccione una especialidad</option>
-                </select>
-                <div class="loading" id="loadingDoctores">
-                    <i class="fas fa-spinner fa-spin"></i> Cargando doctores...
-                </div>
+            <label for="empleado_id" class="form-label" >Doctor</label>
+            <select id="empleado_id" name="empleado_id" class="form-control" required>
+                <option value="">Seleccionar doctor</option>
+                @foreach($doctores as $doctor)
+                    <option value="{{ $doctor->id }}">{{ $doctor->nombre }}</option>
+                @endforeach
+            </select>
+            <div id="loadingDoctores" class="loading" style="display:none;">Cargando doctores...</div>
             </div>
 
             <!-- Fecha de la Cita -->
+                <div class="form-group">
             <div class="form-group">
                 <label class="form-label" for="fecha_cita"> Fecha de la Cita</label>
                 <input type="date" class="form-control" id="fecha_cita" name="fecha_cita" min="{{ date('Y-m-d') }}" required>
             </div>
+                </div>
 
             <!-- Hora de la Cita -->
+
             <div class="form-group">
                 <label class="form-label" for="hora_cita"> Hora de la Cita</label>
                 <select class="form-control" id="hora_cita" name="hora_cita" required>
@@ -281,7 +245,7 @@
             </div>
         </form>
     </div>
-
+</div>
     <script>
         // Filtrar doctores por especialidad
         document.getElementById('especialidad').addEventListener('change', function() {
@@ -289,34 +253,27 @@
             const doctorSelect = document.getElementById('empleado_id');
             const loading = document.getElementById('loadingDoctores');
 
+            doctorSelect.innerHTML = '<option value="">Seleccionar doctor</option>';
+
             if (especialidad) {
                 loading.style.display = 'block';
-                doctorSelect.disabled = true;
-                doctorSelect.innerHTML = '<option value="">Cargando doctores...</option>';
-
                 fetch(`/recepcionista/doctores-especialidad/${especialidad}`)
                     .then(response => response.json())
                     .then(data => {
-                        doctorSelect.innerHTML = '<option value="">Seleccionar doctor</option>';
                         data.forEach(doctor => {
                             const option = document.createElement('option');
                             option.value = doctor.id;
-                            option.textContent = `${doctor.nombre} ${doctor.apellido}`;
+                            option.textContent = doctor.nombre;
                             doctorSelect.appendChild(option);
                         });
-                        doctorSelect.disabled = false;
-                        loading.style.display = 'none';
                     })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        doctorSelect.innerHTML = '<option value="">Error al cargar doctores</option>';
+                    .catch(error => console.error('Error:', error))
+                    .finally(() => {
                         loading.style.display = 'none';
                     });
-            } else {
-                doctorSelect.innerHTML = '<option value="">Primero seleccione una especialidad</option>';
-                doctorSelect.disabled = true;
             }
         });
+
 
         // Validación de fecha mínima (hoy)
         document.getElementById('fecha_cita').min = new Date().toISOString().split('T')[0];

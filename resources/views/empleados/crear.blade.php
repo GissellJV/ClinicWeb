@@ -60,12 +60,14 @@
         .form-control-custom,
         .form-select-custom {
             width: 100%;
+            background: rgba(248, 250, 255, 0.6);
+            color: #555;
             padding: 16px 20px;
-            border: 2px solid #e8f4f3;
-            border-radius: 12px;
-            font-size: 1.05rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
             transition: all 0.3s ease;
-            background: #f8fffe;
+            background: #f8f9fa;
         }
 
         .form-control-custom:focus,
@@ -92,17 +94,17 @@
             display: flex;
         }
 
-        .input-group-text-custom {
+        .input-group-text {
             background: #4ECDC4;
             color: white;
             padding: 16px 20px;
             border: 2px solid #4ECDC4;
             border-radius: 12px 0 0 12px;
             font-weight: 600;
-            font-size: 1.05rem;
+            font-size: 0.7rem;
         }
 
-        .input-group-custom .form-control-custom {
+        .input-group-custom .form-control {
             border-radius: 0 12px 12px 0;
             border-left: none;
         }
@@ -173,9 +175,19 @@
                 font-size: 1.4rem;
             }
         }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background:whitesmoke;
+            display: flex;
+        }
+
+        .text-info-emphasis{
+            font-weight: bold;
+        }
+
     </style>
     <div class="formulario">
-            <h1 class="text-center">Registrar Nuevo Empleado</h1>
+            <h1 class="text-center text-info-emphasis">Registrar Nuevo Empleado</h1>
     <div class="form-container" style="margin: 10px auto; max-width: 900px">
 
             <div class="card-body-empleado">
@@ -192,7 +204,7 @@
                     <div class="form-row-custom">
                         <div class="form-group-custom">
                             <label for="nombre">Nombre *</label>
-                            <input type="text" class="form-control-custom" id="nombre" name="nombre"
+                            <input type="text" class="form-control" id="nombre" name="nombre"
                                    value="{{ old('nombre') }}" placeholder="Ingrese el nombre">
                             @error('nombre')
                             <small class="text-danger">{{ $message }}</small>
@@ -201,7 +213,7 @@
 
                         <div class="form-group-custom">
                             <label for="apellido">Apellido *</label>
-                            <input type="text" class="form-control-custom" id="apellido" name="apellido"
+                            <input type="text" class="form-control" id="apellido" name="apellido"
                                    value="{{ old('apellido') }}" placeholder="Ingrese el apellido">
                             @error('apellido')
                             <small class="text-danger">{{ $message }}</small>
@@ -213,7 +225,7 @@
                     <div class="form-row-custom">
                         <div class="form-group-custom">
                             <label for="numero_identidad">Número de Identidad *</label>
-                            <input type="text" class="form-control-custom" id="numero_identidad" name="numero_identidad"
+                            <input type="text" class="form-control" id="numero_identidad" name="numero_identidad"
                                    value="{{ old('numero_identidad') }}" placeholder="0000-0000-00000">
                             @error('numero_identidad')
                             <small class="text-danger">{{ $message }}</small>
@@ -222,7 +234,7 @@
 
                         <div class="form-group-custom">
                             <label for="fecha_ingreso">Fecha de Ingreso</label>
-                            <input type="date" class="form-control-custom" id="fecha_ingreso" name="fecha_ingreso"
+                            <input type="date" class="form-control" id="fecha_ingreso" name="fecha_ingreso"
                                    value="{{ old('fecha_ingreso') }}">
                             @error('fecha_ingreso')
                             <small class="text-danger">{{ $message }}</small>
@@ -235,8 +247,8 @@
                         <div class="form-group-custom">
                             <label for="telefono">Número de Teléfono</label>
                             <div class="input-group-custom">
-                                <span class="input-group-text-custom">+504</span>
-                                <input type="text" class="form-control-custom" id="telefono" name="telefono"
+                                <span class="input-group-text">+504</span>
+                                <input type="text" class="form-control" id="telefono" name="telefono"
                                        value="{{ old('telefono') }}" placeholder="0000-0000">
                             </div>
                             @error('telefono')
@@ -246,7 +258,7 @@
 
                         <div class="form-group-custom">
                             <label for="password">Contraseña</label>
-                            <input type="password" class="form-control-custom" id="password" name="password"
+                            <input type="password" class="form-control" id="password" name="password"
                                    placeholder="Mínimo 8 caracteres">
                             @error('password')
                             <small class="text-danger">{{ $message }}</small>
@@ -289,10 +301,10 @@
 
                     <!-- Botones -->
                     <div class="btn-group-custom">
-                        <a href="{{ route('empleados.lista') }}" class="btn-custom btn-secondary-custom">
+                        <a href="{{ route('empleados.lista') }}" class="btn-cancel" style="text-decoration-line: none">
                             Cancelar
                         </a>
-                        <button type="submit" class="btn-custom btn-primary-custom">
+                        <button type="submit" class="btn-register">
                             Registrar Empleado
                         </button>
                     </div>
