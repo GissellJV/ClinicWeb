@@ -14,7 +14,7 @@ class CitaController extends Controller
     public function agendar()
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
-            return redirect()->route('empleados.loginempleado')
+            return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
 
@@ -32,7 +32,7 @@ class CitaController extends Controller
     public function index()
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
-            return redirect()->route('empleados.loginempleado')
+            return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
 
@@ -45,7 +45,7 @@ class CitaController extends Controller
     public function misCitas()
     {
         if (!session('paciente_id')) {
-            return redirect()->route('empleados.loginempleado')
+            return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión para visualizar tus citas');
         }
 
@@ -72,7 +72,7 @@ class CitaController extends Controller
     public function cancelarCita($id)
     {
         if (!session('paciente_id')) {
-            return redirect()->route('empleados.loginempleado')
+            return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión primero');
         }
 
@@ -97,7 +97,7 @@ class CitaController extends Controller
     {
 
         if (!session('paciente_id')) {
-            return redirect()->route('empleados.loginempleado')
+            return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión primero');
         }
 
@@ -129,7 +129,7 @@ class CitaController extends Controller
 
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
-            return redirect()->route('empleados.loginempleado')
+            return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
 
@@ -185,7 +185,7 @@ class CitaController extends Controller
     public function guardarCitaRecepcionista(Request $request)
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
-            return redirect()->route('empleados.loginempleado')
+            return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
 
@@ -256,7 +256,7 @@ class CitaController extends Controller
     public function misCitasDoctor(Request $request)
     {
         if (!session('cargo') || session('cargo') != 'Doctor') {
-            return redirect()->route('empleados.loginempleado')
+            return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Doctor');
         }
 
@@ -300,7 +300,7 @@ class CitaController extends Controller
     public function completarCita($id)
     {
         if (!session('cargo') || session('cargo') != 'Doctor') {
-            return redirect()->route('empleados.loginempleado')
+            return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Doctor');
         }
 

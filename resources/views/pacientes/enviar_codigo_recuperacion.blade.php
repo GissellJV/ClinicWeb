@@ -61,7 +61,7 @@
         </form>
 
         <div class="mt-3 text-center">
-            <a href="{{route('empleados.loginempleado')}}" style="color: #4ecdc4; text-decoration: none; font-weight: 500;">Volver al inicio de sesión</a>
+            <a href="{{route('inicioSesion')}}" style="color: #4ecdc4; text-decoration: none; font-weight: 500;">Volver al inicio de sesión</a>
         </div>
     </div>
 </div>

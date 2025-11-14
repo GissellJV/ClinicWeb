@@ -12,7 +12,7 @@ use App\Http\Controllers\RecepcionistaController;
 use App\Http\Controllers\CitaController;
 use App\Http\Controllers\ExpedienteController;
 use App\Http\Controllers\EmpleadoController;
-use App\Http\Controllers\LoginEmpleadoController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RecetaController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
@@ -41,9 +41,9 @@ Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comen
 Route::get('/doctores', [DoctorController::class, 'visualizacion_Doctores'])->name('pacientes.visualizacion_Doctores');
 
 //RUTAS RECEPCIONISTA
-Route::get('/loginempleado', [LoginEmpleadoController::class, 'loginempleado'])->name('empleados.loginempleado');
-Route::post('/loginempleado',[LoginEmpleadoController::class, 'login'])->name('empleados.login');
-Route::post('/logoutE', [LoginEmpleadoController::class, 'logout'])->name('empleados.logout');
+Route::get('/login', [LoginController::class, 'loginempleado'])->name('inicioSesion');
+Route::post('/login',[LoginController::class, 'login'])->name('login.sesion');
+Route::post('/logoutE', [LoginController::class, 'logout'])->name('empleados.logout');
 Route::get('/busquedaexpediente',[RecepcionistaController::class,'buscarExpediente'])->name('recepcionista.busquedaexpediente');
 Route::get('/informacion', [PacienteController::class, 'informacion'])->name('pacientes.informacion_Clinica');
 

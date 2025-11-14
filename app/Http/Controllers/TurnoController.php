@@ -13,7 +13,7 @@ class TurnoController extends Controller
     {
         // Verificación de sesión
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
-            return redirect()->route('empleados.loginempleado')
+            return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
 
@@ -52,7 +52,7 @@ class TurnoController extends Controller
     public function store(Request $request)
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
-            return redirect()->route('empleados.loginempleado')
+            return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
         $request->validate([
