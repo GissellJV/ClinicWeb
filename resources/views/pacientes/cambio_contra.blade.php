@@ -70,7 +70,7 @@
         </form>
 
         <div class="mt-3 text-center">
-            <a href="{{route('empleados.loginempleado')}}" style= "text-decoration-line: none; margin-bottom: 0.5rem; color: #4ecdc4; font-weight: 600" >Volver al inicio de sesión</a>
+            <a href="{{route('inicioSesion')}}" style= "text-decoration-line: none; margin-bottom: 0.5rem; color: #4ecdc4; font-weight: 600" >Volver al inicio de sesión</a>
         </div>
     </div>
         </div>

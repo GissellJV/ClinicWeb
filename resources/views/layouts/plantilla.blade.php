@@ -46,7 +46,7 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link  fw-semibold text-custom" href="{{ route('empleados.loginempleado') }}" id="loginDropdown"
+                            <a class="nav-link  fw-semibold text-custom" href="{{ route('inicioSesion') }}" id="loginDropdown"
                                role="button" >
                                 <i class="bi bi-box-arrow-in-right me-1"></i> Acceder
                             </a>
