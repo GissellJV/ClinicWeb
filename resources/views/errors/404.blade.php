@@ -78,9 +78,9 @@
 <div class="container text-center ">
     <img src="{{ asset('imagenes/login-icon.png') }}" alt="Error 404" style="width: 200px; height: auto;">
     <h1 class="mt-4 text-danger fw-bold">
-        ¡Ups! Página no encontrada</h1>
+        Página no encontrada</h1>
     <p class="text-muted mb-4">
-        La página que buscas no existe.
+        La página que buscas no existe dar click en el boton de regresar a inicio.
     </p>
 
     {{-- Este botón redirige al panel o ruta principal según el rol --}}
