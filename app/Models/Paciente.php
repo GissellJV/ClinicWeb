@@ -22,6 +22,11 @@ class Paciente extends Model
         'password'
     ];
 
+    public function asignacionesHabitacion()
+    {
+        return $this->hasMany(AsignacionHabitacion::class);
+    }
+
     public function expediente()
     {
         return $this->hasOne(Expediente::class);
