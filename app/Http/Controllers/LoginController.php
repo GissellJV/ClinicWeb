@@ -8,12 +8,12 @@ use App\Models\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class LoginEmpleadoController extends Controller
+class LoginController extends Controller
 {
     public function loginempleado()
     {
 
-        return view('empleados.InicioEmpleado');
+        return view('login');
     }
 
         public function login(Request $request)

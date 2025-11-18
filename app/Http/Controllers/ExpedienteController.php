@@ -11,7 +11,7 @@ class ExpedienteController extends Controller
     public function crearExpediente($paciente_id = null)
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
-            return redirect()->route('empleados.loginempleado')
+            return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
 
@@ -73,7 +73,7 @@ class ExpedienteController extends Controller
     {
 
         if (!session('empleado_id')) {
-            return redirect()->route('empleados.loginempleado')->with('error', 'Debes iniciar sesion como Recepcionista');
+            return redirect()->route('inicioSesion')->with('error', 'Debes iniciar sesion como Recepcionista');
         }
 
         $expediente = Expediente::with('paciente')->findOrFail($id);
