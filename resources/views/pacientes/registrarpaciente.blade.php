@@ -118,7 +118,7 @@
             </div>
               <div class="text-center mt-3">
               <p style="margin-bottom: 0.5rem; color: #666;">¿Tienes una cuenta?
-                  <a style="color: #4ecdc4; text-decoration: none; font-weight: 500;" href="{{route('empleados.login')}}">Iniciar Sesión</a>
+                  <a style="color: #4ecdc4; text-decoration: none; font-weight: 500;" href="{{route('login.sesion')}}">Iniciar Sesión</a>
               </p>
          </div>
           </form>

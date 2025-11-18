@@ -12,8 +12,11 @@ use App\Http\Controllers\RecepcionistaController;
 use App\Http\Controllers\CitaController;
 use App\Http\Controllers\ExpedienteController;
 use App\Http\Controllers\EmpleadoController;
-use App\Http\Controllers\LoginEmpleadoController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RecetaController;
+use App\Http\Controllers\AsignacionHabitacionController;
+use App\Http\Controllers\VisualizacionHabitacionController;
+use App\Http\Controllers\DoctorHabitacionController; // Nuevo
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 Route::get('/promociones', [RutasController::class, 'index'])->name('promociones.index');
@@ -41,9 +44,9 @@ Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comen
 Route::get('/doctores', [DoctorController::class, 'visualizacion_Doctores'])->name('pacientes.visualizacion_Doctores');
 
 //RUTAS RECEPCIONISTA
-Route::get('/loginempleado', [LoginEmpleadoController::class, 'loginempleado'])->name('empleados.loginempleado');
-Route::post('/loginempleado',[LoginEmpleadoController::class, 'login'])->name('empleados.login');
-Route::post('/logoutE', [LoginEmpleadoController::class, 'logout'])->name('empleados.logout');
+Route::get('/login', [LoginController::class, 'loginempleado'])->name('inicioSesion');
+Route::post('/login',[LoginController::class, 'login'])->name('login.sesion');
+Route::post('/logoutE', [LoginController::class, 'logout'])->name('empleados.logout');
 Route::get('/busquedaexpediente',[RecepcionistaController::class,'buscarExpediente'])->name('recepcionista.busquedaexpediente');
 Route::get('/informacion', [PacienteController::class, 'informacion'])->name('pacientes.informacion_Clinica');
 
@@ -107,3 +110,27 @@ Route::post('/recepcionista/verificar-disponibilidad', [CitaController::class, '
 
 Route::get('/doctor/mis-citas', [CitaController::class, 'misCitasDoctor'])->name('doctor.citas');
 Route::put('/doctor/cita/{id}/completar', [CitaController::class, 'completarCita'])->name('doctor.cita.completar');
+
+
+// Rutas para Enfermería (H28) - Ajustado a tu estructura
+Route::prefix('enfermeria')->name('enfermeria.')->group(function () {
+    Route::get('/habitaciones', [AsignacionHabitacionController::class, 'index'])->name('habitaciones.index');
+    Route::get('/habitaciones/asignar', [AsignacionHabitacionController::class, 'create'])->name('habitaciones.asignar');
+    Route::post('/habitaciones', [AsignacionHabitacionController::class, 'store'])->name('habitaciones.store');
+    Route::put('/habitaciones/{id}/liberar', [AsignacionHabitacionController::class, 'liberar'])->name('habitaciones.liberar');
+});
+
+// Rutas para Recepcionista
+Route::prefix('recepcionista')->name('recepcionista.')->group(function () {
+    Route::get('/habitaciones', [VisualizacionHabitacionController::class, 'index'])->name('habitaciones.index');
+    Route::get('/habitaciones/buscar', [VisualizacionHabitacionController::class, 'buscar'])->name('habitaciones.buscar');
+    Route::get('/habitaciones/ocupadas', [VisualizacionHabitacionController::class, 'listarOcupadas'])->name('habitaciones.ocupadas');
+    Route::get('/habitaciones/asignar', [AsignacionHabitacionController::class, 'createRecepcionista'])->name('habitaciones.asignar');
+    Route::post('/habitaciones/asignar', [AsignacionHabitacionController::class, 'storeRecepcionista'])->name('habitaciones.store');
+});
+// HABITACIONES - DOCTOR
+Route::prefix('doctor')->name('doctor.')->group(function () {
+    Route::get('/habitaciones', [DoctorHabitacionController::class, 'index'])->name('habitaciones.index');
+    Route::get('/habitaciones/buscar', [DoctorHabitacionController::class, 'buscar'])->name('habitaciones.buscar');
+    Route::get('/habitaciones/mis-pacientes', [DoctorHabitacionController::class, 'misPacientes'])->name('habitaciones.mis-pacientes');
+});

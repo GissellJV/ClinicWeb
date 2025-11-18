@@ -102,6 +102,8 @@
                             <!--LA CONDICION DE DOCTOR-->
                             <li><a class="dropdown-item" href="{{route('doctor.citas')}}">Citas programadas</a></li>
                             <li><a class="dropdown-item" href="{{route('recetamedica')}}">Generar Receta</a></li>
+                            <li><a class="dropdown-item" href="{{ route('doctor.habitaciones.index') }}">Buscar Habitación</a></li>
+                            <li><a class="dropdown-item" href="{{ route('doctor.habitaciones.mis-pacientes') }}">Pacientes Hospitalizados</a></li>
                         </ul>
                     </li>
                 </ul>

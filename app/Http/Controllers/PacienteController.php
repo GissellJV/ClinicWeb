@@ -66,13 +66,13 @@ class PacienteController extends Controller
 
        //dirigirse a iniciar sesion // if($nuevoPaciente->save()){
 
-      return redirect()->route('pacientes.loginp')->with('mensaje', 'Registro exitoso, Inicia sesión');
+      return redirect()->route('inicioSesion')->with('mensaje', 'Registro exitoso, Inicia sesión');
     }
 
     public function listado_citaspro(Request $request){
 
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
-            return redirect()->route('empleados.loginempleado')
+            return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
 
@@ -107,39 +107,8 @@ class PacienteController extends Controller
 
     }
 
-    public function loginp()
-    {
-        return view('pacientes.iniciodesesion');
-    }
-  /*  public function login(Request $request){
 
-        $request->validate([
-            'telefono' => 'required|string',
-            'password' => 'required|string',
-        ],[
-            'telefono.required'=>'Ingresa el número de teléfono',
-            'password.required'=>'Ingresa la contraseña'
-        ]);
 
-        $paciente= Paciente::where('telefono',$request->input('telefono'))->first();
-
-        if($paciente && Hash::check($request->password, $paciente->password)){
-
-            session([
-                'paciente_id' => $paciente->id,
-                'paciente_nombre' => $paciente->nombres . ' ' . $paciente->apellidos,
-            ]);
-
-            return redirect()->route('agendarcitas')
-                ->with('mensaje', '¡Bienvenido ' . $paciente->nombres . '!');
-        }
-
-        return back()
-            ->with('error', 'El número de teléfono o la contraseña son incorrectos.')
-            ->withInput($request->only('telefono'));
-
-    }
-  */
 
     // Cerrar sesión
     public function logout(Request $request)
@@ -155,7 +124,7 @@ class PacienteController extends Controller
     public function agendar_Citasonline()
     {
         if (!session('paciente_id')) {
-                    return redirect()->route('empleados.loginempleado')
+                    return redirect()->route('inicioSesion')
               ->with('error', 'Debes iniciar sesión para agendar una cita');
       }
 
@@ -245,7 +214,7 @@ class PacienteController extends Controller
             'password' => Hash::make($request->password),
         ]);
         DB::table('password_reset_tokens')->where('token', $request->token)->delete();
-        return redirect('/loginempleado')->with('status', 'Tu contraseña se ha cambiado exitosamente.');
+        return redirect('/login')->with('status', 'Tu contraseña se ha cambiado exitosamente.');
     }
 
 

@@ -104,6 +104,9 @@
                     <li><a class="nav-link {{ request()->routeIs('listadocitas') ? 'active' : '' }}" href="{{ route('listadocitas') }}">Citas Programadas</a></li>
                     <li><a class="nav-link {{ request()->routeIs('recepcionista.registroPaciente') ? 'active' : '' }}" href="{{ route('recepcionista.registroPaciente') }}">Asistencia de Pacientes</a></li>
                     <li><a class="nav-link {{ request()->routeIs('recepcionista.index') ? 'active' : '' }}" href="{{ route('recepcionista.index') }}">Turnos de Doctores</a></li>
+                    <li><a class="nav-link {{ request()->routeIs('recepcionista.habitaciones.index') ? 'active' : '' }}" href="{{ route('recepcionista.habitaciones.index') }}">Buscar Habitación</a></li>
+                    <li><a class="nav-link {{ request()->routeIs('recepcionista.habitaciones.ocupadas') ? 'active' : '' }}" href="{{ route('recepcionista.habitaciones.ocupadas') }}">Habitaciones Ocupadas</a></li>
+                    <li><a class="nav-link {{ request()->routeIs('recepcionista.habitaciones.asignar') ? 'active' : '' }}" href="{{ route('recepcionista.habitaciones.asignar') }}">Asignar Habitación</a></li>
                 </ul>
 
                 @if(session('empleado_id'))

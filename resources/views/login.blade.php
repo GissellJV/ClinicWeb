@@ -207,7 +207,7 @@
 
 
                 <h2 class="login-title" >Iniciar sesión</h2>
-            <form action="{{route('empleados.login')}}" method="POST">
+            <form action="{{route('login.sesion')}}" method="POST">
                 @csrf
                 <div class="form-group">
                     <div class="input-group">
