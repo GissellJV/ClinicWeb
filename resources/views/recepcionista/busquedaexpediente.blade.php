@@ -179,10 +179,28 @@
 
     </style>
     <div class="container mt-5 pt-5">
+        @if (session('success'))
+            <div id="mensaje-exito" class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <script>
+            setTimeout(function() {
+                let mensaje = document.getElementById('mensaje-exito');
+                if (mensaje) {
+                    mensaje.style.transition = "opacity 0.5s";
+                    mensaje.style.opacity = "0";
+
+                    setTimeout(() => mensaje.remove(), 500); // lo remueve después
+                }
+            }, 10000); // 20 segundos = 20000 milisegundos
+        </script>
         <h2 class="text-info-emphasis">Búsqueda de Expedientes
             <a href="{{ route('expedientes.crear') }}" class="btn btn-light btn-sm">
                 + Nuevo Expediente
             </a></h2>
+
 
         <br>
 

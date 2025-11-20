@@ -1,3 +1,28 @@
+@php
+    //Determinar plantilla según tipo de usuario logueado
+    if (session('tipo_usuario') === 'paciente') {
+    $layout = 'layouts.plantilla';
+    } elseif (session('tipo_usuario') === 'empleado') {
+    switch (session('cargo')) {
+    case 'Recepcionista':
+    $layout = 'layouts.plantillaRecepcion';
+    break;
+    case 'Doctor':
+    $layout = 'layouts.plantillaDoctor';
+    break;
+    case 'Enfermero':
+    $layout = 'layouts.plantillaEnfermero';
+    break;
+    default:
+    $layout = 'layouts.plantilla'; // fallback
+    }
+    } else {
+    $layout = 'layouts.plantilla'; // visitante
+    }
+@endphp
+
+@extends($layout)
+@section('contenido')
 <style>
     .card-header-custom {
         display: flex;
@@ -20,22 +45,39 @@
 
     /* Botones */
     .btn-actualizar {
-        background-color: white;
-        color: #4ecdc4;
+        display: inline-block;
+        padding: 10px 18px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none; /* Quita subrayado del <a> */
+        cursor: pointer;
+
+        background-color: #4ecdc4;
+        color: white;
         border: 2px solid #4ecdc4;
         transition: 0.3s;
     }
     .btn-actualizar:hover {
-        background-color: #4ecdc4;
+        background-color: #3eb2aa;
         color: white;
     }
 
     .btn-guardar {
+        display: inline-block;
+        padding: 10px 18px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none; /* Quita subrayado del <a> */
+        cursor: pointer;
+
         background-color: #4ecdc4;
         color: white;
         border: 2px solid #4ecdc4;
         transition: 0.3s;
     }
+
     .btn-guardar:hover {
         background-color: #3eb2aa;
         color: white;
@@ -319,8 +361,20 @@
         }
     }
 </style>
+
 <div class="container-fluid p-0" style="margin-top: 100px;">
-    <h1 class="text-info-emphasis">Visualización de Expediente</h1>
+    <div class="d-flex justify-content-between align-items-center">
+
+
+        <h1 class="text-info-emphasis">Visualización de Expediente</h1>
+
+        @if(session('cargo') === 'Recepcionista')
+        <a href="{{ route('recepcionista.vistaEnviarDoctor', $expediente->id) }}" class="btn-guardar">
+            Enviar Expediente
+        </a>
+        @endif
+
+    </div>
     <br>
     <div class="tabs d-flex border-bottom">
         <div class="tab active" data-tab="Paciente">Paciente</div>
@@ -389,9 +443,12 @@
                          style="height: 27px; width: 26px; filter: grayscale(1) brightness(0.5);">
                     <h5 class="mb-0">Parámetros Vitales del Paciente</h5>
                 </div>
-                <button type="button" id="btnEditarSignos" class="btn btn-actualizar">
+
+                @if(session('cargo') === 'Recepcionista')
+                <button type="button" id="btnEditarSignos" class="btn-actualizar">
                     Actualizar
                 </button>
+                @endif
             </div>
 
 
@@ -445,7 +502,10 @@
                 <img src="{{ asset('imagenes/registroC.png') }}" alt="usuario" style="height: 25px; width: 25px; filter: grayscale(1) brightness(0.5);">
                 <h5 class="mb-0">Registro de Consulta Médica</h5>
                 </div>
-                <button type="button" id="btnEditarConsulta" class="btn btn-actualizar">Actualizar</button>
+                @if(session('cargo') === 'Doctor')
+                <button type="button" id="btnEditarConsulta" class="btn-actualizar">Actualizar</button>
+
+                @endif
             </div>
 
             <form id="formConsulta" method="POST" action="{{ route('expedientes.actualizarConsulta', $expediente->id) }}">
@@ -477,91 +537,112 @@
 
         <!-- HISTORIAL CLINICO -->
         <div class="tab-content" id="antecedentes">
-            <div class="card-header-custom">
-                <img src="{{ asset('imagenes/ante.png') }}" alt="antecedentes" style="height: 25px; width: 24px; filter: grayscale(1) brightness(0.5);">
-                <h5 class="mb-0">Antecedentes</h5>
+            <div class="card-header-custom" style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="{{ asset('imagenes/ante.png') }}" alt="antecedentes" style="height: 25px; width: 24px; filter: grayscale(1) brightness(0.5);">
+                    <h5 class="mb-0">Antecedentes</h5>
+                </div>
+                @if(session('cargo') === 'Recepcionista')
+                    <button type="button" id="btnEditarHistorial" class="btn-actualizar">Actualizar</button>
+                @endif
             </div>
 
+            <form id="formHistorial" method="POST" action="{{ route('expedientes.actualizarHistorial', $expediente->id) }}">
+                @csrf
+                <table class="info-table">
+                <tbody>
+
+                <tr>
+                    <td class="info-item" style="grid-column: 1 / -1;">
+                        <span class="info-label">Alergias:</span>
+                        <input class="info-value" name="alergias" value="{{ $expediente->alergias }}" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="info-item" style="grid-column: 1 / -1;">
+                        <span class="info-label">Medicamentos Actuales:</span>
+                        <input class="info-value" name="medicamentos_actuales" value="{{$expediente->medicamentos_actuales}}" disabled>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="info-item" style="grid-column: 1 / -1;">
+                        <span class="info-label">Antecedentes Familiares:</span>
+                        <input class="info-value" name="antecedentes_familiares" value="{{$expediente->antecedentes_familiares}}" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="info-item" style="grid-column: 1 / -1;">
+                        <span class="info-label">Antecedentes Personales:</span>
+                        <input class="info-value" name="antecedentes_personales" value="{{$expediente->antecedentes_personales}}" disabled>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="card-header-custom mt-4">
+                <img src="{{ asset('imagenes/notas.png') }}" alt="notas" style="height: 25px; width: 24px; filter: grayscale(1) brightness(0.5);">
+                <h5 class="mb-0">Notas Adicionales</h5>
+            </div>
 
             <table class="info-table">
-            <tbody>
-
-            <tr>
-                <td class="info-item" style="grid-column: 1 / -1;">
-                    <span class="info-label">Alergias:</span>
-                    <div class="info-value">{{$expediente->alergias}}</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="info-item" style="grid-column: 1 / -1;">
-                    <span class="info-label">Medicamentos Actuales:</span>
-                    <div class="info-value">{{$expediente->medicamentos_actuales}}</div>
-                </td>
-
-            </tr>
-            <tr>
-                <td class="info-item" style="grid-column: 1 / -1;">
-                    <span class="info-label">Antecedentes Familiares:</span>
-                    <div class="info-value">{{$expediente->antecedentes_familiares}}</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="info-item" style="grid-column: 1 / -1;">
-                    <span class="info-label">Antecedentes Personales:</span>
-                    <div class="info-value">{{$expediente->antecedentes_personales}}</div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
-        <div class="card-header-custom mt-4">
-            <img src="{{ asset('imagenes/notas.png') }}" alt="notas" style="height: 25px; width: 24px; filter: grayscale(1) brightness(0.5);">
-            <h5 class="mb-0">Notas Adicionales</h5>
-        </div>
-
-        <table class="info-table">
-            <tbody>
-            <tr>
-                <td class="info-item" style="grid-column: 1 / -1;">
-                    <span class="info-label">Observaciones Generales:</span>
-                    <div class="info-value">{{$expediente->observaciones}}</div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                <tbody>
+                <tr>
+                    <td class="info-item" style="grid-column: 1 / -1;">
+                        <span class="info-label">Observaciones Generales:</span>
+                        <textarea class="form-control" name="observaciones" rows="2" disabled>{{ $expediente->observaciones }}</textarea>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+                <div class="text-end mt-3">
+                    <button type="submit" id="btnGuardarHistorial" class="btn btn-guardar d-none">Guardar</button>
+                </div>
+            </form>
     </div>
 </div>
 </div>
 
 <br><br>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                function habilitarEdicion(btnEditarId, formId, btnGuardarId) {
-                    const btnEditar = document.getElementById(btnEditarId);
-                    const form = document.getElementById(formId);
-                    const btnGuardar = document.getElementById(btnGuardarId);
-                    const inputs = form.querySelectorAll('input, textarea');
-                    let modoEdicion = false;
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
 
-                    btnEditar.addEventListener('click', function() {
-                        if (!modoEdicion) {
-                            inputs.forEach(i => i.disabled = false);
-                            btnEditar.textContent = 'Guardar';
-                            btnEditar.classList.remove('btn-actualizar');
-                            btnEditar.classList.add('btn-guardar');
-                            btnGuardar.classList.remove('d-none');
-                            modoEdicion = true;
-                        } else {
-                            form.submit();
-                        }
-                    });
+        function habilitarEdicion(btnEditarId, formId) {
+            const btnEditar = document.getElementById(btnEditarId);
+            const form = document.getElementById(formId);
+
+            // 🔥 Si el botón NO existe (ej: no es doctor), simplemente NO ejecutar nada
+            if (!btnEditar || !form) return;
+
+            const inputs = form.querySelectorAll('input, textarea');
+            let modoEdicion = false;
+
+            btnEditar.addEventListener('click', function() {
+                if (!modoEdicion) {
+                    // Habilitar los campos
+                    inputs.forEach(i => i.disabled = false);
+
+                    // Convertir el botón a "Guardar"
+                    btnEditar.textContent = 'Guardar';
+                    btnEditar.classList.remove('btn-actualizar');
+                    btnEditar.classList.add('btn-guardar');
+                    btnEditar.type = 'submit';
+
+                    modoEdicion = true;
+                } else {
+                    // Guardar (submit)
+                    form.submit();
                 }
-
-                habilitarEdicion('btnEditarSignos', 'formSignos', 'btnGuardarSignos');
-                habilitarEdicion('btnEditarConsulta', 'formConsulta', 'btnGuardarConsulta');
             });
-        </script>
+        }
+
+        habilitarEdicion('btnEditarSignos', 'formSignos');
+        habilitarEdicion('btnEditarConsulta', 'formConsulta');
+        habilitarEdicion('btnEditarHistorial', 'formHistorial');
+
+    });
+</script>
 
 
 
@@ -583,3 +664,4 @@
         });
     });
 </script>
+@endsection
