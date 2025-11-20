@@ -118,6 +118,22 @@ class ExpedienteController extends Controller
 
         return redirect()->back()->with('success_consulta', 'Registro médico actualizado correctamente.');
     }
+    public function actualizarHistorial(Request $request, $id)
+    {
+        $expediente = Expediente::findOrFail($id);
+
+        // Actualiza los campos desde el formulario
+        $expediente->alergias = $request->input('alergias');
+        $expediente->medicamentos_actuales = $request->input('medicamentos_actuales');
+        $expediente->antecedentes_familiares = $request->input('antecedentes_familiares');
+        $expediente->antecedentes_personales = $request->input('antecedentes_personales');
+        $expediente->observaciones = $request->input('observaciones');
+
+        $expediente->save();
+
+        return redirect()->back()->with('success', 'Historial actualizado correctamente');
+    }
+
 
 
 

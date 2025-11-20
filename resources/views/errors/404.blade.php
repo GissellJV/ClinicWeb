@@ -85,11 +85,11 @@
 
     {{-- Este botón redirige al panel o ruta principal según el rol --}}
     @if(session('cargo') === 'Recepcionista')
-        <a href="{{ route('recepcionista.dashboard') }}" class="btn btn-primary">
+        <a href="{{ route('recepcionista.busquedaexpediente') }}" class="btn btn-primary">
             <i class="bi bi-house-door"></i> Ir al inicio
         </a>
     @elseif(session('cargo') === 'Doctor')
-        <a href="{{ route('doctor.dashboard') }}" class="btn btn-success">
+        <a href="{{ route('doctor.receta') }}" class="btn btn-success">
             <i class="bi bi-house-door"></i> Ir al panel del doctor
         </a>
     @else

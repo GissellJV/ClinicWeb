@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
+
         .navbar-toggler {
             background-color: white;
             border: 2px solid #4ecdc4;
@@ -44,6 +45,12 @@
             color: #34b5ad !important;
             text-decoration: underline;
             font-weight: 600;
+        }
+        .offcanvas {
+            z-index: 2000 !important;
+        }
+        .navbar {
+            z-index: 3000 !important;
         }
 
     </style>

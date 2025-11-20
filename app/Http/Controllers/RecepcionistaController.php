@@ -8,9 +8,50 @@ use App\Models\Paciente;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\EnviarDoctor;
+use App\Models\Empleado;
 
 class RecepcionistaController extends Controller
 {
+    public function enviarDoctor(Request $request)
+    {
+        // VALIDACIÓN
+        $request->validate([
+            'paciente_id'   => 'required|exists:pacientes,id',
+            'empleado_id'   => 'required|exists:empleados,id',
+            'especialidad'  => 'required|string'
+        ]);
+
+        // GUARDAR EL ENVÍO
+        EnviarDoctor::create([
+            'paciente_id'  => $request->paciente_id,
+            'empleado_id'  => $request->empleado_id,
+            'especialidad' => $request->especialidad,
+            'estado'       => 'pendiente'
+        ]);
+
+
+        return redirect()->route('recepcionista.busquedaexpediente')
+            ->with('success', 'Expediente enviado correctamente al doctor.');
+    }
+
+
+    public function vistaEnviarDoctor($id)
+    {
+        $expediente = Expediente::findOrFail($id);
+
+        // Traer solo los departamentos de los doctores, sin duplicados
+        $especialidades = Empleado::where('cargo', 'Doctor')
+            ->select('departamento')
+            ->distinct()
+            ->get();
+
+        return view('recepcionista.enviar_doctor', compact('expediente', 'especialidades'));
+    }
+
+
+
+
     public function buscarExpediente(Request $request)
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
