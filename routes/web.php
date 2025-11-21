@@ -118,6 +118,10 @@ Route::get('/doctor/mis-citas', [CitaController::class, 'misCitasDoctor'])->name
 Route::put('/doctor/cita/{id}/completar', [CitaController::class, 'completarCita'])->name('doctor.cita.completar');
 
 
+
+
+
+
 // Rutas para Enfermería (H28) - Ajustado a tu estructura
 Route::prefix('enfermeria')->name('enfermeria.')->group(function () {
     Route::get('/habitaciones', [AsignacionHabitacionController::class, 'index'])->name('habitaciones.index');
@@ -144,4 +148,9 @@ Route::prefix('doctor')->name('doctor.')->group(function () {
     Route::get('/habitaciones/buscar', [DoctorHabitacionController::class, 'buscar'])->name('habitaciones.buscar');
     Route::get('/habitaciones/mis-pacientes', [DoctorHabitacionController::class, 'misPacientes'])->name('habitaciones.mis-pacientes');
 });
+
+
+Route::get('/historialDiario', [RecepcionistaController::class, 'historialDiario'])->name('historial.diario');
+Route::get('/listaDoctores', [RecepcionistaController::class, 'listaDoctores'])
+    ->name('lista.doctores');
 
