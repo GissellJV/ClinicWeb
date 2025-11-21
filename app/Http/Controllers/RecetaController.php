@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HistorialDiario;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -13,8 +14,9 @@ class RecetaController extends Controller
             return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Doctor');
         }
+        $doctor = session('empleado_nombre');
 
-        return view('empleados.recetamedica');
+        return view('empleados.recetamedica' , compact('doctor'));
     }
 
     // Genera y descarga el PDF
@@ -41,6 +43,16 @@ class RecetaController extends Controller
             'observaciones' => $request->observaciones,
             'fecha' => now()->format('d/m/Y'),
         ];
+
+
+        $doctor = session('empleado_nombre');
+
+        HistorialDiario::create([
+            'nombre_paciente' => $request->nombre_paciente,
+            'doctor' => $doctor,
+            'fecha' => now(),
+        ]);
+
 
         $pdf = Pdf::loadView('empleados.receta_pdf', $data);
 

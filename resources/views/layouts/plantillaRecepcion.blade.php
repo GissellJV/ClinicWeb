@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
+
         .navbar-toggler {
             background-color: white;
             border: 2px solid #4ecdc4;
@@ -44,6 +45,12 @@
             color: #34b5ad !important;
             text-decoration: underline;
             font-weight: 600;
+        }
+        .offcanvas {
+            z-index: 2000 !important;
+        }
+        .navbar {
+            z-index: 3000 !important;
         }
 
     </style>
@@ -107,6 +114,7 @@
                     <li><a class="nav-link {{ request()->routeIs('recepcionista.habitaciones.index') ? 'active' : '' }}" href="{{ route('recepcionista.habitaciones.index') }}">Buscar Habitación</a></li>
                     <li><a class="nav-link {{ request()->routeIs('recepcionista.habitaciones.ocupadas') ? 'active' : '' }}" href="{{ route('recepcionista.habitaciones.ocupadas') }}">Habitaciones Ocupadas</a></li>
                     <li><a class="nav-link {{ request()->routeIs('recepcionista.habitaciones.asignar') ? 'active' : '' }}" href="{{ route('recepcionista.habitaciones.asignar') }}">Asignar Habitación</a></li>
+                    <li><a class="nav-link {{ request()->routeIs('lista.doctores') ? 'active' : '' }}" href="{{ route('lista.doctores') }}">Doctores </a></li>
                 </ul>
 
                 @if(session('empleado_id'))

@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('inventario_medicamentos', function (Blueprint $table) {
+        Schema::create('historiales_diarios', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo')->unique();
-            $table->string('nombre');
-            $table->integer('cantidad')->default(0);
-           $table->string('estado')->nullable();
-           $table->date('fecha_vencimiento');
+            $table->string('nombre_paciente');
+            $table->string('doctor');
+            $table->date('fecha');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('inventario_medicamentos');
+        Schema::dropIfExists('historiales_diarios');
     }
 };

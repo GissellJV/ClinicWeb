@@ -17,6 +17,7 @@ use App\Http\Controllers\RecetaController;
 use App\Http\Controllers\AsignacionHabitacionController;
 use App\Http\Controllers\VisualizacionHabitacionController;
 use App\Http\Controllers\DoctorHabitacionController; // Nuevo
+use \App\Http\Controllers\EnviarDoctorController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 Route::get('/promociones', [RutasController::class, 'index'])->name('promociones.index');
@@ -79,6 +80,7 @@ Route::get('/ver-expediente/{id}', [ExpedienteController::class, 'verExpediente'
 // rutas de agregar datos vitales del expediente y de actualizar consulta
 Route::post('/expedientes/{id}/actualizar-signos', [ExpedienteController::class, 'actualizarSignos'])->name('expedientes.actualizarSignos');
 Route::post('/expedientes/{id}/actualizar-consulta', [ExpedienteController::class, 'actualizarConsulta'])->name('expedientes.actualizarConsulta');
+Route::post('/expedientes/{id}/actualizar-historial', [ExpedienteController::class, 'actualizarHistorial'])->name('expedientes.actualizarHistorial');
 
 
 // Rutas para empleados
@@ -95,6 +97,10 @@ Route::post('/recetamedica/pdf', [RecetaController::class, 'generarPDF'])->name(
 
 //Ruta para doctores
 Route::get('/doctor-principal', [DoctorController::class, 'receta'])->name('doctor.receta');
+Route::get('/recepcionista/doctores-expediente/{departamento}', [DoctorController::class, 'getDoctoresPorEspecialidad']);
+Route::get('/doctor/expedientes-recibidos', [DoctorController::class, 'expedientesRecibidos'])->name('doctor.expedientesRecibidos');
+Route::get('/doctor/expediente/{id}', [DoctorController::class, 'verExpediente'])->name('expediente.ver');
+
 
 //Ruta para enfermeros
 Route::get('/enfermeria-principal', [EnfermeriaController::class, 'principal'])->name('enfermeria.principal');
@@ -112,6 +118,9 @@ Route::get('/doctor/mis-citas', [CitaController::class, 'misCitasDoctor'])->name
 Route::put('/doctor/cita/{id}/completar', [CitaController::class, 'completarCita'])->name('doctor.cita.completar');
 
 
+
+
+
 // Rutas para Enfermería (H28) - Ajustado a tu estructura
 Route::prefix('enfermeria')->name('enfermeria.')->group(function () {
     Route::get('/habitaciones', [AsignacionHabitacionController::class, 'index'])->name('habitaciones.index');
@@ -127,10 +136,30 @@ Route::prefix('recepcionista')->name('recepcionista.')->group(function () {
     Route::get('/habitaciones/ocupadas', [VisualizacionHabitacionController::class, 'listarOcupadas'])->name('habitaciones.ocupadas');
     Route::get('/habitaciones/asignar', [AsignacionHabitacionController::class, 'createRecepcionista'])->name('habitaciones.asignar');
     Route::post('/habitaciones/asignar', [AsignacionHabitacionController::class, 'storeRecepcionista'])->name('habitaciones.store');
+    Route::get('/expediente/{id}/enviar-doctor', [RecepcionistaController::class, 'vistaEnviarDoctor'])->name('vistaEnviarDoctor');
+    Route::post('/expediente/enviar-doctor', [RecepcionistaController::class, 'enviarDoctor'])->name('enviarDoctor');
+
 });
+
 // HABITACIONES - DOCTOR
 Route::prefix('doctor')->name('doctor.')->group(function () {
     Route::get('/habitaciones', [DoctorHabitacionController::class, 'index'])->name('habitaciones.index');
     Route::get('/habitaciones/buscar', [DoctorHabitacionController::class, 'buscar'])->name('habitaciones.buscar');
     Route::get('/habitaciones/mis-pacientes', [DoctorHabitacionController::class, 'misPacientes'])->name('habitaciones.mis-pacientes');
 });
+
+//Inventario de Medicamentos
+Route::get('/inventario', [InventarioController::class, 'index'])->name('inventario.principal');
+Route::get('/inventario/registrar', [InventarioController::class, 'create'])->name('inventario.create');
+Route::post('/inventario', [InventarioController::class, 'store'])->name('inventario.store');
+Route::get('/inventario/{id}/editar', [InventarioController::class, 'edit'])->name('inventario.edit');
+Route::put('/inventario/{id}', [InventarioController::class, 'update'])->name('inventario.update');
+Route::delete('/inventario/{id}', [InventarioController::class, 'destroy'])->name('inventario.destroy');
+
+
+
+
+Route::get('/historialDiario', [RecepcionistaController::class, 'historialDiario'])->name('historial.diario');
+Route::get('/listaDoctores', [RecepcionistaController::class, 'listaDoctores'])
+    ->name('lista.doctores');
+

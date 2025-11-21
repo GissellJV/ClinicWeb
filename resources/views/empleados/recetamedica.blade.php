@@ -115,6 +115,13 @@
                             <textarea name="observaciones" id="observaciones" class="form-control" placeholder="Indicaciones adicionales (opcional)"></textarea>
                         </div>
 
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" name="atendido" id="atendido" value="1">
+                            <label class="form-check-label" for="atendido">
+                                Paciente atendido
+                            </label>
+                        </div>
+
                         <button type="submit" class="btn btn-generar">Generar Receta</button>
                     </form>
 

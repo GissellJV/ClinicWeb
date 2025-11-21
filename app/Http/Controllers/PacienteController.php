@@ -23,8 +23,8 @@ class PacienteController extends Controller
     {
         // Validar datos
         $request->validate([
-            'nombres' => 'required|string|max:255',
-            'apellidos' => 'required|string|max:255',
+            'nombres' => 'required|string|max:255|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/',
+            'apellidos' => 'required|string|max:255|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/',
             'fecha_nacimiento' => 'required|date|before:today',
             'numero_identidad' => 'required|string|size:13|regex:/^\d{4}\d{4}\d{5}$/|unique:pacientes',
             'genero' => 'required|in:Femenino,Masculino',
@@ -34,7 +34,9 @@ class PacienteController extends Controller
         ], [
 
             'nombres.required' => 'Nombres obligatorios',
+            'nombres.regex' => 'Ingrese nombres validos',
             'apellidos.required' => 'Apellidos obligatorios ',
+            'apellidos.regex' => 'Ingrese apellidos validos',
             'fecha_nacimiento.required' => 'Fecha de nacimiento obligatoria',
             'fecha_nacimiento.before' => 'Ingresa una fecha valida',
             'genero.required' => 'Selecciona un genero',

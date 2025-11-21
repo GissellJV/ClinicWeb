@@ -101,6 +101,9 @@
                     </div>
                 @endif
             @endforeach
+                <div class="mt-3">
+                    {{ $citas->links() }}
+                </div>
 
             @if($citas->isEmpty())
                 <div class="col-12">
