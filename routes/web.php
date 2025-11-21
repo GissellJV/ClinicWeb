@@ -121,7 +121,6 @@ Route::put('/doctor/cita/{id}/completar', [CitaController::class, 'completarCita
 
 
 
-
 // Rutas para Enfermería (H28) - Ajustado a tu estructura
 Route::prefix('enfermeria')->name('enfermeria.')->group(function () {
     Route::get('/habitaciones', [AsignacionHabitacionController::class, 'index'])->name('habitaciones.index');
@@ -148,6 +147,16 @@ Route::prefix('doctor')->name('doctor.')->group(function () {
     Route::get('/habitaciones/buscar', [DoctorHabitacionController::class, 'buscar'])->name('habitaciones.buscar');
     Route::get('/habitaciones/mis-pacientes', [DoctorHabitacionController::class, 'misPacientes'])->name('habitaciones.mis-pacientes');
 });
+
+//Inventario de Medicamentos
+Route::get('/inventario', [InventarioController::class, 'index'])->name('inventario.principal');
+Route::get('/inventario/registrar', [InventarioController::class, 'create'])->name('inventario.create');
+Route::post('/inventario', [InventarioController::class, 'store'])->name('inventario.store');
+Route::get('/inventario/{id}/editar', [InventarioController::class, 'edit'])->name('inventario.edit');
+Route::put('/inventario/{id}', [InventarioController::class, 'update'])->name('inventario.update');
+Route::delete('/inventario/{id}', [InventarioController::class, 'destroy'])->name('inventario.destroy');
+
+
 
 
 Route::get('/historialDiario', [RecepcionistaController::class, 'historialDiario'])->name('historial.diario');
