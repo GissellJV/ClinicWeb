@@ -56,6 +56,10 @@
             color: #000;
             margin-top: 40px;
         }
+
+        .text-info-emphasis{
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>

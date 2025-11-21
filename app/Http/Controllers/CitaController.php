@@ -36,7 +36,7 @@ class CitaController extends Controller
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
 
-        $citas = Cita::with(['doctor', 'paciente'])->get();
+        $citas = Cita::with(['doctor', 'paciente'])->paginate(10);
 
         return view('pacientes.listado_citaspro', compact('citas'));
     }
@@ -63,7 +63,7 @@ class CitaController extends Controller
 
         $citas = Cita::with('doctor')
             ->where('paciente_id', $paciente->id)
-            ->get();
+            ->Paginate(10);
 
         return view('citas.mis-citas', compact('citas'));
     }

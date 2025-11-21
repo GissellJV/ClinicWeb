@@ -106,6 +106,9 @@
         @endforelse
         </tbody>
     </table>
+    <div class="mt-3">
+        {{ $citas->links() }}
+    </div>
 
     <div class="text-center">
         <a href="{{route('recepcionista.busquedaexpediente')}}">

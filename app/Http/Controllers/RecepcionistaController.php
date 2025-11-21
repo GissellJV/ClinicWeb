@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cita;
+use App\Models\HistorialDiario;
+use App\Models\Receta;
+use App\Models\Empleado;
 use App\Models\Expediente;
 use App\Models\Paciente;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\EnviarDoctor;
-use App\Models\Empleado;
 
 class RecepcionistaController extends Controller
 {
@@ -167,5 +169,23 @@ class RecepcionistaController extends Controller
             'citas'
         ));
     }
+
+    public function historialDiario()
+    {
+        $historial = HistorialDiario::whereDate('fecha', now())->get();
+
+
+        return view('recepcionista.historial', compact('historial'));
+    }
+
+
+    public function listaDoctores()
+    {
+        $doctores = Empleado::where('cargo', 'Doctor')->paginate(6);
+
+        return view('recepcionista.lista_doctores', compact('doctores', ));
+    }
+
+
 
 }
