@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-     /*   Schema::create('inventario_medicamentos', function (Blueprint $table) {
+       Schema::create('inventario_medicamentos', function (Blueprint $table) {
             $table->id();
             $table->string('codigo')->unique();
             $table->string('nombre');
             $table->integer('cantidad')->default(0);
-            $table->date('fecha_registro');
+           $table->string('estado')->nullable();
+           $table->date('fecha_vencimiento');
             $table->timestamps();
         });
-     */
+
     }
 
     /**

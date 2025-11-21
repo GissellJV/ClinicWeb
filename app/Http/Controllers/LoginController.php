@@ -52,13 +52,13 @@ class LoginController extends Controller
                 } elseif ($cargo == 'recepcionista') {
                     return redirect()->route('recepcionista.busquedaexpediente')->with('mensaje', $mensaje);
                 } elseif ($cargo == 'enfermero') {
-                    return redirect()->route('enfermeria.principal')->with('mensaje', $mensaje);
+                    return redirect()->route('inventario.principal')->with('mensaje', $mensaje);
                 } else {
                     return redirect()->route('empleado.dashboard')->with('mensaje', $mensaje);
                 }
             }
 
-            // Si no es empleado, intentar login como paciente
+
             $paciente = Paciente::where('telefono', $telefono)->first();
 
             if ($paciente && Hash::check($password, $paciente->password)) {
@@ -66,14 +66,14 @@ class LoginController extends Controller
                 session([
                     'paciente_id' => $paciente->id,
                     'paciente_nombre' => $paciente->nombres . ' ' . $paciente->apellidos,
-                    'tipo_usuario' => 'paciente' // Identificador del tipo de usuario
+                    'tipo_usuario' => 'paciente'
                 ]);
 
                 return redirect()->route('agendarcitas')
                     ->with('mensaje', '¡Bienvenido ' . $paciente->nombres . '!');
             }
 
-            // Si no coincide con ninguno
+
             return back()
                 ->with('error', 'El número de teléfono o la contraseña son incorrectos.')
                 ->withInput($request->only('telefono'));
