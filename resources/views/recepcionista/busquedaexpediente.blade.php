@@ -1,12 +1,14 @@
 @extends('layouts.plantillaRecepcion')
 @section('contenido')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background:whitesmoke;
-            display: flex;
+
 
         }
          .form-control {
@@ -109,71 +111,129 @@
             border-radius: 6px;
         }
         /* Contenedor de la tabla */
-        .table-responsive {
+        .table-container {
             background-color: white;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            padding: 0;
+            padding: 25px;
             margin-bottom: 30px;
         }
 
-        /* Tabla base */
-        .table {
-            margin-bottom: 0;
+        /* DataTables Styling */
+        table.dataTable {
+            width: 100% !important;
+            border-collapse: collapse;
         }
 
-        /* Encabezado de la tabla - MÁS OSCURO */
-        .table thead.table-light {
-            background-color: #2C5F7C !important;
-            border-bottom: none;
-        }
-
-        .table thead.table-light th {
-            color: #224b63 !important;
-            font-weight: 600;
-            font-size: 14px;
-            padding: 16px 20px; /* Más padding */
-            border-bottom: none;
-            vertical-align: middle;
-            text-transform: uppercase; /* Mayúsculas para los encabezados */
+        table.dataTable thead th {
+            padding: 20px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 13px;
             letter-spacing: 0.5px;
-
+            text-transform: uppercase;
+            border-bottom: 2px solid #e0e0e0;
+            color: white !important;
+            background: #4ecdc4 !important;
         }
 
-        /* Filas del cuerpo */
-        .table tbody tr {
-            border-bottom: 1px solid #e5e7eb;
-            transition: background-color 0.2s ease;
+        table.dataTable tbody tr {
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.2s;
         }
 
-        .table-hover tbody tr:hover {
-            background-color: #f0fffe !important;
+        table.dataTable tbody tr:hover {
+            background: #f8f9fa;
         }
 
-        .table tbody td {
-            padding: 16px 20px; /* Más padding */
-            font-size: 14px;
-            color: #374151;
+        table.dataTable tbody td {
+            padding: 20px;
+            color: #666;
             vertical-align: middle;
         }
 
-        /* Última fila sin borde */
-        .table tbody tr:last-child {
-            border-bottom: none;
+        /* DataTables Controls */
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter {
+            margin-bottom: 20px;
         }
 
-        /* Columna de acciones centrada */
-        .table tbody td:last-child,
-        .table thead th:last-child {
-            text-align: center;
+        .dataTables_wrapper .dataTables_filter input {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 8px 15px;
+            margin-left: 10px;
         }
-        .text-info-emphasis{
+
+        .dataTables_wrapper .dataTables_filter input:focus {
+            outline: none;
+            border-color: #4ecdc4;
+        }
+
+        .dataTables_wrapper .dataTables_length select {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 5px 10px;
+            margin: 0 10px;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 8px 12px !important;
+            border-radius: 8px !important;
+            transition: all 0.3s !important;
+            box-shadow: none !important;
+            font-weight: 600 !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            color: white !important;
+            box-shadow: none !important;
+            transform: translateY(-2px);
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%) !important;
+            color: white !important;
+            border-color: #4ecdc4 !important;
+        }
+
+        .dataTables_wrapper .dataTables_info {
+            font-size: 14px;
+            padding-top: 15px;
+        }
+
+        .text-info-emphasis {
+
             font-weight: bold;
         }
 
-        .table thead th {
-            background: #4ecdc4 ;
+        /* Botón + Nuevo Expediente */
+        .btn-light {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-light:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+            color: white;
+        }
+
+        @media (max-width: 1200px) {
+            .table-container {
+                padding: 15px;
+            }
+
+            table.dataTable thead th,
+            table.dataTable tbody td {
+                padding: 15px 10px;
+            }
         }
 
 
@@ -192,75 +252,32 @@
                     mensaje.style.transition = "opacity 0.5s";
                     mensaje.style.opacity = "0";
 
-                    setTimeout(() => mensaje.remove(), 500); // lo remueve después
+                    setTimeout(() => mensaje.remove(), 500);
                 }
-            }, 10000); // 20 segundos = 20000 milisegundos
+            }, 10000);
         </script>
-        <h2 class="text-info-emphasis">Búsqueda de Expedientes
+            <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-info-emphasis">Búsqueda de Expedientes</h2>
             <a href="{{ route('expedientes.crear') }}" class="btn btn-light btn-sm">
                 + Nuevo Expediente
-            </a></h2>
-
+            </a>
+            </div>
 
         <br>
 
 
-        <div class="row justify-content-center mb-4">
-            <div class="col-12 col-md-10 col-lg-8">
-                <form method="get" action="{{ route('recepcionista.busquedaexpediente') }}">
-                    <div class="row g-2">
-
-                        <div class="col-12 col-md-6">
-                            <input class="form-control" type="search" name="busqueda"
-                                   value="{{ request('busqueda') }}"
-                                   placeholder="Ingrese nombre, apellido o expediente"
-                                   aria-label="Buscar">
-                        </div>
-
-
-                        <div class="col-6 col-md-3">
-                            <select class="form-select" name="filtro" aria-label="filtro de búsqueda">
-                                <option id="opcion" value="" selected>Filtrar por: </option>
-                                <option id="opcion" value="todos" {{ request('filtro') == 'todos' ? 'selected' : '' }}> Todos </option>
-                                <option id="opcion" value="nombre" {{ request('filtro') == 'nombre' ? 'selected' : '' }}> Nombre </option>
-                                <option id="opcion" value="apellido" {{ request('filtro') == 'apellido' ? 'selected' : '' }}> Apellido </option>
-                                <option id="opcion" value="numero_expediente" {{ request('filtro') == 'numero_expediente' ? 'selected' : '' }}> N° Expediente </option>
-                            </select>
-                        </div>
-
-
-                        <div class="col-6 col-md-3">
-                            <button class="btn-buscar" type="submit"> Buscar </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-    @if(request('busqueda'))
-           @if($expedientes->total() > 0)
-
-                {{-- Mostrar alerta de resultados encontrados --}}
-             <div class="row justify-content-center mb-3" style="margin-top: 140px;">
-                <div class="col-12 col-md-10 col-lg-8">
-                    <div class="alerta-resultados" role="alert">
-                        Se encontraron <strong>{{ $expedientes->total() }}</strong> pacientes
-                    </div>
-                </div>
-             </div>
-
 
          {{-- Mostrar tabla con resultados --}}
 
-            <div class="table-responsive">
-                <table class="table table-hover ">
-                    <thead class="table-light">
+            <div class="table-container">
+                <table id="expedientesTable" class="table table-hover">
+                    <thead>
                     <tr>
-                        <th scope="col">N° Expediente</th>
-                        <th scope="col">Nombre Completo</th>
-                        <th scope="col">Teléfono</th>
-                        <th scope="col">Fecha Creación</th>
-                        <th scope="col">Acciones</th>
+                        <th>N° Expediente</th>
+                        <th>Nombre Completo</th>
+                        <th>Teléfono</th>
+                        <th>Fecha Creación</th>
+                        <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody class="table-group-divider">
@@ -294,28 +311,48 @@
                     </tbody>
                 </table>
             </div>
-
-                {{-- Paginación --}}
-            <div class="d-flex justify-content-left">
-                {{ $expedientes->links('pagination::bootstrap-5') }}
-            </div>
-           @else
-            {{-- No se encontraron resultados --}}
-             <div class="text-center py-5" style="margin-top: 100px;">
-                <i class="bi bi-search" style="font-size: 4rem; color: #ccc;"></i>
-                <h5 class="mt-3 text-muted">No se encontraron resultados para "<strong>{{ request('busqueda') }}</strong>"</h5>
-                <p class="text-muted">Intente con otros términos de búsqueda</p>
-             </div>
-           @endif
-    @else
-            {{-- Mensaje inicial antes de buscar --}}
-            <div class="text-center py-5" style="margin-top: 100px;">
-                <i class="bi bi-search" style="font-size: 4rem; color: #ccc;"></i>
-                <h5 class="mt-3 text-muted">Realice una búsqueda para ver los resultados</h5>
-
-            </div>
-    @endif
-
     </div>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#expedientesTable').DataTable({
+                responsive: true,
+                autoWidth: false,
+                language: {
+                    processing: "Procesando...",
+                    search: "Buscar:",
+                    lengthMenu: "Mostrar _MENU_ registros",
+                    info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    infoEmpty: "Mostrando 0 a 0 de 0 registros",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    loadingRecords: "Cargando...",
+                    zeroRecords: "No se encontraron registros",
+                    emptyTable: "No hay expedientes disponibles",
+                    paginate: {
+                        first: "Primero",
+                        previous: "Anterior",
+                        next: "Siguiente",
+                        last: "Último"
+                    }
+                },
+                pageLength: 10,
+                lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+                order: [[0, 'desc']], // Ordenar por N° Expediente descendente
+                columnDefs: [
+                    {
+                        targets: 4, // Columna de Acciones
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
+        });
+    </script>
 
 @endsection
