@@ -38,7 +38,7 @@
                 <div class="col-md-6 mb-3">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">{{ $cita->doctor_nombre ?? 'Doctor no asignado' }}</h5>
+                            <h5 class="card-title">Dr. {{ ($cita->doctor->nombre ?? '') . ' ' . ($cita->doctor->apellido ?? '') ?: 'Doctor no asignado' }}</h5>
                             <p class="card-text">
                                 <strong>Paciente:</strong> {{ session('paciente_nombre') ?? 'No definido' }}<br>
                                 <strong>Fecha:</strong> {{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}<br>

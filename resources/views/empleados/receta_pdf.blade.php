@@ -15,7 +15,7 @@
             border-radius: 10px;
             padding: 30px 40px;
             background-color: #fff;
-            max-width: 650px;
+            max-width: 550px;
             margin: 0 auto;
         }
         h2 {
@@ -65,16 +65,20 @@
 <body>
 
 <div class="receta-container">
-    <h1 class="text-center text-info-emphasis">Receta Médica</h1>
+    <img style="margin-left: 180px;" src="{{ public_path('imagenes/login-icon.png') }}" width="200">
+    <h1 style="margin-left: 140px" class="text-info-emphasis" >Receta Médica </h1>
 
-    <div class="campo"><span class="label">Paciente:</span> {{ $nombre_paciente }}</div>
-    <div class="campo"><span class="label">Medicamento:</span> {{ $medicamento }}</div>
-    <div class="campo"><span class="label">Dosis:</span> {{ $dosis }}</div>
-    <div class="campo"><span class="label">Duración del tratamiento:</span> {{ $duracion }}</div>
+    <div style="margin-left: 130px" >
 
-    @if($observaciones)
-        <div class="campo"><span class="label">Observaciones:</span> {{ $observaciones }}</div>
-    @endif
+        <div class="campo"><span class="label">Paciente:</span> {{ $nombre_paciente }}</div>
+        <div class="campo"><span class="label">Medicamento:</span> {{ $medicamento }}</div>
+        <div class="campo"><span class="label">Dosis:</span> {{ $dosis }}</div>
+        <div class="campo"><span class="label">Duración del tratamiento:</span> {{ $duracion }}</div>
+
+        @if($observaciones)
+            <div class="campo"><span class="label">Observaciones:</span> {{ $observaciones }}</div>
+        @endif
+    </div>
 
     <br> <br>
 
@@ -85,13 +89,14 @@
                 {{session('empleado_nombre')}}
             </div>
         @endif
-        <p>Médico responsable</p>
+        <p>Médico Responsable</p>
     </div>
 
     <div class="footer">
         <p><em>ClínicWeb • Tel. 504 2234-5678 • contacto@clinicweb.hn</em></p>
-    </div>
-</div>
+    </div></div>
+
+
 
 </body>
 </html>

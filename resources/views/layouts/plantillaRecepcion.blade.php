@@ -115,6 +115,7 @@
                     <li><a class="nav-link {{ request()->routeIs('recepcionista.habitaciones.ocupadas') ? 'active' : '' }}" href="{{ route('recepcionista.habitaciones.ocupadas') }}">Habitaciones Ocupadas</a></li>
                     <li><a class="nav-link {{ request()->routeIs('recepcionista.habitaciones.asignar') ? 'active' : '' }}" href="{{ route('recepcionista.habitaciones.asignar') }}">Asignar Habitación</a></li>
                     <li><a class="nav-link {{ request()->routeIs('lista.doctores') ? 'active' : '' }}" href="{{ route('lista.doctores') }}">Doctores </a></li>
+                    <li><a class="nav-link {{ request()->routeIs('historial.diario') ? 'active' : '' }}" href="{{ route('historial.diario') }}">Historial Diario de Pacientes Atendidos </a></li>
                 </ul>
 
                 @if(session('empleado_id'))

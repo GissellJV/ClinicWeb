@@ -6,246 +6,576 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background:whitesmoke;
-            display: flex;
+            background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
+            min-height: 100vh;
         }
+
         .calendar-wrapper {
             max-width: 1200px;
-            margin: 50px auto;
-            text-align: center;
+            margin: 0 auto;
+            padding: 30px 20px;
         }
+
         h1 {
-            color: #333;
-            margin-bottom: 20px;
-            font-weight: 600;
+            color: #0f766e;
+            margin-bottom: 30px;
+            font-weight: 700;
+            font-size: 2.2rem;
         }
+
         .calendar-container {
             display: flex;
             align-items: flex-start;
             justify-content: center;
             gap: 30px;
+            flex-wrap: wrap;
         }
-        .controls {
-            text-align: left;
-        }
-        .controls label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #333;
-        }
-        .controls input,
-        .controls select {
-            padding: 12px 18px;
-            border-radius: 10px;
-            border: 1px solid #999;
-            font-size: 18px;
-            width: 300px;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .controls input { margin-bottom: 10px; }
 
-        .year-calendar {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-            gap: 20px;
+        .controls {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            min-width: 320px;
+            max-width: 350px;
+        }
+
+        .controls .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+            font-size: 0.95rem;
+        }
+
+        .controls select {
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid #d1d5db;
+            font-size: 16px;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .controls select:focus {
+            outline: none;
+            border-color: #14b8a6;
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .nombre-paciente {
+            padding: 12px 16px;
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid #d1d5db;
+            font-size: 16px;
+            background-color: #f0fdfa;
+            color: #0f766e;
+            font-weight: 500;
+            box-sizing: border-box;
+        }
+
+        .loading-text {
+            display: none;
+            margin-top: 8px;
+            color: #0d9488;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        /* Calendario Mensual */
+        .month-calendar {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            min-width: 420px;
+            max-width: 500px;
             flex: 1;
         }
-        .month {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-        .month:hover { transform: scale(1.03); }
+
         .month-header {
-            background: rgb(68, 160, 141);
+            background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
             color: white;
-            padding: 10px;
-            font-weight: 500;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        .days {
+
+        .month-header h2 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .days-header {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             text-align: center;
+            padding: 15px 15px 5px 15px;
+            background: #f8fafc;
+        }
+
+        .day-name {
+            font-weight: 700;
+            color: #6b7280;
             padding: 10px;
+            font-size: 0.9rem;
         }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            padding: 10px 15px 20px 15px;
+            gap: 6px;
+        }
+
         .day {
-            padding: 8px;
+            padding: 14px 8px;
             cursor: pointer;
-            border-radius: 6px;
-            transition: 0.2s;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            background: #f0fdfa;
+            color: #374151;
+            transition: all 0.2s ease;
         }
-        .day:hover { background: #e8f1ff; }
+
+        .day:hover {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+
+        .day.today {
+            background: #14b8a6;
+            color: white;
+            font-weight: 700;
+        }
+
+        .day.selected {
+            background: #0d9488;
+            color: white;
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.4);
+        }
+
+        .day.empty {
+            background: transparent;
+            cursor: default;
+        }
+
+        /* Leyenda */
+        .legend {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .legend h4 {
+            font-size: 0.9rem;
+            color: #374151;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: #4b5563;
+        }
+
+        .legend-color {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+        }
+
+        .legend-color.disponible { background: #22c55e; }
+        .legend-color.agendada { background: #0d9488; }
+        .legend-color.no-disponible { background: #9ca3af; }
 
         /* Modal */
         .modal {
             display: none;
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
             justify-content: center;
             align-items: center;
+            z-index: 1000;
         }
+
         .modal-content {
             background: white;
-            border-radius: 10px;
-            padding: 20px;
-            width: 500px;
-            max-height: 90vh;
+            border-radius: 16px;
+            padding: 25px;
+            width: 90%;
+            max-width: 550px;
+            max-height: 85vh;
             overflow-y: auto;
-            animation: fadeIn 0.3s ease;
+            animation: modalFadeIn 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
         }
-        @keyframes fadeIn {
-            from {opacity: 0; transform: scale(0.8);}
-            to {opacity: 1; transform: scale(1);}
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
+
+        .modal-content h3 {
+            color: #0f766e;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
         .doctor-card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 12px;
-            background: #f9f9f9;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 15px;
+            background: #f9fafb;
+            transition: all 0.3s ease;
         }
+
+        .doctor-card:hover {
+            border-color: #14b8a6;
+            background: #f0fdfa;
+        }
+
         .doctor-nombre {
-            font-weight: bold;
-            color: #2c3e50;
+            font-weight: 700;
+            color: #1f2937;
+            font-size: 1rem;
+            margin-bottom: 10px;
         }
+
         .horas {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-top: 8px;
         }
+
         .hora {
-            padding: 6px 10px;
+            padding: 10px 16px;
             border-radius: 20px;
             cursor: pointer;
             font-size: 14px;
-            transition: 0.3s;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
+
         .hora.disponible {
-            background: #d4edda;
-            color: #155724;
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
         }
+
+        .hora.disponible:hover {
+            background: #22c55e;
+            color: white;
+            transform: scale(1.05);
+        }
+
         .hora.ocupada {
-            background: #f8d7da;
-            color: #721c24;
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .hora.seleccionada {
+            background: #0d9488;
+            color: white;
+            border: 2px solid #0f766e;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.4);
+        }
+
+        .btn-agendar {
+            display: block;
+            width: 100%;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
+        }
+
+        .btn-agendar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(20, 184, 166, 0.4);
+        }
+
+        .btn-agendar:disabled {
+            opacity: 0.5;
             cursor: not-allowed;
         }
+
         .btn-citas {
-            padding: 0.875rem 2rem;
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            display: inline-block;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
+            margin-top: 20px;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .btn-citas:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(20, 184, 166, 0.4);
+            color: white;
+        }
+
+        .btn-cerrar {
+            padding: 12px 28px;
+            background: #6b7280;
             border: none;
             border-radius: 8px;
             color: white;
-            font-weight: 600;
-            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+            margin-top: 15px;
         }
 
-        .form-label {
+        .btn-cerrar:hover {
+            background: #4b5563;
+        }
+
+        .fecha-seleccionada {
+            background: #f0fdfa;
+            border: 1px solid #99f6e4;
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: #0f766e;
             font-weight: 600;
-            color: #555;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
         }
 
-        .text-info-emphasis{
-            font-weight: bold;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .calendar-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .controls {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .month-calendar {
+                width: 100%;
+                min-width: auto;
+            }
         }
     </style>
 
     <div class="calendar-wrapper">
-        <br>
-        <h1 class="text-center text-info-emphasis">Agenda de Citas Médicas</h1>
+        <h1 class="text-center">Agenda de Citas Médicas</h1>
 
-        <br>
-        <div id="alert-container" class="container mt-3" style="max-width: 700px;"></div>
+        <div id="alert-container" class="container" style="max-width: 700px;"></div>
 
-        <br>
         <div class="calendar-container">
             <div class="controls">
-                <label class="form-label">Nombre del Paciente:</label>
-                <label id="nombre" style="padding:12px; width: 300px; border-radius:10px; border:1px solid #999; font-size:16px;">
-                    {{ session('paciente_nombre') }}
-                </label>
+                <div class="form-group">
+                    <label class="form-label">Nombre del Paciente:</label>
+                    <div class="nombre-paciente" id="nombre">
+                        {{ session('paciente_nombre') }}
+                    </div>
+                </div>
 
-                <br><br>
+                <div class="form-group">
+                    <label for="especialidad" class="form-label">Seleccionar Especialidad:</label>
+                    <select name="especialidad" id="especialidad" class="form-control" required>
+                        <option value="">Seleccione especialidad</option>
+                        @foreach($especialidades as $esp)
+                            <option value="{{ $esp }}">{{ $esp }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-                <label for="especialidad" class="form-label" >Especialidad:</label>
-                <select id="especialidad">
-                    <option value="">Seleccione una especialidad</option>
-                    <option value="medicina">Medicina General</option>
-                    <option value="pediatria">Pediatría</option>
-                    <option value="dermatologia">Dermatología</option>
-                </select>
+                <div class="form-group">
+                    <label for="empleado_id" class="form-label">Seleccionar Doctor:</label>
+                    <select name="empleado_id" id="empleado_id" class="form-control" required>
+                        <option value="">Seleccione Doctor</option>
+                    </select>
+                    <div id="loadingDoctores" class="loading-text">Cargando doctores...</div>
+                </div>
 
-                <br><br><br><br><br><br><br><br>
+                <div class="form-group">
+                    <label class="form-label">Fecha Seleccionada:</label>
+                    <div class="fecha-seleccionada" id="fecha-display">
+                        Seleccione una fecha en el calendario
+                    </div>
+                </div>
 
-                <a href="{{ route('citas.mis-citas') }}" class="btn btn-citas" >
-                    Mis Citas
+                <a href="{{ route('citas.mis-citas') }}" class="btn-citas">
+                    Ver Mis Citas
                 </a>
+
+                <div class="legend">
+                    <h4>Leyenda:</h4>
+                    <div class="legend-item">
+                        <div class="legend-color disponible"></div>
+                        <span>Disponible</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color agendada"></div>
+                        <span>Cita agendada</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color no-disponible"></div>
+                        <span>No disponible</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="year-calendar" id="year-calendar"></div>
+            <!-- Calendario Mensual -->
+            <div class="month-calendar">
+                <div class="month-header">
+                    <button class="nav-btn" id="prev-month">&#8592;</button>
+                    <h2 id="month-title"></h2>
+                    <button class="nav-btn" id="next-month">&#8594;</button>
+                </div>
+                <div class="days-header" id="days-header"></div>
+                <div class="days-grid" id="days-grid"></div>
+            </div>
         </div>
 
-        <!-- Modal -->
+        <!-- Modal de Horarios -->
         <div class="modal" id="modal-doctores">
             <div class="modal-content">
                 <h3 id="titulo-doctores"></h3>
                 <div id="doctores-container" class="doctores"></div>
-                <button id="cerrar-modal-doctores">Cerrar</button>
+                <button class="btn-cerrar" id="cerrar-modal-doctores">Cerrar</button>
             </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const yearCalendar = document.getElementById('year-calendar');
+            const monthTitle = document.getElementById('month-title');
+            const daysHeader = document.getElementById('days-header');
+            const daysGrid = document.getElementById('days-grid');
+            const prevMonthBtn = document.getElementById('prev-month');
+            const nextMonthBtn = document.getElementById('next-month');
             const modalDoctores = document.getElementById('modal-doctores');
             const tituloDoctores = document.getElementById('titulo-doctores');
             const doctoresContainer = document.getElementById('doctores-container');
             const cerrarModalDoctores = document.getElementById('cerrar-modal-doctores');
             const especialidadSelect = document.getElementById('especialidad');
+            const doctorSelect = document.getElementById('empleado_id');
+            const loadingDoctores = document.getElementById('loadingDoctores');
             const nombreLabel = document.getElementById('nombre');
+            const fechaDisplay = document.getElementById('fecha-display');
             const alertContainer = document.getElementById('alert-container');
             const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
-            const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-            const diasSemana = ['L','M','M','J','V','S','D'];
-            const year = new Date().getFullYear();
+            const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            const diasSemana = ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'];
 
-            const doctores = {
-                medicina: {
+            let currentDate = new Date();
+            let currentMonth = currentDate.getMonth();
+            let currentYear = currentDate.getFullYear();
+            let selectedDate = null;
+            let selectedDayElement = null;
 
-                    'Dr. Juan Pérez': ['08:00 AM','09:00 AM','10:00 AM'],
-                    'Dr. Luis Gómez': ['01:00 PM','02:00 PM','03:00 PM']
-                },
-                pediatria: {
-                    'Dra. Ana Rodríguez': ['09:00 AM','10:00 AM','11:00 AM'],
-                    'Dr. Jorge Salinas': ['01:30 PM','02:30 PM','03:30 PM']
-                },
-                dermatologia: {
-                    'Dr. Carlos López': ['08:30 AM','09:30 AM','11:00 AM'],
-                    'Dra. Elena Martínez': ['01:00 PM','02:00 PM','03:00 PM']
+            // Inicializar encabezados de días
+            diasSemana.forEach(dia => {
+                const div = document.createElement('div');
+                div.classList.add('day-name');
+                div.textContent = dia;
+                daysHeader.appendChild(div);
+            });
+
+            // Filtrar doctores por especialidad
+            especialidadSelect.addEventListener('change', function () {
+                const especialidad = this.value;
+                doctorSelect.innerHTML = '<option value="">Seleccione Doctor</option>';
+
+                if (especialidad) {
+                    loadingDoctores.style.display = 'block';
+
+                    fetch(`/recepcionista/doctores-expediente/${especialidad}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            data.forEach(doctor => {
+                                const option = document.createElement('option');
+                                option.value = doctor.id;
+                                option.textContent = `Dr. ${doctor.nombre} ${doctor.apellido || ''} (${doctor.departamento})`;
+                                doctorSelect.appendChild(option);
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error al cargar doctores:', error);
+                            mostrarAlerta('danger', 'Error al cargar los doctores');
+                        })
+                        .finally(() => loadingDoctores.style.display = 'none');
                 }
-            };
+            });
 
-            // Función para mostrar alertas Bootstrap
+            // Función para mostrar alertas
             function mostrarAlerta(tipo, mensaje) {
                 const alert = document.createElement('div');
                 alert.className = `alert alert-${tipo} alert-dismissible fade show mt-2`;
                 alert.role = 'alert';
                 alert.innerHTML = `
-            ${mensaje}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        `;
+                    ${mensaje}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `;
                 alertContainer.appendChild(alert);
 
                 setTimeout(() => {
@@ -255,106 +585,222 @@
                 }, 4000);
             }
 
-            // --- Generar calendario ---
-            meses.forEach((mes, index) => {
-                const monthDiv = document.createElement('div');
-                monthDiv.classList.add('month');
-                const header = document.createElement('div');
-                header.classList.add('month-header');
-                header.textContent = mes + ' ' + year;
-                monthDiv.appendChild(header);
+            // Renderizar calendario
+            function renderCalendar() {
+                daysGrid.innerHTML = '';
+                monthTitle.textContent = `${meses[currentMonth]} ${currentYear}`;
 
-                const daysDiv = document.createElement('div');
-                daysDiv.classList.add('days');
+                const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+                const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+                const today = new Date();
 
-                diasSemana.forEach(d => {
-                    const diaHeader = document.createElement('div');
-                    diaHeader.style.fontWeight='bold';
-                    diaHeader.style.color='#666';
-                    diaHeader.textContent=d;
-                    daysDiv.appendChild(diaHeader);
-                });
-
-                const firstDay = new Date(year, index, 1).getDay();
-                const daysInMonth = new Date(year, index + 1, 0).getDate();
-                for (let i=0;i<(firstDay===0?6:firstDay-1);i++){daysDiv.appendChild(document.createElement('div'));}
-                for (let day=1;day<=daysInMonth;day++){
-                    const dayDiv=document.createElement('div');
-                    dayDiv.classList.add('day');
-                    dayDiv.textContent=day;
-                    const fecha=`${year}-${String(index+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-                    dayDiv.dataset.fecha=fecha;
-                    dayDiv.addEventListener('click', ()=>{
-                        const esp=especialidadSelect.value;
-                        const nombrePaciente=nombreLabel.textContent.trim();
-                        if(!esp){mostrarAlerta('warning','Seleccione una especialidad primero.');return;}
-                        if(!nombrePaciente){mostrarAlerta('danger','No se encontró el nombre del paciente.');return;}
-                        abrirModalDoctores(esp,fecha,nombrePaciente);
-                    });
-                    daysDiv.appendChild(dayDiv);
+                // Espacios vacíos antes del primer día
+                const offset = firstDay === 0 ? 6 : firstDay - 1;
+                for (let i = 0; i < offset; i++) {
+                    const emptyDiv = document.createElement('div');
+                    emptyDiv.classList.add('day', 'empty');
+                    daysGrid.appendChild(emptyDiv);
                 }
-                monthDiv.appendChild(daysDiv);
-                yearCalendar.appendChild(monthDiv);
-            });
 
-            // --- Modal de doctores ---
-            function abrirModalDoctores(especialidad,fecha,nombrePaciente){
-                modalDoctores.style.display='flex';
-                tituloDoctores.textContent=`Doctores disponibles - ${especialidad.charAt(0).toUpperCase()+especialidad.slice(1)} (${FormatoFecha(fecha)})`;
-                doctoresContainer.innerHTML='';
+                // Días del mes
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayDiv = document.createElement('div');
+                    dayDiv.classList.add('day');
+                    dayDiv.textContent = day;
 
-                Object.keys(doctores[especialidad]).forEach(nombre=>{
-                    const card=document.createElement('div');
-                    card.classList.add('doctor-card');
-                    card.innerHTML=`<div class="doctor-nombre">${nombre}</div>`;
+                    const fecha = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                    dayDiv.dataset.fecha = fecha;
 
-                    const horasDiv=document.createElement('div');
-                    horasDiv.classList.add('horas');
+                    // Marcar día actual
+                    if (today.getDate() === day && today.getMonth() === currentMonth && today.getFullYear() === currentYear) {
+                        dayDiv.classList.add('today');
+                    }
 
-                    doctores[especialidad][nombre].forEach(hora=>{
-                        const div=document.createElement('div');
-                        div.textContent=hora;
-                        div.classList.add('hora','disponible');
+                    // Mantener selección si es el mismo día
+                    if (selectedDate === fecha) {
+                        dayDiv.classList.add('selected');
+                        selectedDayElement = dayDiv;
+                    }
 
-                        div.addEventListener('click', async ()=>{
-                            const response = await fetch("{{ route('citas.guardar') }}", {
-                                method:"POST",
-                                headers:{
-                                    "Content-Type":"application/json",
-                                    "X-CSRF-TOKEN":csrfToken
-                                },
-                                body:JSON.stringify({
-                                    fecha,
-                                    hora,
-                                    doctor:nombre,
-                                    especialidad
-                                })
-                            });
-
-                            const data = await response.json();
-                            if (data.success) {
-                                mostrarAlerta('success', 'Tu cita ha sido agendada exitosamente.');
-                                modalDoctores.style.display = 'none';
-                            } else {
-                                mostrarAlerta('danger', 'Error: ' + data.message);
-                            }
-
-                        });
-
-                        horasDiv.appendChild(div);
-                    });
-
-                    card.appendChild(horasDiv);
-                    doctoresContainer.appendChild(card);
-                });
+                    dayDiv.addEventListener('click', () => handleDayClick(dayDiv, day, fecha));
+                    daysGrid.appendChild(dayDiv);
+                }
             }
 
-            function FormatoFecha(fecha){
-                const [y,m,d]=fecha.split('-');
+            function handleDayClick(dayDiv, day, fecha) {
+                const esp = especialidadSelect.value;
+                const doctorId = doctorSelect.value;
+                const nombrePaciente = nombreLabel.textContent.trim();
+
+                if (!esp) {
+                    mostrarAlerta('warning', 'Seleccione una especialidad primero.');
+                    return;
+                }
+
+                if (!doctorId) {
+                    mostrarAlerta('warning', 'Seleccione un doctor primero.');
+                    return;
+                }
+
+                if (!nombrePaciente) {
+                    mostrarAlerta('danger', 'No se encontró el nombre del paciente.');
+                    return;
+                }
+
+                // Actualizar selección visual
+                if (selectedDayElement) {
+                    selectedDayElement.classList.remove('selected');
+                }
+                dayDiv.classList.add('selected');
+                selectedDayElement = dayDiv;
+                selectedDate = fecha;
+
+                // Actualizar display de fecha
+                fechaDisplay.textContent = `${day} de ${meses[currentMonth]} ${currentYear}`;
+
+                // Abrir modal con horarios
+                abrirModalDoctores(esp, fecha, nombrePaciente, doctorId);
+            }
+
+            // Navegación de meses
+            prevMonthBtn.addEventListener('click', () => {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                renderCalendar();
+            });
+
+            nextMonthBtn.addEventListener('click', () => {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                renderCalendar();
+            });
+
+            // Horarios disponibles por defecto
+            const horariosDisponibles = [
+                { hora: '08:00 AM', disponible: true },
+                { hora: '09:00 AM', disponible: true },
+                { hora: '10:00 AM', disponible: true },
+                { hora: '11:00 AM', disponible: true },
+                { hora: '12:00 PM', disponible: false },
+                { hora: '01:00 PM', disponible: true },
+                { hora: '02:00 PM', disponible: true },
+                { hora: '03:00 PM', disponible: true },
+                { hora: '04:00 PM', disponible: true },
+                { hora: '05:00 PM', disponible: false }
+            ];
+
+            let horaSeleccionada = null;
+            let horaSeleccionadaElement = null;
+
+            // Modal de doctores/horarios
+            function abrirModalDoctores(especialidad, fecha, nombrePaciente, doctorId) {
+                modalDoctores.style.display = 'flex';
+                const doctorNombre = doctorSelect.options[doctorSelect.selectedIndex].text;
+                tituloDoctores.textContent = `Horarios disponibles - ${formatoFecha(fecha)}`;
+                doctoresContainer.innerHTML = '';
+                horaSeleccionada = null;
+                horaSeleccionadaElement = null;
+
+                const card = document.createElement('div');
+                card.classList.add('doctor-card');
+                card.innerHTML = `<div class="doctor-nombre">${doctorNombre}</div>`;
+
+                const horasDiv = document.createElement('div');
+                horasDiv.classList.add('horas');
+
+                horariosDisponibles.forEach(horario => {
+                    const div = document.createElement('div');
+                    div.textContent = horario.hora;
+                    div.classList.add('hora');
+                    div.classList.add(horario.disponible ? 'disponible' : 'ocupada');
+
+                    if (horario.disponible) {
+                        div.addEventListener('click', () => {
+                            if (horaSeleccionadaElement) {
+                                horaSeleccionadaElement.classList.remove('seleccionada');
+                            }
+                            div.classList.add('seleccionada');
+                            horaSeleccionadaElement = div;
+                            horaSeleccionada = horario.hora;
+                        });
+                    }
+
+                    horasDiv.appendChild(div);
+                });
+
+                card.appendChild(horasDiv);
+
+                // Botón Agendar Cita
+                const btnAgendar = document.createElement('button');
+                btnAgendar.textContent = 'Agendar Cita';
+                btnAgendar.classList.add('btn-agendar');
+                btnAgendar.addEventListener('click', async () => {
+                    if (!horaSeleccionada) {
+                        mostrarAlerta('warning', 'Seleccione un horario primero.');
+                        return;
+                    }
+
+                    btnAgendar.disabled = true;
+                    btnAgendar.textContent = 'Agendando...';
+
+                    try {
+                        const response = await fetch("{{ route('citas.guardar') }}", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-TOKEN": csrfToken
+                            },
+                            body: JSON.stringify({
+                                fecha: fecha,
+                                hora: horaSeleccionada,
+                                doctor_id: doctorId,
+                                especialidad: especialidad
+                            })
+                        });
+
+                        const data = await response.json();
+
+                        if (data.success) {
+                            mostrarAlerta('success', 'Tu cita ha sido agendada exitosamente.');
+                            modalDoctores.style.display = 'none';
+                        } else {
+                            mostrarAlerta('danger', 'Error: ' + (data.message || 'No se pudo agendar la cita'));
+                            btnAgendar.disabled = false;
+                            btnAgendar.textContent = 'Agendar Cita';
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        mostrarAlerta('danger', 'Error al agendar la cita. Intente nuevamente.');
+                        btnAgendar.disabled = false;
+                        btnAgendar.textContent = 'Agendar Cita';
+                    }
+                });
+
+                doctoresContainer.appendChild(card);
+                doctoresContainer.appendChild(btnAgendar);
+            }
+
+            function formatoFecha(fecha) {
+                const [y, m, d] = fecha.split('-');
                 return `${d}/${m}/${y}`;
             }
 
-            cerrarModalDoctores.addEventListener('click',()=>modalDoctores.style.display='none');
+            cerrarModalDoctores.addEventListener('click', () => modalDoctores.style.display = 'none');
+
+            modalDoctores.addEventListener('click', (e) => {
+                if (e.target === modalDoctores) {
+                    modalDoctores.style.display = 'none';
+                }
+            });
+
+            // Inicializar calendario
+            renderCalendar();
         });
     </script>
 @endsection

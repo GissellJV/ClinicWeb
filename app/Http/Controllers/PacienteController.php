@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empleado;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -131,8 +132,13 @@ class PacienteController extends Controller
       }
 
         $paciente = Paciente::find(session('paciente_id'));
+        $doctores = Empleado::where('cargo', 'Doctor')->get();
+        $especialidades = Empleado::where('cargo', 'Doctor')
+            ->select('departamento')
+            ->distinct()
+            ->pluck('departamento');
 
-        return view('pacientes.agendar_Citasonline', compact('paciente'));
+        return view('pacientes.agendar_Citasonline', compact('paciente', 'especialidades', 'doctores'));
     }
 
     public function enviarCodigoRecuperacion(Request $request)
@@ -218,7 +224,6 @@ class PacienteController extends Controller
         DB::table('password_reset_tokens')->where('token', $request->token)->delete();
         return redirect('/login')->with('status', 'Tu contraseña se ha cambiado exitosamente.');
     }
-
 
 
     public function informacion()
