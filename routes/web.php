@@ -54,6 +54,8 @@ Route::get('/informacion', [PacienteController::class, 'informacion'])->name('pa
 
 Route::get('/recepcionista/citas', [CitaController::class, 'index'])->name('listadocitas');
 Route::get('/citas/agendar', [CitaController::class, 'agendar'])->name('citas.agendar');
+Route::post('/citas/guardar', [CitaController::class, 'guardarDesdeCalendario'])->name('citas.guardar');
+Route::get('/citas/horarios/{doctorId}/{fecha}', [CitaController::class, 'obtenerHorarios'])->name('citas.horarios');
 
 //registro pacientes
 Route::get('/asistenciapaciente', [RecepcionistaController::class, 'registroPaciente'])->name('recepcionista.registroPaciente');
@@ -67,8 +69,7 @@ Route::get('/mis-citas', [CitaController::class, 'misCitas'])->name('citas.mis-c
 Route::post('/cancelar-cita/{id}', [CitaController::class, 'cancelarCita'])->name('citas.cancelar');
 Route::post('/reprogramar-cita/{id}', [CitaController::class, 'reprogramarCita'])->name('citas.reprogramar');
 Route::post('/citas/{id}/confirmar', [CitaController::class, 'confirmarCita'])->name('citas.confirmar');
-Route::post('/citas/guardar', [CitaController::class, 'guardarDesdeCalendario'])->name('citas.guardar');
-Route::post('/citas/guardar-calendario', [CitaController::class, 'guardarDesdeCalendario'])->name('citas.guardar.calendario');
+
 
 
 // Rutas para expedientes
@@ -157,9 +158,7 @@ Route::put('/inventario/{id}', [InventarioController::class, 'update'])->name('i
 Route::delete('/inventario/{id}', [InventarioController::class, 'destroy'])->name('inventario.destroy');
 
 
-
-
 Route::get('/historialDiario', [RecepcionistaController::class, 'historialDiario'])->name('historial.diario');
-Route::get('/listaDoctores', [RecepcionistaController::class, 'listaDoctores'])
-    ->name('lista.doctores');
+Route::get('/listaDoctores', [RecepcionistaController::class, 'listaDoctores'])->name('lista.doctores');
+
 

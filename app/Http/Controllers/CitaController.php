@@ -36,7 +36,11 @@ class CitaController extends Controller
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
 
-        $citas = Cita::with(['doctor', 'paciente'])->paginate(10);
+        // Cargar las citas con las relaciones
+        $citas = Cita::with(['doctor', 'paciente'])
+            ->orderBy('fecha', 'desc')
+            ->orderBy('hora', 'desc')
+            ->paginate(10);
 
         return view('pacientes.listado_citaspro', compact('citas'));
     }
@@ -153,7 +157,7 @@ class CitaController extends Controller
         $request->validate([
             'fecha' => 'required|date',
             'hora' => 'required|string',
-            'doctor' => 'required|string',
+            'doctor_id' => 'required|exists:empleados,id',
             'especialidad' => 'required|string',
         ]);
 
@@ -161,24 +165,81 @@ class CitaController extends Controller
         $paciente_nombre = session('paciente_nombre');
 
         if (!$paciente_id || !$paciente_nombre) {
-            return response()->json(['success' => false, 'message' => 'Debe iniciar sesión']);
+            return response()->json([
+                'success' => false,
+                'message' => 'Debe iniciar sesión como paciente'
+            ]);
         }
 
         try {
+            // Obtener información del doctor
+            $doctor = Empleado::findOrFail($request->doctor_id);
+
+            // Verificar disponibilidad
+            $citaExistente = Cita::where('empleado_id', $request->doctor_id)
+                ->where('fecha', $request->fecha)
+                ->where('hora', $request->hora)
+                ->whereIn('estado', ['pendiente', 'programada'])
+                ->exists();
+
+            if ($citaExistente) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Este horario ya está ocupado. Por favor seleccione otro.'
+                ]);
+            }
+
+            // Crear la cita
             $cita = Cita::create([
                 'paciente_id' => $paciente_id,
                 'paciente_nombre' => $paciente_nombre,
-                'doctor_nombre' => $request->doctor,
+                'empleado_id' => $request->doctor_id,
+                'doctor_nombre' => 'Dr. ' . $doctor->nombre . ' ' . ($doctor->apellido ?? ''),
                 'especialidad' => $request->especialidad,
                 'fecha' => $request->fecha,
                 'hora' => $request->hora,
                 'estado' => 'pendiente',
             ]);
 
-            return response()->json(['success' => true]);
+            return response()->json([
+                'success' => true,
+                'message' => 'Cita agendada exitosamente',
+                'cita_id' => $cita->id
+            ]);
+
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+            \Log::error('Error al guardar cita: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al procesar la solicitud: ' . $e->getMessage()
+            ], 500);
         }
+    }
+
+    public function obtenerHorarios($doctorId, $fecha)
+    {
+        // Horarios base del consultorio
+        $horariosBase = [
+            '08:00 AM', '09:00 AM', '10:00 AM', '11:00 AM',
+            '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM'
+        ];
+
+        // Obtener citas ya agendadas para ese doctor en esa fecha
+        $citasOcupadas = Cita::where('empleado_id', $doctorId)
+            ->where('fecha', $fecha)
+            ->pluck('hora')
+            ->toArray();
+
+        // Crear array de horarios con disponibilidad
+        $horarios = [];
+        foreach ($horariosBase as $hora) {
+            $horarios[] = [
+                'hora' => $hora,
+                'disponible' => !in_array($hora, $citasOcupadas)
+            ];
+        }
+
+        return response()->json($horarios);
     }
 
     // GUARDAR CITA RECEPCIONISTA

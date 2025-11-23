@@ -54,7 +54,7 @@ class RecetaController extends Controller
         ]);
 
 
-        $pdf = Pdf::loadView('empleados.receta_pdf', $data);
+        $pdf = Pdf::loadView('empleados.receta_pdf', $data)->setPaper([0, 0, 650, 650]);
 
         return $pdf->download('receta_medica_'.$data['nombre_paciente'].'.pdf');
     }
