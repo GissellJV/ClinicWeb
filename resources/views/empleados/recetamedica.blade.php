@@ -114,15 +114,15 @@
                             <label for="observaciones" class="form-label">Observaciones</label>
                             <textarea name="observaciones" id="observaciones" class="form-control" placeholder="Indicaciones adicionales (opcional)"></textarea>
                         </div>
-
+                        <button style="margin-left: 300px; margin-top: 10px" type="submit" class="btn btn-generar">Generar Receta</button>
                         <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" name="atendido" id="atendido" value="1">
-                            <label class="form-check-label" for="atendido">
+                            <input style=" margin-top: -40px"  class="form-check-input" type="checkbox" name="atendido" id="atendido" value="1">
+                            <label style=" margin-top: -45px"  class="form-check-label" for="atendido">
                                 Paciente atendido
                             </label>
                         </div>
 
-                        <button type="submit" class="btn btn-generar">Generar Receta</button>
+
                     </form>
 
         </div>
