@@ -79,7 +79,7 @@
             <!--Numero de identidad-->
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Número de identidad</label>
-                <input type="text" class="form-control" id="numero_identidad" name="numero_identidad" placeholder="0000000000000" >
+                <input type="text" class="form-control" id="numero_identidad" name="numero_identidad" placeholder="0000000000000" value="{{old('numero_identidad')}}" >
                 @error('numero_identidad')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror

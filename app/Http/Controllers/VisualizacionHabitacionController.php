@@ -11,12 +11,20 @@ class VisualizacionHabitacionController extends Controller
     // Mostrar vista de búsqueda (H30)
     public function index()
     {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
         return view('recepcionista.habitaciones.buscarhabitacion');
     }
 
     // Buscar paciente y su habitación
     public function buscar(Request $request)
     {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
         $request->validate([
             'busqueda' => 'required|string|min:3'
         ]);
@@ -39,6 +47,11 @@ class VisualizacionHabitacionController extends Controller
     // Ver todas las habitaciones ocupadas
     public function listarOcupadas()
     {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
         $asignaciones = AsignacionHabitacion::with(['paciente', 'habitacion'])
             ->where('estado', 'activo')
             ->orderBy('habitacion_id')

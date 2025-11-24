@@ -13,6 +13,11 @@ class AsignacionHabitacionController extends Controller
     // Mostrar lista de habitaciones (H28)
     public function index()
     {
+        if (!session('cargo') || session('cargo') != 'Enfermero') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Enfermero');
+        }
+
         $habitaciones = Habitacion::with('asignacionActiva.paciente')->get();
         return view('enfermeria.habitaciones.index', compact('habitaciones'));
     }
@@ -20,6 +25,11 @@ class AsignacionHabitacionController extends Controller
     // Formulario de asignación
     public function create()
     {
+        if (!session('cargo') || session('cargo') != 'Enfermero') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Enfermero');
+        }
+
         $habitacionesDisponibles = Habitacion::where('estado', 'disponible')
             ->whereDoesntHave('asignaciones', function($query) {
                 $query->where('estado', 'activo');
@@ -33,6 +43,10 @@ class AsignacionHabitacionController extends Controller
     // Guardar asignación
     public function store(Request $request)
     {
+        if (!session('cargo') || session('cargo') != 'Enfermero') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Enfermero');
+        }
         $request->validate([
             'paciente_id' => 'required|exists:pacientes,id',
             'habitacion_id' => 'required|exists:habitaciones,id',
@@ -82,6 +96,11 @@ class AsignacionHabitacionController extends Controller
     // Liberar habitación
     public function liberar($id)
     {
+        if (!session('cargo') || session('cargo') != 'Enfermero') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Enfermero');
+        }
+
         DB::beginTransaction();
         try {
             $asignacion = AsignacionHabitacion::findOrFail($id);
@@ -104,6 +123,11 @@ class AsignacionHabitacionController extends Controller
     }
     public function createRecepcionista()
     {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
         $habitacionesDisponibles = Habitacion::where('estado', 'disponible')
             ->whereDoesntHave('asignaciones', function($query) {
                 $query->where('estado', 'activo');
@@ -115,6 +139,10 @@ class AsignacionHabitacionController extends Controller
     }
     public function storeRecepcionista(Request $request)
     {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
         return $this->store($request);
     }
 }
