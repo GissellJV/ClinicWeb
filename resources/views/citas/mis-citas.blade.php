@@ -15,6 +15,22 @@
             font-weight: bold;
         }
 
+        .card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .list-group-item {
+            border: none;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .list-group-flush > .list-group-item {
+            border-bottom: 1px solid #e9ecef;
+        }
+
         /* Estilos para las alertas automáticas */
         .alert-auto-hide {
             animation: slideDown 0.3s ease;
@@ -71,25 +87,42 @@
                 {{ session('error') }}
             </div>
         @endif
-
-        <br>
-
         <div class="row">
             @forelse($citas as $cita)
                 <div class="col-md-6 mb-4">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">{{ $cita->doctor_nombre ?? 'Doctor no asignado' }}</h5>
-                            <p class="card-text">
-                                <strong>Paciente:</strong> {{ session('paciente_nombre') ?? 'No definido' }}<br>
-                                <strong>Fecha:</strong> {{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}<br>
-                                <strong>Hora:</strong> {{ $cita->hora }}<br>
-                                <strong>Especialidad:</strong> {{ $cita->especialidad ?? 'No definida' }}<br>
-                                <strong>Estado:</strong>
-                                <span class="badge bg-{{ $cita->estado == 'programada' ? 'success' : ($cita->estado == 'cancelada' ? 'danger' : 'warning') }}">
-                                {{ ucfirst($cita->estado) }}
-                            </span>
-                            </p>
+                            <h5 class="card-title mb-3">
+                                {{ $cita->doctor_nombre ?? 'Doctor no asignado' }}
+                            </h5>
+
+
+                            <ul class="list-group  mb-3">
+
+                                <li class="list-group-item">
+                                    <strong>Paciente:</strong> {{ session('paciente_nombre') ?? 'No definido' }}
+                                </li>
+
+                                <li class="list-group-item">
+                                    <strong>Fecha:</strong> {{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}
+                                </li>
+
+                                <li class="list-group-item">
+                                    <strong>Hora:</strong> {{ $cita->hora }}
+                                </li>
+
+                                <li class="list-group-item">
+                                    <strong>Especialidad:</strong> {{ $cita->especialidad ?? 'No definida' }}
+                                </li>
+
+                                <li class="list-group-item">
+                                    <strong>Estado:</strong>
+                                    <span class="badge bg-{{ $cita->estado == 'programada' ? 'success' : ($cita->estado == 'cancelada' ? 'danger' : 'warning') }}">
+                                        {{ ucfirst($cita->estado) }}
+                                    </span>
+                                </li>
+
+                            </ul>
                             @if($cita->mensaje)
                                 <div class="alert alert-info mt-2">{{ $cita->mensaje }}</div>
                             @endif
@@ -111,7 +144,6 @@
                         </div>
                     </div>
                 </div>
-
                 @if($cita->estado == 'programada')
                     <!-- Formulario oculto para reprogramar -->
                     <form action="{{ route('citas.reprogramar', $cita->id) }}" method="POST" id="formReprogramar{{ $cita->id }}" style="display: none;">
@@ -127,9 +159,12 @@
                     </div>
                 </div>
             @endforelse
+
+                <div class="mt-3">
+                    {{ $citas->links() }}
+                </div>
         </div>
     </div>
-
     <script>
         function confirmarCancelacion(citaId, doctorNombre, fecha, hora) {
             showConfirmModal(

@@ -23,13 +23,14 @@ class RecetaController extends Controller
     public function generarPDF(Request $request)
     {
         $request->validate([
-            'nombre_paciente' => 'required|string|max:255',
+            'nombre_paciente' => 'required|string|max:255|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/',
             'medicamento' => 'required|string|max:255',
             'dosis' => 'required|string|max:255',
             'duracion' => 'required|string|max:255',
             'observaciones' => 'nullable|string',
         ],[
             'nombre_paciente.required' => 'El nombre es obligatorio',
+            'nombre_paciente.regex' => 'Ingrese nombres válidos (solo letras y espacios)',
             'medicamento.required' => 'El medicamento es obligatorio',
             'dosis.required' => 'La dosis es obligatoria',
             'duracion.required' => 'La duracion es obligatoria',

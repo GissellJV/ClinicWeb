@@ -143,10 +143,10 @@ class CitaController extends Controller
             return redirect()->back()->with('error', 'La cita no se puede confirmar porque no está pendiente.');
         }
 
-        $doctorNombre = $cita->doctor ? $cita->doctor->nombre : ($cita->doctor_nombre ?? 'Doctor no asignado');
+        $doctorNombre = $cita->doctor_nombre ?? 'Doctor no asignado';
 
         $cita->estado = 'programada';
-        $cita->mensaje = "Tu cita con el {$doctorNombre} ha sido confirmada para las {$cita->hora}.";
+        $cita->mensaje = "Tu cita con {$doctorNombre} ha sido confirmada para las {$cita->hora}.";
         $cita->save();
 
         return redirect()->back()->with('success', 'Cita confirmada correctamente.');

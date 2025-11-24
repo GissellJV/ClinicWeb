@@ -4,9 +4,8 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
-            min-height: 100vh;
-            padding: 20px;
+            background:whitesmoke;
+            display: flex;
         }
 
         .container-fluid {
@@ -252,13 +251,13 @@
 
         @if(session('success'))
             <div class="alert alert-success text-center">
-                <strong>✓</strong> {{ session('success') }}
+                 {{ session('success') }}
             </div>
         @endif
 
         @if(session('error'))
             <div class="alert alert-danger text-center">
-                <strong>✗</strong> {{ session('error') }}
+                 {{ session('error') }}
             </div>
         @endif
 
@@ -333,15 +332,15 @@
                                     <form action="{{ route('citas.confirmar', $cita->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         <button type="submit" class="btn btn-success btn-sm">
-                                            ✓ Confirmar
+                                             Confirmar
                                         </button>
                                     </form>
                                 @elseif($cita->estado == 'programada')
-                                    <span class="text-success fw-bold">✓ Confirmada</span>
+                                    <span class="text-success fw-bold"> Confirmada</span>
                                 @elseif($cita->estado == 'cancelada')
-                                    <span class="text-danger fw-bold">✗ Cancelada</span>
+                                    <span class="text-danger fw-bold"> Cancelada</span>
                                 @elseif($cita->estado == 'reprogramada')
-                                    <span class="text-info fw-bold">↻ Reprogramada</span>
+                                    <span class="text-info fw-bold"> Reprogramada</span>
                                 @else
                                     <span class="text-muted">Sin acción</span>
                                 @endif
@@ -352,7 +351,7 @@
                     <tr>
                         <td colspan="7">
                             <div class="empty-state">
-                                <div style="font-size: 4rem; color: #d1d5db;">📅</div>
+                                <div style="font-size: 4rem; color: #d1d5db;"></div>
                                 <h4>No hay citas registradas</h4>
                                 <p>Las citas agendadas aparecerán aquí</p>
                             </div>
@@ -371,7 +370,7 @@
 
         <div class="text-center mt-4">
             <a href="{{ route('recepcionista.busquedaexpediente') }}" class="btn-inicio">
-                ← Volver al Inicio
+                 Volver al Inicio
             </a>
         </div>
     </div>
