@@ -11,7 +11,7 @@ class InventarioController extends Controller
     {
         if (!session('cargo') || session('cargo') != 'Enfermero') {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Enfermera');
+                ->with('error', 'Debes iniciar sesión como Enfermero');
         }
         $inventarios = Inventario::all();
         return view('inventario.principal')->with('inventarios', $inventarios);
@@ -19,12 +19,20 @@ class InventarioController extends Controller
 
     public function create()
     {
+        if (!session('cargo') || session('cargo') != 'Enfermero') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Enfermero');
+        }
+
        return view('inventario.registrar');
     }
 
     public function store(Request $request)
     {
-
+        if (!session('cargo') || session('cargo') != 'Enfermero') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Enfermero');
+        }
 
         request()->validate([
             'codigo' => 'required|string|max:6|unique:inventario_medicamentos,codigo',
@@ -65,13 +73,21 @@ class InventarioController extends Controller
     }
     public function edit($id)
     {
+        if (!session('cargo') || session('cargo') != 'Enfermero') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Enfermero');
+        }
+
         $inventario = Inventario::findOrFail($id);
         return view('inventario.registrar')->with('inventario', $inventario);
     }
 
     public function update(Request $request, $id)
     {
-
+        if (!session('cargo') || session('cargo') != 'Enfermero') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Enfermero');
+        }
 
         request()->validate([
             'codigo'=> "required|string|max:255|unique:inventario_medicamentos,codigo,$id",
@@ -118,6 +134,11 @@ class InventarioController extends Controller
 
     public function destroy($id)
     {
+        if (!session('cargo') || session('cargo') != 'Enfermero') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Enfermero');
+        }
+
         $medicamento = Inventario::findOrFail($id);
         $medicamento->delete();
 

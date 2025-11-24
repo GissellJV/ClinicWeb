@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Http;
 class PacienteController extends Controller
 {
     public function registrarpaciente(){
+
         return view('pacientes.registrarpaciente');
     }
 
@@ -42,16 +43,18 @@ class PacienteController extends Controller
                 'before:today',
                 function ($attribute, $value, $fail) {
                     $edad = Carbon::parse($value)->age;
-                    if ($edad > 80) {
-                        $fail('La edad no puede ser mayor a 80 años.');
+                    if ($edad > 120) {
+                        $fail('La edad no puede ser mayor a 120 años.');
                     }
                 }
             ],
             'numero_identidad' => 'required|string|size:13|regex:/^\d{4}\d{4}\d{5}$/|unique:pacientes',
             'genero' => 'required|in:Femenino,Masculino',
-            'telefono' => 'required|string|size:8|regex:/^[2389]\d{7}$/',
+            'telefono' => 'required|string|size:8|regex:/^[389]\d{7}$/',
             'password' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]/|confirmed',
-        ], [
+        ],
+            [
+
             'nombres.required' => 'Nombres obligatorios',
             'nombres.regex' => 'Ingrese nombres válidos (solo letras y espacios)',
             'nombres.max' => 'Los nombres no pueden tener más de 50 caracteres',
@@ -74,6 +77,7 @@ class PacienteController extends Controller
             'password.confirmed' => 'Las contraseñas no coinciden',
         ]);
 
+
         $nuevoPaciente = new Paciente();
         $nuevoPaciente->nombres = $request->input('nombres');
         $nuevoPaciente->apellidos = $request->input('apellidos');
@@ -84,10 +88,13 @@ class PacienteController extends Controller
         $nuevoPaciente->password = bcrypt($request->input('password'));
         $nuevoPaciente->save();
 
+
         return redirect()->route('inicioSesion')->with('mensaje', 'Registro exitoso, Inicia sesión');
     }
 
+
     public function listado_citaspro(Request $request){
+
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
             return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');

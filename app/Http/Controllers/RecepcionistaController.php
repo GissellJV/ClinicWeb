@@ -74,6 +74,7 @@ class RecepcionistaController extends Controller
             return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
+
         $ninos = Paciente::whereRaw('TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) BETWEEN 0 AND 12')->get();
         $adolescentes = Paciente::whereRaw('TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) BETWEEN 13 AND 17')->get();
         $adultos = Paciente::whereRaw('TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) BETWEEN 18 AND 59')->get();
@@ -138,6 +139,11 @@ class RecepcionistaController extends Controller
 
     public function historialDiario()
     {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
         $historial = HistorialDiario::whereDate('fecha', now())->get();
 
 
@@ -147,6 +153,11 @@ class RecepcionistaController extends Controller
 
     public function listaDoctores()
     {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
         $doctores = Empleado::where('cargo', 'Doctor')->paginate(6);
 
         return view('recepcionista.lista_doctores', compact('doctores', ));
