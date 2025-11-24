@@ -6,6 +6,7 @@ use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\LoginEmpleado;
+use Illuminate\Support\Carbon;
 
 class EmpleadoController extends Controller
 {
@@ -25,18 +26,40 @@ class EmpleadoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string|max:255',
-            'apellido' => 'required|string|max:255',
+            'nombre' => [
+                'required',
+                'string',
+                'max:50',
+                'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/'
+            ],
+            'apellido' => [
+                'required',
+                'string',
+                'max:50',
+                'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/'
+            ],
             'numero_identidad' => 'required|string|size:13|regex:/^\d{4}\d{4}\d{5}$/|unique:empleados,numero_identidad',
             'cargo' => 'required|string',
             'departamento' => 'required|string',
-            'fecha_ingreso' => 'required|date',
+            'fecha_ingreso' => [
+                'required',
+                'date',
+                function ($attribute, $value, $fail) {
+                    $edadIngreso = Carbon::parse($value)->age;
+                    if ($edadIngreso > 80) {
+                        $fail('La edad no puede ser mayor a 80 años.');
+                    }
+                }
+            ],
             'telefono' => 'required|string|size:8|regex:/^[2389]\d{7}$/',
             'password' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]/'
         ],[
-
             'nombre.required' => 'El nombre es obligatorio',
+            'nombre.regex' => 'El nombre solo puede contener letras y espacios',
+            'nombre.max' => 'El nombre no puede tener más de 50 caracteres',
             'apellido.required' => 'El apellido es obligatorio',
+            'apellido.regex' => 'El apellido solo puede contener letras y espacios',
+            'apellido.max' => 'El apellido no puede tener más de 50 caracteres',
             'cargo.required' => 'El cargo es obligatorio',
             'departamento.required' => 'El departamento es obligatorio',
             'fecha_ingreso.required' => 'La fecha de ingreso es obligatoria',
@@ -44,9 +67,9 @@ class EmpleadoController extends Controller
             'numero_identidad.required' => 'El número de identidad es obligatorio',
             'numero_identidad.regex' => 'El formato del número de identidad no es válido',
             'numero_identidad.size' => 'El número de identidad debe tener 13 dígitos',
-            'telefono.required' => 'El número de teléfono  obligatorio',
-            'telefono.regex' => 'El número de telefono no es valido',
-            'telefono.size' => 'El número de telefono debe tener 8 dígitos',
+            'telefono.required' => 'El número de teléfono es obligatorio',
+            'telefono.regex' => 'El número de teléfono no es válido',
+            'telefono.size' => 'El número de teléfono debe tener 8 dígitos',
             'password.required' => 'La contraseña es obligatoria',
             'password.min' => 'La contraseña debe tener mínimo 8 caracteres',
             'password.regex' => 'La contraseña debe incluir mayúsculas, minúsculas y números',
@@ -65,7 +88,7 @@ class EmpleadoController extends Controller
         $empleado->loginEmpleado()->create([
             'empleado_nombre' => $request->nombre,
             'empleado_apellido' => $request->apellido,
-            'telefono' =>$request->telefono,
+            'telefono' => $request->telefono,
             'password' => bcrypt($request->password),
         ]);
 

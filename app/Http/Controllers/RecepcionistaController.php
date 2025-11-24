@@ -60,45 +60,11 @@ class RecepcionistaController extends Controller
             return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
-
-        $expedientes = null;
-
-        if ($request->busqueda) {
-            $busqueda = $request->input('busqueda');
-            $filtro = $request->input('filtro', 'todos');
-
-            $query = Paciente::query();
-
-            if ($filtro == 'nombre') {
-                $query->where('nombres', 'LIKE', "%{$busqueda}%");
-
-            } elseif ($filtro == 'apellido') {
-                $query->where('apellidos', 'LIKE', "%{$busqueda}%");
-
-            } elseif ($filtro == 'numero_expediente') {
-                $query->whereHas('expediente', function($q) use ($busqueda) {
-                    $q->where('numero_expediente', 'LIKE', "%{$busqueda}%");
-                });
-
-            } else {
-
-                $query->where(function ($q) use ($busqueda) {
-                    $q->where('nombres', 'LIKE', "%{$busqueda}%")
-                        ->orWhere('apellidos', 'LIKE', "%{$busqueda}%")
-                        ->orWhereHas('expediente', function($subQuery) use ($busqueda) {
-                            $subQuery->where('numero_expediente', 'LIKE', "%{$busqueda}%");
-                        });
-                });
-            }
-
-
-            $query->with('expediente')
-                ->orderBy('apellidos', 'asc')
-                ->orderBy('nombres', 'asc');
-
-            $expedientes = $query->paginate(10)->withQueryString();
-
-        }
+        // Obtener TODOS los pacientes con expediente
+        $expedientes = Paciente::with('expediente')
+            ->orderBy('apellidos')
+            ->orderBy('nombres')
+            ->get();
         return view('recepcionista.busquedaexpediente', compact('expedientes'));
     }
 
