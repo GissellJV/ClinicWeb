@@ -4,16 +4,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            background:whitesmoke;
+            height: 100%;
+            margin: 0;
+            padding: 0;
             display: flex;
-            min-height: 100vh;
-            padding: 20px;
+            flex-direction: column;
+            background: whitesmoke;
+        }
+
+        body {
+            flex: 1; /* para que el body ocupe toda la altura */
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            flex: 1; /* que crezca */
+            width: 100%; /* todo el ancho */
+            box-sizing: border-box;
+            padding: 0; /* quitar padding extra */
         }
 
         .citas-container {
-            margin-top: 100px;
-            max-width: 1200px;
+            flex: 1; /* ocupa el espacio disponible */
+            margin: 100px auto 0 auto; /* centrado horizontal, margen superior */
+            max-width: 1200px; /* opcional: limitar ancho si quieres */
+            width: 100%; /* ocupa todo el ancho disponible dentro del max-width */
+            padding: 0 20px; /* opcional, para dar un poquito de margen interno */
+            box-sizing: border-box;
+        }
 
+        footer {
+            width: 100%; /* ocupa todo el ancho */
+            margin-top: auto; /* asegura que se quede abajo */
+            padding: 20px 0; /* opcional: ajustar espacio interno */
         }
 
         .header {
