@@ -6,6 +6,7 @@
         body{
             background: #f4f6f9;
             font-family: 'Poppins', sans-serif;
+            padding-top: 100px;
         }
         .card{
             border-radius: 15px;
