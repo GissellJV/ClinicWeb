@@ -7,129 +7,319 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        .navbar-toggler {
-            background-color: white;
-            border: 2px solid #4ecdc4;
-            border-radius: 8px;
-            width: 50px;
-            height: 50px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding-top: 60px;
+            background-color: #f5f7fa;
+        }
+
+        /* NAVBAR MODERNO */
+        .navbar-modern {
+            background: linear-gradient(90deg,
+            rgba(0, 191, 166, 0.7),
+        rgba(0, 158, 142, 0.7)
+        ) !important;
+            backdrop-filter: blur(6px);
+        }
+        .nav-link-glow {
+            color: #e7fffc !important;
+            font-weight: 500;
+            transition: 0.25s ease;
+        }
+        .nav-link-modern {
+            color: #e7fffc !important;
+            font-weight: 500;
+            transition: 0.25s ease;
+        }
+        .nav-link-glow:hover, .nav-link-glow.active {
+            color: #ffffff !important;
+            text-shadow: 0 0 10px #00ffe0, 0 0 20px #00d3b8;
+        }
+
+        /* Dropdown moderno */
+        .dropdown-menu-modern {
+            background-color: #00bfa6;
+            border: none;
+            min-width: 220px;
+        }
+        .dropdown-item-modern {
+            color: #e7fffc;
+            transition: all 0.3s ease;
+        }
+        .dropdown-item-modern:hover {
+            color: #ffffff;
+            text-shadow: 0 0 8px #00ffe0;
+            background-color: rgba(0,0,0,0.1);
+        }
+
+        /* Perfil badge */
+        .profile-badge {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Botón cerrar sesión */
+        .btn-logout {
+            padding: 6px 12px !important;
+            font-size: 14px !important;
+            border-radius: 6px !important;
+            background: #dc3545;
+            color: white !important;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            margin-right: 20px;
+            text-align: center;
         }
-        .navbar-toggler:hover {
-            background-color: #34b5ad;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transform: translateY(-2px);
-        }
-        .navbar-brand img {
-            height: 3rem;
-            width: auto;
-        }
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%2334b5ad' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-        }
-        .navbar-toggler:hover .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-        }
-        .nav-link {
-            color: #4ecdc4 !important;
-            transition: color 0.3s ease;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: #34b5ad !important;
-            text-decoration: underline;
-            font-weight: 600;
+        .btn-logout:hover {
+            background-color: #e04344;
+            box-shadow: 0 0 9px #ff6b6b;
         }
 
+        /* Logo SVG */
+        .navbar-brand svg {
+            height: 48px;
+            width: 48px;
+        }
+
+        /* Offcanvas */
+        .offcanvas-modern {
+            background: linear-gradient(180deg, #00bfa6, #009e8e);
+            color: #e7fffc;
+        }
+        .offcanvas-modern .nav-link {
+            color: #e7fffc;
+            transition: 0.3s;
+        }
+        .offcanvas-modern .nav-link:hover {
+            color: #fff;
+            text-shadow: 0 0 10px #00ffe0;
+        }
+
+        main.contenido {
+            flex: 1;
+            margin-top: 80px;
+            padding: 1rem;
+        }
+
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+        .nav-link-modern {
+            color: #e7fffc !important;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-link-modern:hover {
+            color: #ffffff !important;
+            text-shadow: 0 0 4px rgba(255,255,255,0.7);
+        }
+
+        /* BOTÓN HAMBURGUESA MODERNO */
+        .navbar-toggler {
+            border: none;
+            background: transparent;
+            outline: none;
+            position: relative;
+            width: 35px;
+            height: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .bar {
+            height: 3px;
+            width: 100%;
+            background-color: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .navbar-toggler.collapsed .bar:nth-child(2) {
+            opacity: 1;
+        }
+        .navbar-toggler.collapsed .bar:nth-child(1) {
+            transform: rotate(0) translate(0,0);
+        }
+        .navbar-toggler.collapsed .bar:nth-child(3) {
+            transform: rotate(0) translate(0,0);
+        }
+        .navbar-toggler:not(.collapsed) .bar:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .navbar-toggler:not(.collapsed) .bar:nth-child(2) {
+            opacity: 0;
+        }
+        .navbar-toggler:not(.collapsed) .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* OFFCANVAS ESTILIZADO */
+        .offcanvas-end {
+            width: 280px;
+            background: linear-gradient(180deg, #009e8e, #00bfa6);
+            color: white;
+            padding: 1rem;
+        }
+        .offcanvas-end .nav-link {
+            color: white;
+            padding: 0.6rem 0.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .offcanvas-end .nav-link:hover {
+            background: rgba(255,255,255,0.2);
+            color: #ffffff;
+        }
+        .offcanvas-header .btn-close {
+            filter: invert(1); /* botón blanco */
+        }
+
+        /* FOOTER MODERNO */
+        .footer-modern {
+            background: linear-gradient(180deg, #009e8e, #00bfa6);
+            color: white;
+            padding: 2rem 1rem;
+        }
+        .footer-title { font-weight: 700; margin-bottom: 0.8rem; }
+        .footer-text { color: #eafffa; font-size: 0.95rem; margin-bottom: 0.4rem; }
+        .footer-divider { border-color: rgba(255,255,255,0.25); }
+        .social.modern {
+            width: 42px; height: 42px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: white;
+            transition: 0.3s ease;
+        }
+        .social.modern:hover { background: white; color: #009e8e; }
     </style>
 </head>
 <body>
-<nav class="navbar  fixed-top shadow-sm bg-white">
-    <div class="container-fluid d-flex align-items-center">
-        <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ route('/') }}" style="color: #4ecdc4;">
-            <img src="/imagenes/login-icon.png" alt="login-icono">
+
+<nav class="navbar navbar-modern navbar-expand-lg fixed-top shadow-sm">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center fw-bold text-white" href="{{ route('/') }}">
+            ClinicWeb
         </a>
 
-        <!-- Enlaces principales alineados a la derecha -->
-        <ul class="navbar-nav flex-row ms-auto me-3 gap-3">
+        <!-- Desktop menu -->
+        <ul class="navbar-nav flex-row ms-auto me-3 gap-2 d-none d-lg-flex">
+            <!-- Inicio -->
             <li class="nav-item">
-                <a class="nav-link fw-semibold text-custom {{ request()->routeIs('/') ? 'active' : '' }}" href="{{ route('/') }}">Inicio</a>
+                <a class="nav-link nav-link-glow {{ request()->routeIs('/') ? 'active' : '' }}" href="{{ route('/') }}">
+                    <i class="bi bi-house-door-fill me-1"></i> Inicio
+                </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link fw-semibold text-custom {{ request()->routeIs('pacientes.informacion_Clinica') ? 'active' : '' }}"
-                   href="{{ route('pacientes.informacion_Clinica') }}">Información sobre la clínica</a>
+
+            <!-- Acciones -->
+            <li class="nav-item dropdown">
+                <a class="nav-link nav-link-glow dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-lightning-fill me-1"></i> Acciones
+                </a>
+                <ul class="dropdown-menu dropdown-menu-modern">
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.citas') }}">
+                            <i class="bi bi-calendar-check me-1"></i> Citas Programadas
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('recetamedica') }}">
+                            <i class="bi bi-prescription2 me-1"></i> Generar Receta
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.habitaciones.index') }}">
+                            <i class="bi bi-search me-1"></i> Buscar Habitación
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.habitaciones.mis-pacientes') }}">
+                            <i class="bi bi-hospital me-1"></i> Pacientes Hospitalizados
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.expedientesRecibidos') }}">
+                            <i class="bi bi-folder2-open me-1"></i> Expedientes Recibidos
+                        </a>
+                    </li>
+                </ul>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link  fw-semibold text-custom d-flex align-items-center" href="#" id="userDropdown"
-                   role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+            <!-- Perfil -->
+            <li class="nav-item dropdown">
+                <a class="nav-link nav-link-glow dropdown-toggle profile-badge" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-person-circle me-1"></i> {{ session('empleado_nombre') ?? 'Empleado' }}
                 </a>
-
+                <ul class="dropdown-menu dropdown-menu-modern dropdown-menu-end">
+                    <li>
+                        <form action="{{ route('empleados.logout') }}" method="POST" class="px-3 py-1">
+                            @csrf
+                            <button type="submit" class="btn btn-logout w-100">
+                                Cerrar Sesión
+                            </button>
+                        </form>
+                    </li>
+                </ul>
             </li>
         </ul>
-
-
-        <!-- Botón del menú lateral -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
-             aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
-
-
-            </div>
-            @if(session('cargo') && session('cargo') == 'Doctor')
-                <div class="alert alert-info mb-3">
-                    <strong>Bienvenido Dr: </strong> {{session('empleado_nombre')}}
-                </div>
-            @endif
-            <div class="offcanvas-body">
-                <ul class="navbar-nav flex-grow-1 pe-3">
-                            <!--LA CONDICION DE DOCTOR-->
-                            <li><a class="nav-link {{ request()->routeIs('doctor.citas') ? 'active' : '' }}" href="{{route('doctor.citas')}}">Citas programadas</a></li>
-                            <li><a class="nav-link {{ request()->routeIs('recetamedica') ? 'active' : '' }}" href="{{route('recetamedica')}}">Generar Receta</a></li>
-                            <li><a class="nav-link {{ request()->routeIs('doctor.habitaciones.index') ? 'active' : '' }}" href="{{ route('doctor.habitaciones.index') }}">Buscar Habitación</a></li>
-                            <li><a class="nav-link {{ request()->routeIs('doctor.habitaciones.mis-pacientes') ? 'active' : '' }}" href="{{ route('doctor.habitaciones.mis-pacientes') }}">Pacientes Hospitalizados</a></li>
-                            <li><a class="nav-link {{ request()->routeIs('doctor.expedientesRecibidos') ? 'active' : '' }}" href="{{ route('doctor.expedientesRecibidos') }}">Expedientes Recibidos</a></li>
-
-                        </ul>
-
-
-                @if(session('empleado_id'))
-                    <form action="{{route('empleados.logout')}}" method="POST" class="mt-3">
-                        @csrf
-                        <button type="submit" class="btn btn-outline-danger w-100">
-                            Cerrar
-                        </button>
-                    </form>
-                @endif
-
-                <form class="d-flex mt-3" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                    <button class="btn btn-outline-success" type="submit">Buscar</button>
-                </form>
-            </div>
-        </div>
     </div>
 </nav>
 
-<div class="container mt-10 pt-10">
-    <div class="row justify-content-center">
-
+<main class="container-fluid p-0 mt-0 pt-0">
     @yield('contenido')
+</main>
 
+<footer class="footer-modern mt-5">
+    <div class="container py-5">
+        <div class="row gy-4">
+
+            <!-- Columna 1 -->
+            <div class="col-md-4">
+                <h4 class="fw-bold text-white mb-3">ClinicWeb</h4>
+                <p class="footer-text">
+                    Gestión moderna de citas médicas con atención profesional y tecnología avanzada.
+                </p>
+            </div>
+
+            <!-- Columna 2 -->
+            <div class="col-md-4">
+                <h5 class="footer-title">Contacto</h5>
+                <p class="footer-text"><i class="bi bi-geo-alt-fill me-2"></i> Danlí, El Paraíso, Honduras</p>
+                <p class="footer-text"><i class="bi bi-telephone-fill me-2"></i> +504 2234-5678</p>
+                <p class="footer-text"><i class="bi bi-envelope-fill me-2"></i> contacto@clinicweb.hn</p>
+            </div>
+
+            <!-- Columna 3 -->
+            <div class="col-md-4">
+                <h5 class="footer-title">Síguenos</h5>
+                <div class="d-flex gap-3">
+                    <a class="social modern" href="#"><i class="bi bi-facebook"></i></a>
+                    <a class="social modern" href="#"><i class="bi bi-instagram"></i></a>
+                    <a class="social modern" href="#"><i class="bi bi-twitter-x"></i></a>
+                    <a class="social modern" href="#"><i class="bi bi-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <hr class="footer-divider">
+
+        <div class="text-center text-white-50 small mt-3">
+            © {{ date('Y') }} ClinicWeb. Todos los derechos reservados.
+        </div>
     </div>
-</div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

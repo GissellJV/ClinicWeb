@@ -3,6 +3,31 @@
 @section('contenido')
     <style>
 
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: whitesmoke;
+            display: flex;
+            flex-direction: column; /* para que footer esté al final */
+            min-height: 100vh;
+        }
+
+        .main-container {
+            flex: 1; /* ocupa espacio disponible y empuja footer */
+        }
+
+        footer {
+            width: 100%;
+            margin-top: auto; /* asegura que se quede abajo */
+            text-align: center;
+            padding: 20px 0;
+        }
+
         .receta-header h2 {
             color: rgba(28, 27, 27, 0.95);
             font-size: 24px;
