@@ -20,6 +20,7 @@ use App\Http\Controllers\DoctorHabitacionController; // Nuevo
 use \App\Http\Controllers\EnviarDoctorController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
+
 Route::get('/promociones', [RutasController::class, 'index'])->name('promociones.index');
 
 Route::get('/registrar',[PacienteController::class,'registrarpaciente'])->name('pacientes.registrarpaciente');
@@ -103,9 +104,6 @@ Route::get('/doctor/expedientes-recibidos', [DoctorController::class, 'expedient
 Route::get('/doctor/expediente/{id}', [DoctorController::class, 'verExpediente'])->name('expediente.ver');
 
 
-//Ruta para enfermeros
-Route::get('/enfermeria-principal', [EnfermeriaController::class, 'principal'])->name('enfermeria.principal');
-Route::get('/pacientes/medicamentos', [PacienteController::class, 'medicamentosPorPaciente'])->name('pacientes.medicamentos');
 
 
 // Agendar citas - Recepcionista
