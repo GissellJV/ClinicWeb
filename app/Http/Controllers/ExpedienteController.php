@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class ExpedienteController extends Controller
 {
+
     public function crearExpediente($paciente_id = null)
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
