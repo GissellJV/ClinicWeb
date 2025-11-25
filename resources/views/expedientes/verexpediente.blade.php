@@ -143,7 +143,7 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background:whitesmoke;
         min-height: 100vh;
-        display: flex;
+
 
     }
 

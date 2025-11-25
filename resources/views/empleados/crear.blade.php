@@ -178,7 +178,7 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background:whitesmoke;
-            display: flex;
+
         }
 
         .text-info-emphasis{

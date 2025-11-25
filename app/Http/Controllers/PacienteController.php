@@ -60,17 +60,7 @@ class PacienteController extends Controller
 
 
 
-    public function historialPacientes()
-    {
-        $pacientes = Paciente::with([
-            'medicamentos',
-            'asignacionesHabitacion.habitacion'
-        ])->get();
 
-        $inventarios = Inventario::all();
-
-        return view('enfermeria.historial', compact('pacientes', 'inventarios'));
-    }
 
     public function medicamentosPorPaciente()
     {

@@ -144,8 +144,10 @@ class RecepcionistaController extends Controller
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
 
-        $historial = HistorialDiario::whereDate('fecha', now())->get();
-
+        // Traemos las citas del día de hoy
+        $historial = Cita::whereDate('fecha', today())
+            ->select('paciente_nombre as nombre_paciente', 'doctor_nombre as doctor')
+            ->get();
 
         return view('recepcionista.historial', compact('historial'));
     }
