@@ -37,9 +37,8 @@ class DoctorHabitacionController extends Controller
             $query->where('estado', 'activo')->with('habitacion');
         }])
             ->where(function($query) use ($busqueda) {
-                $query->where('nombre', 'LIKE', "%{$busqueda}%")
-                    ->orWhere('apellido', 'LIKE', "%{$busqueda}%")
-                    ->orWhere('numero_expediente', 'LIKE', "%{$busqueda}%")
+                $query->where('nombres', 'LIKE', "%{$busqueda}%")
+                    ->orWhere('apellidos', 'LIKE', "%{$busqueda}%")
                     ->orWhere('numero_identidad', 'LIKE', "%{$busqueda}%");
             })
             ->get();

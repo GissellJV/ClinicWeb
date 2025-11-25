@@ -37,26 +37,20 @@
                         <div class="card-header bg-primary text-white">
                             <h5 class="mb-0">
                                 <i class="fas fa-user"></i>
-                                {{ $paciente->nombre }} {{ $paciente->apellido }}
+                                {{ $paciente->nombres }} {{ $paciente->apellidos }}
                             </h5>
                         </div>
                         <div class="card-body">
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <p class="mb-2">
-                                        <strong><i class="fas fa-file-medical"></i> Expediente:</strong><br>
-                                        {{ $paciente->numero_expediente }}
-                                    </p>
-                                </div>
-                                <div class="col-6">
-                                    <p class="mb-2">
                                         <strong><i class="fas fa-id-card"></i> Identidad:</strong><br>
                                         {{ $paciente->numero_identidad }}
                                     </p>
                                 </div>
-                                <div class="col-12">
-                                    <p class="mb-0">
-                                        <strong><i class="fas fa-phone"></i> Teléfono:</strong>
+                                <div class="col-6">
+                                    <p class="mb-2">
+                                        <strong><i class="fas fa-phone"></i> Teléfono:</strong><br>
                                         {{ $paciente->telefono }}
                                     </p>
                                 </div>

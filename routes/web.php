@@ -120,7 +120,7 @@ Route::put('/doctor/cita/{id}/completar', [CitaController::class, 'completarCita
 
 
 
-// Rutas para Enfermería (H28) - Ajustado a tu estructura
+// Rutas para Enfermería
 Route::prefix('enfermeria')->name('enfermeria.')->group(function () {
     Route::get('/habitaciones', [AsignacionHabitacionController::class, 'index'])->name('habitaciones.index');
     Route::get('/habitaciones/asignar', [AsignacionHabitacionController::class, 'create'])->name('habitaciones.asignar');
@@ -135,8 +135,10 @@ Route::prefix('recepcionista')->name('recepcionista.')->group(function () {
     Route::get('/habitaciones/ocupadas', [VisualizacionHabitacionController::class, 'listarOcupadas'])->name('habitaciones.ocupadas');
     Route::get('/habitaciones/asignar', [AsignacionHabitacionController::class, 'createRecepcionista'])->name('habitaciones.asignar');
     Route::post('/habitaciones/asignar', [AsignacionHabitacionController::class, 'storeRecepcionista'])->name('habitaciones.store');
+    Route::put('/habitaciones/liberar/{id}', [AsignacionHabitacionController::class, 'liberarRecepcionista'])->name('recepcionista.habitaciones.liberar');
     Route::get('/expediente/{id}/enviar-doctor', [RecepcionistaController::class, 'vistaEnviarDoctor'])->name('vistaEnviarDoctor');
     Route::post('/expediente/enviar-doctor', [RecepcionistaController::class, 'enviarDoctor'])->name('enviarDoctor');
+    Route::put('/habitaciones/liberar/{id}', [AsignacionHabitacionController::class, 'liberarRecepcionista'])->name('habitaciones.liberar');
 
 });
 

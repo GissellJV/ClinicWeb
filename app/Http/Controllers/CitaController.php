@@ -143,10 +143,10 @@ class CitaController extends Controller
             return redirect()->back()->with('error', 'La cita no se puede confirmar porque no está pendiente.');
         }
 
-        $doctorNombre = $cita->doctor_nombre ?? 'Doctor no asignado';
+        $doctorNombre = $cita->doctor ? $cita->doctor->nombre : ($cita->doctor_nombre ?? 'Doctor no asignado');
 
         $cita->estado = 'programada';
-        $cita->mensaje = "Tu cita con {$doctorNombre} ha sido confirmada para las {$cita->hora}.";
+        $cita->mensaje = "Tu cita con el {$doctorNombre} ha sido confirmada para las {$cita->hora}.";
         $cita->save();
 
         return redirect()->back()->with('success', 'Cita confirmada correctamente.');
@@ -155,7 +155,11 @@ class CitaController extends Controller
     public function guardarDesdeCalendario(Request $request)
     {
         $request->validate([
-            'fecha' => 'required|date',
+            'fecha' => [
+                'required',
+                'date',
+                'after_or_equal:today'  // ✅ AGREGAR ESTA VALIDACIÓN
+            ],
             'hora' => 'required|string',
             'doctor_id' => 'required|exists:empleados,id',
             'especialidad' => 'required|string',
@@ -172,6 +176,17 @@ class CitaController extends Controller
         }
 
         try {
+            // Validación adicional manual por seguridad
+            $fechaSeleccionada = Carbon::parse($request->fecha);
+            $hoy = Carbon::today();
+
+            if ($fechaSeleccionada->lt($hoy)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No se pueden agendar citas en fechas pasadas.'
+                ], 422);
+            }
+
             // Obtener información del doctor
             $doctor = Empleado::findOrFail($request->doctor_id);
 
@@ -250,16 +265,29 @@ class CitaController extends Controller
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
 
-        $request->validate([
+        // Validación más robusta
+        $validated = $request->validate([
             'paciente_id' => 'required|exists:pacientes,id',
-            'especialidad' => 'required|string',
+            'especialidad' => 'required|string|max:255',
             'empleado_id' => 'required|exists:empleados,id',
-            'fecha' => 'required|date|after_or_equal:today',
+            'fecha' => [
+                'required',
+                'date',
+                'after_or_equal:today',
+                function ($attribute, $value, $fail) {
+                    $fechaSeleccionada = \Carbon\Carbon::parse($value);
+                    $hoy = \Carbon\Carbon::today();
+
+                    if ($fechaSeleccionada->lt($hoy)) {
+                        $fail('La fecha de la cita no puede ser anterior a hoy.');
+                    }
+                }
+            ],
             'hora' => 'required',
             'motivo' => 'required|string|max:500'
         ]);
 
-        // Verificar disponibilidad
+        // Verificar disponibilidad (ya lo tienes)
         $citaExistente = Cita::where('empleado_id', $request->empleado_id)
             ->where('fecha', $request->fecha)
             ->where('hora', $request->hora)
@@ -312,7 +340,7 @@ class CitaController extends Controller
         return response()->json(['disponible' => !$citaExistente]);
     }
 
-   // VER CITAS DEL DOCTOR
+    // VER CITAS DEL DOCTOR
 
     public function misCitasDoctor(Request $request)
     {
