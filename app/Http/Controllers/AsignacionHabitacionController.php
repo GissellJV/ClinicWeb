@@ -25,7 +25,12 @@ class AsignacionHabitacionController extends Controller
                 $query->where('estado', 'activo');
             })->get();
 
-        $pacientes = Paciente::all();
+        $pacientes = Paciente::whereHas('expediente')
+            ->whereHas('citas', function($query){
+                $query->where('fecha', '>=', now());
+            })
+            ->get();
+
 
         return view('enfermeria.habitaciones.asignar', compact('habitacionesDisponibles', 'pacientes'));
     }
