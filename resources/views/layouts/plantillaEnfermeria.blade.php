@@ -111,7 +111,7 @@
                         <!--LA CONDICION DE ENFERMERIA-->
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{route('inventario.principal')}}">Administrar Medicamentos</a></li>
-                            <li><a class="dropdown-item" href="#"></a></li>
+                            <li><a class="dropdown-item" href="{{route('pacientes.medicamentos')}}">Historial medicamentos en habitacion</a></li>
 
                         </ul>
                     </li>

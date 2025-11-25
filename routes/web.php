@@ -105,6 +105,7 @@ Route::get('/doctor/expediente/{id}', [DoctorController::class, 'verExpediente']
 
 //Ruta para enfermeros
 Route::get('/enfermeria-principal', [EnfermeriaController::class, 'principal'])->name('enfermeria.principal');
+Route::get('/pacientes/medicamentos', [PacienteController::class, 'medicamentosPorPaciente'])->name('pacientes.medicamentos');
 
 
 // Agendar citas - Recepcionista

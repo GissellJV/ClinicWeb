@@ -18,4 +18,17 @@ class Inventario extends Model
         'estado',
         'fecha_vencimiento',
     ];
+    // Relación inversa con Paciente
+    public function pacientes()
+    {
+        return $this->belongsToMany(
+            Paciente::class,
+            'aplicacion_medicamento',
+            'inventario_id',
+            'paciente_id'
+        )
+            ->withPivot('cantidad', 'habitacion_id', 'fecha_aplicacion', 'observaciones')
+            ->withTimestamps();
+    }
+
 }
