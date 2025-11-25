@@ -1,8 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.plantillaRecepcion')
 
 @section('title', 'Asignar Habitación')
 
-@section('content')
+@section('contenido')
+    <style>
+        body{
+            padding-top: 70px;
+        }
+    </style>
     <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-lg-8">
