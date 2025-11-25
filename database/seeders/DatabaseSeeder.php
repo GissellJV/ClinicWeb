@@ -15,11 +15,14 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        $this->call([
-            InventarioMedicamentosTableSeeder::class,
-            HabitacionesSeeder::class,
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
         ]);
 
-
+        $this->call([
+            InventarioMedicamentosTableSeeder::class,
+            HabitacionesTableSeeder::class, // ← AGREGAR ESTA LÍNEA
+        ]);
     }
 }

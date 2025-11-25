@@ -13,6 +13,11 @@ class DoctorController extends Controller
 {
     public function verExpediente($pacienteId)
     {
+        if (!session('cargo') || session('cargo') != 'Doctor') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Doctor');
+        }
+
         $doctorId = session('empleado_id');
 
         // Verifica que el doctor tenga asignado este paciente
@@ -31,6 +36,11 @@ class DoctorController extends Controller
 
     public function expedientesRecibidos()
     {
+        if (!session('cargo') || session('cargo') != 'Doctor') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Doctor');
+        }
+
         $doctorId = session('empleado_id'); // obtiene el ID de la sesión
 
         if (!$doctorId) {
@@ -58,6 +68,8 @@ class DoctorController extends Controller
 
     public function visualizacion_Doctores()
     {
+
+
         $doctores = Empleado::where('cargo', 'Doctor')->get();
 
         return view('pacientes.visualizacion_Doctores', compact('doctores'));
@@ -65,6 +77,10 @@ class DoctorController extends Controller
 
     public function receta()
     {
+        if (!session('cargo') || session('cargo') != 'Doctor') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Doctor');
+        }
         return view('empleados.recetamedica');
 
     }

@@ -97,6 +97,11 @@ class EmpleadoController extends Controller
 
     public function lista()
     {
+        if (!session('cargo') || strtolower(session('cargo')) != 'recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
         $empleados = Empleado::orderBy('created_at', 'desc')->get();
         return view('empleados.lista', compact('empleados'));
     }

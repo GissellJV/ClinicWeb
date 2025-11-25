@@ -6,8 +6,8 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
-            min-height: 100vh;
+            background:whitesmoke;
+            display: flex;
         }
 
         .calendar-wrapper {
@@ -467,7 +467,6 @@
                 </a>
 
                 <div class="legend">
-                    <h4>Leyenda:</h4>
                     <div class="legend-item">
                         <div class="legend-color disponible"></div>
                         <span>Disponible</span>

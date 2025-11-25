@@ -47,13 +47,24 @@
                                         <option value="{{ $paciente->id }}" {{ old('paciente_id') == $paciente->id ? 'selected' : '' }}>
                                             {{ $paciente->nombres }} {{ $paciente->apellidos }}
                                             ({{ $paciente->expediente->numero_expediente ?? 'Sin expediente' }})
+                                            {{ $paciente->nombres }} {{ $paciente->apellidos }}
+                                            (Identidad: {{ $paciente->numero_identidad }})
                                         </option>
-
                                     @endforeach
                                 </select>
                                 @error('paciente_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+
+                                @if($pacientes->isEmpty())
+                                    <div class="alert alert-info mt-3">
+                                        <strong>Todos los pacientes ya tienen habitación asignada.</strong>
+                                    </div>
+                                @else
+                                    <small class="text-muted">
+                                        Hay {{ $pacientes->count() }} paciente(s) sin habitación asignada
+                                    </small>
+                                @endif
                             </div>
 
                             <div class="mb-4">
@@ -111,7 +122,7 @@
                                 </a>
                                 <button type="submit" class="btn btn-lg text-white"
                                         style="background: linear-gradient(135deg, #4ecdc4 0%, #4FC3C3 100%);"
-                                        @if($habitacionesDisponibles->isEmpty()) disabled @endif>
+                                        @if($habitacionesDisponibles->isEmpty() || $pacientes->isEmpty()) disabled @endif>
                                     Asignar Habitación
                                 </button>
                             </div>
@@ -150,6 +161,24 @@
                     this.classList.add('border-success');
                     this.classList.remove('border-danger');
                 }
+            });
+
+            // Deshabilitar el botón si no hay opciones disponibles
+            document.addEventListener('DOMContentLoaded', function() {
+                const pacientesSelect = document.getElementById('paciente_id');
+                const habitacionesSelect = document.getElementById('habitacion_id');
+                const submitBtn = document.querySelector('button[type="submit"]');
+
+                function checkFormValidity() {
+                    const hasPacientes = pacientesSelect.options.length > 1; // Más de 1 porque incluye la opción vacía
+                    const hasHabitaciones = habitacionesSelect.options.length > 1;
+
+                    if (!hasPacientes || !hasHabitaciones) {
+                        submitBtn.disabled = true;
+                    }
+                }
+
+                checkFormValidity();
             });
         </script>
     @endsection
