@@ -18,7 +18,7 @@
             align-items: center;
             justify-content: center;
             padding: 50px;
-            margin-top:450px;
+            margin-top:-75px;
             width: 800px;
         }
 
@@ -187,6 +187,8 @@
                 font-size: 1.5rem;
             }
         }
+
+
     </style>
 
 

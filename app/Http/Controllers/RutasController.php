@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cita;
+use App\Models\Empleado;
+use App\Models\Paciente;
 use Illuminate\Http\Request;
 
 class RutasController extends Controller
@@ -24,6 +27,11 @@ class RutasController extends Controller
         // Ordenar alfabéticamente
         $promociones = $promociones->sortBy('titulo');
 
-        return view('index', compact('promociones'));
+        $doctores = Empleado::where('cargo', 'Doctor')->get();
+        $empleados = Empleado::orderBy('created_at', 'desc')->get();
+        $pacientes = Paciente::orderBy('created_at', 'desc')->get();
+        $citas = Cita::orderBy('created_at', 'desc')->get();
+
+        return view('index', compact('promociones', 'doctores', 'empleados', 'pacientes', 'citas'));
     }
 }

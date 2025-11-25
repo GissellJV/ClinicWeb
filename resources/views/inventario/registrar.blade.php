@@ -9,7 +9,6 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background:whitesmoke;
-            display: flex;
         }
         .formulario .btn-guardar {
             padding: 0.875rem 2rem;

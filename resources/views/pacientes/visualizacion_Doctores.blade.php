@@ -29,8 +29,7 @@
                                 <p class="card-text">
                                     <small class="text-body-secondary">Disponible ahora</small>
                                 </p>
-                            </div>
-                        </div>
+                            </div>                        </div>
                     </div>
                 </div>
             </div>

@@ -72,7 +72,7 @@ class DoctorController extends Controller
 
         $doctores = Empleado::where('cargo', 'Doctor')->get();
 
-        return view('pacientes.visualizacion_Doctores', compact('doctores'));
+        return view('index', compact('doctores'));
     }
 
     public function receta()
