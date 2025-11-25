@@ -500,7 +500,7 @@
                         @endif
 
                         <div class="cita-acciones">
-                            <a href="{{ route('expedientes.visualizar', $cita->paciente_id) }}" class="btn btn-ver">
+                            <a href="{{ route('expediente.ver', $cita->paciente_id) }}" class="btn btn-ver">
                                 <i class="fas fa-file-medical"></i>
                                 Ver Expediente
                             </a>

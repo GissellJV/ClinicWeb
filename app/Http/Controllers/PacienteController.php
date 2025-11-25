@@ -13,9 +13,81 @@ use Illuminate\Support\Str;
 use Vonage\Client;
 use Vonage\Client\Credentials\Basic;
 use Illuminate\Support\Facades\Http;
+use App\Models\Inventario;
 
 class PacienteController extends Controller
 {
+    public function asignarMedicamento(Request $request)
+    {
+        $request->validate([
+            'paciente_id' => 'required|exists:pacientes,id',
+            'inventario_id' => 'required|exists:inventario_medicamentos,id',
+            'habitacion_id' => 'required|exists:habitaciones,id',
+            'cantidad' => 'required|integer|min:1',
+        ]);
+
+        $paciente = Paciente::findOrFail($request->paciente_id);
+        $medicamento = Inventario::findOrFail($request->inventario_id);
+        $cantidadAsignar = $request->cantidad;
+
+        // Verificar que hay suficiente medicamento en inventario
+        if ($cantidadAsignar > $medicamento->cantidad) {
+            return back()->with('error', "No hay suficiente $medicamento->nombre en inventario.");
+        }
+
+        // Asignar medicamento al paciente
+        $medExistente = $paciente->medicamentos()->where('inventario_id', $medicamento->id)->first();
+
+        if ($medExistente) {
+            $paciente->medicamentos()->updateExistingPivot($medicamento->id, [
+                'cantidad' => $medExistente->pivot->cantidad + $cantidadAsignar,
+                'habitacion_id' => $request->habitacion_id,
+                'fecha_aplicacion' => now()
+            ]);
+        } else {
+            $paciente->medicamentos()->attach($medicamento->id, [
+                'cantidad' => $cantidadAsignar,
+                'habitacion_id' => $request->habitacion_id,
+                'fecha_aplicacion' => now()
+            ]);
+        }
+
+        // ⚡ Restar la cantidad del inventario directamente
+        $medicamento->decrement('cantidad', $cantidadAsignar);
+
+        return back()->with('success', "$medicamento->nombre asignado correctamente. Inventario actualizado.");
+    }
+
+
+
+    public function historialPacientes()
+    {
+        $pacientes = Paciente::with([
+            'medicamentos',
+            'asignacionesHabitacion.habitacion'
+        ])->get();
+
+        $inventarios = Inventario::all();
+
+        return view('enfermeria.historial', compact('pacientes', 'inventarios'));
+    }
+
+    public function medicamentosPorPaciente()
+    {
+        $pacientes = Paciente::with([
+            'medicamentos',
+            'asignacionesHabitacion' => function($query) {
+                $query->where('estado', 'activo')->with('habitacion');
+            }
+        ])->get();
+
+        $inventarios = Inventario::all(); // Traemos todos los medicamentos disponibles
+
+        return view('enfermeria.historial', compact('pacientes', 'inventarios'));
+
+
+    }
+
     public function registrarpaciente(){
 
         return view('pacientes.registrarpaciente');
