@@ -1,8 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.plantillaRecepcion')
 
 @section('title', 'Habitaciones Ocupadas')
 
-@section('content')
+@section('contenido')
+    <style>
+        body{
+            padding-top: 100px;
+        }
+    </style>
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h2><i class="fas fa-bed"></i> Habitaciones Ocupadas</h2>
