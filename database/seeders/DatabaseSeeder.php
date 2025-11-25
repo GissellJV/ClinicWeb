@@ -22,7 +22,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             InventarioMedicamentosTableSeeder::class,
+            HabitacionesSeeder::class,
             HabitacionesTableSeeder::class, // ← AGREGAR ESTA LÍNEA
         ]);
+
+
     }
 }

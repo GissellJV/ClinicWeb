@@ -16,6 +16,20 @@ use Illuminate\Support\Facades\Http;
 
 class PacienteController extends Controller
 {
+    public function medicamentosPorPaciente()
+    {
+        $pacientes = Paciente::with([
+            'medicamentos',
+            'asignacionesHabitacion' => function($query) {
+                $query->where('estado', 'activo')->with('habitacion');
+            }
+        ])->get();
+
+        return view('enfermeria.historial', compact('pacientes'));
+
+
+    }
+
     public function registrarpaciente(){
 
         return view('pacientes.registrarpaciente');
