@@ -217,8 +217,7 @@
             padding-left: 0;
         }
 
-        /* ========== MODALES PERSONALIZADOS ========== */
-        /* Modal de Confirmación Personalizado */
+
         .modal-overlay {
             display: none;
             position: fixed;
