@@ -1293,45 +1293,45 @@
         </div>
     </section>
 
+<!-- BOOKING -->
     <!-- BOOKING -->
     <section class="booking">
         <div id="promoCarousel" class="carousel slide promo-carousel" data-bs-ride="carousel">
 
             <div class="carousel-inner">
+                @if(isset($promociones) && count($promociones) > 0)
+                    @foreach($promociones as $index => $promocion)
+                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                            <div class="promo-card glow-target">
 
-                <!-- ITEM 1 -->
-                <div class="carousel-item active">
-                    <div class="promo-card glow-target">
-                        <img src="https://www.hospitalitaliano.org.ar/hiba/files/2025-08/Chequeo%20M%C3%A9dico.jpg" class="promo-img">
-                        <div class="promo-text">
-                            <h3>Control Estándar</h3>
-                            <p>Consulta general + análisis básico + seguimiento.
-                                Disponible durante todo el mes.</p>
+                                @if($promocion->imagen)
+                                    <img src="data:image/jpeg;base64,{{ base64_encode($promocion->imagen) }}"
+                                         class="promo-img"
+                                         alt="{{ $promocion->titulo }}">
+                                @else
+                                    <img src="https://via.placeholder.com/600x400?text=Sin+Imagen"
+                                         class="promo-img"
+                                         alt="Sin imagen">
+                                @endif
+
+                                <div class="promo-text">
+                                    <h3>{{ $promocion->titulo }}</h3>
+                                    <p>{{ $promocion->descripcion }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <div class="carousel-item active">
+                        <div class="promo-card glow-target">
+                            <img src="https://via.placeholder.com/600x400?text=No+hay+promociones" class="promo-img">
+                            <div class="promo-text">
+                                <h3>No hay promociones disponibles</h3>
+                                <p>Pronto tendremos nuevas promociones para ti.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- ITEM 2 -->
-                <div class="carousel-item">
-                    <div class="promo-card glow-target">
-                        <img src="https://www.promedco.com/images/Noticias_2019/dia-internacional-de-los-medicos-1.jpg" class="promo-img">
-                        <div class="promo-text">
-                            <h3>Especialistas</h3>
-                            <p>Agenda tu cita con nuestros doctores certificados.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ITEM 3 -->
-                <div class="carousel-item">
-                    <div class="promo-card glow-target">
-                        <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=1500&q=80" class="promo-img">
-                        <div class="promo-text">
-                            <h3>Promoción para Adultos Mayores</h3>
-                            <p>Hasta 30% de descuento en consultas y exámenes preventivos.</p>
-                        </div>
-                    </div>
-                </div>
+                @endif
 
             </div>
 
@@ -1346,14 +1346,14 @@
         </div>
     </section>
 
-    <!-- SERVICES -->
-    <section id="servicios" class="services">
-        <div class="section-header">
-            <p class="section-subtitle">Nuestros Servicios</p>
-            <h2 class="section-title">Atención Médica Integral</h2>
-            <p class="section-description">Ofrecemos una amplia gama de servicios médicos de alta calidad para cuidar tu
-                salud y la de tu familia</p>
-        </div>
+<!-- SERVICES -->
+<section id="servicios" class="services">
+    <div class="section-header">
+        <p class="section-subtitle">Nuestros Servicios</p>
+        <h2 class="section-title">Atención Médica Integral</h2>
+        <p class="section-description">Ofrecemos una amplia gama de servicios médicos de alta calidad para cuidar tu
+            salud y la de tu familia</p>
+    </div>
 
         <div class="services-grid">
             <div class="service-card">
