@@ -20,8 +20,8 @@ class Empleado extends Model
         'cargo',
         'departamento',
         'fecha_ingreso',
-        'foto',
-        'genero'
+        'genero',
+        'foto'
     ];
 
     // Ocultar campos sensibles

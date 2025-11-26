@@ -301,51 +301,7 @@
         </div>
 
         <!-- Enlaces principales -->
-        <ul class="navbar-nav flex-row ms-auto me-3 gap-2 d-none d-lg-flex">
-            <!-- Inicio -->
-            <li class="nav-item">
-                <a class="nav-link nav-link-glow active" href="{{ route('/') }}">
-                    <i class="bi bi-house-door-fill me-1"></i> Inicio
-                </a>
-            </li>
-            <!-- Enfermería (Dropdown) -->
-            <li class="nav-item dropdown">
-                <a class="nav-link nav-link-glow dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                   aria-expanded="false">
-                    <i class="bi bi-heart-pulse-fill me-1"></i> Enfermería
-                </a>
-                <ul class="dropdown-menu dropdown-menu-modern">
-                    <li>
-                        <a class="dropdown-item dropdown-item-modern" href="{{route('inventario.principal')}}">
-                            <i class="bi bi-capsule"></i> Administrar Medicamentos
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item dropdown-item-modern" href="{{route('pacientes.medicamentos')}}">
-                            <i class="bi bi-clipboard2-pulse"></i> Historial Medicamentos
-                        </a>
-                    </li>
-                </ul>
-            </li>
 
-            <!-- Perfil (Dropdown) -->
-            <li class="nav-item dropdown">
-                <a class="nav-link nav-link-glow dropdown-toggle profile-badge" href="#" role="button"
-                   data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-person-circle"></i> {{ session('empleado_nombre') }}
-                </a>
-                <ul class="dropdown-menu dropdown-menu-modern dropdown-menu-end">
-                    <li>
-                        <form action="{{ route('empleados.logout') }}" method="POST" class="px-3 py-1">
-                            @csrf
-                            <button type="submit" class="btn btn-logout w-100">
-                                Cerrar Sesión
-                            </button>
-                        </form>
-                    </li>
-                </ul>
-            </li>
-        </ul>
     </div>
 </nav>
 
