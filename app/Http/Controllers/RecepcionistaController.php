@@ -147,7 +147,7 @@ class RecepcionistaController extends Controller
         $historial = HistorialDiario::whereDate('fecha', now())->get();
 
 
-        return view('recepcionista.historial', compact('historial'));
+        return view('recepcionista.historial', compact('historial'));;
     }
 
 

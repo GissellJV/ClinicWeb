@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Demo - Navbar Enfermería</title>
+    <title>Enfermería</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
@@ -246,7 +246,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link nav-link-glow dropdown-toggle profile-badge" href="#" role="button"
                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-person-circle"></i> Admin Enfermería
+                    <i class="bi bi-person-circle"></i> {{ session('empleado_nombre') }}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-modern dropdown-menu-end">
                     <li>
