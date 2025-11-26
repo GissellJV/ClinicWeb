@@ -27,7 +27,92 @@
 @section('contenido')
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        /* Sistema de calificación con estrellas */
+        .star-rating-input {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 8px;
+            font-size: 2.5rem;
+            margin: 20px 0;
+        }
 
+        .star-rating-input .star-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            transition: all 0.2s ease;
+            color: #ddd;
+        }
+
+        .star-rating-input .star-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .star-rating-input .star-btn.active {
+            color: #ffc107;
+        }
+
+        .star-rating-input .star-btn.hover {
+            color: #ffc107;
+        }
+
+        /* Feedback visual */
+        .rating-feedback {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 600;
+            color: #666;
+            min-height: 24px;
+        }
+
+        /* Modal mejorado */
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #00D9C0 0%, #4EFFF5 100%);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            border-bottom: none;
+            padding: 20px 30px;
+        }
+
+        .modal-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #e9ecef;
+            padding: 20px 30px;
+        }
+
+        .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        /* Alerta de acceso denegado */
+        .alert-login {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .alert-login strong {
+            font-size: 1.1rem;
+        }
         :root {
             --primary: #00D9C0;
             --primary-dark: #00A896;
@@ -1046,277 +1131,471 @@
 
     </style>
 
-<!-- HERO -->
-<section id="hero" class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
+    <!-- HERO -->
+    <section id="hero" class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
 
-    <div class="hero-content">
-        <div class="hero-badges">
-            <span class="badge"> Salud Global</span>
-            <span class="badge"> Cuidado del Corazón</span>
+        <div class="hero-content">
+            <div class="hero-badges">
+                <span class="badge"> Salud Global</span>
+                <span class="badge"> Cuidado del Corazón</span>
+            </div>
+
+            <h1>Reserva tu Cita Médica</h1>
+            <p>Sigue esta guía simple para registrarte y comenzar a disfrutar de todas las características que ofrecemos
+            </p>
+
+            <div class="hero-cta">
+                <a href="{{ route('agendarcitas') }}" class="btn btn-primary">Agendar Cita</a>
+                <a href="#servicios" class="btn btn-secondary">Explorar Servicios</a>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-icon"></div>
+                    <div class="stat-number" data-target="{{ $empleados->count() }}">0</div>
+                    <div class="stat-label">Especialistas</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-icon"></div>
+                    <div class="stat-number" data-target="{{ $pacientes->count() }}">0</div>
+                    <div class="stat-label">Pacientes</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-icon"></div>
+                    <div class="stat-number" data-target="{{ $citas->count() }}">0</div>
+                    <div class="stat-label">Citas</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-icon"></div>
+                    <div class="stat-number">4.9</div>
+                    <div class="stat-label">Calificación</div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <h1>Reserva tu Cita Médica</h1>
-        <p>Sigue esta guía simple para registrarte y comenzar a disfrutar de todas las características que ofrecemos
-        </p>
+    <!-- BOOKING -->
+    <section class="booking">
+        <div id="promoCarousel" class="carousel slide promo-carousel" data-bs-ride="carousel">
 
-        <div class="hero-cta">
-            <a href="{{ route('agendarcitas') }}" class="btn btn-primary">Agendar Cita</a>
-            <a href="#servicios" class="btn btn-secondary">Explorar Servicios</a>
-        </div>
+            <div class="carousel-inner">
 
-        <div class="stats">
-            <div class="stat">
-                <div class="stat-icon"></div>
-                <div class="stat-number" data-target="{{ $empleados->count() }}">0</div>
-                <div class="stat-label">Especialistas</div>
-            </div>
-            <div class="stat">
-                <div class="stat-icon"></div>
-                <div class="stat-number" data-target="{{ $pacientes->count() }}">0</div>
-                <div class="stat-label">Pacientes</div>
-            </div>
-            <div class="stat">
-                <div class="stat-icon"></div>
-                <div class="stat-number" data-target="{{ $citas->count() }}">0</div>
-                <div class="stat-label">Citas</div>
-            </div>
-            <div class="stat">
-                <div class="stat-icon"></div>
-                <div class="stat-number">4.9</div>
-                <div class="stat-label">Calificación</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- BOOKING -->
-<section class="booking">
-    <div id="promoCarousel" class="carousel slide promo-carousel" data-bs-ride="carousel">
-
-        <div class="carousel-inner">
-
-            <!-- ITEM 1 -->
-            <div class="carousel-item active">
-                <div class="promo-card glow-target">
-                    <img src="https://www.hospitalitaliano.org.ar/hiba/files/2025-08/Chequeo%20M%C3%A9dico.jpg" class="promo-img">
-                    <div class="promo-text">
-                        <h3>Control Estándar</h3>
-                        <p>Consulta general + análisis básico + seguimiento.
-                            Disponible durante todo el mes.</p>
+                <!-- ITEM 1 -->
+                <div class="carousel-item active">
+                    <div class="promo-card glow-target">
+                        <img src="https://www.hospitalitaliano.org.ar/hiba/files/2025-08/Chequeo%20M%C3%A9dico.jpg" class="promo-img">
+                        <div class="promo-text">
+                            <h3>Control Estándar</h3>
+                            <p>Consulta general + análisis básico + seguimiento.
+                                Disponible durante todo el mes.</p>
+                        </div>
                     </div>
+                </div>
+
+                <!-- ITEM 2 -->
+                <div class="carousel-item">
+                    <div class="promo-card glow-target">
+                        <img src="https://www.promedco.com/images/Noticias_2019/dia-internacional-de-los-medicos-1.jpg" class="promo-img">
+                        <div class="promo-text">
+                            <h3>Especialistas</h3>
+                            <p>Agenda tu cita con nuestros doctores certificados.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ITEM 3 -->
+                <div class="carousel-item">
+                    <div class="promo-card glow-target">
+                        <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=1500&q=80" class="promo-img">
+                        <div class="promo-text">
+                            <h3>Promoción para Adultos Mayores</h3>
+                            <p>Hasta 30% de descuento en consultas y exámenes preventivos.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Controles -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#promoCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#promoCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="servicios" class="services">
+        <div class="section-header">
+            <p class="section-subtitle">Nuestros Servicios</p>
+            <h2 class="section-title">Atención Médica Integral</h2>
+            <p class="section-description">Ofrecemos una amplia gama de servicios médicos de alta calidad para cuidar tu
+                salud y la de tu familia</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+                <h3 class="service-title">Cardiología</h3>
+                <p class="service-description">Cuidado especializado del corazón con tecnología de punta y profesionales
+                    experimentados</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon"><i class="bi bi-emoji-smile-fill"></i></div>
+                <h3 class="service-title">Pediatría</h3>
+                <p class="service-description">Atención integral para el desarrollo y salud de tus hijos desde el
+                    nacimiento</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon"><i class="bi bi-eyedropper"></i></div>
+                <h3 class="service-title">Laboratorio Clínico</h3>
+                <p class="service-description">Análisis clínicos precisos con equipos modernos y resultados rápidos</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon"><i class="bi bi-clipboard2-pulse"></i></div>
+                <h3 class="service-title">Medicina General</h3>
+                <p class="service-description">Consultas médicas generales para diagnóstico y tratamiento de
+                    enfermedades comunes</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon"><i class="bi bi-person-heart"></i></i>
+                </div>
+                <h3 class="service-title">Odontología</h3>
+                <p class="service-description">Cuidado dental completo para mantener tu sonrisa saludable y radiante</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon"><i class="bi bi-eye-fill"></i></div>
+                <h3 class="service-title">Oftalmología</h3>
+                <p class="service-description">Exámenes visuales y tratamiento de enfermedades oculares con
+                    especialistas</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section>
+        <div class="section-header">
+            <p class="section-subtitle">¿Por Qué Elegirnos?</p>
+            <h2 class="section-title">Experiencia y Calidad en Salud</h2>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-icon"><i class="bi bi-phone"></i></div>
+                <div>
+                    <h3>Reservas en Línea</h3>
+                    <p>Agenda tus citas fácilmente desde cualquier dispositivo, 24/7</p>
                 </div>
             </div>
 
-            <!-- ITEM 2 -->
-            <div class="carousel-item">
-                <div class="promo-card glow-target">
-                    <img src="https://www.promedco.com/images/Noticias_2019/dia-internacional-de-los-medicos-1.jpg" class="promo-img">
-                    <div class="promo-text">
-                        <h3>Especialistas</h3>
-                        <p>Agenda tu cita con nuestros doctores certificados.</p>
-                    </div>
+            <div class="feature">
+                <div class="feature-icon"><i class="bi bi-patch-check-fill"></i>
+                </div>
+                <div>
+                    <h3>Profesionales Certificados</h3>
+                    <p>Equipo médico altamente calificado con años de experiencia</p>
                 </div>
             </div>
 
-            <!-- ITEM 3 -->
-            <div class="carousel-item">
-                <div class="promo-card glow-target">
-                    <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=1500&q=80" class="promo-img">
-                    <div class="promo-text">
-                        <h3>Promoción para Adultos Mayores</h3>
-                        <p>Hasta 30% de descuento en consultas y exámenes preventivos.</p>
-                    </div>
+            <div class="feature">
+                <div class="feature-icon"><i class="bi bi-lightning-charge-fill"></i></div>
+                <div>
+                    <h3>Atención Rápida</h3>
+                    <p>Tiempos de espera mínimos y atención prioritaria</p>
                 </div>
             </div>
 
-        </div>
-
-        <!-- Controles -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#promoCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </button>
-
-        <button class="carousel-control-next" type="button" data-bs-target="#promoCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </button>
-    </div>
-</section>
-
-<!-- SERVICES -->
-<section id="servicios" class="services">
-    <div class="section-header">
-        <p class="section-subtitle">Nuestros Servicios</p>
-        <h2 class="section-title">Atención Médica Integral</h2>
-        <p class="section-description">Ofrecemos una amplia gama de servicios médicos de alta calidad para cuidar tu
-            salud y la de tu familia</p>
-    </div>
-
-    <div class="services-grid">
-        <div class="service-card">
-            <div class="service-icon"><i class="bi bi-heart-pulse-fill"></i></div>
-            <h3 class="service-title">Cardiología</h3>
-            <p class="service-description">Cuidado especializado del corazón con tecnología de punta y profesionales
-                experimentados</p>
-        </div>
-
-        <div class="service-card">
-            <div class="service-icon"><i class="bi bi-emoji-smile-fill"></i></div>
-            <h3 class="service-title">Pediatría</h3>
-            <p class="service-description">Atención integral para el desarrollo y salud de tus hijos desde el
-                nacimiento</p>
-        </div>
-
-        <div class="service-card">
-            <div class="service-icon"><i class="bi bi-eyedropper"></i></div>
-            <h3 class="service-title">Laboratorio Clínico</h3>
-            <p class="service-description">Análisis clínicos precisos con equipos modernos y resultados rápidos</p>
-        </div>
-
-        <div class="service-card">
-            <div class="service-icon"><i class="bi bi-clipboard2-pulse"></i></div>
-            <h3 class="service-title">Medicina General</h3>
-            <p class="service-description">Consultas médicas generales para diagnóstico y tratamiento de
-                enfermedades comunes</p>
-        </div>
-
-        <div class="service-card">
-            <div class="service-icon"><i class="bi bi-person-heart"></i></i>
+            <div class="feature">
+                <div class="feature-icon"><i class="bi bi-cash-stack"></i></div>
+                <div>
+                    <h3>Precios Accesibles</h3>
+                    <p>Planes de pago flexibles y promociones especiales</p>
+                </div>
             </div>
-            <h3 class="service-title">Odontología</h3>
-            <p class="service-description">Cuidado dental completo para mantener tu sonrisa saludable y radiante</p>
-        </div>
 
-        <div class="service-card">
-            <div class="service-icon"><i class="bi bi-eye-fill"></i></div>
-            <h3 class="service-title">Oftalmología</h3>
-            <p class="service-description">Exámenes visuales y tratamiento de enfermedades oculares con
-                especialistas</p>
-        </div>
-    </div>
-</section>
+            <div class="feature">
+                <div class="feature-icon"><i class="bi bi-shield-lock-fill"></i></div>
+                <div>
+                    <h3>Privacidad Garantizada</h3>
+                    <p>Tus datos médicos están protegidos y seguros</p>
+                </div>
+            </div>
 
-<!-- FEATURES -->
-<section>
-    <div class="section-header">
-        <p class="section-subtitle">¿Por Qué Elegirnos?</p>
-        <h2 class="section-title">Experiencia y Calidad en Salud</h2>
-    </div>
-
-    <div class="features-grid">
-        <div class="feature">
-            <div class="feature-icon"><i class="bi bi-phone"></i></div>
-            <div>
-                <h3>Reservas en Línea</h3>
-                <p>Agenda tus citas fácilmente desde cualquier dispositivo, 24/7</p>
+            <div class="feature">
+                <div class="feature-icon"><i class="bi bi-building"></i></div>
+                <div>
+                    <h3>Instalaciones Modernas</h3>
+                    <p>Equipamiento de última generación para tu comodidad</p>
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="feature">
-            <div class="feature-icon"><i class="bi bi-patch-check-fill"></i>
-            </div>
-            <div>
-                <h3>Profesionales Certificados</h3>
-                <p>Equipo médico altamente calificado con años de experiencia</p>
-            </div>
+
+
+    <!-- SECCIÓN DOCTORES -->
+    <section id="doctors" class="doctors">
+        <div class="section-header">
+            <p class="section-subtitle">Nuestro Equipo</p>
+            <h2 class="section-title">Conoce a Nuestros Especialistas</h2>
+            <p class="section-description">Profesionales de la salud comprometidos con tu bienestar</p>
         </div>
 
-        <div class="feature">
-            <div class="feature-icon"><i class="bi bi-lightning-charge-fill"></i></div>
-            <div>
-                <h3>Atención Rápida</h3>
-                <p>Tiempos de espera mínimos y atención prioritaria</p>
-            </div>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon"><i class="bi bi-cash-stack"></i></div>
-            <div>
-                <h3>Precios Accesibles</h3>
-                <p>Planes de pago flexibles y promociones especiales</p>
-            </div>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon"><i class="bi bi-shield-lock-fill"></i></div>
-            <div>
-                <h3>Privacidad Garantizada</h3>
-                <p>Tus datos médicos están protegidos y seguros</p>
-            </div>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon"><i class="bi bi-building"></i></div>
-            <div>
-                <h3>Instalaciones Modernas</h3>
-                <p>Equipamiento de última generación para tu comodidad</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="doctors" class="doctors">
-    <div class="section-header">
-         <p class="section-subtitle">Nuestro Equipo</p>
-         <h2 class="section-title">Conoce a Nuestros Especialistas</h2>
-         <p class="section-description">Profesionales de la salud comprometidos con tu bienestar</p>
-    </div>
-
-    <div class="slider-container">
-
-        <!-- Botón Izquierda -->
-        <button class="slider-arrow left">
+        <div class="slider-container" style="max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 15px;">
+            <!-- Botón Izquierda -->
+            <button class="slider-arrow left" onclick="scrollDoctors(-1)">
                 <i class="bi bi-chevron-left"></i>
-        </button>
+            </button>
 
-        <!-- Contenedor deslizable -->
-        <div class="cards-wrapper">
-            @forelse($doctores as $doctor)
-            <div class="doctor-card">
-                <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=500&fit=crop">
-                <div class="doctor-info">
-                    <h3 class="doctor-name">Dr. {{ $doctor->nombre }} {{ $doctor->apellido }}</h3>
-                    <p class="doctor-specialty">{{ $doctor->departamento === 'Medicina General'
-                    ? 'Medicina General'
-                    : 'Especialista en ' . $doctor->departamento }}</p>
-                    <div class="doctor-rating">
-                        <span class="stars">
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        </span>
-                        <span class="rating-num">4.9 (2,568 reseñas)</span>
-                    </div>
-                    <div class="doctor-stats">
-                        <span class="doctor-stat"><i class="bi bi-people-fill"></i> 1,200+ pacientes</span>
-                        <span class="doctor-stat"><i class="bi bi-calendar-check"></i> 15 años exp.</span>
-                    </div>
-                    <button class="btn-book" onclick="window.location='{{ route('agendarcitas') }}'">
-                        Reservar Cita
-                    </button>
+            <!-- Contenedor deslizable -->
+            <div class="cards-wrapper" id="doctorsWrapper" style="display: flex; gap: 2rem; overflow-x: auto; scroll-behavior: smooth; padding: 1rem 0; scrollbar-width: none; -ms-overflow-style: none;">
+                @forelse($doctores as $doctor)
+                    <div class="doctor-card" style="min-width: 320px; max-width: 320px; flex-shrink: 0;">
+                        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=500&fit=crop" alt="Doctor" class="doctor-img">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">Dr. {{ $doctor->nombre }} {{ $doctor->apellido }}</h3>
+                            <p class="doctor-specialty">
+                                {{ $doctor->departamento === 'Medicina General' ? 'Medicina General' : 'Especialista en ' . $doctor->departamento }}
+                            </p>
+                            <div class="doctor-rating">
+                            <span class="stars">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($doctor->promedio_calificacion >= $i)
+                                        <i class="bi bi-star-fill" style="color: #ffc107;"></i>
+                                    @elseif ($doctor->promedio_calificacion >= $i - 0.5)
+                                        <i class="bi bi-star-half" style="color: #ffc107;"></i>
+                                    @else
+                                        <i class="bi bi-star" style="color: #ddd;"></i>
+                                    @endif
+                                @endfor
+                            </span>
+                                <span class="rating-num">{{ number_format($doctor->promedio_calificacion, 1) }} ({{ $doctor->total_calificaciones }} reseñas)</span>
+                            </div>
+                            <div class="doctor-stats">
+                                <span class="doctor-stat"><i class="bi bi-people-fill"></i> 1,200+ pacientes</span>
+                                <span class="doctor-stat"><i class="bi bi-calendar-check"></i> 15 años exp.</span>
+                            </div>
 
-                </div>
+                            <!-- Botón calificar -->
+                            @php $esPaciente = session('tipo_usuario') === 'paciente'; @endphp
+                            @if($esPaciente && !$doctor->ya_califico)
+                                <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#calificarModal{{ $doctor->id }}">
+                                    <i class="bi bi-star"></i> Calificar Doctor
+                                </button>
+                            @elseif($doctor->ya_califico)
+                                <button type="button" class="btn-book" disabled style="opacity: 0.6; cursor: not-allowed;">
+                                    <i class="bi bi-check-circle"></i> Ya calificaste
+                                </button>
+                            @else
+                                <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#loginRequiredModal">
+                                    <i class="bi bi-star"></i> Calificar Doctor
+                                </button>
+                            @endif
+                        </div>
+                    </div>
+
+                    <!-- Modal para calificar (solo pacientes que no han calificado) -->
+                    @if($esPaciente && !$doctor->ya_califico)
+                        <div class="modal fade" id="calificarModal{{ $doctor->id }}" tabindex="-1" aria-labelledby="calificarModalLabel{{ $doctor->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <form action="{{ route('calificar') }}" method="POST" id="formCalificar{{ $doctor->id }}">
+                                        @csrf
+                                        <input type="hidden" name="doctor_id" value="{{ $doctor->id }}">
+                                        <input type="hidden" name="estrellas" id="estrellasInput{{ $doctor->id }}" value="0">
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="calificarModalLabel{{ $doctor->id }}">
+                                                <i class="bi bi-star-fill"></i> Calificar a Dr. {{ $doctor->nombre }}
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <label class="form-label text-center d-block mb-3" style="font-size: 1.1rem; font-weight: 600;">
+                                                ¿Cómo calificarías tu experiencia?
+                                            </label>
+
+                                            <div class="star-rating-input" id="starRating{{ $doctor->id }}">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    <button type="button" class="star-btn" data-value="{{ $i }}" data-modal="{{ $doctor->id }}">
+                                                        <i class="bi bi-star-fill"></i>
+                                                    </button>
+                                                @endfor
+                                            </div>
+                                            <div class="rating-feedback" id="ratingFeedback{{ $doctor->id }}">Selecciona una calificación</div>
+
+                                            <label for="comentario{{ $doctor->id }}" class="form-label mt-3" style="font-weight: 600;">
+                                                <i class="bi bi-chat-left-text"></i> Comentario (opcional)
+                                            </label>
+                                            <textarea class="form-control" id="comentario{{ $doctor->id }}" name="comentario" rows="4"
+                                                      placeholder="Cuéntanos sobre tu experiencia..." maxlength="500"
+                                                      style="border-radius: 12px; border: 2px solid #e9ecef;"></textarea>
+                                            <small class="text-muted">Máximo 500 caracteres</small>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary" id="btnSubmit{{ $doctor->id }}" disabled>
+                                                <i class="bi bi-send-fill"></i> Enviar Calificación
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                @empty
+                    <div class="alert alert-warning text-center" style="width: 100%; margin: 2rem auto;">
+                        <h5>No hay doctores disponibles en este momento.</h5>
+                    </div>
+                @endforelse
             </div>
 
-            @empty
-                <div class="alert alert-warning text-center mt-4">
-                    <h5>No hay doctores disponibles en este momento.</h5>
-                    <p>Por favor, vuelve más tarde o contacta al administrador del sistema.</p>
-                </div>
-            @endforelse
-
+            <!-- Botón derecha -->
+            <button class="slider-arrow right" onclick="scrollDoctors(1)">
+                <i class="bi bi-chevron-right"></i>
+            </button>
         </div>
+    </section>
 
-        <!-- Botón derecha -->
-        <button class="slider-arrow right">
-            <i class="bi bi-chevron-right"></i>
-        </button>
-
+    <!-- Modal para usuarios no pacientes -->
+    <div class="modal fade" id="loginRequiredModal" tabindex="-1" aria-labelledby="loginRequiredModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);">
+                    <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill"></i> Acceso Restringido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="bi bi-lock-fill" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                    <p><strong>Solo los pacientes pueden calificar doctores</strong></p>
+                    <p>Debes iniciar sesión como paciente para poder calificar a nuestros especialistas.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <a href="{{ route('inicioSesion') }}" class="btn btn-primary">Iniciar Sesión</a>
+                </div>
+            </div>
+        </div>
     </div>
-</section>
+
+    <!-- ESTILOS ADICIONALES -->
+    <style>
+        #doctorsWrapper::-webkit-scrollbar { display: none; }
+        .doctor-card { flex: 0 0 320px; }
+    </style>
+
+    <!-- JS INTERACTIVO -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const feedbackMessages = {
+                1: 'Muy insatisfecho',
+                2: 'Insatisfecho',
+                3: 'Aceptable',
+                4: 'Bueno',
+                5: 'Excelente'
+            };
+
+            // Seleccionar todos los sistemas de estrellas
+            const starRatings = document.querySelectorAll('.star-rating-input');
+
+            starRatings.forEach(container => {
+                const stars = container.querySelectorAll('.star-btn');
+                let selectedRating = 0; // Valor final
+
+                stars.forEach(star => {
+                    const value = parseInt(star.dataset.value);
+                    const modalId = star.dataset.modal;
+
+                    // Click: seleccionar calificación
+                    star.addEventListener('click', function() {
+                        selectedRating = value;
+
+                        // Actualizar input hidden
+                        const inputEstrellas = document.getElementById(`estrellasInput${modalId}`);
+                        inputEstrellas.value = selectedRating;
+
+                        // Actualizar feedback
+                        const feedback = document.getElementById(`ratingFeedback${modalId}`);
+                        feedback.textContent = feedbackMessages[selectedRating];
+
+                        // Activar botón submit
+                        const btnSubmit = document.getElementById(`btnSubmit${modalId}`);
+                        btnSubmit.disabled = false;
+
+                        // Actualizar apariencia de estrellas
+                        updateStars(stars, selectedRating);
+                    });
+
+                    // Hover para preview
+                    star.addEventListener('mouseenter', function() {
+                        updateStars(stars, value, true);
+                    });
+                });
+
+                // Mouseleave: restaurar selección
+                container.addEventListener('mouseleave', function() {
+                    updateStars(container.querySelectorAll('.star-btn'), selectedRating);
+                });
+            });
+
+            // Función para actualizar las estrellas visualmente
+            function updateStars(stars, rating, isHover = false) {
+                stars.forEach(star => {
+                    const value = parseInt(star.dataset.value);
+                    if (value <= rating) {
+                        star.classList.add('active');
+                        if (isHover) star.classList.add('hover');
+                    } else {
+                        star.classList.remove('active', 'hover');
+                    }
+                });
+            }
+
+            // Reiniciar formulario al cerrar modal
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('hidden.bs.modal', function() {
+                    const modalId = this.id.replace('calificarModal', '');
+                    if (!modalId || modalId === 'loginRequired') return;
+
+                    const stars = this.querySelectorAll('.star-btn');
+                    stars.forEach(star => star.classList.remove('active','hover'));
+
+                    const inputEstrellas = document.getElementById(`estrellasInput${modalId}`);
+                    const feedback = document.getElementById(`ratingFeedback${modalId}`);
+                    const btnSubmit = document.getElementById(`btnSubmit${modalId}`);
+                    const comentario = document.getElementById(`comentario${modalId}`);
+
+                    if (inputEstrellas) inputEstrellas.value = '0';
+                    if (feedback) feedback.textContent = 'Selecciona una calificación';
+                    if (btnSubmit) btnSubmit.disabled = true;
+                    if (comentario) comentario.value = '';
+                });
+            });
+
+        });
+
+    // Slider
+        function scrollDoctors(direction){
+            const wrapper = document.getElementById("doctorsWrapper");
+            const cardWidth = 320 + 32;
+            wrapper.scrollBy({ left: direction*cardWidth, behavior:'smooth' });
+        }
+    </script>
+
 
     <!-- TESTIMONIALS -->
     <section id="comentarios" class="testimonials-section">
@@ -1388,129 +1667,129 @@
     </section>
 
 
-<!-- PROMOS -->
-<section class="promos">
-    <div class="section-header">
-        <p class="section-subtitle">Promociones</p>
-        <h2 class="section-title">Ofertas Especiales</h2>
-        <p class="section-description">Aprovecha nuestras promociones vigentes y cuida tu salud</p>
-    </div>
+    <!-- PROMOS -->
+    <section class="promos">
+        <div class="section-header">
+            <p class="section-subtitle">Promociones</p>
+            <h2 class="section-title">Ofertas Especiales</h2>
+            <p class="section-description">Aprovecha nuestras promociones vigentes y cuida tu salud</p>
+        </div>
 
-    <div class="promos-grid">
-        <div class="promo">
-            <div class="promo-badge"> Promoción Vigente</div>
-            <div class="promo-content">
-                <h3 class="promo-title">Control Estándar</h3>
-                <p class="promo-desc">Revisión hasta septiembre. Incluye consulta general, análisis de sangre básico
-                    y seguimiento personalizado.</p>
-                <div class="promo-footer">
-                    <span class="promo-brand">ClinicWeb</span>
-                    <a href="#" class="promo-link">Ver más →</a>
+        <div class="promos-grid">
+            <div class="promo">
+                <div class="promo-badge"> Promoción Vigente</div>
+                <div class="promo-content">
+                    <h3 class="promo-title">Control Estándar</h3>
+                    <p class="promo-desc">Revisión hasta septiembre. Incluye consulta general, análisis de sangre básico
+                        y seguimiento personalizado.</p>
+                    <div class="promo-footer">
+                        <span class="promo-brand">ClinicWeb</span>
+                        <a href="#" class="promo-link">Ver más →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="promo">
+                <div class="promo-badge"> Promoción de Noviembre</div>
+                <div class="promo-content">
+                    <h3 class="promo-title">Control Total</h3>
+                    <p class="promo-desc">Promoción de octubre versión. Chequeo completo con exámenes de laboratorio
+                        avanzados y consulta especializada.</p>
+                    <div class="promo-footer">
+                        <span class="promo-brand">ClinicWeb</span>
+                        <a href="#" class="promo-link">Ver más →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="promo">
+                <div class="promo-badge"> Promoción Vigente</div>
+                <div class="promo-content">
+                    <h3 class="promo-title">Descuento de Cuarta Edad</h3>
+                    <p class="promo-desc">Especial para adultos mayores. 30% de descuento en consultas y exámenes
+                        preventivos durante todo el año.</p>
+                    <div class="promo-footer">
+                        <span class="promo-brand">ClinicWeb</span>
+                        <a href="#" class="promo-link">Ver más →</a>
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <div class="promo">
-            <div class="promo-badge"> Promoción de Noviembre</div>
-            <div class="promo-content">
-                <h3 class="promo-title">Control Total</h3>
-                <p class="promo-desc">Promoción de octubre versión. Chequeo completo con exámenes de laboratorio
-                    avanzados y consulta especializada.</p>
-                <div class="promo-footer">
-                    <span class="promo-brand">ClinicWeb</span>
-                    <a href="#" class="promo-link">Ver más →</a>
-                </div>
-            </div>
-        </div>
+    <!-- CTA -->
+    <section class="cta">
+        <h2>¿Listo para Cuidar tu Salud?</h2>
+        <p>Agenda tu cita hoy y recibe atención médica de calidad</p>
+        <a href="{{ route('agendarcitas') }}" class="btn btn-primary">Agendar Cita Ahora</a>
+    </section>
 
-        <div class="promo">
-            <div class="promo-badge"> Promoción Vigente</div>
-            <div class="promo-content">
-                <h3 class="promo-title">Descuento de Cuarta Edad</h3>
-                <p class="promo-desc">Especial para adultos mayores. 30% de descuento en consultas y exámenes
-                    preventivos durante todo el año.</p>
-                <div class="promo-footer">
-                    <span class="promo-brand">ClinicWeb</span>
-                    <a href="#" class="promo-link">Ver más →</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    <script>
+        // Counter Animation
+        function animateCounter(el) {
+            const target = parseInt(el.dataset.target);
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
 
-<!-- CTA -->
-<section class="cta">
-    <h2>¿Listo para Cuidar tu Salud?</h2>
-    <p>Agenda tu cita hoy y recibe atención médica de calidad</p>
-    <a href="{{ route('agendarcitas') }}" class="btn btn-primary">Agendar Cita Ahora</a>
-</section>
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    el.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    el.textContent = Math.floor(current);
+                }
+            }, 16);
+        }
 
-<script>
-    // Counter Animation
-    function animateCounter(el) {
-        const target = parseInt(el.dataset.target);
-        const duration = 2000;
-        const step = target / (duration / 16);
-        let current = 0;
+        // Scroll Reveal
+        function reveal() {
+            const elements = document.querySelectorAll('.service-card, .feature, .doctor-card, .testimonial, .promo');
 
-        const timer = setInterval(() => {
-            current += step;
-            if (current >= target) {
-                el.textContent = target;
-                clearInterval(timer);
-            } else {
-                el.textContent = Math.floor(current);
-            }
-        }, 16);
-    }
+            elements.forEach((el, index) => {
+                const rect = el.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight - 100;
 
-    // Scroll Reveal
-    function reveal() {
-        const elements = document.querySelectorAll('.service-card, .feature, .doctor-card, .testimonial, .promo');
-
-        elements.forEach((el, index) => {
-            const rect = el.getBoundingClientRect();
-            const isVisible = rect.top < window.innerHeight - 100;
-
-            if (isVisible) {
-                setTimeout(() => {
-                    el.classList.add('show');
-                }, index * 100);
-            }
-        });
-    }
-
-    // Init
-    document.addEventListener('DOMContentLoaded', () => {
-        // Animate counters
-        const counters = document.querySelectorAll('.stat-number[data-target]');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateCounter(entry.target);
-                    observer.unobserve(entry.target);
+                if (isVisible) {
+                    setTimeout(() => {
+                        el.classList.add('show');
+                    }, index * 100);
                 }
             });
-        }, { threshold: 0.5 });
+        }
 
-        counters.forEach(counter => observer.observe(counter));
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate counters
+            const counters = document.querySelectorAll('.stat-number[data-target]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounter(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
 
-        // Scroll reveal
-        window.addEventListener('scroll', reveal);
-        reveal();
+            counters.forEach(counter => observer.observe(counter));
 
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.querySelector(anchor.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
+            // Scroll reveal
+            window.addEventListener('scroll', reveal);
+            reveal();
+
+            // Smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(anchor.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const carousel = document.getElementById('promoCarousel');
