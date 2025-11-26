@@ -20,6 +20,7 @@ use App\Http\Controllers\VisualizacionHabitacionController;
 use App\Http\Controllers\DoctorHabitacionController; // Nuevo
 use \App\Http\Controllers\EnviarDoctorController;
 use App\Http\Controllers\PromocionController;
+use App\Http\Controllers\PublicidadController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 
@@ -186,3 +187,10 @@ Route::get('/doctor/{id}/info', [RutasController::class, 'getDoctorInfo'])->name
 Route::get('/doctores/especialidad/{especialidad}', [RutasController::class, 'getDoctoresPorEspecialidad'])->name('doctores.especialidad');
 Route::get('/estadisticas', [RutasController::class, 'getEstadisticas'])->name('estadisticas');
 Route::post('/verificar-puede-calificar', [RutasController::class, 'verificarPuedeCalificar'])->name('verificar.calificar');
+
+//promociones publicidad
+Route::get('/publicidad', [PublicidadController::class, 'index'])->name('publicidad');
+Route::post('/publicidad', [PublicidadController::class, 'store'])->name('publicidad.store');
+Route::get('/pacientes/medicamentos', [PacienteController::class, 'medicamentos'])->name('pacientes.medicamentos');
+Route::get('/pacientes/medicamentos', [PacienteController::class, 'medicamentosPorPaciente'])->name('enfermeria.historial');
+Route::post('/pacientes/asignar-medicamento', [PacienteController::class, 'asignarMedicamento'])->name('asignar.medicamento');

@@ -7,6 +7,7 @@ use App\Models\Comentario;
 use App\Models\Empleado;
 use App\Models\Paciente;
 use App\Models\Calificacion;
+use App\Models\Publicidad;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Promocion;
@@ -16,8 +17,11 @@ class RutasController extends Controller
     /**
      * Mostrar la página principal con estadísticas y doctores
      */
-    public function index()
+    public function index(Request $request)
     {
+        $orden = $request->get('orden', 'asc'); // asc por defecto
+
+        $publicidades = Publicidad::orderBy('titulo', $orden)->get();
         $promociones = Promocion::query();
         // Simulación de promociones
         $promociones = $promociones->orderBy('created_at', 'desc')->get();
@@ -83,7 +87,7 @@ class RutasController extends Controller
         // Ordenar doctores por mejor calificación
         $doctores = $doctores->sortByDesc('promedio_calificacion');
 
-        return view('index', compact('promociones', 'empleados', 'pacientes', 'citas', 'doctores', 'comentarios'));
+        return view('index', compact('publicidades', 'orden',  'promociones', 'empleados', 'pacientes', 'citas', 'doctores', 'comentarios'));
 
     }
 
