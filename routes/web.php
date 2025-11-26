@@ -101,7 +101,8 @@ Route::post('/expedientes/{id}/actualizar-historial', [ExpedienteController::cla
 Route::get('/empleados/crear', [EmpleadoController::class, 'crear'])->name('empleados.crear');
 Route::post('/empleados/guardar', [EmpleadoController::class, 'store'])->name('empleados.guardar');
 Route::get('/empleados/lista', [EmpleadoController::class, 'lista'])->name('empleados.lista');
-
+Route::get('/empleados/{id}/foto', [EmpleadoController::class, 'mostrarFoto'])->name('empleados.foto');
+Route::post('/doctor/subir-foto', [EmpleadoController::class, 'subirFoto'])->name('doctor.subirFoto');
 
 
 
@@ -116,14 +117,6 @@ Route::get('/doctor/expedientes-recibidos', [DoctorController::class, 'expedient
 Route::get('/doctor/expediente/{id}', [DoctorController::class, 'verExpediente'])->name('expediente.ver');
 
 
-//Ruta para enfermeros
-Route::get('/enfermeria-principal', [EnfermeriaController::class, 'principal'])->name('enfermeria.principal');
-Route::get('/enfermeria/medicamentos', [PacienteController::class, 'medicamentosPorPaciente'])->name('pacientes.medicamentos');
-Route::post('/asignar-medicamento', [PacienteController::class, 'asignarMedicamento'])->name('asignar.medicamento');
-
-
-//Rol Turno de enfermeros
-Route::get('/enfermeria/turnos', [EnfermeriaController::class, 'rolTurno'])->name('enfermeria.turnos');
 
 
 // Agendar citas - Recepcionista

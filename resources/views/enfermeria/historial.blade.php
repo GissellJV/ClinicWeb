@@ -311,8 +311,8 @@
         <br>
         <div class="container mt-5 pt-5">
             <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <h2 class="text-info-emphasis">Historial de Medicamentos por Habitación</h2>
             </div>
+
 
             <div class="inventory-card">
                 <div class="table-container">

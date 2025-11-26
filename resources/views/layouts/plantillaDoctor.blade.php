@@ -13,6 +13,12 @@
             padding-top: 60px;
             background-color: #f5f7fa;
         }
+        .formulario small.text-danger {
+            font-size: 0.875rem;
+            display: block;
+            margin-top: 0.5rem;
+        }
+
 
         /* NAVBAR MODERNO */
         .navbar-modern {
@@ -35,7 +41,18 @@
             color: #ffffff !important;
             text-shadow: 0 0 10px #00ffe0, 0 0 20px #00d3b8;
         }
+        /* ALINEACIÓN HORIZONTAL DEL NAVBAR */
+        .navbar-nav {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+        }
 
+        .navbar-nav .nav-item {
+            display: flex;
+            align-items: center;
+        }
         /* Dropdown moderno */
         .dropdown-menu-modern {
             background-color: #00bfa6;
@@ -230,6 +247,178 @@
             transition: 0.3s ease;
         }
         .social.modern:hover { background: white; color: #009e8e; }
+
+        .edit-icon-overlay {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            background: #00bfa6;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .edit-icon-overlay i {
+            font-size: 10px;
+            color: white;
+        }
+
+        .edit-icon-overlay:hover {
+            background: #009e8e;
+            transform: scale(1.15);
+            box-shadow: 0 0 12px rgba(0, 217, 192, 0.8);
+        }
+
+        .profile-badge img {
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 217, 192, 0.3);
+        }
+
+        .profile-badge:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 217, 192,0.5);
+           }
+
+        .edit-icon-overlay {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            background: #00bfa6;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .edit-icon-overlay i {
+            font-size: 10px;
+            color: white;
+        }
+
+        .edit-icon-overlay:hover {
+            background: #009e8e;
+            transform: scale(1.15);
+            box-shadow: 0 0 12px rgba(0, 217, 192, 0.8);
+        }
+
+        .profile-badge img {
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 217, 192, 0.3);
+        }
+
+        .profile-badge:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 217, 192,0.5);
+        }
+
+        /* BOTONES */
+        .btn-register {
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+
+        .btn-cancel {
+            padding: 0.875rem 2rem;
+            background: white;
+            border: 2px solid #dc3545;
+            border-radius: 8px;
+            color: #dc3545;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancel:hover {
+            background: #dc3545;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+        }
+        .foto-preview-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #e0e0e0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .foto-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .foto-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .form-group-custom {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group-custom label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+            color: #333;
+        }
+
+        .form-group-custom .form-control {
+            border-radius: 8px;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        .form-group-custom .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(0, 217, 192, 0.25);
+        }
+
+        #nuevaFotoPreview .foto-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+        }
+
     </style>
 </head>
 <body>
@@ -248,59 +437,12 @@
             <span class="navbar-toggler-icon-modern"></span>
         </button>
 
-        <!-- Menú -->
-        <div class="collapse navbar-collapse" id="navbarClinic">
 
-            <ul class="navbar-nav ms-auto gap-2">
 
-                <!-- Inicio -->
-                <li class="nav-item">
-                    <a class="nav-link nav-link-glow active" href="{{ route('/') }}">
-                        <i class="bi bi-house-door-fill me-1"></i> Inicio
-                    </a>
-                </li>
 
-                <!-- Enfermería -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link nav-link-glow dropdown-toggle" data-bs-toggle="dropdown">
-                        <i class="bi bi-heart-pulse-fill me-1"></i> Enfermería
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-modern">
-                        <li>
-                            <a class="dropdown-item dropdown-item-modern"
-                               href="{{route('inventario.principal')}}">
-                                <i class="bi bi-capsule"></i> Administrar Medicamentos
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item dropdown-item-modern"
-                               href="{{route('pacientes.medicamentos')}}">
-                                <i class="bi bi-clipboard2-pulse"></i> Historial Medicamentos
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Perfil -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link nav-link-glow dropdown-toggle profile-badge" data-bs-toggle="dropdown">
-                        <i class="bi bi-person-circle"></i> {{ session('empleado_nombre') }}
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-modern dropdown-menu-end">
-                        <li>
-                            <form action="{{ route('empleados.logout') }}" method="POST" class="px-3 py-1">
-                                @csrf
-                                <button type="submit" class="btn btn-logout w-100">
-                                    Cerrar Sesión
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
 
         <!-- Desktop menu -->
+
         <ul class="navbar-nav flex-row ms-auto me-3 gap-2 d-none d-lg-flex">
             <!-- Inicio -->
             <li class="nav-item">
@@ -345,8 +487,29 @@
 
             <!-- Perfil -->
             <li class="nav-item dropdown">
+
                 <a class="nav-link nav-link-glow dropdown-toggle profile-badge" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-person-circle me-1"></i> {{ session('empleado_nombre') ?? 'Empleado' }}
+                    @php
+                        $empleadoId = session('empleado_id');
+                        $empleado = \App\Models\Empleado::find($empleadoId);
+                    @endphp
+
+                    <div style="position: relative; display: inline-block; margin-right: 8px;">
+                        @if($empleado && $empleado->foto)
+                            <img src="data:image/jpeg;base64,{{ base64_encode($empleado->foto) }}"
+                                 alt="Foto"
+                                 style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid #00ffe0;">
+                        @else
+                            <i class="bi bi-person-circle" style="font-size: 35px; color: #e7fffc;"></i>
+                        @endif
+
+
+                        <span class="edit-icon-overlay" data-bs-toggle="modal" data-bs-target="#modalFotoDoctor" onclick="event.stopPropagation();">
+            <i class="bi bi-camera-fill"></i>
+        </span>
+                    </div>
+
+                    {{ session('empleado_nombre') ?? 'Empleado' }}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-modern dropdown-menu-end">
                     <li>
@@ -408,5 +571,192 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<div class="modal fade" id="modalFotoDoctor" tabindex="-1" aria-labelledby="modalFotoDoctorLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalFotoDoctorLabel">
+                    <i class="bi bi-camera-fill me-2"></i>Actualizar Foto de Perfil
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form action="{{ route('doctor.subirFoto') }}" method="POST" enctype="multipart/form-data" id="formFotoDoctor">
+                @csrf
+                <div class="modal-body">
+
+                    <!-- Vista previa de la foto actual -->
+                    <div class="text-center mb-4">
+                        <div class="foto-preview-container">
+                            @php
+                                $empleadoId = session('empleado_id');
+                                $empleado = \App\Models\Empleado::find($empleadoId);
+                            @endphp
+
+                            @if($empleado && $empleado->foto)
+                                <img src="data:image/jpeg;base64,{{ base64_encode($empleado->foto) }}"
+                                     alt="Foto actual"
+                                     class="foto-preview"
+                                     id="fotoActual">
+                            @else
+                                <div class="foto-placeholder" id="fotoPlaceholder">
+                                    <i class="bi bi-person-circle"></i>
+                                </div>
+                            @endif
+                        </div>
+                        <small class="text-muted">Foto actual</small>
+                    </div>
+
+                    <!-- Input para nueva foto -->
+                    <div class="form-group-custom mb-3">
+                        <label for="foto" class="form-label">Seleccionar nueva foto *</label>
+                        <input type="file"
+                               class="form-control @error('foto') is-invalid @enderror"
+                               id="foto"
+                               name="foto"
+                               accept="image/jpeg,image/jpg,image/png"
+                               onchange="previewImage(event)"
+                        >
+
+                        @error('foto')
+                        <div class="invalid-feedback d-block">
+                            <i></i>{{ $message }}
+                        </div>
+                        @enderror
+
+                        <div class="invalid-feedback" id="errorFoto">
+                            <i></i>Por favor selecciona una imagen válida
+                        </div>
+
+                    </div>
+
+                    <!-- Vista previa de la nueva foto -->
+                    <div class="text-center mt-3" id="nuevaFotoPreview" style="display: none;">
+                        <p class="mb-2"><strong>Nueva foto:</strong></p>
+                        <img src="" alt="Vista previa" class="foto-preview" id="imagenPreview">
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" data-bs-dismiss="modal">
+                        <i class=""></i>Cancelar
+                    </button>
+                    <button type="submit" class="btn-register" id="btnSubirFoto">
+                        <i class="bi bi-upload me-1"></i>Subir Foto
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('nuevaFotoPreview');
+        const img = document.getElementById('imagenPreview');
+        const fotoInput = document.getElementById('foto');
+
+        // Limpiar clases de error previas
+        fotoInput.classList.remove('is-invalid');
+
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const fileSize = file.size / 1024 / 1024; // MB
+            const fileType = file.type;
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+
+            // Validar tipo de archivo
+            if (!allowedTypes.includes(fileType)) {
+                fotoInput.classList.add('is-invalid');
+                document.getElementById('errorFoto').textContent = 'Solo se permiten archivos JPG, JPEG o PNG';
+                input.value = '';
+                preview.style.display = 'none';
+                return;
+            }
+
+            // Validar tamaño (máximo 2MB)
+            if (fileSize > 2) {
+                fotoInput.classList.add('is-invalid');
+                document.getElementById('errorFoto').textContent = 'La imagen no debe superar los 2MB';
+                input.value = '';
+                preview.style.display = 'none';
+                return;
+            }
+
+            // Si pasa las validaciones, mostrar preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                img.src = e.target.result;
+                preview.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Validar antes de enviar el formulario
+    document.getElementById('formFotoDoctor').addEventListener('submit', function(e) {
+        const fotoInput = document.getElementById('foto');
+        const btnSubmit = document.getElementById('btnSubirFoto');
+
+        // Validar si hay archivo seleccionado
+        if (!fotoInput.files || fotoInput.files.length === 0) {
+            e.preventDefault();
+            fotoInput.classList.add('is-invalid');
+            document.getElementById('errorFoto').textContent = 'Debes seleccionar una foto';
+            fotoInput.focus();
+            return false;
+        }
+
+        const file = fotoInput.files[0];
+        const fileSize = file.size / 1024 / 1024; // MB
+        const fileType = file.type;
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+
+        // Validar tipo
+        if (!allowedTypes.includes(fileType)) {
+            e.preventDefault();
+            fotoInput.classList.add('is-invalid');
+            document.getElementById('errorFoto').textContent = 'Solo se permiten archivos JPG, JPEG o PNG';
+            fotoInput.focus();
+            return false;
+        }
+
+        // Validar tamaño
+        if (fileSize > 2) {
+            e.preventDefault();
+            fotoInput.classList.add('is-invalid');
+            document.getElementById('errorFoto').textContent = 'La imagen no debe superar los 2MB';
+            fotoInput.focus();
+            return false;
+        }
+
+        // Si pasa todas las validaciones, deshabilitar botón y mostrar loading
+        fotoInput.classList.remove('is-invalid');
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Subiendo...';
+
+        return true;
+    });
+
+    // Limpiar validación al cambiar archivo
+    document.getElementById('foto').addEventListener('change', function() {
+        if (this.files.length > 0) {
+            this.classList.remove('is-invalid');
+        }
+    });
+
+    // Mantener modal abierto si hay errores de validación del servidor
+    document.addEventListener('DOMContentLoaded', function() {
+        @if($errors->has('foto'))
+        var modal = new bootstrap.Modal(document.getElementById('modalFotoDoctor'));
+        modal.show();
+        @endif
+    });
+</script>
 </body>
 </html>

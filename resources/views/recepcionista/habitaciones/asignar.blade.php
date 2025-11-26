@@ -51,6 +51,8 @@
                                     @foreach($pacientes as $paciente)
                                         <option value="{{ $paciente->id }}" {{ old('paciente_id') == $paciente->id ? 'selected' : '' }}>
                                             {{ $paciente->nombres }} {{ $paciente->apellidos }}
+                                            ({{ $paciente->expediente->numero_expediente ?? 'Sin expediente' }})
+                                            {{ $paciente->nombres }} {{ $paciente->apellidos }}
                                             (Identidad: {{ $paciente->numero_identidad }})
                                         </option>
                                     @endforeach
