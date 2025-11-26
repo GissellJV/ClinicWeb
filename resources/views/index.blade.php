@@ -1715,12 +1715,12 @@
 
 
     <!-- TESTIMONIALS -->
-<section id="comentarios" class="testimonials-section">
+    <section id="comentarios" class="testimonials-section">
 
-    <div class="section-header">
-        <p class="section-subtitle">Testimonios</p>
-        <h2 class="section-title">Lo Que Dicen Nuestros Pacientes</h2>
-    </div>
+        <div class="section-header">
+            <p class="section-subtitle">Testimonios</p>
+            <h2 class="section-title">Lo Que Dicen Nuestros Pacientes</h2>
+        </div>
 
         <!-- Carrusel -->
         <div class="testimonials-carousel">
@@ -1773,42 +1773,42 @@
 
         </div>
 
-    <div class="comentario-area">
-        @if(session('tipo_usuario') === 'paciente')
+        <div class="comentario-area">
+            @if(session('tipo_usuario') === 'paciente')
 
-            <div class="comentario-widget">
+                <div class="comentario-widget">
 
-                <!-- Botón de abrir -->
-                <button class="open-comentario-btn" onclick="toggleComentario(true)">
-                    <i class="bi bi-chat-dots"></i> Agregar comentario
-                </button>
+                    <!-- Botón de abrir -->
+                    <button class="open-comentario-btn" onclick="toggleComentario(true)">
+                        <i class="bi bi-chat-dots"></i> Agregar comentario
+                    </button>
 
-                <!-- Tarjeta oculta -->
-                <div id="comentarioCard" class="comentario-card hidden">
-                    <div class="comentario-card-header">
-                        <h4>Nuevo comentario</h4>
-                        <button class="close-btn" onclick="toggleComentario(false)">
-                            <i class="bi bi-x-lg"></i>
-                        </button>
+                    <!-- Tarjeta oculta -->
+                    <div id="comentarioCard" class="comentario-card hidden">
+                        <div class="comentario-card-header">
+                            <h4>Nuevo comentario</h4>
+                            <button class="close-btn" onclick="toggleComentario(false)">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+
+                        <form id="formComentario" onsubmit="enviarComentario(event)">
+                            @csrf
+                            <textarea id="comentarioTextarea" name="comentario" required placeholder="Escribe tu comentario..." rows="3"></textarea>
+
+                            <button type="submit" class="send-comentario-btn">
+                                <i class="bi bi-send-fill"></i> Publicar
+                            </button>
+                        </form>
                     </div>
 
-                    <form id="formComentario" onsubmit="enviarComentario(event)">
-                        @csrf
-                        <textarea id="comentarioTextarea" name="comentario" required placeholder="Escribe tu comentario..." rows="3"></textarea>
-
-                        <button type="submit" class="send-comentario-btn">
-                            <i class="bi bi-send-fill"></i> Publicar
-                        </button>
-                    </form>
                 </div>
 
-            </div>
-
-        @else
-            <p class="text-center mt-3">Debes iniciar sesión como paciente para dejar un comentario.</p>
-        @endif
-    </div>
-</section>
+            @else
+                <p class="text-center mt-3">Debes iniciar sesión como paciente para dejar un comentario.</p>
+            @endif
+        </div>
+    </section>
 
 
     <!-- PROMOS -->
