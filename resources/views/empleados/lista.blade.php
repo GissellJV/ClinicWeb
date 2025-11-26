@@ -299,14 +299,14 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background:whitesmoke;
-            display: flex;
+
 
         }
 
     </style>
 
     <div class="formulario">
-        <br> <br>
+        <br> <br><br><br>
 
     <h1 class="text-center text-info-emphasis">Lista de Empleados
         <a href="{{ route('empleados.crear') }}" class="btn btn-light btn-sm">
@@ -378,7 +378,7 @@
                                 <th><i class="fas fa-briefcase"></i> Cargo</th>
                                 <th><i class="fas fa-building"></i> Departamento</th>
                                 <th><i class="fas fa-calendar"></i> Fecha Ingreso</th>
-                                <th><i class="fas fa-cog"></i> Acciones</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -408,16 +408,6 @@
                                     </td>
                                     <td>{{ $empleado->departamento }}</td>
                                     <td>{{ $empleado->fecha_ingreso->format('d/m/Y') }}</td>
-                                    <td>
-                                        <a href="#" class="btn-acciones btn-ver">
-                                            <i class="fas fa-eye"></i>
-                                            Ver
-                                        </a>
-                                        <a href="#" class="btn-acciones btn-editar">
-                                            <i class="fas fa-edit"></i>
-                                            Editar
-                                        </a>
-                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

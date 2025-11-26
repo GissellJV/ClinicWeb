@@ -587,6 +587,10 @@
             object-fit: cover;
         }
 
+
+
+
+
         .doctor-info {
             padding: 35px;
         }
@@ -1474,17 +1478,26 @@
                 <i class="bi bi-chevron-left"></i>
             </button>
 
-            <!-- Contenedor deslizable -->
-            <div class="cards-wrapper" id="doctorsWrapper" style="display: flex; gap: 2rem; overflow-x: auto; scroll-behavior: smooth; padding: 1rem 0; scrollbar-width: none; -ms-overflow-style: none;">
-                @forelse($doctores as $doctor)
-                    <div class="doctor-card" style="min-width: 320px; max-width: 320px; flex-shrink: 0;">
-                        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=500&fit=crop" alt="Doctor" class="doctor-img">
-                        <div class="doctor-info">
-                            <h3 class="doctor-name">Dr. {{ $doctor->nombre }} {{ $doctor->apellido }}</h3>
-                            <p class="doctor-specialty">
-                                {{ $doctor->departamento === 'Medicina General' ? 'Medicina General' : 'Especialista en ' . $doctor->departamento }}
-                            </p>
-                            <div class="doctor-rating">
+        <!-- Contenedor deslizable -->
+        <div class="cards-wrapper"  id="doctorsWrapper" style="display: flex; gap: 2rem; overflow-x: auto; scroll-behavior: smooth; padding: 1rem 0; scrollbar-width: none; -ms-overflow-style: none;">
+            @forelse($doctores as $doctor)
+            <div class="doctor-card"  style="min-width: 320px; max-width: 320px; flex-shrink: 0;">
+                @if($doctor->foto)
+                    <img src="data:image/jpeg;base64,{{ base64_encode($doctor->foto) }}"
+                         alt="Foto {{ $doctor->nombre }}"
+                         class="doctor-img">
+                @else
+                    <div class="doctor-photo-placeholder">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+                @endif
+
+                <div class="doctor-info">
+                    <h3 class="doctor-name">{{ $doctor->genero === 'Femenino' ? 'Dra.' : 'Dr.' }} {{ $doctor->nombre }} {{ $doctor->apellido }}</h3>
+                    <p class="doctor-specialty">{{ $doctor->departamento === 'Medicina General'
+                    ? 'Medicina General'
+                    : 'Especialista en ' . $doctor->departamento }}</p>
+                    <div class="doctor-rating">
                             <span class="stars">
                                 @for ($i = 1; $i <= 5; $i++)
                                     @if ($doctor->promedio_calificacion >= $i)
@@ -1496,30 +1509,30 @@
                                     @endif
                                 @endfor
                             </span>
-                                <span class="rating-num">{{ number_format($doctor->promedio_calificacion, 1) }} ({{ $doctor->total_calificaciones }} reseñas)</span>
-                            </div>
-                            <div class="doctor-stats">
-                                <span class="doctor-stat"><i class="bi bi-people-fill"></i> 1,200+ pacientes</span>
-                                <span class="doctor-stat"><i class="bi bi-calendar-check"></i> 15 años exp.</span>
-                            </div>
-
-                            <!-- Botón calificar -->
-                            @php $esPaciente = session('tipo_usuario') === 'paciente'; @endphp
-                            @if($esPaciente && !$doctor->ya_califico)
-                                <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#calificarModal{{ $doctor->id }}">
-                                    <i class="bi bi-star"></i> Calificar Doctor
-                                </button>
-                            @elseif($doctor->ya_califico)
-                                <button type="button" class="btn-book" disabled style="opacity: 0.6; cursor: not-allowed;">
-                                    <i class="bi bi-check-circle"></i> Ya calificaste
-                                </button>
-                            @else
-                                <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#loginRequiredModal">
-                                    <i class="bi bi-star"></i> Calificar Doctor
-                                </button>
-                            @endif
-                        </div>
+                        <span class="rating-num">{{ number_format($doctor->promedio_calificacion, 1) }} ({{ $doctor->total_calificaciones }} reseñas)</span>
                     </div>
+                    <div class="doctor-stats">
+                        <span class="doctor-stat"><i class="bi bi-people-fill"></i> 1,200+ pacientes</span>
+                        <span class="doctor-stat"><i class="bi bi-calendar-check"></i> 15 años exp.</span>
+                    </div>
+
+                    <!-- Botón calificar -->
+                    @php $esPaciente = session('tipo_usuario') === 'paciente'; @endphp
+                    @if($esPaciente && !$doctor->ya_califico)
+                        <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#calificarModal{{ $doctor->id }}">
+                            <i class="bi bi-star"></i> Calificar Doctor
+                        </button>
+                    @elseif($doctor->ya_califico)
+                        <button type="button" class="btn-book" disabled style="opacity: 0.6; cursor: not-allowed;">
+                            <i class="bi bi-check-circle"></i> Ya calificaste
+                        </button>
+                    @else
+                        <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#loginRequiredModal">
+                            <i class="bi bi-star"></i> Calificar Doctor
+                        </button>
+                    @endif
+                </div>
+            </div>
 
                     <!-- Modal para calificar (solo pacientes que no han calificado) -->
                     @if($esPaciente && !$doctor->ya_califico)
