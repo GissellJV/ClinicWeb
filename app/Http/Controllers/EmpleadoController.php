@@ -52,7 +52,9 @@ class EmpleadoController extends Controller
                 }
             ],
             'telefono' => 'required|string|size:8|regex:/^[2389]\d{7}$/',
-            'password' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]/'
+            'password' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]/',
+            'genero' => 'required|in:Femenino,Masculino',
+            'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ],[
             'nombre.required' => 'El nombre es obligatorio',
             'nombre.regex' => 'El nombre solo puede contener letras y espacios',
@@ -73,6 +75,11 @@ class EmpleadoController extends Controller
             'password.required' => 'La contraseña es obligatoria',
             'password.min' => 'La contraseña debe tener mínimo 8 caracteres',
             'password.regex' => 'La contraseña debe incluir mayúsculas, minúsculas y números',
+            'genero.required' => 'El género es obligatorio',
+            'foto.image' => 'El archivo debe ser debe ser formato jpeg, png o jpg',
+            'foto.required' => 'Debe seleccionar una foto',
+            'foto.mimes' => 'La foto debe ser formato jpeg, png o jpg',
+            'foto.max' => 'La foto no puede superar los 2MB'
         ]);
 
         $empleado = Empleado::create([
@@ -82,7 +89,15 @@ class EmpleadoController extends Controller
             'cargo' => $request->cargo,
             'departamento' => $request->departamento,
             'fecha_ingreso' => $request->fecha_ingreso,
+            'genero' => $request->genero,
         ]);
+
+        // Guardar la foto si existe
+        if ($request->hasFile('foto')) {
+            $foto = file_get_contents($request->file('foto')->getRealPath());
+            $empleado->foto = $foto;
+            $empleado->save();
+        }
 
         // Crear el login asociado
         $empleado->loginEmpleado()->create([
@@ -105,4 +120,52 @@ class EmpleadoController extends Controller
         $empleados = Empleado::orderBy('created_at', 'desc')->get();
         return view('empleados.lista', compact('empleados'));
     }
+
+
+    public function mostrarFoto($id)
+    {
+        $empleado = Empleado::findOrFail($id);
+
+        if ($empleado->foto) {
+            return response($empleado->foto)
+                ->header('Content-Type', 'image/jpeg');
+        }
+
+    }
+
+    public function subirFoto(Request $request)
+    {
+        try {
+            $request->validate([
+                'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+            ], [
+                'foto.required' => 'Debes seleccionar una foto',
+                'foto.image' => 'El archivo debe ser una imagen',
+                'foto.mimes' => 'Solo se permiten archivos JPG, JPEG o PNG',
+                'foto.max' => 'La foto no debe superar los 2MB'
+            ]);
+
+            $empleadoId = session('empleado_id');
+
+            if (!$empleadoId) {
+                return redirect()->back()->with('error', 'No se encontró la sesión del empleado');
+            }
+
+            $empleado = Empleado::findOrFail($empleadoId);
+
+            if ($request->hasFile('foto')) {
+                $foto = file_get_contents($request->file('foto')->getRealPath());
+                $empleado->foto = $foto;
+                $empleado->save();
+
+                return redirect()->back()->with('success', 'Foto actualizada con exito');
+            }
+
+            return redirect()->back()->with('error', 'No se recibió ningún archivo');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
+        }
+    }
+
 }

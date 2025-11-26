@@ -60,7 +60,7 @@ class DoctorController extends Controller
     {
         $doctores = Empleado::where('cargo', 'Doctor')
             ->where('departamento', $departamento)
-            ->get(['id', 'nombre', 'apellido']);
+            ->get(['id', 'nombre', 'apellido', 'foto', 'genero']);
         return response()->json($doctores);
     }
 

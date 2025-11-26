@@ -157,6 +157,41 @@
             margin-bottom: 30px;
             font-size: 1.05rem;
         }
+        .gender-options {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        form-check {
+            display: inline-flex;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .form-check-input {
+            margin: 0 8px 0 0 !important;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+
+        .form-check-label {
+            cursor: pointer;
+            margin: 0 !important;
+            padding: 0 !important;
+            vertical-align: middle;
+        }
+
+        .form-check-input:checked ~ .form-check-label {
+            color: #4ECDC4;
+            font-weight: 600;
+        }
+
+        .form-check-input:checked {
+            background-color: #4ECDC4;
+            border-color: #4ECDC4;
+        }
 
         @media (max-width: 768px) {
             .form-row-custom {
@@ -186,6 +221,18 @@
             font-weight: bold;
         }
 
+        .foto-preview {
+            margin-top: 15px;
+            max-width: 200px;
+        }
+
+        .foto-preview img {
+            width: 100%;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+
+
     </style>
     <div class="formulario">
             <h1 class="text-center text-info-emphasis">Registrar Nuevo Empleado</h1>
@@ -198,7 +245,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('empleados.guardar') }}" method="POST">
+                <form action="{{ route('empleados.guardar') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <!-- Nombre y Apellido -->
@@ -222,8 +269,27 @@
                         </div>
                     </div>
 
-                    <!-- Número de Identidad y Fecha de Ingreso -->
+                    <!-- Genero y Numero de identidad -->
                     <div class="form-row-custom">
+                        <div class="form-group-custom">
+                        <label for="genero">Género *</label>
+                        <div style="display: flex; gap: 50px; align-items: center;">
+                            <label class="form-check" style="display: inline-flex; align-items: center;">
+                                <input class="form-check-input" type="radio" name="genero" id="femenino"
+                                       value="Femenino" {{ old('genero') == 'Femenino' ? 'checked' : '' }}>
+                                <span>Femenino</span>
+                            </label>
+                            <label class="form-check" style="display: inline-flex; align-items: center;">
+                                <input class="form-check-input" type="radio" name="genero" id="masculino"
+                                       value="Masculino" {{ old('genero') == 'Masculino' ? 'checked' : '' }}>
+                                <span>Masculino</span>
+                            </label>
+                        </div>
+                        @error('genero')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
                         <div class="form-group-custom">
                             <label for="numero_identidad">Número de Identidad *</label>
                             <input type="text" class="form-control" id="numero_identidad" name="numero_identidad"
@@ -233,17 +299,9 @@
                             @enderror
                         </div>
 
-                        <div class="form-group-custom">
-                            <label for="fecha_ingreso">Fecha de Ingreso</label>
-                            <input type="date" class="form-control" id="fecha_ingreso" name="fecha_ingreso"
-                                   value="{{ old('fecha_ingreso') }}">
-                            @error('fecha_ingreso')
-                            <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
                     </div>
 
-                    <!-- Número de Teléfono y Contraseña -->
+                    <!-- Número de Telefono y Fecha de Ingreso -->
                     <div class="form-row-custom">
                         <div class="form-group-custom">
                             <label for="telefono">Número de Teléfono</label>
@@ -258,15 +316,17 @@
                         </div>
 
                         <div class="form-group-custom">
-                            <label for="password">Contraseña</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                                   placeholder="Mínimo 8 caracteres">
-                            @error('password')
+                            <label for="fecha_ingreso">Fecha de Ingreso</label>
+                            <input type="date" class="form-control" id="fecha_ingreso" name="fecha_ingreso"
+                                   value="{{ old('fecha_ingreso') }}">
+                            @error('fecha_ingreso')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                    </div>
 
+
+
+                    </div>
                     <!-- Cargo y Departamento -->
                     <div class="form-row-custom">
                         <div class="form-group-custom">
@@ -300,6 +360,32 @@
                         </div>
                     </div>
 
+
+
+                    <!-- Foto y Contraseña -->
+                    <div class="form-row-custom">
+
+
+                        <div class="form-group-custom">
+                            <label for="password">Contraseña</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="Mínimo 8 caracteres">
+                            @error('password')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="form-group-custom">
+                            <label for="foto">Foto</label>
+                            <input type="file" class="form-control" id="foto" name="foto" accept="image/*" >
+                            @error('foto')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+
+
+
                     <!-- Botones -->
                     <div class="btn-group-custom">
                         <a href="{{ route('empleados.lista') }}" class="btn-cancel" style="text-decoration-line: none">
@@ -309,7 +395,9 @@
                             Registrar Empleado
                         </button>
                     </div>
+
                 </form>
+
             </div>
 
     </div>
