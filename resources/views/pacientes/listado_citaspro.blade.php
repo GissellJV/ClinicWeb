@@ -247,6 +247,8 @@
     </style>
 
     <div class="container-fluid">
+
+        <br> <br> <br> <br>
         <h1 class="text-center">Pacientes con Citas Programadas</h1>
 
         @if(session('success'))

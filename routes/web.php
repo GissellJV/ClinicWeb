@@ -19,6 +19,7 @@ use App\Http\Controllers\AsignacionHabitacionController;
 use App\Http\Controllers\VisualizacionHabitacionController;
 use App\Http\Controllers\DoctorHabitacionController; // Nuevo
 use \App\Http\Controllers\EnviarDoctorController;
+use App\Http\Controllers\PromocionController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 
@@ -181,6 +182,12 @@ Route::get('/historialDiario', [RecepcionistaController::class, 'historialDiario
 Route::get('/listaDoctores', [RecepcionistaController::class, 'listaDoctores'])->name('lista.doctores');
 
 
+
+
+Route::get('/promociones', [PromocionController::class, 'promociones'])->name('promociones');
+Route::post('/promociones', [PromocionController::class, 'store'])->name('promociones.store');
+
+Route::get('/promociones/imagen/{id}', [PromocionController::class, 'mostrarImagen'])->name('promociones.imagen');
 // Rutas AJAX para información de doctores
 Route::get('/doctor/{id}/info', [RutasController::class, 'getDoctorInfo'])->name('doctor.info');
 Route::get('/doctores/especialidad/{especialidad}', [RutasController::class, 'getDoctoresPorEspecialidad'])->name('doctores.especialidad');
