@@ -191,3 +191,6 @@ Route::post('/verificar-puede-calificar', [RutasController::class, 'verificarPue
 //promociones publicidad
 Route::get('/publicidad', [PublicidadController::class, 'index'])->name('publicidad');
 Route::post('/publicidad', [PublicidadController::class, 'store'])->name('publicidad.store');
+Route::get('/pacientes/medicamentos', [PacienteController::class, 'medicamentos'])->name('pacientes.medicamentos');
+Route::get('/pacientes/medicamentos', [PacienteController::class, 'medicamentosPorPaciente'])->name('enfermeria.historial');
+Route::post('/pacientes/asignar-medicamento', [PacienteController::class, 'asignarMedicamento'])->name('asignar.medicamento');

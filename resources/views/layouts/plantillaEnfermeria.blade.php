@@ -274,7 +274,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item dropdown-item-modern"
-                               href="{{route('pacientes.medicamentos')}}">
+                               href="{{route('enfermeria.historial')}}">
                                 <i class="bi bi-clipboard2-pulse"></i> Historial Medicamentos
                             </a>
                         </li>

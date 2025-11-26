@@ -1003,7 +1003,7 @@
 
         /* Asegura que las cards mantengan tu tamaño actual */
         .cards-wrapper .doctor-card {
-            min-width: 320px; /* Ajustable si quieres más pequeño */
+            min-width: 360px; /* Ajustable si quieres más pequeño */
         }
 
         /* Sección */
@@ -1288,11 +1288,7 @@
                     <div class="stat-number" data-target="{{ $citas->count() }}">0</div>
                     <div class="stat-label">Citas</div>
                 </div>
-                <div class="stat">
-                    <div class="stat-icon"></div>
-                    <div class="stat-number">4.9</div>
-                    <div class="stat-label">Calificación</div>
-                </div>
+
             </div>
         </div>
     </section>
@@ -1472,7 +1468,7 @@
             <p class="section-description">Profesionales de la salud comprometidos con tu bienestar</p>
         </div>
 
-        <div class="slider-container" style="max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 15px;">
+        <div class="slider-container" style="max-width: 1800px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 15px;">
             <!-- Botón Izquierda -->
             <button class="slider-arrow left" onclick="scrollDoctors(-1)">
                 <i class="bi bi-chevron-left"></i>
@@ -1481,7 +1477,7 @@
         <!-- Contenedor deslizable -->
         <div class="cards-wrapper"  id="doctorsWrapper" style="display: flex; gap: 2rem; overflow-x: auto; scroll-behavior: smooth; padding: 1rem 0; scrollbar-width: none; -ms-overflow-style: none;">
             @forelse($doctores as $doctor)
-            <div class="doctor-card"  style="min-width: 320px; max-width: 320px; flex-shrink: 0;">
+            <div class="doctor-card"  style="min-width: 360px; max-width: 390px; flex-shrink: 0;">
                 @if($doctor->foto)
                     <img src="data:image/jpeg;base64,{{ base64_encode($doctor->foto) }}"
                          alt="Foto {{ $doctor->nombre }}"
@@ -2106,5 +2102,6 @@
             track.prepend(card); // Lo pone al inicio
         }
     </script>
+
 
 @endsection
