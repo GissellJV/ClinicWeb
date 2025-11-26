@@ -9,6 +9,7 @@ use App\Models\Paciente;
 use App\Models\Calificacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\Promocion;
 
 class RutasController extends Controller
 {
@@ -17,22 +18,10 @@ class RutasController extends Controller
      */
     public function index()
     {
+        $promociones = Promocion::query();
         // Simulación de promociones
-        $promociones = collect([
-            ['titulo' => 'Descuento de Tercera Edad', 'descripcion' => '30% en consultas, exámenes y rayos X.', 'mes' => 'todas'],
-            ['titulo' => 'Descuento de Cuarta Edad', 'descripcion' => '40% en consultas, exámenes y medicamentos.', 'mes' => 'todas'],
-            ['titulo' => 'Control Total', 'descripcion' => 'Promoción de octubre: precio 1,000 L.', 'mes' => 'octubre'],
-            ['titulo' => 'Control Estándar', 'descripcion' => 'Promoción hasta noviembre: precio 850 L.', 'mes' => 'todas'],
-        ]);
+        $promociones = $promociones->orderBy('created_at', 'desc')->get();
 
-
-        // Ordenar alfabéticamente
-        $promociones = $promociones->sortBy('titulo');
-
-        $doctores = Empleado::where('cargo', 'Doctor')->get();
-        $empleados = Empleado::orderBy('created_at', 'desc')->get();
-        $pacientes = Paciente::orderBy('created_at', 'desc')->get();
-        $citas = Cita::orderBy('created_at', 'desc')->get();
 
         $comentarios = Comentario::latest()->get();
 
