@@ -1,6 +1,6 @@
 @extends('layouts.plantillaRecepcion')
-        @section('contenido')
-<!DOCTYPE html>
+@section('contenido')
+    <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +13,6 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background:whitesmoke;
-            display: flex;
 
         }
 
@@ -86,10 +85,6 @@
 </head>
 <body>
 
-<br>
-<br>
-<br>
-
 <div class="container my-4">
 
     <!-- Estadísticas -->
@@ -141,16 +136,16 @@
     </div>
 
     <!-- Registro y filtros -->
-     <div class="chart-container">
-         <!--<form method="GET">
+    <div class="chart-container">
+        <!--<form method="GET">
             <div class="input-group mb-3">
                 <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
                 <input type="text" name="buscar" class="form-control border-start-0" placeholder="Buscar paciente..." value="{{ request('buscar') }}">
             </div>
         </form>-->
-         <div class="chart-container">
-             <h5 class="mb-3">Registro de visitas</h5>
-         </div>
+        <div class="chart-container">
+            <h5 class="mb-3">Registro de visitas</h5>
+        </div>
 
         <ul class="nav nav-tabs filter-tabs mb-3">
             <li class="nav-item"><a class="nav-link {{ $filtro == 'recientes' ? 'active' : '' }}" href="?filtro=recientes">Recientes</a></li>

@@ -4,38 +4,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Demo - Navbar Animado</title>
+    <title>Recepcion</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
+            padding-top: 60px;
+            background-color: #f5f7fa;
         }
 
         main.contenido {
             flex: 1;
-            margin-top: 80px;
+            padding: 1rem;
         }
-
+        .navbar-modern .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem; /* espacio entre icono y texto */
+        }
         .navbar-modern {
             background: linear-gradient(90deg, #00bfa6, #009e8e);
             padding: 0.75rem 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            overflow: visible !important;
         }
 
+        /* Contenedor navbar */
+        .navbar-modern .container-fluid {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Navbar links */
+        .navbar-modern .navbar-nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        .navbar-modern .navbar-nav.d-none.d-lg-flex {
+            gap: 0rem !important;
+            margin-right: 0rem !important;
+        }
+
+        .navbar-modern .navbar-nav.flex-row .nav-item {
+            margin-right: 0 !important;
+        }
+
+        .navbar-modern .navbar-nav.flex-row .nav-link {
+            padding-left: 0.25rem !important;
+            padding-right: 0.25rem !important;
+            margin-right: 0 !important;
+        }
+
+        .navbar-modern .navbar-nav .nav-item .nav-link {
+            padding-left: 0.55rem !important;
+            padding-right: 0.55rem !important;
+        }
+
+        /* ================== LOGO ================== */
         .navbar-brand img {
             height: 3rem;
             width: auto;
             transition: transform 0.3s ease;
         }
-
         .navbar-brand:hover img {
             transform: scale(1.05);
         }
 
+        /* ================== NAV-LINK GLOW ================== */
         .nav-link-glow {
             color: #e7fffc !important;
             font-weight: 500;
@@ -78,6 +118,34 @@
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         }
 
+        /* ================== DROPDOWN ================== */
+        .navbar-modern .d-none.d-lg-flex .nav-item.dropdown .dropdown-menu {
+            position: absolute !important;
+            top: 100% !important;
+            right: 0 !important;
+            margin-top: 8px !important;
+            transform: none !important;
+            z-index: 99999 !important;
+        }
+
+        .dropdown-menu-modern {
+            background-color: #00bfa6;
+            border: none;
+            min-width: 220px;
+        }
+
+        .dropdown-item-modern {
+            color: #e7fffc;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item-modern:hover {
+            color: #ffffff;
+            text-shadow: 0 0 8px #00ffe0;
+            background-color: rgba(0,0,0,0.1);
+        }
+
+        /* ================== BOTÓN HAMBURGUESA ================== */
         .navbar-toggler-modern {
             background: white;
             border: 2px solid #4ecdc4;
@@ -131,10 +199,11 @@
             transform: rotate(90deg);
         }
 
-        /* ANIMACIONES MEJORADAS */
+        /* ================== OFFCANVAS ================== */
         .offcanvas-modern {
-            background: linear-gradient(180deg, #f8fffe, #e7fffc);
+            background-color: #e7fffc;
             width: 350px !important;
+            height: 100% !important;
         }
 
         .offcanvas-header-modern {
@@ -152,16 +221,16 @@
             filter: brightness(0) invert(1);
         }
 
+        /* ================== OFFCANVAS LINKS ================== */
         @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
 
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        .offcanvas-body .navbar-nav {
+            align-items: flex-start !important;
+            text-align: left !important;
+            width: 100%;
         }
 
         .offcanvas-nav-link {
@@ -174,50 +243,7 @@
             overflow: hidden;
             opacity: 0;
             animation: slideInRight 0.4s ease forwards;
-        }
-
-        .offcanvas-nav-link:nth-child(1) {
-            animation-delay: 0.05s;
-        }
-
-        .offcanvas-nav-link:nth-child(2) {
-            animation-delay: 0.1s;
-        }
-
-        .offcanvas-nav-link:nth-child(3) {
-            animation-delay: 0.15s;
-        }
-
-        .offcanvas-nav-link:nth-child(4) {
-            animation-delay: 0.2s;
-        }
-
-        .offcanvas-nav-link:nth-child(5) {
-            animation-delay: 0.25s;
-        }
-
-        .offcanvas-nav-link:nth-child(6) {
-            animation-delay: 0.3s;
-        }
-
-        .offcanvas-nav-link:nth-child(7) {
-            animation-delay: 0.35s;
-        }
-
-        .offcanvas-nav-link:nth-child(8) {
-            animation-delay: 0.4s;
-        }
-
-        .offcanvas-nav-link:nth-child(9) {
-            animation-delay: 0.45s;
-        }
-
-        .offcanvas-nav-link:nth-child(10) {
-            animation-delay: 0.5s;
-        }
-
-        .offcanvas-nav-link:nth-child(11) {
-            animation-delay: 0.55s;
+            width: 100%;
         }
 
         .offcanvas-nav-link::before {
@@ -245,7 +271,7 @@
         }
 
         .offcanvas-nav-link i {
-            margin-right: 10px;
+            margin-right: 12px !important;
             transition: transform 0.3s ease;
             font-size: 1.1rem;
         }
@@ -254,80 +280,25 @@
             transform: scale(1.2) rotate(5deg);
         }
 
-        .alert-welcome {
-            background: linear-gradient(135deg, #4ecdc4, #00bfa6);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(78, 205, 196, 0.3);
-        }
-
-        .demo-card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-        }
-
-        .demo-title {
-            color: #009e8e;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        /* CORRIGE ALINEACIÓN EN ESCRITORIO Y EVITA QUE TODO SE DESBORDE */
-        .navbar-modern .container-fluid {
+        /* ================== BOTÓN CERRAR SESIÓN ================== */
+        .btn-logout {
+            padding: 6px 12px !important;
+            font-size: 14px !important;
+            border-radius: 6px !important;
+            background: #dc3545;
+            color: white !important;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            text-align: center;
         }
 
-        /* LOS MENÚS EN PC NO SE DEBEN ROMPER */
-        .navbar-modern .navbar-nav {
-            display: flex;
-            align-items: center;
-            flex-wrap: nowrap;
+        .btn-logout:hover {
+            background-color: #e04344;
+            box-shadow: 0 0 9px #ff6b6b;
         }
 
-        /* EL BOTÓN HAMBURGUESA SIEMPRE A LA DERECHA */
-        .navbar-toggler-modern {
-            margin-left: auto;
-        }
-
-        .offcanvas-body .navbar-nav {
-            text-align: left;
-            align-items: flex-start !important;
-        }
-        /* 1) PEGAR LOS LINKS DE PC AL BOTÓN HAMBURGUESA */
-        .navbar-modern .navbar-nav.d-none.d-lg-flex {
-            gap: 0.5rem !important;        /* antes estaba demasiado grande */
-            margin-right: 0.5rem !important; /* reduce el espacio hacia la derecha */
-        }
-
-        /* Ajuste opcional: reducir aún más la separación */
-        .navbar-modern .navbar-nav .nav-item .nav-link {
-            padding-left: 0.55rem !important;
-            padding-right: 0.55rem !important;
-        }
-
-
-        /* 2) ALINEAR A LA IZQUIERDA TODO EL MENÚ DEL OFFCANVAS */
-        .offcanvas-body .navbar-nav {
-            align-items: flex-start !important;
-            text-align: left !important;
-            width: 100%;
-        }
-
-        .offcanvas-nav-link {
-            width: 100%;
-        }
-
-
-        .offcanvas-nav-link i {
-            margin-right: 12px !important;
-        }
-        /* FOOTER MODERNO */
+        /* ================== FOOTER ================== */
         .footer-modern {
             background: linear-gradient(180deg, #009e8e, #00bfa6);
             color: white;
@@ -348,7 +319,9 @@
             transition: 0.3s ease;
         }
         .social.modern:hover { background: white; color: #009e8e; }
+
     </style>
+
 </head>
 
 <body>
@@ -361,16 +334,37 @@
         </a>
 
         <!-- LINKS VISIBLES SOLO EN PC -->
-        <ul class="navbar-nav flex-row ms-auto me-1 gap-1 d-none d-lg-flex">
+        <ul class="navbar-nav flex-row ms-auto me-4 gap-3 d-none d-lg-flex nav-ul-tight">
         <li class="nav-item">
-                <a class="nav-link nav-link-glow active" href="#">
+                <a class="nav-link nav-link-glow active" href="{{ request()->routeIs('/') ? '#hero' : url('/#hero') }}">
                     <i class="bi bi-house-door-fill me-1"></i> Inicio
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link nav-link-glow" href="#">
+                <a class="nav-link nav-link-glow" href="{{ request()->routeIs('/') ? '#servicios' : url('/#servicios') }}">
                     <i class="bi bi-info-circle-fill me-1"></i> Información
                 </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-link-glow" href="{{ request()->routeIs('/') ? '#doctors' : url('/#doctors') }}">
+                    <i class="bi bi-person-fill"></i> Doctores
+                </a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link nav-link-glow dropdown-toggle profile-badge" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle me-1"></i> {{ session('empleado_nombre') ?? 'Empleado' }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-modern dropdown-menu-end">
+                    <li>
+                        <form action="{{ route('empleados.logout') }}" method="POST" class="px-3 py-1">
+                            @csrf
+                            <button type="submit" class="btn btn-logout w-100">
+                                Cerrar Sesión
+                            </button>
+                        </form>
+                    </li>
+                </ul>
             </li>
         </ul>
 
@@ -457,8 +451,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('lista.doctores') }}">
-                            <i class="bi bi-people"></i> Doctores
+                        <a class="nav-link offcanvas-nav-link" href="#">
+                            <i class="bi bi-folder-plus"></i> Agregar Publicidad
                         </a>
                     </li>
                     <li class="nav-item">
@@ -494,7 +488,7 @@
 
         </div>
         </div>
-    </div>
+
 </nav>
 
 <div class="container-fluid p-0 mt-0 pt-0">
