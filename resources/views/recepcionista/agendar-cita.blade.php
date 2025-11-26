@@ -2,6 +2,9 @@
 <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 @section('contenido')
     <style>
+        body{
+            padding-top: 100px;
+        }
         .agendar-container {
             max-width: 800px;
             margin: 0 auto;

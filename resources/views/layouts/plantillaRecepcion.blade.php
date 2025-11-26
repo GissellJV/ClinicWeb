@@ -451,7 +451,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="#">
+                        <a class="nav-link offcanvas-nav-link" href="{{route('promociones')}}">
                             <i class="bi bi-folder-plus"></i> Agregar Publicidad
                         </a>
                     </li>
