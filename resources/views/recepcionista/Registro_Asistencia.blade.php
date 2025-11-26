@@ -13,7 +13,6 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background:whitesmoke;
-            display: flex;
 
         }
 
@@ -85,10 +84,6 @@
     </style>
 </head>
 <body>
-
-<br>
-<br>
-<br>
 
 <div class="container my-4">
 
