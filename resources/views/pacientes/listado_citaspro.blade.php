@@ -5,7 +5,7 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background:whitesmoke;
-            display: flex;
+            padding-top: 100px;
         }
 
         .container-fluid {

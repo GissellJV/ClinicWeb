@@ -145,10 +145,11 @@
             height: 100vh;
             min-height: 700px;
             display: flex;
-            align-items: center;
+            margin-top: -20px;
             justify-content: center;
             overflow: hidden;
             background: var(--dark);
+            align-items: center;
         }
 
         .hero-bg {
@@ -1129,6 +1130,122 @@
             color: #34b5ad;
         }
 
+
+        .testimonials-track {
+            display: flex;
+            gap: 20px;
+            overflow: hidden;
+        }
+        .testimonial {
+            min-width: 100%;
+        }
+        @media (min-width: 1024px) {
+            .testimonial {
+                min-width: calc(33.33% - 20px);
+            }
+        }
+
+
+        .comentario-widget {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        /* Botón para abrir */
+        .open-comentario-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--dark);
+            box-shadow: 0 8px 25px rgba(0, 217, 192, 0.4);
+            border: none;
+            padding: 12px 22px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.25s;
+        }
+
+        .open-comentario-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(0, 217, 192, 0.6);
+        }
+
+        /* Tarjeta oculta */
+        .comentario-card {
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+            transform: translateY(10px);
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s ease;
+        }
+
+        .comentario-card.show {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Encabezado con X */
+        .comentario-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* Textarea */
+        .comentario-card textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            resize: none;
+            font-size: 15px;
+        }
+
+        /* Botón Enviar */
+        .send-comentario-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--dark);
+            box-shadow: 0 8px 25px rgba(0, 217, 192, 0.4);
+            padding: 10px 18px;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 10px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
+            transition: .25s;
+        }
+
+        .send-comentario-btn:hover {
+            box-shadow: 0 12px 35px rgba(0, 217, 192, 0.6);
+        }
+        .hidden {
+            display: none;
+        }
+
     </style>
 
     <!-- HERO -->
@@ -1598,12 +1715,12 @@
 
 
     <!-- TESTIMONIALS -->
-    <section id="comentarios" class="testimonials-section">
+<section id="comentarios" class="testimonials-section">
 
-        <div class="section-header">
-            <p class="section-subtitle">Testimonios</p>
-            <h2 class="section-title">Lo Que Dicen Nuestros Pacientes</h2>
-        </div>
+    <div class="section-header">
+        <p class="section-subtitle">Testimonios</p>
+        <h2 class="section-title">Lo Que Dicen Nuestros Pacientes</h2>
+    </div>
 
         <!-- Carrusel -->
         <div class="testimonials-carousel">
@@ -1616,44 +1733,36 @@
             <!-- Contenedor deslizable -->
             <div class="testimonials-track">
 
-                <div class="testimonial">
-                    <div class="quote">"</div>
-                    <p class="testimonial-text">Excelente atención médica. El Dr. Martínez es muy profesional y dedicado.
-                        Las instalaciones son modernas y el personal muy amable.</p>
-                    <div class="author">
-                        <div class="avatar">JR</div>
-                        <div>
-                            <h4>Juan Rodríguez</h4>
-                            <p>Paciente desde 2022</p>
+                @if($comentarios->isEmpty())
+                    <!-- Mensaje cuando no hay comentarios -->
+                    <div class="testimonial">
+                        <div class="quote">"</div>
+                        <p class="testimonial-text">Aún no hay testimonios. ¡Sé el primero en dejar el tuyo!</p>
+                        <div class="author">
+                            <div class="avatar">PT</div>
+                            <div>
+                                <h4>Nuestros Pacientes</h4>
+                                <p>Comparte tu experiencia</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @else
+                    @foreach ($comentarios as $c)
+                        <div class="testimonial">
+                            <div class="quote">"</div>
 
-                <div class="testimonial">
-                    <div class="quote">"</div>
-                    <p class="testimonial-text">El sistema de citas en línea es muy conveniente. Siempre encuentro
-                        disponibilidad y la atención es rápida. Muy recomendado.</p>
-                    <div class="author">
-                        <div class="avatar">MS</div>
-                        <div>
-                            <h4>María Sánchez</h4>
-                            <p>Paciente desde 2021</p>
-                        </div>
-                    </div>
-                </div>
+                            <p class="testimonial-text">{{ $c->comentario }}</p>
 
-                <div class="testimonial">
-                    <div class="quote">"</div>
-                    <p class="testimonial-text">La Dra. López salvó mi vida. Su diagnóstico fue preciso y el tratamiento
-                        efectivo. Estoy eternamente agradecido con todo el equipo.</p>
-                    <div class="author">
-                        <div class="avatar">PG</div>
-                        <div>
-                            <h4>Pedro González</h4>
-                            <p>Paciente desde 2020</p>
+                            <div class="author">
+                                <div class="avatar">{{ $c->iniciales }}</div>
+                                <div>
+                                    <h4>{{ $c->usuario }}</h4>
+                                    <p>{{ $c->tiempo }}</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    @endforeach
+                @endif
 
             </div>
 
@@ -1664,7 +1773,42 @@
 
         </div>
 
-    </section>
+    <div class="comentario-area">
+        @if(session('tipo_usuario') === 'paciente')
+
+            <div class="comentario-widget">
+
+                <!-- Botón de abrir -->
+                <button class="open-comentario-btn" onclick="toggleComentario(true)">
+                    <i class="bi bi-chat-dots"></i> Agregar comentario
+                </button>
+
+                <!-- Tarjeta oculta -->
+                <div id="comentarioCard" class="comentario-card hidden">
+                    <div class="comentario-card-header">
+                        <h4>Nuevo comentario</h4>
+                        <button class="close-btn" onclick="toggleComentario(false)">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+
+                    <form id="formComentario" onsubmit="enviarComentario(event)">
+                        @csrf
+                        <textarea id="comentarioTextarea" name="comentario" required placeholder="Escribe tu comentario..." rows="3"></textarea>
+
+                        <button type="submit" class="send-comentario-btn">
+                            <i class="bi bi-send-fill"></i> Publicar
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+        @else
+            <p class="text-center mt-3">Debes iniciar sesión como paciente para dejar un comentario.</p>
+        @endif
+    </div>
+</section>
 
 
     <!-- PROMOS -->
@@ -1822,20 +1966,104 @@
     </script>
     <script>
         let pos = 0;
+
         function moveTestimonial(direction) {
             const track = document.querySelector(".testimonials-track");
-            const cardWidth = 320; // tamaño de la tarjeta + gaps
+            const card = document.querySelector(".testimonial");
+
+            if (!card) return;
+
+            const cardWidth = card.getBoundingClientRect().width + 20;  // +20 por gap
 
             pos += direction * cardWidth;
 
-            // límite a la izquierda
+            // límite izquierdo
             if (pos < 0) pos = 0;
 
-            // límite derecha (máximo 3 cards)
-            const maxScroll = (track.scrollWidth - track.clientWidth);
+            // límite derecho
+            const maxScroll = track.scrollWidth - track.clientWidth;
+
             if (pos > maxScroll) pos = maxScroll;
 
-            track.scrollTo({ left: pos, behavior: 'smooth' });
+            track.scrollTo({
+                left: pos,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
+    <script>
+        function toggleComentario(abrir) {
+            const card = document.getElementById('comentarioCard');
+
+            if (abrir) {
+                card.classList.remove('hidden');
+                setTimeout(() => {
+                    card.classList.add('show');
+                }, 10);
+            } else {
+                card.classList.remove('show');
+                setTimeout(() => {
+                    card.classList.add('hidden');
+                }, 250);
+            }
+        }
+    </script>
+
+    <script>
+        async function enviarComentario(e) {
+            e.preventDefault();
+
+            const texto = document.querySelector("#comentarioTextarea").value;
+
+            const formData = new FormData();
+            formData.append("comentario", texto);
+
+            const response = await fetch("{{ route('comentarios.store') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+
+            // Agregar el comentario al carrusel
+            agregarTestimonio(data);
+
+            // Limpiar textarea
+            document.querySelector("#comentarioTextarea").value = "";
+
+            // Cerrar formulario
+            toggleComentario(false);
+        }
+
+        function agregarTestimonio(c) {
+            const track = document.querySelector(".testimonials-track");
+
+            const card = document.createElement("div");
+            card.classList.add("testimonial");
+
+            card.innerHTML = `
+        <div class="quote">"</div>
+        <p class="testimonial-text">${c.comentario}</p>
+
+        <div class="author">
+            <div class="avatar">${c.usuario.substring(0,1).toUpperCase()}${c.usuario.split(" ")[1]?.substring(0,1).toUpperCase() ?? ""}</div>
+            <div>
+                <h4>${c.usuario}</h4>
+                <p>${c.tiempo}</p>
+            </div>
+        </div>
+    `;
+
+            track.prepend(card); // Lo pone al inicio
         }
     </script>
 

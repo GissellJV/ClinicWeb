@@ -8,6 +8,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding-top: 60px;
+            background-color: #f5f7fa;
+        }
+
+        main.contenido {
+            flex: 1;
+            padding: 1rem;
+        }
         .navbar-modern .nav-link {
             display: flex;
             align-items: center;
@@ -293,11 +304,9 @@
             color: white;
             padding: 2rem 1rem;
         }
-
         .footer-title { font-weight: 700; margin-bottom: 0.8rem; }
         .footer-text { color: #eafffa; font-size: 0.95rem; margin-bottom: 0.4rem; }
         .footer-divider { border-color: rgba(255,255,255,0.25); }
-
         .social.modern {
             width: 42px; height: 42px;
             background: rgba(255,255,255,0.2);
