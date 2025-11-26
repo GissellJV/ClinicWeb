@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CalificacionController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\EnfermeriaController;
@@ -44,6 +45,15 @@ Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comen
 
 
 Route::get('/doctores', [DoctorController::class, 'visualizacion_Doctores'])->name('pacientes.visualizacion_Doctores');
+
+//para calificar como paciente
+Route::post('/calificar', [CalificacionController::class, 'store'])->name('calificar');
+
+// Rutas adicionales opcionales
+Route::get('/doctor/{id}/calificaciones', [CalificacionController::class, 'verCalificaciones'])->name('doctor.calificaciones');
+Route::put('/calificacion/{id}', [CalificacionController::class, 'update'])->name('calificacion.update');
+Route::delete('/calificacion/{id}', [CalificacionController::class, 'destroy'])->name('calificacion.destroy');
+
 
 //RUTAS RECEPCIONISTA
 Route::get('/login', [LoginController::class, 'loginempleado'])->name('inicioSesion');
@@ -171,3 +181,8 @@ Route::get('/historialDiario', [RecepcionistaController::class, 'historialDiario
 Route::get('/listaDoctores', [RecepcionistaController::class, 'listaDoctores'])->name('lista.doctores');
 
 
+// Rutas AJAX para información de doctores
+Route::get('/doctor/{id}/info', [RutasController::class, 'getDoctorInfo'])->name('doctor.info');
+Route::get('/doctores/especialidad/{especialidad}', [RutasController::class, 'getDoctoresPorEspecialidad'])->name('doctores.especialidad');
+Route::get('/estadisticas', [RutasController::class, 'getEstadisticas'])->name('estadisticas');
+Route::post('/verificar-puede-calificar', [RutasController::class, 'verificarPuedeCalificar'])->name('verificar.calificar');
