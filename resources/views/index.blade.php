@@ -1819,47 +1819,74 @@
             <p class="section-description">Aprovecha nuestras promociones vigentes y cuida tu salud</p>
         </div>
 
-        <div class="promos-grid">
-            <div class="promo">
-                <div class="promo-badge"> Promoción Vigente</div>
-                <div class="promo-content">
-                    <h3 class="promo-title">Control Estándar</h3>
-                    <p class="promo-desc">Revisión hasta septiembre. Incluye consulta general, análisis de sangre básico
-                        y seguimiento personalizado.</p>
-                    <div class="promo-footer">
-                        <span class="promo-brand">ClinicWeb</span>
-                        <a href="#" class="promo-link">Ver más →</a>
+        <div class="order-controls" style="text-align:right; margin-bottom:20px;">
+            <a href="{{ url()->current() }}?orden={{ $orden === 'asc' ? 'desc' : 'asc' }}"
+               class="btn-guardar"
+               style="padding:0.5rem 1.5rem; font-size:0.95rem; display:inline-block;">
+                Ordenar por título: {{ $orden === 'asc' ? 'Z → A' : 'A → Z' }}
+            </a>
+        </div>
+
+        <!-- Swiper Container -->
+        <div class="swiper myPromosSwiper">
+            <div class="swiper-wrapper">
+
+                @foreach($publicidades as $pub)
+                    <div class="swiper-slide">
+                        <div class="promo">
+                            <div class="promo-badge">{{ $pub->titulo }}</div>
+
+                            <div class="promo-content">
+                                <h3 class="promo-title">{{ $pub->subtitulo }}</h3>
+                                <p class="promo-desc">{{ $pub->descripcion }}</p>
+
+                                <div class="promo-footer">
+                                    <span class="promo-brand">ClinicWeb</span>
+                                    <a href="#" class="promo-link">Ver más →</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                @endforeach
+
             </div>
 
-            <div class="promo">
-                <div class="promo-badge"> Promoción de Noviembre</div>
-                <div class="promo-content">
-                    <h3 class="promo-title">Control Total</h3>
-                    <p class="promo-desc">Promoción de octubre versión. Chequeo completo con exámenes de laboratorio
-                        avanzados y consulta especializada.</p>
-                    <div class="promo-footer">
-                        <span class="promo-brand">ClinicWeb</span>
-                        <a href="#" class="promo-link">Ver más →</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="promo">
-                <div class="promo-badge"> Promoción Vigente</div>
-                <div class="promo-content">
-                    <h3 class="promo-title">Descuento de Cuarta Edad</h3>
-                    <p class="promo-desc">Especial para adultos mayores. 30% de descuento en consultas y exámenes
-                        preventivos durante todo el año.</p>
-                    <div class="promo-footer">
-                        <span class="promo-brand">ClinicWeb</span>
-                        <a href="#" class="promo-link">Ver más →</a>
-                    </div>
-                </div>
-            </div>
+            <!-- Controles -->
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
         </div>
     </section>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        new Swiper(".myPromosSwiper", {
+            loop: true,
+            slidesPerView: 1,
+            spaceBetween: 20,
+            autoplay: {
+                delay: 4000,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2
+                },
+                1024: {
+                    slidesPerView: 3
+                }
+            }
+        });
+    </script>
 
     <!-- CTA -->
     <section class="cta">

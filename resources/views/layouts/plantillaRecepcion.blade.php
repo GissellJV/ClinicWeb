@@ -456,6 +456,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link offcanvas-nav-link" href="{{route('publicidad')}}">
+                            <i class="bi bi-folder-plus"></i> Agregar Promociones
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link offcanvas-nav-link" href="{{ route('historial.diario') }}">
                             <i class="bi bi-journal-text"></i> Historial Diario
                         </a>
