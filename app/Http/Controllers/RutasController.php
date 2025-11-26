@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cita;
+use App\Models\Comentario;
 use App\Models\Empleado;
 use App\Models\Paciente;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class RutasController extends Controller
@@ -32,6 +34,19 @@ class RutasController extends Controller
         $pacientes = Paciente::orderBy('created_at', 'desc')->get();
         $citas = Cita::orderBy('created_at', 'desc')->get();
 
-        return view('index', compact('promociones', 'doctores', 'empleados', 'pacientes', 'citas'));
+        $comentarios = Comentario::latest()->get();
+
+        Carbon::setLocale('es');
+        // Generar iniciales (nombre + apellido) en el controller
+        foreach ($comentarios as $c) {
+            $partes = explode(' ', trim($c->usuario));
+            $nombre = $partes[0] ?? '';
+            $apellido = $partes[1] ?? '';
+
+            $c->iniciales = strtoupper(substr($nombre, 0, 1)) . strtoupper(substr($apellido, 0, 1));
+            $c->tiempo = $c->created_at->diffForHumans();
+        }
+
+        return view('index', compact('promociones', 'doctores', 'empleados', 'pacientes', 'citas', 'comentarios'));
     }
 }

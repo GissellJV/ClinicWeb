@@ -16,11 +16,10 @@
 
         /* NAVBAR MODERNO */
         .navbar-modern {
-            background: linear-gradient(90deg,
-            rgba(0, 191, 166, 0.7),
-        rgba(0, 158, 142, 0.7)
-        ) !important;
-            backdrop-filter: blur(6px);
+            background: linear-gradient(90deg, #00bfa6, #009e8e);
+            padding: 0.75rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            overflow: visible !important;
         }
         .nav-link-glow {
             color: #e7fffc !important;
@@ -119,25 +118,54 @@
 
         /* BOTÓN HAMBURGUESA MODERNO */
         .navbar-toggler {
-            border: none;
-            background: transparent;
-            outline: none;
-            position: relative;
-            width: 35px;
-            height: 25px;
+            background: white;
+            border: 2px solid #4ecdc4;
+            border-radius: 10px;
+            width: 50px;
+            height: 50px;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
             cursor: pointer;
-            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        .bar {
-            height: 3px;
-            width: 100%;
-            background-color: #fff;
-            border-radius: 2px;
-            transition: all 0.3s ease;
+        .navbar-toggler::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(78, 205, 196, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
         }
+        .navbar-toggler:hover::before {
+            width: 200px;
+            height: 200px;
+        }
+        .navbar-toggler:hover {
+            background: #4ecdc4;
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.6),
+            0 0 40px rgba(78, 205, 196, 0.4),
+            0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        .navbar-toggler-icon-modern {
+            background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%2334b5ad' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-toggler:hover .navbar-toggler-icon-modern {
+            background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+            transform: rotate(90deg);
+        }
+
         .navbar-toggler.collapsed .bar:nth-child(2) {
             opacity: 1;
         }
@@ -212,6 +240,65 @@
         <a class="navbar-brand d-flex align-items-center fw-bold text-white" href="{{ route('/') }}">
             ClinicWeb
         </a>
+
+        <!-- Botón móvil -->
+        <button class="navbar-toggler collapsed" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarClinic"
+                aria-controls="navbarClinic" aria-expanded="false">
+            <span class="navbar-toggler-icon-modern"></span>
+        </button>
+
+        <!-- Menú -->
+        <div class="collapse navbar-collapse" id="navbarClinic">
+
+            <ul class="navbar-nav ms-auto gap-2">
+
+                <!-- Inicio -->
+                <li class="nav-item">
+                    <a class="nav-link nav-link-glow active" href="{{ route('/') }}">
+                        <i class="bi bi-house-door-fill me-1"></i> Inicio
+                    </a>
+                </li>
+
+                <!-- Enfermería -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link nav-link-glow dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="bi bi-heart-pulse-fill me-1"></i> Enfermería
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-modern">
+                        <li>
+                            <a class="dropdown-item dropdown-item-modern"
+                               href="{{route('inventario.principal')}}">
+                                <i class="bi bi-capsule"></i> Administrar Medicamentos
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item dropdown-item-modern"
+                               href="{{route('pacientes.medicamentos')}}">
+                                <i class="bi bi-clipboard2-pulse"></i> Historial Medicamentos
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Perfil -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link nav-link-glow dropdown-toggle profile-badge" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle"></i> {{ session('empleado_nombre') }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-modern dropdown-menu-end">
+                        <li>
+                            <form action="{{ route('empleados.logout') }}" method="POST" class="px-3 py-1">
+                                @csrf
+                                <button type="submit" class="btn btn-logout w-100">
+                                    Cerrar Sesión
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
 
         <!-- Desktop menu -->
         <ul class="navbar-nav flex-row ms-auto me-3 gap-2 d-none d-lg-flex">
