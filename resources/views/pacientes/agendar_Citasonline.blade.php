@@ -188,6 +188,12 @@
             cursor: default;
         }
 
+        .day.no-disponible {
+            background: #f3f4f6;
+            color: #9ca3af;
+        }
+
+
         /* Leyenda */
         .legend {
             margin-top: 25px;
@@ -584,14 +590,12 @@
                 }, 4000);
             }
 
-            // Renderizar calendario
             function renderCalendar() {
                 daysGrid.innerHTML = '';
                 monthTitle.textContent = `${meses[currentMonth]} ${currentYear}`;
 
                 const firstDay = new Date(currentYear, currentMonth, 1).getDay();
                 const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-                const today = new Date();
 
                 // Espacios vacíos antes del primer día
                 const offset = firstDay === 0 ? 6 : firstDay - 1;
@@ -601,7 +605,9 @@
                     daysGrid.appendChild(emptyDiv);
                 }
 
-                // Días del mes
+                const hoy = new Date();
+                hoy.setHours(0, 0, 0, 0); // medianoche para comparar solo fechas
+
                 for (let day = 1; day <= daysInMonth; day++) {
                     const dayDiv = document.createElement('div');
                     dayDiv.classList.add('day');
@@ -610,8 +616,22 @@
                     const fecha = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                     dayDiv.dataset.fecha = fecha;
 
+                    const fechaObj = new Date(fecha);
+
+                    if (fechaObj < hoy) {
+                        // días anteriores → no disponibles
+                        dayDiv.classList.add('no-disponible');
+                        dayDiv.style.cursor = 'not-allowed';
+                        dayDiv.addEventListener('click', () => {
+                            mostrarAlerta('warning', 'No se puede agendar citas en fechas anteriores a hoy.');
+                        });
+                    } else {
+                        // hoy y días futuros → seleccionables
+                        dayDiv.addEventListener('click', () => handleDayClick(dayDiv, day, fecha));
+                    }
+
                     // Marcar día actual
-                    if (today.getDate() === day && today.getMonth() === currentMonth && today.getFullYear() === currentYear) {
+                    if (fechaObj.getTime() === hoy.getTime()) {
                         dayDiv.classList.add('today');
                     }
 
@@ -621,7 +641,6 @@
                         selectedDayElement = dayDiv;
                     }
 
-                    dayDiv.addEventListener('click', () => handleDayClick(dayDiv, day, fecha));
                     daysGrid.appendChild(dayDiv);
                 }
             }

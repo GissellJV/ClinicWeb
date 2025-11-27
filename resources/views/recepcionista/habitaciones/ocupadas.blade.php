@@ -122,7 +122,7 @@
                                 <td>{{ $asignacion->fecha_asignacion->format('d/m/Y H:i') }}</td>
                                 <td>
                                     <span class="badge bg-primary">
-                                        {{ $asignacion->fecha_asignacion->diffInDays(now()) }} días
+                                        {{ $asignacion->fecha_asignacion->startOfDay()->diffInDays(now()->startOfDay()) + 1 }} días
                                     </span>
                                 </td>
                                 <td>
