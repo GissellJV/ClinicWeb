@@ -1831,8 +1831,8 @@
 
         <div class="order-controls" style="text-align:right; margin-bottom:20px;">
             <a href="{{ url()->current() }}?orden={{ $orden === 'asc' ? 'desc' : 'asc' }}"
-               class="btn-guardar"
-               style="padding:0.5rem 1.5rem; font-size:0.95rem; display:inline-block;">
+               class="promo-link"
+               style="padding:0.5rem 1.5rem; font-size:0.95rem; display:inline-block; text-decoration-line: none; color: #00bfa6 ">
                 Ordenar por título: {{ $orden === 'asc' ? 'Z → A' : 'A → Z' }}
             </a>
         </div>
@@ -1852,7 +1852,7 @@
 
                                 <div class="promo-footer">
                                     <span class="promo-brand">ClinicWeb</span>
-                                    <a href="#" class="promo-link">Ver más →</a>
+
                                 </div>
                             </div>
                         </div>
