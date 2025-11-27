@@ -310,7 +310,7 @@
                         </td>
                         <td>
                             @if($cita->doctor)
-                                Dr. {{ $cita->doctor->nombre }} {{ $cita->doctor->apellido ?? '' }}
+                                {{ $cita->doctor->genero === 'Femenino' ? 'Dra.' : 'Dr.' }} {{ $cita->doctor->nombre }} {{ $cita->doctor->apellido ?? '' }}
                             @else
                                 {{ $cita->doctor_nombre ?? 'No Definido' }}
                             @endif
@@ -368,12 +368,6 @@
                     {{ $citas->links() }}
                 </div>
             @endif
-        </div>
-
-        <div class="text-center mt-4">
-            <a href="{{ route('recepcionista.busquedaexpediente') }}" class="btn-inicio">
-                 Volver al Inicio
-            </a>
         </div>
     </div>
 
