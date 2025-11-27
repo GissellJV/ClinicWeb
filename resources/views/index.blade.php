@@ -1267,7 +1267,7 @@
             z-index: 10;
         }
 
-        /* Botón principal (igual estilo que open-comentario-btn) */
+        /* Botón principal */
         .btn-especialidad-open {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: var(--dark);
@@ -1290,7 +1290,7 @@
             box-shadow: 0 12px 35px rgba(0, 217, 192, 0.6);
         }
 
-        /* Tarjeta del formulario (tipo comentario-card) */
+        /* Tarjeta del formulario */
         .form-especialidad {
             width: 100%;
             max-width: 450px;
@@ -1341,12 +1341,6 @@
             box-shadow: 0 12px 35px rgba(0, 217, 192, 0.6);
         }
 
-        /* Clase que oculta */
-        .oculto {
-            display: none;
-        }
-
-
         .btn-especialidad-container {
             width: 100%;
             display: flex;
@@ -1367,6 +1361,58 @@
             text-align: center;
             margin-top: 20px;
         }
+
+        .btn-agregar-especialidad {
+            background: #00c6ff;
+            padding: 10px 18px;
+            border-radius: 10px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn-agregar-especialidad:hover {
+            background: #008ecc;
+        }
+
+        .form-especialidad {
+            text-align: left;
+            background: white;
+            padding: 20px;
+            width: 350px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+            margin-top: 20px;
+            transition: 0.3s ease;
+        }
+
+
+        .service-card {
+            position: relative;
+        }
+
+        .btn-delete {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            border: none;
+            background: none;
+            font-size: 22px;
+            color: #d9534f;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            color: #b52b27;
+        }
+
+        .delete-form {
+            margin: 0;
+            padding: 0;
+        }
+
     </style>
 
     <!-- HERO -->
@@ -1479,6 +1525,21 @@
         @else
             @foreach ($especialidades as $e)
                 <div class="service-card">
+                    @if(session('cargo') === 'Recepcionista')
+                        <form action="{{ route('especialidades.destroy', $e->id) }}" method="POST" class="delete-form">
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit" class="btn-delete">
+                                <i class="bi bi-dash-circle"></i>
+                            </button>
+                        </form>
+                    @endif
+
+                    <div class="service-icon">
+                        <img src="{{ asset('storage/' . $e->icono) }}" alt="Icono"
+                             style="width: 60px; height: 60px;">
+                    </div>
                     <div class="service-icon">
                         <img src="{{ asset('storage/' . $e->icono) }}" alt="Icono" style="width: 60px; height: 60px;">
                     </div>
@@ -2195,8 +2256,12 @@
             const data = await response.json();
 
             if (data.error) {
-                alert(data.error);
+                showBootstrapAlert(data.error, 'danger');
                 return;
+            }
+
+            if (data.success) {
+                showBootstrapAlert(data.success, 'success');
             }
 
             agregarTestimonio(data);
@@ -2241,5 +2306,30 @@
             }, 500);
             @endif
         });
+    </script>
+
+    <script>
+        function showBootstrapAlert(message, type = 'danger') {
+            const alertContainer = document.getElementById('alert-container');
+
+            // Crear alerta dinámica
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-dismissible fade show`;
+            alert.role = 'alert';
+            alert.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+
+            // Agregar la alerta al contenedor
+            alertContainer.appendChild(alert);
+
+            // Opcional: eliminar la alerta automáticamente después de 5 segundos
+            setTimeout(() => {
+                alert.classList.remove('show');
+                alert.classList.add('hide');
+                alert.remove();
+            }, 5000);
+        }
     </script>
 @endsection
