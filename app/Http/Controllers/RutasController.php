@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cita;
 use App\Models\Comentario;
 use App\Models\Empleado;
+use App\Models\Especialidad;
 use App\Models\Paciente;
 use App\Models\Calificacion;
 use App\Models\Publicidad;
@@ -87,8 +88,11 @@ class RutasController extends Controller
         // Ordenar doctores por mejor calificación
         $doctores = $doctores->sortByDesc('promedio_calificacion');
 
-        return view('index', compact('publicidades', 'orden',  'promociones', 'empleados', 'pacientes', 'citas', 'doctores', 'comentarios'));
+        $especialidades = Especialidad::all();
 
+        return view('index', compact('publicidades', 'orden',  'promociones',
+            'empleados', 'pacientes', 'citas', 'doctores', 'comentarios', 'especialidades'
+        ));
     }
 
     /**

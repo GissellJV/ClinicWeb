@@ -1250,6 +1250,123 @@
             display: none;
         }
 
+
+        .form-especialidad {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            opacity: 0;
+            pointer-events: none;
+
+            background: white;
+            padding: 20px;
+            width: 350px;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+            transition: 0.3s ease;
+            z-index: 10;
+        }
+
+        /* Botón principal (igual estilo que open-comentario-btn) */
+        .btn-especialidad-open {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--dark);
+            box-shadow: 0 8px 25px rgba(0, 217, 192, 0.4);
+            border: none;
+            padding: 12px 22px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.25s;
+            margin-top: 20px;
+        }
+
+        .btn-especialidad-open:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(0, 217, 192, 0.6);
+        }
+
+        /* Tarjeta del formulario (tipo comentario-card) */
+        .form-especialidad {
+            width: 100%;
+            max-width: 450px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+            transform: translateY(10px);
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s ease;
+        }
+
+        /* Cuando se muestre */
+        .form-especialidad.show {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Inputs del formulario */
+        .form-especialidad input,
+        .form-especialidad textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        .form-especialidad button[type="submit"] {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--dark);
+            box-shadow: 0 8px 25px rgba(0, 217, 192, 0.4);
+            padding: 10px 18px;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: .25s;
+        }
+
+        .form-especialidad button[type="submit"]:hover {
+            box-shadow: 0 12px 35px rgba(0, 217, 192, 0.6);
+        }
+
+        /* Clase que oculta */
+        .oculto {
+            display: none;
+        }
+
+
+        .btn-especialidad-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+
+        .form-especialidad.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .especialidad-wrapper {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 
     <!-- HERO -->
@@ -1354,49 +1471,48 @@
         <p class="section-description">Ofrecemos una amplia gama de servicios médicos de alta calidad para cuidar tu
             salud y la de tu familia</p>
     </div>
-
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon"><i class="bi bi-heart-pulse-fill"></i></div>
-                <h3 class="service-title">Cardiología</h3>
-                <p class="service-description">Cuidado especializado del corazón con tecnología de punta y profesionales
-                    experimentados</p>
+    <div class="services-grid">
+        @if ($especialidades->isEmpty())
+            <div class="text-center p-4">
+                <h4 class="text-muted">No hay especialidades registradas aún.</h4>
             </div>
-
-            <div class="service-card">
-                <div class="service-icon"><i class="bi bi-emoji-smile-fill"></i></div>
-                <h3 class="service-title">Pediatría</h3>
-                <p class="service-description">Atención integral para el desarrollo y salud de tus hijos desde el
-                    nacimiento</p>
-            </div>
-
-            <div class="service-card">
-                <div class="service-icon"><i class="bi bi-eyedropper"></i></div>
-                <h3 class="service-title">Laboratorio Clínico</h3>
-                <p class="service-description">Análisis clínicos precisos con equipos modernos y resultados rápidos</p>
-            </div>
-
-            <div class="service-card">
-                <div class="service-icon"><i class="bi bi-clipboard2-pulse"></i></div>
-                <h3 class="service-title">Medicina General</h3>
-                <p class="service-description">Consultas médicas generales para diagnóstico y tratamiento de
-                    enfermedades comunes</p>
-            </div>
-
-            <div class="service-card">
-                <div class="service-icon"><i class="bi bi-person-heart"></i></i>
+        @else
+            @foreach ($especialidades as $e)
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="{{ asset('storage/' . $e->icono) }}" alt="Icono" style="width: 60px; height: 60px;">
+                    </div>
+                    <h3 class="service-title">{{ $e->nombre }}</h3>
+                    <p class="service-description">{{ $e->descripcion }}</p>
                 </div>
-                <h3 class="service-title">Odontología</h3>
-                <p class="service-description">Cuidado dental completo para mantener tu sonrisa saludable y radiante</p>
-            </div>
+            @endforeach
+        @endif
+    </div>
+    @if(session('cargo') === 'Recepcionista')
+        <div class="especialidad-wrapper">
+            <button id="btnAgregarEspecialidad" class="btn-especialidad-open">
+                Agregar Especialidad
+            </button>
 
-            <div class="service-card">
-                <div class="service-icon"><i class="bi bi-eye-fill"></i></div>
-                <h3 class="service-title">Oftalmología</h3>
-                <p class="service-description">Exámenes visuales y tratamiento de enfermedades oculares con
-                    especialistas</p>
+            <div id="formEspecialidad" class="form-especialidad">
+                <h3>Agregar Especialidad</h3>
+                <form id="especialidadForm" enctype="multipart/form-data"
+                      action="{{ route('especialidades.store') }}" method="POST">
+                    @csrf
+                    <label>Nombre de la especialidad</label>
+                    <input type="text" name="nombre" required>
+                    <label>Descripción</label>
+                    <textarea name="descripcion" required></textarea>
+                    <label>Ícono</label>
+                    <input type="file" name="icono" accept="image/*" required>
+                    <button type="submit">Guardar</button>
+                </form>
+                @if(session('success'))
+                    <p>{{ session('success') }}</p>
+                @endif
             </div>
         </div>
+    @endif
     </section>
 
     <!-- FEATURES -->
@@ -1722,8 +1838,19 @@
             wrapper.scrollBy({ left: direction*cardWidth, behavior:'smooth' });
         }
     </script>
+    <script>
+        document.getElementById('btnAgregarEspecialidad')?.addEventListener('click', function () {
+            const form = document.getElementById('formEspecialidad');
 
-
+            if (form.classList.contains('oculto')) {
+                form.classList.remove('oculto');
+                setTimeout(() => form.classList.add('show'), 10);
+            } else {
+                form.classList.remove('show');
+                setTimeout(() => form.classList.add('oculto'), 300);
+            }
+        });
+    </script>
     <!-- TESTIMONIALS -->
     <section id="comentarios" class="testimonials-section">
 
