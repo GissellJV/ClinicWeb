@@ -34,7 +34,7 @@
     </style>
 
     <br> <br> <br> <br>
-    <h1 class="text-center text-info-emphasis">Promociones</h1>
+    <h1 class="text-center text-info-emphasis">Publicidad</h1>
    <div class="formulario">
 
        <div class="form-container">
