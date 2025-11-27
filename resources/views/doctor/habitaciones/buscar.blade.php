@@ -5,7 +5,11 @@
 @section('contenido')
     <style>
         body {
+            padding-top: 100px;
             overflow-x: hidden;
+        }
+        h6{
+            color: #4ECDC4;
         }
     </style>
 
@@ -15,15 +19,15 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="text-center mb-4">
-                            <h2><i class="fas fa-search"></i> Buscar Habitación de Paciente</h2>
+                            <h2><i class="fas fa-search" style="color: #4ECDC4"></i> Buscar Habitación de Paciente</h2>
                             <p class="text-muted">Localiza la habitación donde se encuentra un paciente</p>
                         </div>
 
-                        <div class="card shadow-sm">
+                        <div class="card border-0 shadow-sm">
                             <div class="card-body p-4">
                                 <form action="{{ route('doctor.habitaciones.buscar') }}" method="GET">
                                     <div class="input-group input-group-lg">
-                        <span class="input-group-text bg-primary text-white">
+                        <span class="input-group-text text-white" style="background: linear-gradient(135deg, #4ecdc4 0%, #4FC3C3 100%);" >
                             <i class="fas fa-search"></i>
                         </span>
                                         <input type="text"
@@ -34,7 +38,7 @@
                                                required
                                                minlength="3"
                                                autofocus>
-                                        <button class="btn btn-primary px-4" type="submit">
+                                        <button class="input-group-text text-white" style="background: linear-gradient(135deg, #4ecdc4 0%, #4FC3C3 100%);" type="submit">
                                             Buscar
                                         </button>
                                     </div>
@@ -44,7 +48,7 @@
                         </div>
 
                         <div class="text-center mt-4">
-                            <a href="{{ route('doctor.habitaciones.mis-pacientes') }}" class="btn btn-outline-primary btn-lg">
+                            <a href="{{ route('doctor.habitaciones.mis-pacientes') }}" class="btn btn-lg text-white" style="background: linear-gradient(135deg, #4ecdc4 0%, #4FC3C3 100%);">
                                 <i class="fas fa-user-md"></i> Ver Pacientes Hospitalizados
                             </a>
                         </div>
@@ -54,21 +58,21 @@
                             <div class="col-md-4 text-center mb-3">
                                 <div class="p-3">
                                     <i class="fas fa-user-injured fa-3x text-primary mb-2"></i>
-                                    <h6>Por Nombre</h6>
+                                    <h6 class="fw-bold">Por Nombre</h6>
                                     <small class="text-muted">Busca por nombre del paciente</small>
                                 </div>
                             </div>
                             <div class="col-md-4 text-center mb-3">
                                 <div class="p-3">
                                     <i class="fas fa-file-medical fa-3x text-primary mb-2"></i>
-                                    <h6>Por Expediente</h6>
+                                    <h6 class="fw-bold">Por Expediente</h6>
                                     <small class="text-muted">Busca por número de expediente</small>
                                 </div>
                             </div>
                             <div class="col-md-4 text-center mb-3">
                                 <div class="p-3">
                                     <i class="fas fa-bed fa-3x text-primary mb-2"></i>
-                                    <h6>Ubicación</h6>
+                                    <h6 class="fw-bold">Ubicación</h6>
                                     <small class="text-muted">Encuentra la habitación exacta</small>
                                 </div>
                             </div>

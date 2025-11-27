@@ -1,5 +1,5 @@
 @extends('layouts.plantillaRecepcion')
-
+<link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 @section('title', 'Asignar Habitación')
 
 @section('contenido')
@@ -8,15 +8,16 @@
             padding-top: 70px;
         }
     </style>
-    <div class="container mt-4">
+    <div class="formulario mt-4">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="card shadow">
-                    <div class="card-header text-white" style="background: linear-gradient(135deg, #4ecdc4 0%, #4FC3C3 100%);">
-                        <h4 class="mb-0">
+
+                    <div class="register-section">
+                        <h1 class="text-center text-info-emphasis">
                             Asignar Habitación a Paciente
-                        </h4>
-                    </div>
+                        </h1>
+
+
                     <div class="card-body p-4">
                         @if(session('error'))
                             <div class="alert alert-danger alert-dismissible fade show">
@@ -36,7 +37,8 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                             </div>
                         @endif
-
+                    </div>
+                    <div class="form-container">
                         <form action="{{ route('recepcionista.habitaciones.store') }}" method="POST">
                             @csrf
 
@@ -133,18 +135,24 @@
                             </div>
                         </form>
                     </div>
-                </div>
+
+                    </div>
+
 
                 <!-- Información adicional -->
-                <div class="card mt-4">
-                    <div class="card-body bg-light">
-                        <h6 class="mb-3">Información Importante</h6>
-                        <ul class="mb-0 small">
-                            <li>Un paciente no puede tener más de una habitación activa al mismo tiempo</li>
-                            <li>Solo se pueden asignar habitaciones con estado "disponible"</li>
-                            <li>La habitación cambiará automáticamente a estado "ocupada" al asignarla</li>
-                            <li>La fecha y hora de asignación se registrará automáticamente</li>
-                        </ul>
+                <div class="row justify-content-center mt-4">
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-body bg-light">
+                                <h6 class="mb-3">Información Importante</h6>
+                                <ul class="mb-0 small">
+                                    <li>Un paciente no puede tener más de una habitación activa al mismo tiempo</li>
+                                    <li>Solo se pueden asignar habitaciones con estado "disponible"</li>
+                                    <li>La habitación cambiará automáticamente a estado "ocupada" al asignarla</li>
+                                    <li>La fecha y hora de asignación se registrará automáticamente</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
