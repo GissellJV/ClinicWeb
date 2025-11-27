@@ -1537,10 +1537,6 @@
                     @endif
 
                     <div class="service-icon">
-                        <img src="{{ asset('storage/' . $e->icono) }}" alt="Icono"
-                             style="width: 60px; height: 60px;">
-                    </div>
-                    <div class="service-icon">
                         <img src="{{ asset('storage/' . $e->icono) }}" alt="Icono" style="width: 60px; height: 60px;">
                     </div>
                     <h3 class="service-title">{{ $e->nombre }}</h3>
