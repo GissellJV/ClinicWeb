@@ -4,6 +4,7 @@ use App\Http\Controllers\CalificacionController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\EnfermeriaController;
+use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\TurnoController;
@@ -23,6 +24,10 @@ use App\Http\Controllers\PromocionController;
 use App\Http\Controllers\PublicidadController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
+
+//especialidades
+Route::post('/especialidades/store', [EspecialidadController::class, 'store'])->name('especialidades.store');
+
 
 Route::get('/promociones', [RutasController::class, 'index'])->name('promociones.index');
 

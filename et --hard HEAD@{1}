@@ -1,0 +1,71 @@
+[33m618ec8e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mMaynor1412/Desarrollo[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/Maynor1412/Desarrollo[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{0}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m5661af6[m HEAD@{1}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33mcfa2ac0[m HEAD@{2}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m4226409[m HEAD@{3}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m3f6e3fe[m HEAD@{4}: commit: Correccion de errores en las plantillas de navbar
+[33m5953f3d[m HEAD@{5}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33mf264693[m HEAD@{6}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m6f48a97[m HEAD@{7}: commit: Diseño plantilla recepcionista
+[33maa47f82[m HEAD@{8}: commit: Diseño de plantillas
+[33m1c71454[m HEAD@{9}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33ma0e9e0e[m HEAD@{10}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33ma4b01d3[m HEAD@{11}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m71c15fd[m HEAD@{12}: commit: se actualizo la vista visualizacion de doctores optimizando el funcionamiento y correguir errores
+[33m4d85b99[m HEAD@{13}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m869838a[m HEAD@{14}: commit: se actualizo la vista turnos optimizando el funcionamiento y correguir errores
+[33m28d7612[m HEAD@{15}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m4f280bf[m HEAD@{16}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m22276e2[m HEAD@{17}: commit: se modifico la vista turnos
+[33mc299492[m HEAD@{18}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33mbdad244[m HEAD@{19}: commit: se modifico la vista turnos
+[33m04e8aab[m HEAD@{20}: commit: se modifico la vista turnos
+[33mf3f9f5d[m HEAD@{21}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m1a34ff7[m HEAD@{22}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m7898ce2[m HEAD@{23}: commit: se creo la historia visualizacion de rol de turnos para doctores y todas sus tareas
+[33maad4be1[m HEAD@{24}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m48259af[m HEAD@{25}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33mb0bf5e1[m HEAD@{26}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m3aa0c73[m HEAD@{27}: commit: Se programo las consultas en la vista de la historia registro de asistencia de pacientes
+[33mf728276[m HEAD@{28}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33me1acd07[m HEAD@{29}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m3583dd4[m HEAD@{30}: commit: Se crea la vista de registro de aisteniade paciente
+[33m731b964[m HEAD@{31}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m5f9da75[m HEAD@{32}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33mbd7f315[m HEAD@{33}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33mf679651[m HEAD@{34}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m561fa11[m HEAD@{35}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33mac0939b[m HEAD@{36}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m221dcc8[m HEAD@{37}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m7ecf482[m HEAD@{38}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m0e5224d[m HEAD@{39}: commit: se agrego las modificaciones de restablecer contraseña
+[33meb71dc2[m HEAD@{40}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33mc9e8611[m HEAD@{41}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m5e8cc26[m HEAD@{42}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m8817487[m HEAD@{43}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33mcb81884[m HEAD@{44}: merge origin/Maynor1412/Desarrollo: Merge made by the 'ort' strategy.
+[33m1484d86[m HEAD@{45}: commit: actualizacion del nombre de la view recuperar_contra y incluir los enlaces bootstrap para visualizacion del diseño
+[33m5567bb9[m HEAD@{46}: commit: actualizacion del diseño de interfaz de recuperacion de la cuenta
+[33ma1fd303[m HEAD@{47}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m84577d9[m HEAD@{48}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33mf69f81f[m HEAD@{49}: commit: visualizacion de doctores y recuperacion de contraseña
+[33md7d71f5[m HEAD@{50}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33me9395b9[m HEAD@{51}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33mfe3e5e3[m HEAD@{52}: commit: actualizacion de visualizacion de doctores
+[33meb9fcf0[m HEAD@{53}: merge origin/Maynor1412/Desarrollo: Fast-forward
+[33m5c356d9[m HEAD@{54}: checkout: moving from main to Maynor1412/Desarrollo
+[33meb9fcf0[m HEAD@{55}: checkout: moving from Maynor1412/Desarrollo to main
+[33m5c356d9[m HEAD@{56}: checkout: moving from main to Maynor1412/Desarrollo
+[33meb9fcf0[m HEAD@{57}: checkout: moving from Maynor1412/Desarrollo to main
+[33m5c356d9[m HEAD@{58}: checkout: moving from Maynor1412/Desarrollo to Maynor1412/Desarrollo
+[33m5c356d9[m HEAD@{59}: branch: Reset to origin/Maynor1412/Desarrollo
+[33m5c356d9[m HEAD@{60}: checkout: moving from main to Maynor1412/Desarrollo
+[33meb9fcf0[m HEAD@{61}: checkout: moving from Maynor1412/Desarrollo to main
+[33m5c356d9[m HEAD@{62}: checkout: moving from main to Maynor1412/Desarrollo
+[33meb9fcf0[m HEAD@{63}: checkout: moving from Maynor1412/Desarrollo to main
+[33m5c356d9[m HEAD@{64}: checkout: moving from main to Maynor1412/Desarrollo
+[33meb9fcf0[m HEAD@{65}: merge origin/main: Fast-forward
+[33m5c356d9[m HEAD@{66}: checkout: moving from Maynor1412/Desarrollo to main
+[33m5c356d9[m HEAD@{67}: checkout: moving from Maynor1412/Desarrollo to Maynor1412/Desarrollo
+[33m5c356d9[m HEAD@{68}: branch: Reset to origin/Maynor1412/Desarrollo
+[33m5c356d9[m HEAD@{69}: checkout: moving from main to Maynor1412/Desarrollo
+[33m5c356d9[m HEAD@{70}: clone: from https://github.com/Maynor1412/ClinicWeb.git
