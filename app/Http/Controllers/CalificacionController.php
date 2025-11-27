@@ -19,7 +19,7 @@ class CalificacionController extends Controller
     {
         if (!session('paciente_id')) {
         return redirect()->route('inicioSesion')
-            ->with('error', 'Debes iniciar sesión para agendar una cita');
+            ->with('error', 'Debes iniciar sesión para calificar al doctor');
     }
 
         // VERIFICAR SESIÓN

@@ -29,6 +29,7 @@ class InventarioController extends Controller
 
     public function store(Request $request)
     {
+
         if (!session('cargo') || session('cargo') != 'Enfermero') {
             return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Enfermero');

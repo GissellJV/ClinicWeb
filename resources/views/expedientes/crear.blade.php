@@ -18,7 +18,7 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background:whitesmoke;
-            display: flex;
+
             min-height: 100vh;
             padding: 20px;
         }
@@ -337,6 +337,7 @@
 <body>
 <!-- Botón de navegación navbar-toggler -->
 <div class="formulario">
+    <br><br><br><br><br>
 <h1 class="text-center text-info-emphasis">Crear Nuevo Expediente Médico</h1>
 
 <div class="form-container" style="margin: 10px auto; max-width: 900px">

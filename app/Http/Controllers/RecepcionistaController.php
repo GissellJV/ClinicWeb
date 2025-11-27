@@ -17,6 +17,11 @@ class RecepcionistaController extends Controller
 {
     public function enviarDoctor(Request $request)
     {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
         // VALIDACIÓN
         $request->validate([
             'paciente_id'   => 'required|exists:pacientes,id',
@@ -40,6 +45,11 @@ class RecepcionistaController extends Controller
 
     public function vistaEnviarDoctor($id)
     {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
         $expediente = Expediente::findOrFail($id);
 
         // Traer solo los departamentos de los doctores, sin duplicados
