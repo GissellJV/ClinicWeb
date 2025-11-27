@@ -188,6 +188,7 @@
                         <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#servicios' : url('/#servicios') }}">Información</a>
                     </li>
 
+                    <!-- Doctores -->
                     <li class="nav-item">
                         <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#doctors' : url('/#doctors') }}">Doctores</a>
                     </li>

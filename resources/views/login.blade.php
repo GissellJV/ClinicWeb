@@ -211,6 +211,8 @@
                 <h2 class="login-title" >Iniciar sesión</h2>
             <form action="{{route('login.sesion')}}" method="POST">
                 @csrf
+                <input type="hidden" name="redirect_to" value="{{ request('redirect_to') }}">
+
                 <div class="form-group">
                     <div class="input-group">
             <span class="input-icon">

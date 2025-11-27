@@ -30,6 +30,10 @@ class LoginController extends Controller
             $telefono = $request->input('telefono');
             $password = $request->password;
 
+
+            // Capturar el parámetro de redirección
+            $redirectTo = $request->input('redirect_to');
+
             // Primero intentar login como empleado
             $loginEmpleado = LoginEmpleado::where('telefono', $telefono)->first();
 
@@ -69,8 +73,15 @@ class LoginController extends Controller
                     'tipo_usuario' => 'paciente'
                 ]);
 
-                return redirect()->route('agendarcitas')
-                    ->with('mensaje', '¡Bienvenido ' . $paciente->nombres . '!');
+                $mensaje = '¡Bienvenido ' . $paciente->nombres . '!';
+
+                // Si viene desde el botón de calificar, redirigir a la sección de doctores
+                if ($redirectTo === 'doctors') {
+                    return redirect('/')->with('mensaje', $mensaje)->with('scroll_to', 'doctors');
+                }
+
+                return redirect()->route('agendarcitas')->with('mensaje', $mensaje);
+
             }
 
 
