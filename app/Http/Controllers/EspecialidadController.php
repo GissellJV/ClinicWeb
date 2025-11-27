@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Especialidad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EspecialidadController extends Controller
 {
@@ -26,4 +27,19 @@ class EspecialidadController extends Controller
 
         return redirect()->back()->with('success', 'Especialidad agregada correctamente.');
     }
+
+    public function destroy($id)
+    {
+        $especialidad = Especialidad::findOrFail($id);
+
+        // Eliminar icono si existe
+        if ($especialidad->icono && Storage::exists('public/' . $especialidad->icono)) {
+            Storage::delete('public/' . $especialidad->icono);
+        }
+
+        $especialidad->delete();
+
+        return back()->with('success', 'Especialidad eliminada correctamente.');
+    }
+
 }

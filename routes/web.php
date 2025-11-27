@@ -27,6 +27,7 @@ Route::get('/', [RutasController::class, 'index'])->name('/');
 
 //especialidades
 Route::post('/especialidades/store', [EspecialidadController::class, 'store'])->name('especialidades.store');
+Route::delete('/especialidades/{id}', [EspecialidadController::class, 'destroy'])->name('especialidades.destroy');
 
 
 Route::get('/promociones', [RutasController::class, 'index'])->name('promociones.index');
