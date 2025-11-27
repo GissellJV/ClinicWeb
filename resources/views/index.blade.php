@@ -1805,7 +1805,7 @@
                             @csrf
                             <textarea id="comentarioTextarea" name="comentario" required placeholder="Escribe tu comentario..." rows="3"></textarea>
 
-                            <button type="submit" class="send-comentario-btn">
+                            <button type="submit" class="send-comentario-btn" onclick="enviarComentario(event)">
                                 <i class="bi bi-send-fill"></i> Publicar
                             </button>
                         </form>
@@ -2058,7 +2058,8 @@
             const response = await fetch("{{ route('comentarios.store') }}", {
                 method: "POST",
                 headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "X-Requested-With": "XMLHttpRequest"
                 },
                 body: formData
             });
@@ -2070,13 +2071,8 @@
                 return;
             }
 
-            // Agregar el comentario al carrusel
             agregarTestimonio(data);
-
-            // Limpiar textarea
             document.querySelector("#comentarioTextarea").value = "";
-
-            // Cerrar formulario
             toggleComentario(false);
         }
 
@@ -2091,7 +2087,10 @@
         <p class="testimonial-text">${c.comentario}</p>
 
         <div class="author">
-            <div class="avatar">${c.usuario.substring(0,1).toUpperCase()}${c.usuario.split(" ")[1]?.substring(0,1).toUpperCase() ?? ""}</div>
+            <div class="avatar">
+                ${c.usuario.substring(0,1).toUpperCase()}
+                ${c.usuario.split(" ")[1]?.substring(0,1).toUpperCase() ?? ""}
+            </div>
             <div>
                 <h4>${c.usuario}</h4>
                 <p>${c.tiempo}</p>
@@ -2099,7 +2098,7 @@
         </div>
     `;
 
-            track.prepend(card); // Lo pone al inicio
+            track.prepend(card); // Lo agrega al inicio sin recargar
         }
     </script>
 
