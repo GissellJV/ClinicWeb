@@ -25,7 +25,7 @@ class CalificacionController extends Controller
         // VERIFICAR SESIÓN
         $pacienteId = session('paciente_id');
         if (!$pacienteId) {
-            return back()->with('error', 'No se pudo identificar al paciente.');
+            return redirect('/#doctors')->with('error', 'No se pudo identificar al paciente.');
         }
 
         // VALIDAR
@@ -37,7 +37,7 @@ class CalificacionController extends Controller
 
         // EVITAR DUPLICADO
         if (Calificacion::yaCalificado($validated['doctor_id'], $pacienteId)) {
-            return back()->with('info', 'Ya has calificado a este doctor.');
+            return redirect('/#doctors')->with('info', 'Ya has calificado a este doctor.');
         }
 
         // GUARDAR
@@ -48,7 +48,7 @@ class CalificacionController extends Controller
             'comentario' => $validated['comentario']
         ]);
 
-        return back()->with('success', '¡Gracias por tu calificación!');
+        return redirect('/#doctors')->with('success', '¡Gracias por tu calificación!');
 
     }
 
@@ -65,7 +65,7 @@ class CalificacionController extends Controller
         $pacienteId = $this->obtenerPacienteId();
 
         if ($calificacion->paciente_id != $pacienteId) {
-            return redirect()->back()->with('error', 'No tienes permiso para editar esta calificación.');
+            return redirect('/#doctors')->with('error', 'No tienes permiso para editar esta calificación.');
         }
 
         $validated = $request->validate([
@@ -75,7 +75,7 @@ class CalificacionController extends Controller
 
         $calificacion->update($validated);
 
-        return redirect()->back()->with('success', 'Calificación actualizada correctamente.');
+        return redirect('/#doctors')->with('success', 'Calificación actualizada correctamente.');
     }
 
     public function destroy($id)
@@ -84,11 +84,11 @@ class CalificacionController extends Controller
         $pacienteId = $this->obtenerPacienteId();
 
         if ($calificacion->paciente_id != $pacienteId) {
-            return redirect()->back()->with('error', 'No tienes permiso para eliminar esta calificación.');
+            return redirect('/#doctors')->with('error', 'No tienes permiso para eliminar esta calificación.');
         }
 
         $calificacion->delete();
 
-        return redirect()->back()->with('success', 'Calificación eliminada correctamente.');
+        return redirect('/#doctors')->with('success', 'Calificación eliminada correctamente.');
     }
 }

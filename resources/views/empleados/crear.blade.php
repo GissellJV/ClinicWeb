@@ -308,7 +308,7 @@
                             <div class="input-group-custom">
                                 <span class="input-group-text">+504</span>
                                 <input type="text" class="form-control" id="telefono" name="telefono"
-                                       value="{{ old('telefono') }}" placeholder="0000-0000">
+                                       value="{{ old('telefono') }}" placeholder="00000000">
                             </div>
                             @error('telefono')
                             <small class="text-danger">{{ $message }}</small>

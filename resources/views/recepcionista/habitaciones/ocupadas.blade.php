@@ -7,11 +7,51 @@
         body{
             padding-top: 100px;
         }
+
+        .table thead th{
+            background: #44A08D !important;
+            color: white !important;
+        }
+
+        .btn-register {
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+
+        .btn-cancel {
+            padding: 0.875rem 2rem;
+            background: white;
+            border: 2px solid #dc3545;
+            border-radius: 8px;
+            color: #dc3545;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancel:hover {
+            background: #dc3545;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+        }
     </style>
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h2><i class="fas fa-bed"></i> Habitaciones Ocupadas</h2>
-            <p class="text-muted mb-0">Listado completo de habitaciones con pacientes</p>
+            <h1> Habitaciones Ocupadas</h1>
         </div>
         <div>
             <a href="{{ route('recepcionista.habitaciones.asignar') }}" class="btn text-white me-2" style="background: linear-gradient(135deg, #4ecdc4 0%, #4FC3C3 100%);">
@@ -93,15 +133,46 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <form action="{{ route('recepcionista.habitaciones.liberar', $asignacion->id) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('PUT')
-                                        <button type="submit" class="btn btn-warning btn-sm"
-                                                onclick="return confirm('¿Estás seguro de que deseas liberar la habitación {{ $asignacion->habitacion->numero_habitacion }}? El paciente {{ $asignacion->paciente->nombres }} será dado de alta.')"
-                                                title="Liberar Habitación">
-                                            <i class="fas fa-door-open"></i> Liberar
-                                        </button>
-                                    </form>
+                                    <button type="button" class="btn btn-warning btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalLiberar{{ $asignacion->id }}"
+                                            title="Liberar Habitación">
+                                        <i class="fas fa-door-open"></i> Liberar
+                                    </button>
+
+                                    <!-- Modal de Confirmación -->
+                                    <div class="modal fade" id="modalLiberar{{ $asignacion->id }}" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header text-white" style="background: linear-gradient(135deg, #4ecdc4 0%, #4FC3C3 100%);">
+                                                    <h5 class="modal-title">
+                                                        <i class="fas fa-exclamation-triangle"></i> Confirmar Liberación
+                                                    </h5>
+                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="mb-2">¿Está seguro de que desea liberar la habitación?</p>
+                                                    <div class="alert alert-info mb-0">
+                                                        <strong>Habitación:</strong> {{ $asignacion->habitacion->numero_habitacion }}<br>
+                                                        <strong>Paciente:</strong> {{ $asignacion->paciente->nombres }} {{ $asignacion->paciente->apellidos }}<br>
+                                                        <small class="text-muted">El paciente será dado de alta.</small>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">
+                                                        <i class="fas fa-times"></i> Cancelar
+                                                    </button>
+                                                    <form action="{{ route('recepcionista.habitaciones.liberar', $asignacion->id) }}" method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit" class="btn btn-register" >
+                                                            <i class="fas fa-door-open"></i> Sí, Liberar
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -139,19 +210,4 @@
     @endif
 @endsection
 
-@section('scripts')
-    <script>
-        // Confirmación adicional para liberar habitación
-        document.addEventListener('DOMContentLoaded', function() {
-            const liberarButtons = document.querySelectorAll('form[action*="liberar"] button');
 
-            liberarButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    if (!confirm('⚠️ ¿Está seguro de liberar esta habitación? Esta acción no se puede deshacer.')) {
-                        e.preventDefault();
-                    }
-                });
-            });
-        });
-    </script>
-@endsection

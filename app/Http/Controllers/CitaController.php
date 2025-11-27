@@ -130,7 +130,6 @@ class CitaController extends Controller
 
     //Confirmar cita (recepcionista)
     public function confirmarCita($id)
-
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
             return redirect()->route('inicioSesion')
@@ -143,7 +142,13 @@ class CitaController extends Controller
             return redirect()->back()->with('error', 'La cita no se puede confirmar porque no está pendiente.');
         }
 
-        $doctorNombre = $cita->doctor ? $cita->doctor->nombre : ($cita->doctor_nombre ?? 'Doctor no asignado');
+        // Construir el nombre completo del doctor con el título según el género
+        if ($cita->doctor) {
+            $titulo = $cita->doctor->genero === 'Femenino' ? 'Dra.' : 'Dr.';
+            $doctorNombre = "{$titulo} {$cita->doctor->nombre} {$cita->doctor->apellido}";
+        } else {
+            $doctorNombre = $cita->doctor_nombre ?? 'Doctor no asignado';
+        }
 
         $cita->estado = 'programada';
         $cita->mensaje = "Tu cita con el {$doctorNombre} ha sido confirmada para las {$cita->hora}.";
@@ -158,7 +163,7 @@ class CitaController extends Controller
             'fecha' => [
                 'required',
                 'date',
-                'after_or_equal:today'  // ✅ AGREGAR ESTA VALIDACIÓN
+                'after_or_equal:today'  //
             ],
             'hora' => 'required|string',
             'doctor_id' => 'required|exists:empleados,id',

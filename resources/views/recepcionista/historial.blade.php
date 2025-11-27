@@ -11,9 +11,9 @@
         .card{
             border-radius: 15px;
         }
-        .table thead{
-            background:#44A08DFF;
-            color: white;
+        .table thead th{
+            background: #44A08D !important;
+            color: white !important;
         }
 
         .text-info-emphasis{

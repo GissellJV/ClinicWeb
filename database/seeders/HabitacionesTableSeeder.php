@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 class HabitacionesTableSeeder extends Seeder
 {
-    public function run()
+    /*public function run()
     {
         $now = Carbon::now();
 
@@ -95,4 +95,5 @@ class HabitacionesTableSeeder extends Seeder
 
         $this->command->info('🎉 ¡Proceso de seeding de habitaciones completado!');
     }
+    */
 }

@@ -1474,6 +1474,7 @@
                 <i class="bi bi-chevron-left"></i>
             </button>
 
+            <!-- DOCTOR CON SU CALIFICACION -->
         <!-- Contenedor deslizable -->
         <div class="cards-wrapper"  id="doctorsWrapper" style="display: flex; gap: 2rem; overflow-x: auto; scroll-behavior: smooth; padding: 1rem 0; scrollbar-width: none; -ms-overflow-style: none;">
             @forelse($doctores as $doctor)
@@ -1611,7 +1612,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <a href="{{ route('inicioSesion') }}" class="btn btn-primary">Iniciar Sesión</a>
+                    <a href="{{ route('inicioSesion', ['redirect_to' => 'doctors']) }}" class="btn btn-primary">Iniciar Sesión</a>
                 </div>
             </div>
         </div>
@@ -2102,5 +2103,16 @@
         }
     </script>
 
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @if(session('scroll_to') === 'doctors')
+            setTimeout(function() {
+                const doctorsSection = document.getElementById('doctors');
+                if (doctorsSection) {
+                    doctorsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 500);
+            @endif
+        });
+    </script>
 @endsection

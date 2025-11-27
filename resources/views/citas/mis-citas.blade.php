@@ -7,11 +7,11 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background:whitesmoke;
+            background: whitesmoke;
             display: flex;
         }
 
-        .text-info-emphasis{
+        .text-info-emphasis {
             font-weight: bold;
         }
 
@@ -31,24 +31,6 @@
             border-bottom: 1px solid #e9ecef;
         }
 
-        /* Estilos para las alertas automáticas */
-        .alert-auto-hide {
-            animation: slideDown 0.3s ease;
-            position: relative;
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* Mejorar el espaciado entre botones y hacerlos del mismo tamaño */
         .btn-action-group {
             display: flex;
             gap: 10px;
@@ -64,41 +46,170 @@
             font-weight: 600;
         }
 
-        /* Asegurar que ambos botones tengan el mismo tamaño */
-        .btn-action-group .btn-warning,
-        .btn-action-group .btn-danger {
-            min-height: 38px;
+        /* Estilos mejorados para los modales */
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            border: none;
+            padding: 30px 30px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .modal-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-bottom: 15px;
+            font-size: 35px;
+        }
+
+        .modal-icon-danger {
+            background-color: #fee;
+            color: #dc3545;
+        }
+
+        .modal-icon-warning {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0;
+            color: #333;
+        }
+
+        .modal-body {
+            padding: 20px 30px 30px;
+            text-align: center;
+        }
+
+        .modal-body p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .cita-info-box {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .cita-info-box strong {
+            color: #333;
+            display: inline-block;
+            width: 80px;
+        }
+
+        .modal-footer {
+            border: none;
+            padding: 0 30px 30px;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .modal-footer .btn {
+            min-width: 120px;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+        }
+
+        .btn-modal-cancel {
+            background-color: #e9ecef;
+            color: #666;
+        }
+
+        .btn-modal-cancel:hover {
+            background-color: #d3d6d9;
+        }
+
+        .btn-modal-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-modal-danger:hover {
+            background-color: #bb2d3b;
+        }
+
+        .btn-modal-warning {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+
+        .btn-modal-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+        }
+
+        .form-control:focus {
+            border-color: #ffc107;
+            box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            text-align: left;
+            display: block;
+        }
+
+        .btn-close {
+            position: absolute;
+            right: 15px;
+            top: 15px;
         }
     </style>
+
     <div class="container mt-5">
         <h1 class="text-center text-info-emphasis">Mis Citas</h1>
 
         @if(session('success'))
-            <div class="alert alert-success alert-auto-hide" id="autoHideAlert" data-auto-hide="true">
+            <div class="alert alert-success alert-auto-hide" data-auto-hide="true">
                 {{ session('success') }}
             </div>
         @endif
 
         @if(session('error'))
-            <div class="alert alert-danger alert-auto-hide" id="autoHideAlert" data-auto-hide="true">
+            <div class="alert alert-danger alert-auto-hide" data-auto-hide="true">
                 {{ session('error') }}
             </div>
         @endif
+
         <div class="row">
             @forelse($citas as $cita)
                 <div class="col-md-6 mb-4">
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title mb-3">
-                                {{ $cita->doctor_nombre ?? 'Doctor no asignado' }}
+                                @if($cita->doctor)
+                                    {{ $cita->doctor->genero === 'Femenino' ? 'Dra.' : 'Dr.' }} {{ $cita->doctor->nombre }} {{ $cita->doctor->apellido ?? '' }}
+                                @else
+                                    {{ $cita->doctor_nombre ?? 'No Definido' }}
+                                @endif
                             </h5>
 
-
-                            <ul class="list-group  mb-3">
-
+                            <ul class="list-group mb-3">
                                 <li class="list-group-item">
                                     <strong>Paciente:</strong> {{ session('paciente_nombre') ?? 'No definido' }}
                                 </li>
@@ -118,164 +229,180 @@
                                 <li class="list-group-item">
                                     <strong>Estado:</strong>
                                     <span class="badge bg-{{ $cita->estado == 'programada' ? 'success' : ($cita->estado == 'cancelada' ? 'danger' : 'warning') }}">
-                                        {{ ucfirst($cita->estado) }}
-                                    </span>
+                                    {{ ucfirst($cita->estado) }}
+                                </span>
                                 </li>
-
                             </ul>
+
                             @if($cita->mensaje)
                                 <div class="alert alert-info mt-2">{{ $cita->mensaje }}</div>
                             @endif
 
                             @if($cita->estado == 'programada')
                                 <div class="btn-action-group mt-3">
-                                    <button type="button" class="btn btn-warning btn-sm" onclick="confirmarReprogramacion({{ $cita->id }}, '{{ $cita->doctor_nombre }}', '{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}', '{{ $cita->hora }}')">
+
+                                    <!-- BOTÓN REPROGRAMAR -->
+                                    <button type="button" class="btn btn-warning btn-sm"
+                                            onclick="confirmarReprogramacion(
+                                            {{ $cita->id }},
+                                            '{{ $cita->doctor_nombre }}',
+                                            '{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}',
+                                            '{{ $cita->hora }}'
+                                        )">
                                         Reprogramar
                                     </button>
-                                    <!-- Formulario individual para cada cita -->
-                                    <form action="{{ route('citas.cancelar', $cita->id) }}" method="POST" class="d-inline" id="formCancelar{{ $cita->id }}">
+
+                                    <!-- BOTÓN CANCELAR -->
+                                    <form action="{{ route('citas.cancelar', $cita->id) }}" method="POST" id="formCancelar{{ $cita->id }}" class="d-inline">
                                         @csrf
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="confirmarCancelacion({{ $cita->id }}, '{{ $cita->doctor_nombre }}', '{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}', '{{ $cita->hora }}')">
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                                onclick="confirmarCancelacion(
+                                                {{ $cita->id }},
+                                                '{{ $cita->doctor_nombre }}',
+                                                '{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}',
+                                                '{{ $cita->hora }}'
+                                            )">
                                             Cancelar
                                         </button>
                                     </form>
+
                                 </div>
                             @endif
                         </div>
                     </div>
                 </div>
+
+                <!-- FORMULARIO OCULTO PARA REPROGRAMAR -->
                 @if($cita->estado == 'programada')
-                    <!-- Formulario oculto para reprogramar -->
                     <form action="{{ route('citas.reprogramar', $cita->id) }}" method="POST" id="formReprogramar{{ $cita->id }}" style="display: none;">
                         @csrf
                         <input type="hidden" name="nueva_fecha" id="hidden_nueva_fecha_{{ $cita->id }}">
                         <input type="hidden" name="nueva_hora" id="hidden_nueva_hora_{{ $cita->id }}">
                     </form>
                 @endif
+
             @empty
                 <div class="col-12">
-                    <div class="alert alert-info">
-                        No tienes citas programadas.
-                    </div>
+                    <div class="alert alert-info">No tienes citas programadas.</div>
                 </div>
             @endforelse
 
-                <div class="mt-3">
-                    {{ $citas->links() }}
-                </div>
+            <div class="mt-3">
+                {{ $citas->links() }}
+            </div>
+
         </div>
     </div>
-    <script>
-        function confirmarCancelacion(citaId, doctorNombre, fecha, hora) {
-            showConfirmModal(
-                '¿Cancelar Cita?',
-                `¿Estás seguro de que deseas cancelar tu cita con el Dr. ${doctorNombre} programada para el ${fecha} a las ${hora}? Esta acción no se puede deshacer.`,
-                'Sí, cancelar cita',
-                function() {
-                    // Enviar el formulario específico de esta cita
-                    document.getElementById('formCancelar' + citaId).submit();
-                }
-            );
-        }
 
-        function confirmarReprogramacion(citaId, doctorNombre, fechaActual, horaActual) {
-            const formHTML = `
-                <div class="modal-reprogramar-form-group">
-                    <label class="modal-reprogramar-label">Cita Actual</label>
-                    <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 15px;">
-                        <strong>Dr. ${doctorNombre}</strong><br>
-                        <small>Fecha: ${fechaActual} | Hora: ${horaActual}</small>
+    <div class="modal fade" id="modalCancelar" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                <div class="modal-header">
+                    <div class="modal-icon modal-icon-danger">
+
                     </div>
+                    <h5 class="modal-title">¿Cancelar Cita?</h5>
                 </div>
-                <div class="modal-reprogramar-form-group">
-                    <label for="nueva_fecha_${citaId}" class="modal-reprogramar-label">Nueva Fecha</label>
-                    <input type="date"
-                           class="modal-reprogramar-input"
-                           id="nueva_fecha_${citaId}"
-                           name="nueva_fecha"
-                           required
-                           min="{{ date('Y-m-d') }}"
-                           onchange="validarFechaHora(${citaId})">
+
+                <div class="modal-body">
+                    <p>¿Estás seguro de que deseas cancelar esta cita médica?</p>
+
+                    <div class="cita-info-box" id="modalCancelarTexto"></div>
+
+                    <p class="text-muted mb-0" style="font-size: 13px;">Esta acción no se puede deshacer</p>
                 </div>
-                <div class="modal-reprogramar-form-group">
-                    <label for="nueva_hora_${citaId}" class="modal-reprogramar-label">Nueva Hora</label>
-                    <input type="time"
-                           class="modal-reprogramar-input"
-                           id="nueva_hora_${citaId}"
-                           name="nueva_hora"
-                           required
-                           onchange="validarFechaHora(${citaId})">
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-modal-danger" id="btnConfirmarCancelar">Sí, cancelar cita</button>
                 </div>
-                <div id="error-message-${citaId}" style="color: #e74c3c; font-size: 14px; margin-top: 10px; display: none;"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalReprogramar" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                <div class="modal-header">
+                    <div class="modal-icon modal-icon-warning">
+
+                    </div>
+                    <h5 class="modal-title">Reprogramar Cita</h5>
+                </div>
+
+                <div class="modal-body" id="modalReprogramarContenido"></div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-modal-warning" id="btnConfirmarReprogramar">Guardar cambios</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function confirmarCancelacion(id, doctor, fecha, hora) {
+
+            document.getElementById('modalCancelarTexto').innerHTML = `
+                <strong>Doctor:</strong> ${doctor}<br>
+                <strong>Fecha:</strong> ${fecha}<br>
+                <strong>Hora:</strong> ${hora}
             `;
 
-            showReprogramarModal(
-                'Reprogramar Cita',
-                formHTML,
-                function() {
-                    // Validar antes de enviar
-                    if (validarFechaHora(citaId)) {
-                        document.getElementById('formReprogramar' + citaId).submit();
-                    }
-                }
-            );
+            document.getElementById('btnConfirmarCancelar').onclick = function () {
+                document.getElementById('formCancelar' + id).submit();
+            };
+
+            new bootstrap.Modal(document.getElementById('modalCancelar')).show();
         }
 
-        function validarFechaHora(citaId) {
-            const fechaInput = document.getElementById('nueva_fecha_' + citaId);
-            const horaInput = document.getElementById('nueva_hora_' + citaId);
-            const errorDiv = document.getElementById('error-message-' + citaId);
 
-            const fechaSeleccionada = new Date(fechaInput.value);
-            const hoy = new Date();
-            hoy.setHours(0, 0, 0, 0);
+        function confirmarReprogramacion(id, doctor, fecha, hora) {
 
-            if (fechaSeleccionada < hoy) {
-                errorDiv.textContent = 'No puedes seleccionar una fecha pasada.';
-                errorDiv.style.display = 'block';
-                return false;
-            }
+            document.getElementById('modalReprogramarContenido').innerHTML = `
+                <p>Selecciona la nueva fecha y hora para tu cita</p>
 
-            if (!fechaInput.value || !horaInput.value) {
-                errorDiv.textContent = 'Por favor, completa ambos campos.';
-                errorDiv.style.display = 'block';
-                return false;
-            }
+                <div class="cita-info-box mb-3">
+                    <strong>Doctor:</strong> ${doctor}<br>
+                    <strong>Fecha actual:</strong> ${fecha}<br>
+                    <strong>Hora actual:</strong> ${hora}
+                </div>
 
-            errorDiv.style.display = 'none';
-            return true;
-        }
+                <div class="mb-3">
+                    <label class="form-label">Nueva Fecha</label>
+                    <input type="date" class="form-control" id="modal_fecha_${id}" required min="{{ date('Y-m-d') }}">
+                </div>
 
-        // Auto-ocultar alertas después de 10 segundos
-        document.addEventListener('DOMContentLoaded', function() {
-            // Ocultar alertas automáticamente
-            setTimeout(() => {
-                const alerts = document.querySelectorAll('.alert-auto-hide');
-                alerts.forEach(alert => {
-                    if (alert.getAttribute('data-auto-hide') === 'true') {
-                        alert.style.opacity = '0';
-                        alert.style.transition = 'opacity 0.5s ease';
-                        setTimeout(() => {
-                            alert.style.display = 'none';
-                        }, 500);
-                    }
-                });
-            }, 10000); // 10 segundos
-        });
+                <div class="mb-3">
+                    <label class="form-label">Nueva Hora</label>
+                    <input type="time" class="form-control" id="modal_hora_${id}" required>
+                </div>
+            `;
 
-        // Sincronizar los campos del formulario oculto con los del modal
-        document.addEventListener('input', function(e) {
-            if (e.target.classList.contains('modal-reprogramar-input')) {
-                const citaId = e.target.id.split('_').pop();
-                const hiddenFecha = document.getElementById('hidden_nueva_fecha_' + citaId);
-                const hiddenHora = document.getElementById('hidden_nueva_hora_' + citaId);
+            document.getElementById('btnConfirmarReprogramar').onclick = function () {
 
-                if (e.target.name === 'nueva_fecha') {
-                    hiddenFecha.value = e.target.value;
-                } else if (e.target.name === 'nueva_hora') {
-                    hiddenHora.value = e.target.value;
+                let nuevaFecha = document.getElementById('modal_fecha_' + id).value;
+                let nuevaHora = document.getElementById('modal_hora_' + id).value;
+
+                if (!nuevaFecha || !nuevaHora) {
+                    return;
                 }
-            }
-        });
+
+                document.getElementById('hidden_nueva_fecha_' + id).value = nuevaFecha;
+                document.getElementById('hidden_nueva_hora_' + id).value = nuevaHora;
+
+                document.getElementById('formReprogramar' + id).submit();
+            };
+
+            new bootstrap.Modal(document.getElementById('modalReprogramar')).show();
+        }
     </script>
+
 @endsection
