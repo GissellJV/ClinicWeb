@@ -24,7 +24,14 @@
 @extends($layout)
 @section('contenido')
 <style>
-    .card-header-custom {
+    .ver-expediente .container-fluid {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2.5rem;
+        border-radius: 12px;
+
+    }
+   .ver-expediente .card-header-custom {
         display: flex;
         align-items: center;
         gap: 0.75rem;
@@ -36,7 +43,7 @@
     }
 
     /* Contenedor izquierdo con imagen y título */
-    .card-header-custom > div:first-child,
+   .ver-expediente .card-header-custom > div:first-child,
     .card-header-custom > img:first-child {
         display: flex;
         align-items: center;
@@ -44,7 +51,7 @@
     }
 
     /* Botones */
-    .btn-actualizar {
+   .ver-expediente .btn-actualizar {
         display: inline-block;
         padding: 10px 18px;
         border-radius: 6px;
@@ -58,12 +65,12 @@
         border: 2px solid #4ecdc4;
         transition: 0.3s;
     }
-    .btn-actualizar:hover {
+   .ver-expediente .btn-actualizar:hover {
         background-color: #3eb2aa;
         color: white;
     }
 
-    .btn-guardar {
+   .ver-expediente .btn-guardar {
         display: inline-block;
         padding: 10px 18px;
         border-radius: 6px;
@@ -78,13 +85,13 @@
         transition: 0.3s;
     }
 
-    .btn-guardar:hover {
+   .ver-expediente .btn-guardar:hover {
         background-color: #3eb2aa;
         color: white;
     }
 
     /* Alinear botones a la derecha */
-    .text-end {
+  .ver-expediente  .text-end {
         display: flex;
         justify-content: flex-end;
         gap: 10px;
@@ -103,7 +110,7 @@
     }
 
     /* Inputs y textarea deshabilitados con estilo claro */
-    input:disabled[type="number"].form-control,
+   input:disabled[type="number"].form-control,
     input:disabled[type="text"].form-control,
     select:disabled.form-control,
     textarea:disabled.form-control {
@@ -119,10 +126,10 @@
         border: 1px solid #4ecdc4;
     }
 
-    input, textarea {
+     input, textarea {
         transition: 0.3s;
     }
-    input:enabled, textarea:enabled {
+   input:enabled, textarea:enabled {
         background-color: #ffffff;
         border: 1px solid #4ecdc4;
     }
@@ -139,7 +146,7 @@
         --primary-lighter: #d4f4f1;
     }
 
-    body {
+  .ver-expediente  .body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background:whitesmoke;
         min-height: 100vh;
@@ -147,21 +154,21 @@
 
     }
 
-    .navbar-brand-top i {
+   .ver-expediente .navbar-brand-top i {
         font-size: 1.75rem;
     }
 
 
-    .welcome-banner strong {
+   .ver-expediente .welcome-banner strong {
         color: #44a08d;
         font-weight: 600;
     }
 
-    .welcome-banner span {
+  .ver-expediente  .welcome-banner span {
         color: #333;
     }
 
-    .menu-divider select {
+  .ver-expediente  .menu-divider select {
         width: 100%;
         padding: 0.625rem;
         border: 1px solid #e0e0e0;
@@ -170,13 +177,13 @@
         background: white;
     }
 
-    .btn-logout:hover {
+   .ver-expediente .btn-logout:hover {
         background: #dc3545;
         color: white;
     }
 
 
-    .search-box input {
+  .ver-expediente  .search-box input {
         width: 100%;
         padding: 0.75rem 1rem;
         border: 1px solid #e0e0e0;
@@ -184,7 +191,7 @@
         margin-bottom: 0.75rem;
     }
 
-    .search-box .btn-search {
+   .ver-expediente .search-box .btn-search {
         width: 100%;
         padding: 0.75rem;
         background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
@@ -196,12 +203,12 @@
         transition: all 0.3s ease;
     }
 
-    .search-box .btn-search:hover {
+   .ver-expediente .search-box .btn-search:hover {
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
     }
 
-    h1 {
+   .ver-expediente  h1 {
         font-size: 2rem;
         font-weight: 700;
         color: #333;
@@ -209,7 +216,7 @@
     }
 
     /* Tabs */
-    .tabs {
+   .ver-expediente .tabs {
         display: flex;
         background-color: #f8f9fa;
         border-bottom: 2px solid #e0e0e0;
@@ -218,7 +225,7 @@
         overflow: hidden;
     }
 
-    .tab {
+   .ver-expediente .tab {
         padding: 15px 25px;
         cursor: pointer;
         color: #666;
@@ -231,18 +238,18 @@
         text-align: center;
     }
 
-    .tab:hover {
+    .ver-expediente  .tab:hover {
         background-color: #e9ecef;
     }
 
-    .tab.active {
+    .ver-expediente .tab.active {
         color: #4ecdc4;
         border-bottom-color: #4ecdc4;
         background-color: white;
     }
 
     /* Card Body */
-    .card-body {
+    .ver-expediente .card-body {
         background: white;
         border-radius: 0 0 12px 12px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
@@ -250,16 +257,16 @@
     }
 
     /* Tab Content */
-    .tab-content {
+   .ver-expediente .tab-content {
         display: none;
     }
 
-    .tab-content.active {
+   .ver-expediente .tab-content.active {
         display: block;
     }
 
     /* Card Header Custom */
-    .card-header-custom {
+   .ver-expediente .card-header-custom {
         display: flex;
         align-items: center;
         gap: 0.75rem;
@@ -268,12 +275,12 @@
         border-bottom: 2px solid #e0e0e0;
     }
 
-    .card-header-custom i {
+    .ver-expediente.card-header-custom i {
         font-size: 1.5rem;
         color: #4ecdc4;
     }
 
-    .card-header-custom h5 {
+   .ver-expediente .card-header-custom h5 {
         margin: 0;
         font-size: 1.1rem;
         font-weight: 600;
@@ -281,18 +288,18 @@
     }
 
     /* Table Styling */
-    .info-table {
+   .ver-expediente .info-table {
         width: 100%;
     }
 
-    .info-table tr {
+   .ver-expediente .info-table tr {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 2rem;
         margin-bottom: 1.5rem;
     }
 
-    .info-item {
+    .ver-expediente .info-item {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
@@ -304,7 +311,7 @@
         color: #555;
     }
 
-    .info-value {
+   .info-value {
         padding: 0.875rem 1rem;
         background: #f8f9fa;
         border-radius: 8px;
@@ -315,53 +322,53 @@
         align-items: center;
     }
 
-    .info-value:empty::before {
+   .info-value:empty::before {
         content: '\00a0';
     }
 
     /* Responsive */
     @media (max-width: 1200px) {
-        .sidebar {
+      .sidebar {
             width: 320px;
         }
 
-        .main-content {
+      .ver-expediente  .main-content {
             margin-left: 320px;
             width: calc(100% - 320px);
         }
     }
 
     @media (max-width: 992px) {
-        .info-table tr {
+       .ver-expediente .info-table tr {
             grid-template-columns: 1fr;
             gap: 1rem;
         }
     }
 
     @media (max-width: 768px) {
-        .tabs {
+       .ver-expediente .tabs {
             overflow-x: auto;
             flex-wrap: nowrap;
         }
 
-        .tab {
+       .ver-expediente .tab {
             white-space: nowrap;
             padding: 12px 20px;
             font-size: 12px;
             flex: 0 0 auto;
         }
 
-        h1 {
+      .ver-expediente  h1 {
             font-size: 1.5rem;
             font-weight: bold;
         }
 
-        .card-body {
+       .ver-expediente .card-body {
             padding: 1.5rem;
         }
     }
 </style>
-
+<div class="ver-expediente">
 <div class="container-fluid p-0" style="margin-top: 100px;">
     <div class="d-flex justify-content-between align-items-center">
 
@@ -602,7 +609,7 @@
     </div>
 </div>
 </div>
-
+</div>
 <br><br>
 
 <script>

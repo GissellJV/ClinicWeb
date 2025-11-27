@@ -17,6 +17,11 @@ class EnfermeriaController extends Controller
 
     public function rolTurno(Request $request)
     {
+        if (!session('cargo') || session('cargo') != 'Enfermero') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Enfermero');
+        }
+
         // Mes y año actual o enviados desde navegación
         $mes = $request->mes ?? Carbon::now()->month;
         $anio = $request->anio ?? Carbon::now()->year;

@@ -8,6 +8,7 @@ class EnviarDoctorController extends Controller
 {
     public function enviarExpedienteDoctor(Request $request, $expedienteId)
     {
+
         $request->validate([
             'empleado_id' => 'required|exists:empleados,id',
         ]);

@@ -64,6 +64,10 @@ class PacienteController extends Controller
 
     public function medicamentosPorPaciente()
     {
+        if (!session('cargo') || session('cargo') != 'Enfermero') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Enfermero');
+        }
         $pacientes = Paciente::with([
             'medicamentos',
             'asignacionesHabitacion' => function($query) {

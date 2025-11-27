@@ -10,6 +10,11 @@ class PromocionController extends Controller
     // Mostrar vista promociones
     public function promociones()
     {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
         $promociones = Promocion::all();
         return view('recepcionista.promociones', compact('promociones'));
     }
