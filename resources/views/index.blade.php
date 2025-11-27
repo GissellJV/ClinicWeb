@@ -658,6 +658,40 @@
             box-shadow: 0 8px 25px rgba(0, 217, 192, 0.4);
         }
 
+        .doctor-card {
+            min-width: 90%; /* Móvil: 1 card por vista */
+        }
+
+        /* Tablet: 2 por vista */
+        @media (min-width: 768px) {
+            .doctor-card {
+                min-width: 45%;
+            }
+        }
+
+        /* Móvil: 1 card completa, sin cortes */
+        @media (max-width: 768px) {
+            .doctor-card {
+                min-width: 100% !important; /* Ocupa toda la pantalla */
+                max-width: 100% !important;
+            }
+
+            .cards-wrapper {
+                padding-right: 0 !important; /* evita que sobre espacio */
+                gap: 1rem !important; /* reduce separación */
+            }
+        }
+
+
+        /* PC: 3 por vista */
+        @media (min-width: 1024px) {
+            .doctor-card {
+                min-width: 30%;
+            }
+        }
+
+
+
         /* TESTIMONIALS */
         .testimonials-grid {
             display: grid;
@@ -878,15 +912,15 @@
 
         /* Mantener el fondo oscuro */
         .promo-section {
-            background: #0f0f0f;      /* <-- FONDO NEGRO COMO ANTES */
+            background: #0f0f0f;
             padding: 50px 0;
         }
 
         /* Centrado y tamaño equilibrado */
         .promo-carousel {
-            max-width: 900px;        /* tamaño correcto */
+            max-width: 900px;
             width: 100%;
-            margin: 0 auto;          /* centrado */
+            margin: 0 auto;
         }
 
         /* Card del carrusel */
@@ -894,7 +928,7 @@
             position: relative;
             border-radius: 20px;
             overflow: hidden;
-            background: #101010;      /* fondo interno */
+            background: #101010;
             border: 4px solid transparent;
             transition: border-color 0.4s ease;
             box-shadow: 0 5px 20px rgba(0,0,0,0.35);
@@ -1104,7 +1138,7 @@
         }
         .service-icon {
             font-size: 2.4rem;
-            color: #4ecdc4; /* tu color característico */
+            color: #4ecdc4;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -1413,6 +1447,51 @@
             padding: 0;
         }
 
+
+        @media (max-width: 768px) {
+            .slider-arrow {
+                display: none;
+            }
+        }
+        /* ----- HERO RESPONSIVE ----- */
+        @media (max-width: 768px) {
+            .hero {
+                height: auto;            /* Se adapta al contenido */
+                min-height: auto;        /* Elimina el tamaño fijo */
+                padding: 80px 20px 60px; /* Espaciado correcto */
+            }
+
+            .hero-content {
+                padding: 20px 10px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;       /* Reduce tamaño del título */
+                line-height: 1.2;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+                margin-bottom: 30px;
+            }
+
+            .hero-cta .btn {
+                width: 100%;
+                text-align: center;
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
+
+            .stats {
+                margin-top: 30px;
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .stat-number {
+                font-size: 2.2rem;
+            }
+        }
     </style>
 
     <!-- HERO -->
@@ -1641,7 +1720,7 @@
             <p class="section-description">Profesionales de la salud comprometidos con tu bienestar</p>
         </div>
 
-        <div class="slider-container" style="max-width: 1800px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 15px;">
+        <div class="slider-container" style="max-width: 2000px; margin: 0 auto; padding: 0 6px; display: flex; align-items: center; gap: 2px;">
             <!-- Botón Izquierda -->
             <button class="slider-arrow left" onclick="scrollDoctors(-1)">
                 <i class="bi bi-chevron-left"></i>
@@ -1908,6 +1987,7 @@
             }
         });
     </script>
+
     <!-- TESTIMONIALS -->
     <section id="comentarios" class="testimonials-section">
 
