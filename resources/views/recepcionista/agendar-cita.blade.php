@@ -133,6 +133,10 @@
         small.text-danger {
             font-size: 0.875em;
         }
+        .text-info-emphasis {
+
+            font-weight: bold;
+        }
     </style>
 <div class="formulario">
 

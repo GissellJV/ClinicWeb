@@ -45,6 +45,7 @@
             font-size: 1.75rem;
             font-weight: bold;
 
+
             color: #4ecdc4;
             margin-bottom: 2rem;
             background: transparent;
@@ -190,10 +191,7 @@
 
 
     </style>
-
-
-
-    <div class="login-wrapper">
+    <div class="login-wrapper" style=" margin-top: -3%">
         <div class="login-container">
             <div class="d-flex justify-content-center">
                 <!--LOGO DE LA CLINICA-->

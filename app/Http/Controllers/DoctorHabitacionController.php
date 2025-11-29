@@ -61,6 +61,6 @@ class DoctorHabitacionController extends Controller
             ->orderBy('habitacion_id')
             ->get();
 
-        return view('doctor.habitaciones.mis-pacientes', compact('asignaciones'));
+        return view('doctor.habitaciones.pacientes-hospitalizados', compact('asignaciones'));
     }
 }

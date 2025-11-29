@@ -7,6 +7,10 @@
         body{
             padding-top: 70px;
         }
+        .text-info-emphasis {
+
+            font-weight: bold;
+        }
     </style>
     <div class="formulario mt-4">
         <div class="row justify-content-center">
