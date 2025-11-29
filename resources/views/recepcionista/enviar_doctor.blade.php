@@ -53,7 +53,7 @@
                         data.forEach(doctor => {
                             const option = document.createElement('option');
                             option.value = doctor.id;
-                            option.textContent = doctor.nombre + ' ' + doctor.apellido + ` (${doctor.departamento})`;
+                            option.textContent = `${doctor.genero === 'Femenino' ? 'Dra.' : 'Dr.'} ${doctor.nombre} ${doctor.apellido || ''}`;
                             doctorSelect.appendChild(option);
                         });
                     })
