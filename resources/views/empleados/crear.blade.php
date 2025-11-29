@@ -235,7 +235,9 @@
 
     </style>
     <div class="formulario">
+        <br>
             <h1 class="text-center text-info-emphasis">Registrar Nuevo Empleado</h1>
+        <br><br>
     <div class="form-container" style="margin: 10px auto; max-width: 900px">
 
             <div class="card-body-empleado">
@@ -269,25 +271,27 @@
                         </div>
                     </div>
 
+
+
                     <!-- Genero y Numero de identidad -->
                     <div class="form-row-custom">
-                        <div class="form-group-custom">
-                        <label for="genero">Género *</label>
-                        <div style="display: flex; gap: 50px; align-items: center;">
-                            <label class="form-check" style="display: inline-flex; align-items: center;">
-                                <input class="form-check-input" type="radio" name="genero" id="femenino"
-                                       value="Femenino" {{ old('genero') == 'Femenino' ? 'checked' : '' }}>
-                                <span>Femenino</span>
-                            </label>
-                            <label class="form-check" style="display: inline-flex; align-items: center;">
-                                <input class="form-check-input" type="radio" name="genero" id="masculino"
-                                       value="Masculino" {{ old('genero') == 'Masculino' ? 'checked' : '' }}>
-                                <span>Masculino</span>
-                            </label>
-                        </div>
-                        @error('genero')
-                        <small class="text-danger">{{ $message }}</small>
-                        @enderror
+
+                            <div class="form-group-custom">
+
+                                <label for="genero">Género *</label>
+                                <select class="form-control" name="genero" id="genero">
+                                    <option value="">Seleccione un género</option>
+                                    <option value="Femenino" {{ old('genero') == 'Femenino' ? 'selected' : '' }}>Femenino</option>
+                                    <option value="Masculino" {{ old('genero') == 'Masculino' ? 'selected' : '' }}>Masculino</option>
+                                </select>
+
+                                @error('genero')
+
+                                <small class="text-danger">{{ $message }}</small>
+
+                                @enderror
+
+
                     </div>
 
                         <div class="form-group-custom">

@@ -18,7 +18,7 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
             padding: 2.5rem;
             margin: 0 auto;
-            border-top: 5px solid #4ecdc4;
+
             position: relative;
         }
 
@@ -145,7 +145,9 @@
         }
 
         .table thead th {
-            background: #4ecdc4 ;
+            border-bottom: 2px solid #e0e0e0;
+            color: white !important;
+            background: #4ecdc4 !important;
         }
 
         .table.table-hover tbody tr:hover,
@@ -435,8 +437,9 @@
     </style>
 
     <br><br><br>
-    <h1 class="text-center text-info-emphasis">Turnos de Doctores</h1>
+
     <div class="container py-4 formulario">
+        <h1 class="text-info-emphasis">Turnos de Doctores</h1>
 
         <div class="register-section">
             <div class="form-container">

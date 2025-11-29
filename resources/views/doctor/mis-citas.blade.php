@@ -13,31 +13,31 @@
         }
 
         body {
-            flex: 1; /* para que el body ocupe toda la altura */
+            flex: 1;
         }
 
         .main-container {
             display: flex;
             flex-direction: column;
-            flex: 1; /* que crezca */
-            width: 100%; /* todo el ancho */
+            flex: 1;
+            width: 100%;
             box-sizing: border-box;
-            padding: 0; /* quitar padding extra */
+            padding: 0;
         }
 
         .citas-container {
-            flex: 1; /* ocupa el espacio disponible */
-            margin: 100px auto 0 auto; /* centrado horizontal, margen superior */
-            max-width: 1200px; /* opcional: limitar ancho si quieres */
-            width: 100%; /* ocupa todo el ancho disponible dentro del max-width */
-            padding: 0 20px; /* opcional, para dar un poquito de margen interno */
+            flex: 1;
+            margin: 100px auto 0 auto;
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 20px;
             box-sizing: border-box;
         }
 
         footer {
-            width: 100%; /* ocupa todo el ancho */
-            margin-top: auto; /* asegura que se quede abajo */
-            padding: 20px 0; /* opcional: ajustar espacio interno */
+            width: 100%;
+            margin-top: auto;
+            padding: 20px 0;
         }
 
         .header {
@@ -56,24 +56,47 @@
             font-size: 1.1rem;
         }
 
+        /* Cards de Estadísticas - Estilo Mejorado */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 40px;
         }
 
         .stat-card {
             background: white;
-            border-radius: 16px;
+            border-radius: 15px;
             padding: 25px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid;
+            transition: all 0.3s;
+            text-align: left;
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+
+        .stat-card.total {
+            border-left-color: #3498db;
+            background: linear-gradient(135deg, #fff 0%, #e3f2fd 100%);
+        }
+
+        .stat-card.hoy {
+            border-left-color: #4ECDC4;
+            background: linear-gradient(135deg, #fff 0%, #e5f9f7 100%);
+        }
+
+        .stat-card.pendientes {
+            border-left-color: #f39c12;
+            background: linear-gradient(135deg, #fff 0%, #fff4e5 100%);
+        }
+
+        .stat-card.completadas {
+            border-left-color: #2ecc71;
+            background: linear-gradient(135deg, #fff 0%, #e8f8f0 100%);
         }
 
         .stat-card i {
@@ -81,25 +104,48 @@
             margin-bottom: 15px;
         }
 
-        .stat-card.total i { color: #3498db; }
-        .stat-card.hoy i { color: #4ECDC4; }
-        .stat-card.pendientes i { color: #f39c12; }
-        .stat-card.completadas i { color: #2ecc71; }
+        .stat-card.total i {
+            color: #3498db;
+        }
+
+        .stat-card.hoy i {
+            color: #4ECDC4;
+        }
+
+        .stat-card.pendientes i {
+            color: #f39c12;
+        }
+
+        .stat-card.completadas i {
+            color: #2ecc71;
+        }
 
         .stat-number {
             font-size: 2.5rem;
-            font-weight: bold;
+            font-weight: 700;
             margin-bottom: 5px;
         }
 
-        .stat-card.total .stat-number { color: #3498db; }
-        .stat-card.hoy .stat-number { color: #4ECDC4; }
-        .stat-card.pendientes .stat-number { color: #f39c12; }
-        .stat-card.completadas .stat-number { color: #2ecc71; }
+        .stat-card.total .stat-number {
+            color: #3498db;
+        }
+
+        .stat-card.hoy .stat-number {
+            color: #4ECDC4;
+        }
+
+        .stat-card.pendientes .stat-number {
+            color: #f39c12;
+        }
+
+        .stat-card.completadas .stat-number {
+            color: #2ecc71;
+        }
 
         .stat-label {
-            color: #7f8c8d;
-            font-size: 0.95rem;
+            font-size: 14px;
+            color: #666;
+            font-weight: 600;
         }
 
         .filters-card {
@@ -366,54 +412,58 @@
             .filters-row {
                 grid-template-columns: 1fr;
             }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .table thead th {
-            background: #4ecdc4 ;
-        }
-
-        .table.table-hover tbody tr:hover,
-        .table.table-hover tbody tr:hover td {
-            background: rgb(222, 251, 249);
-            color: rgba(28, 27, 27, 0.95);
-        }
-
-        .text-info-emphasis{
+        .text-info-emphasis {
             font-weight: bold;
         }
     </style>
 
     <div class="citas-container">
         <!-- Header -->
+        <br><br>
         <div class="header">
-            <h1 class="text-center text-info-emphasis">Mis Citas Programadas</h1>
-            <p>Gestiona y revisa tus citas médicas</p>
+            <h2 class="text-center text-info-emphasis">
+                Mis Citas Programadas
+            </h2>
         </div>
 
         <!-- Estadísticas -->
         <div class="stats-grid">
             <div class="stat-card total">
-                <i class="fas fa-calendar"></i>
+
                 <div class="stat-number">{{ $citas->total() }}</div>
                 <div class="stat-label">Total de Citas</div>
+                <small style="color: #666;">Registradas</small>
+
             </div>
 
             <div class="stat-card hoy">
-                <i class="fas fa-calendar-day"></i>
+
                 <div class="stat-number">{{ $citasHoy }}</div>
                 <div class="stat-label">Citas de Hoy</div>
+                <small style="color: #666;">Programadas para hoy</small>
+
             </div>
 
             <div class="stat-card pendientes">
-                <i class="fas fa-clock"></i>
+
                 <div class="stat-number">{{ $citas->where('estado', 'programada')->count() + $citas->where('estado', 'pendiente')->count() }}</div>
                 <div class="stat-label">Pendientes</div>
+                <small style="color: #666;">En espera de atención</small>
+
             </div>
 
             <div class="stat-card completadas">
-                <i class="fas fa-check-circle"></i>
+
                 <div class="stat-number">{{ $citas->where('estado', 'completada')->count() }}</div>
                 <div class="stat-label">Completadas</div>
+                <small style="color: #666;">Atenciones Finalizadas</small>
+
             </div>
         </div>
 
@@ -476,8 +526,8 @@
                                 <p>Paciente ID: {{ $cita->paciente_id }}</p>
                             </div>
                             <span class="badge badge-{{ $cita->estado }}">
-                        {{ ucfirst($cita->estado) }}
-                    </span>
+                                {{ ucfirst($cita->estado) }}
+                            </span>
                         </div>
 
                         <div class="cita-detalles">

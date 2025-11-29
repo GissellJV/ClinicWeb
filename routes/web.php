@@ -164,9 +164,9 @@ Route::prefix('recepcionista')->name('recepcionista.')->group(function () {
 
 // HABITACIONES - DOCTOR
 Route::prefix('doctor')->name('doctor.')->group(function () {
-    Route::get('/habitaciones', [DoctorHabitacionController::class, 'index'])->name('habitaciones.index');
-    Route::get('/habitaciones/buscar', [DoctorHabitacionController::class, 'buscar'])->name('habitaciones.buscar');
-    Route::get('/habitaciones/mis-pacientes', [DoctorHabitacionController::class, 'misPacientes'])->name('habitaciones.mis-pacientes');
+   // Route::get('/habitaciones', [DoctorHabitacionController::class, 'index'])->name('habitaciones.index');
+   // Route::get('/habitaciones/buscar', [DoctorHabitacionController::class, 'buscar'])->name('habitaciones.buscar');
+    Route::get('/habitaciones/pacientes-hospitalizados', [DoctorHabitacionController::class, 'misPacientes'])->name('habitaciones.mis-pacientes');
 });
 
 //Inventario de Medicamentos
