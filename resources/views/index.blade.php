@@ -682,14 +682,21 @@
             }
         }
 
-
-        /* PC: 3 por vista */
-        @media (min-width: 1024px) {
+        /* 2 cards en tablets medianas */
+        @media (min-width: 768px) {
             .doctor-card {
-                min-width: 30%;
+                flex: 0 0 48%;
+                max-width: 48%;
             }
         }
 
+        /* 3 cards en PC */
+        @media (min-width: 1024px) {
+            .doctor-card {
+                flex: 0 0 calc(33.33% - 2rem); /* restamos el gap */
+                max-width: calc(33.33% - 2rem);
+            }
+        }
 
 
         /* TESTIMONIALS */
@@ -1730,7 +1737,7 @@
         <!-- Contenedor deslizable -->
         <div class="cards-wrapper"  id="doctorsWrapper" style="display: flex; gap: 2rem; overflow-x: auto; scroll-behavior: smooth; padding: 1rem 0; scrollbar-width: none; -ms-overflow-style: none;">
             @forelse($doctores as $doctor)
-            <div class="doctor-card"  style="min-width: 360px; max-width: 390px; flex-shrink: 0;">
+            <div class="doctor-card"  >
                 @if($doctor->foto)
                     <img src="data:image/jpeg;base64,{{ base64_encode($doctor->foto) }}"
                          alt="Foto {{ $doctor->nombre }}"
