@@ -923,80 +923,159 @@
             padding: 50px 0;
         }
 
-        /* Centrado y tamaño equilibrado */
+
+        /* Animación de respiración luminosa */
+
+        /* BOOKING - Carrusel a pantalla completa */
+        .booking {
+            background: linear-gradient(135deg, var(--dark) 0%, #0D2137 100%);
+            padding: 30px; /* Margen pequeño alrededor */
+            margin: 0;
+        }
+
         .promo-carousel {
-            max-width: 900px;
+            max-width: 100%; /* Ocupar todo el ancho */
             width: 100%;
             margin: 0 auto;
+            height: calc(100vh - 60px); /* Altura completa menos el padding */
+            min-height: 600px; /* Altura mínima para pantallas pequeñas */
+            border-radius: 20px; /* Bordes redondeados para el margen */
+            overflow: hidden; /* Ocultar desbordamiento */
         }
 
-        /* Card del carrusel */
+        .carousel-inner {
+            height: 100%;
+        }
+
+        .carousel-item {
+            height: 100%;
+        }
+
         .promo-card {
             position: relative;
-            border-radius: 20px;
+            border-radius: 0; /* Sin bordes redondeados para pantalla completa */
             overflow: hidden;
             background: #101010;
-            border: 4px solid transparent;
-            transition: border-color 0.4s ease;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.35);
+            border: none; /* Sin bordes */
+            height: 100%;
+            box-shadow: none;
         }
 
-        /* Imagen recortada */
+        /* Imagen a pantalla completa */
         .promo-img {
             width: 100%;
-            height: 330px;
-            object-fit: cover;
+            height: 100%;
+            object-fit: cover; /* Cubrir todo el espacio */
             object-position: center;
-            filter: brightness(0.80); /* más oscura = mejor texto encima */
+            filter: brightness(0.70); /* Oscurecer para mejor legibilidad del texto */
         }
 
-        /* Texto */
+        /* Texto sobre la imagen */
         .promo-text {
             position: absolute;
             bottom: 0;
             width: 100%;
-            padding: 25px;
-            background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+            padding: 40px;
+            background: linear-gradient(to top, rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.60) 50%, transparent 100%);
             color: #fff;
+            text-align: center;
         }
 
-        /* Efecto de iluminación */
-        .glow {
-            border-color: #4ecdc4 !important;
-            box-shadow: 0 0 20px rgba(78,205,196,0.75);
+        .promo-text h3 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
-        .carousel-item {
+        .promo-text p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        /* Controles del carrusel */
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 80px;
             opacity: 0.8;
-            transition: transform 0.6s ease, box-shadow 0.6s ease, opacity 0.6s ease;
-            border-radius: 18px;
+            transition: opacity 0.3s ease;
         }
+
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            opacity: 1;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(78, 205, 196, 0.6);
+            border-radius: 50%;
+            padding: 10px;
+        }
+
 
         .carousel-item.active {
-            transform: scale(1.03);
+            transform: scale(1);
             opacity: 1;
-
-            /* NUEVO EFECTO MÁS POTENTE */
             box-shadow:
-                0 0 20px rgba(78, 205, 196, 0.7),
-                0 0 45px rgba(78, 205, 196, 0.4),
-                0 0 70px rgba(78, 205, 196, 0.25);
-            animation: glowPulse 1.8s ease-in-out infinite alternate;
+                0 0 30px rgba(78, 205, 196, 0.8),
+                0 0 60px rgba(78, 205, 196, 0.5),
+                0 0 90px rgba(78, 205, 196, 0.3);
+            animation: glowPulse 2s ease-in-out infinite alternate;
         }
 
         /* Animación de respiración luminosa */
         @keyframes glowPulse {
             0% {
                 box-shadow:
-                    0 0 22px rgba(78, 205, 196, 0.7),
-                    0 0 40px rgba(78, 205, 196, 0.4),
-                    0 0 60px rgba(78, 205, 196, 0.25);
+                    0 0 30px rgba(78, 205, 196, 0.8),
+                    0 0 50px rgba(78, 205, 196, 0.5),
+                    0 0 70px rgba(78, 205, 196, 0.3);
             }
             100% {
                 box-shadow:
-                    0 0 35px rgba(78, 205, 196, 1),
-                    0 0 65px rgba(78, 205, 196, 0.6),
-                    0 0 90px rgba(78, 205, 196, 0.4);
+                    0 0 45px rgba(78, 205, 196, 1),
+                    0 0 75px rgba(78, 205, 196, 0.7),
+                    0 0 110px rgba(78, 205, 196, 0.5);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .promo-carousel {
+                height: 70vh;
+                min-height: 500px;
+            }
+
+            .promo-text h3 {
+                font-size: 2rem;
+            }
+
+            .promo-text p {
+                font-size: 1rem;
+            }
+
+            .promo-text {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .promo-carousel {
+                height: 60vh;
+                min-height: 400px;
+            }
+
+            .promo-text h3 {
+                font-size: 1.5rem;
+            }
+
+            .promo-text p {
+                font-size: 0.9rem;
             }
         }
 
