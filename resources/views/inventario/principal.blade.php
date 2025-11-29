@@ -427,7 +427,7 @@
                                 </td>
                             </tr>
 
-                            <!-- Modal de Eliminar -->
+                            <!-- Modal de WNoUsadas -->
                             <div class="modal fade" id="deleteModal{{$inventario->id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content" style="border-radius: 15px; border: none; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">

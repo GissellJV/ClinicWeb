@@ -38,7 +38,7 @@ return new class extends Migration
                 $table->text('mensaje')->nullable()->after('motivo');
             }
 
-            // Eliminar campos antiguos si existen
+            // WNoUsadas campos antiguos si existen
             if (Schema::hasColumn('citas', 'fecha_cita')) {
                 $table->dropColumn('fecha_cita');
             }

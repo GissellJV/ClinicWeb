@@ -8,12 +8,14 @@
     <title>Panel de Asistencia | ClinicWeb</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background:whitesmoke;
-
         }
 
         .stat-card {
@@ -23,6 +25,12 @@
             padding: 1.2rem;
             text-align: center;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
 
         .mint { background-color: #00bfa6; }
@@ -33,59 +41,145 @@
         .chart-container {
             background: white;
             border-radius: 15px;
-            padding: 1.5rem;
+            padding: 0.9rem;
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+
         }
 
         .filter-tabs .nav-link {
             color: #009e8e;
             border: none;
             border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tabs .nav-link:hover {
+            color: #00bfa6;
         }
 
         .filter-tabs .nav-link.active {
             border-bottom: 3px solid #00bfa6;
             font-weight: 600;
+            color: #00bfa6;
         }
 
-        .right-menu {
-            position: fixed;
-            right: 1.5rem;
-            top: 6rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        .text-info-emphasis {
+            font-weight: bold;
         }
 
-        .right-menu button {
-            background: white;
-            border: none;
-            border-radius: 50%;
-            width: 48px;
-            height: 48px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            color: #009e8e;
+        /* DataTables Styles */
+        table.dataTable {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: auto;
         }
 
-        .right-menu button:hover {
-            background: #00bfa6;
-            color: white;
+        table.dataTable thead th {
+            padding: 16px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #e0e0e0;
+            background: #4ecdc4 !important;
+            color: white !important;
+            white-space: nowrap;
         }
 
-        .table thead th {
-            background: #4ecdc4 ;
+        table.dataTable tbody tr {
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.2s;
         }
 
-        .table.table-hover tbody tr:hover,
-        .table.table-hover tbody tr:hover td {
-            background: rgb(222, 251, 249);
-            color: rgba(28, 27, 27, 0.95);
+        table.dataTable tbody tr:hover {
+            background: rgb(222, 251, 249) !important;
+        }
+
+        table.dataTable tbody td {
+            padding: 16px;
+            color: #2c3e50;
+            vertical-align: middle;
+        }
+
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter {
+            margin-bottom: 20px;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 8px 15px;
+            margin-left: 10px;
+        }
+
+        .dataTables_wrapper .dataTables_filter input:focus {
+            outline: none;
+            border-color: #4ecdc4;
+        }
+
+        .dataTables_wrapper .dataTables_length select {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 5px 10px;
+            margin: 0 10px;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 8px 12px !important;
+            border-radius: 8px !important;
+            transition: all 0.3s !important;
+            box-shadow: none !important;
+            font-weight: 600 !important;
+            border: none !important;
+            background: transparent !important;
+            color: #6c757d !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            color: #6c757d !important;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            transform: none !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: #4ecdc4 !important;
+            color: white !important;
+            border: none !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+            background: #45b8b0 !important;
+            border: none !important;
+        }
+
+        .dataTables_wrapper .dataTables_info {
+            font-size: 14px;
+            padding-top: 15px;
+        }
+
+        .patient-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            table.dataTable thead th,
+            table.dataTable tbody td {
+                padding: 12px 8px;
+            }
         }
     </style>
 </head>
 <body>
-
+<br><br><br>
 <div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-info-emphasis">Estadística de Asistencia de Pacientes</h2>
+    </div>
 
     <!-- Estadísticas -->
     <div class="row g-3 mb-4">
@@ -123,13 +217,15 @@
     <div class="row g-4 mb-4">
         <div class="col-md-8">
             <div class="chart-container">
-                <h5 class="mb-3">Visitas por Semana</h5>
+                <h5 class="mb-3" style="color: #2c3e50;
+            font-weight: 650; margin-top: 2% ">Visitas por Semana</h5>
                 <canvas id="visitasChart"></canvas>
             </div>
         </div>
         <div class="col-md-4">
             <div class="chart-container">
-                <h5 class="mb-3">Distribución por Edad</h5>
+                <h5 class="mb-3"style="color: #2c3e50;
+            font-weight: 650; margin-top: 2% ">Distribución por Edad</h5>
                 <canvas id="edadChart"></canvas>
             </div>
         </div>
@@ -137,26 +233,12 @@
 
     <!-- Registro y filtros -->
     <div class="chart-container">
-        <!--<form method="GET">
-            <div class="input-group mb-3">
-                <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-                <input type="text" name="buscar" class="form-control border-start-0" placeholder="Buscar paciente..." value="{{ request('buscar') }}">
-            </div>
-        </form>-->
-        <div class="chart-container">
-            <h5 class="mb-3">Registro de visitas</h5>
+        <div class="">
+            <h5 class="mb-3" style="color: #2c3e50;
+            font-weight: 650; margin-top: 1%">Registro de visitas</h5>
         </div>
-
-        <ul class="nav nav-tabs filter-tabs mb-3">
-            <li class="nav-item"><a class="nav-link {{ $filtro == 'recientes' ? 'active' : '' }}" href="?filtro=recientes">Recientes</a></li>
-            <li class="nav-item"><a class="nav-link {{ $filtro == 'hoy' ? 'active' : '' }}" href="?filtro=hoy">Hoy</a></li>
-            <li class="nav-item"><a class="nav-link {{ $filtro == 'semana' ? 'active' : '' }}" href="?filtro=semana">Semana</a></li>
-            <li class="nav-item"><a class="nav-link {{ $filtro == 'mes' ? 'active' : '' }}" href="?filtro=mes">Mes</a></li>
-            <li class="nav-item"><a class="nav-link {{ $filtro == 'anio' ? 'active' : '' }}" href="?filtro=anio">Año</a></li>
-        </ul>
-
-
-        <table class="table table-hover align-middle">
+        <br>
+        <table id="citasTable" class="table table-hover align-middle">
             <thead>
             <tr>
                 <th>Nombre</th>
@@ -171,29 +253,63 @@
             <tbody>
             @foreach ($citas as $cita)
                 <tr>
-                    <td>{{ $cita->paciente_nombre }}</td>
+                    <td><span class="patient-name">{{ $cita->paciente_nombre }}</span></td>
                     <td>{{ $cita->paciente->edad }} años</td>
                     <td>{{ $cita->doctor_nombre }}</td>
                     <td>{{ $cita->especialidad }}</td>
-                    <td>{{ $cita->fecha }}</td>
+                    <td>{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}</td>
                     <td>{{ $cita->hora }}</td>
                     <td>{{ ucfirst($cita->estado) }}</td>
                 </tr>
             @endforeach
             </tbody>
-            {{ $pacientes->links() }}
         </table>
     </div>
 </div>
 
-<!-- Menú lateral derecho
-<div class="right-menu">
-    <button><i class="bi bi-bell"></i></button>
-    <button><i class="bi bi-gear"></i></button>
-    <button><i class="bi bi-person-circle"></i></button>
-</div>-->
+<!-- jQuery (necesario para DataTables) -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
 
 <script>
+    $(document).ready(function() {
+        // Inicializar DataTable
+        $('#citasTable').DataTable({
+            responsive: true,
+            autoWidth: false,
+            paging: true,
+            lengthChange: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            language: {
+                processing: "Procesando...",
+                search: "Buscar:",
+                lengthMenu: "Mostrar _MENU_ registros",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                infoEmpty: "Mostrando 0 a 0 de 0 registros",
+                infoFiltered: "(filtrado de _MAX_ registros totales)",
+                loadingRecords: "Cargando...",
+                zeroRecords: "No se encontraron registros",
+                emptyTable: "No hay visitas registradas",
+                paginate: {
+                    first: "Primero",
+                    previous: "Anterior",
+                    next: "Siguiente",
+                    last: "Último"
+                }
+            },
+            pageLength: 10,
+            lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+            order: [[4, 'desc']], // Ordenar por fecha descendente
+            dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip'
+        });
+    });
+
     // Gráfico de barras
     const ctx1 = document.getElementById('visitasChart');
     new Chart(ctx1, {
@@ -223,9 +339,6 @@
         options: { responsive: true, cutout: '70%' }
     });
 </script>
-
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

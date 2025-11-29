@@ -467,11 +467,7 @@
                             <i class="bi bi-prescription2 me-1"></i> Generar Receta
                         </a>
                     </li>
-                    <li>
-                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.habitaciones.index') }}">
-                            <i class="bi bi-search me-1"></i> Buscar Habitación
-                        </a>
-                    </li>
+
                     <li>
                         <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.habitaciones.mis-pacientes') }}">
                             <i class="bi bi-hospital me-1"></i> Pacientes Hospitalizados

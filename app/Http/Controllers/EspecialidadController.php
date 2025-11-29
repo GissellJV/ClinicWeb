@@ -32,7 +32,7 @@ class EspecialidadController extends Controller
     {
         $especialidad = Especialidad::findOrFail($id);
 
-        // Eliminar icono si existe
+        // WNoUsadas icono si existe
         if ($especialidad->icono && Storage::exists('public/' . $especialidad->icono)) {
             Storage::delete('public/' . $especialidad->icono);
         }
