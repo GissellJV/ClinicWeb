@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background:whitesmoke;
             min-height: 100vh;
             padding: 20px;
         }
@@ -358,13 +358,14 @@
         }
 
         .btn-reprogramar {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
             color: white;
         }
 
         .btn-reprogramar:hover {
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(243, 156, 18, 0.4);
         }
 
         .btn-cancelar {
@@ -412,8 +413,8 @@
         }
 
         .modal-icon-warning {
-            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-            color: #f39c12;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: white;
         }
 
         .modal-title {
@@ -485,12 +486,12 @@
         }
 
         .btn-modal-warning {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
             color: white;
         }
 
         .btn-modal-warning:hover {
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
         }
 
         .form-control-modal {
@@ -642,7 +643,13 @@
                         <!-- Header de la Cita -->
                         <div class="cita-header-card">
                             <div class="doctor-name">
-                                <i class="fas fa-user-md"></i>
+                                @if($cita->doctor && $cita->doctor->foto)
+                                    <img src="data:image/jpeg;base64,{{ base64_encode($cita->doctor->foto) }}"
+                                         alt="Foto Doctor"
+                                         style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #00ffe0; margin-right: 10px;">
+                                @else
+                                    <i class="fas fa-user-md" style="margin-right: 10px; font-size: 28px;"></i>
+                                @endif
                                 @if($cita->doctor)
                                     {{ $cita->doctor->genero === 'Femenino' ? 'Dra.' : 'Dr.' }} {{ $cita->doctor->nombre }} {{ $cita->doctor->apellido ?? '' }}
                                 @else
@@ -789,7 +796,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-modal-cancel" data-bs-dismiss="modal">No, mantener cita</button>
                     <button type="button" class="btn btn-modal-danger" id="btnConfirmarCancelar">
-                        <i class="fas fa-check"></i> Sí, cancelar cita
+                         Sí, cancelar cita
                     </button>
                 </div>
             </div>
@@ -814,7 +821,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-modal-warning" id="btnConfirmarReprogramar">
-                        <i class="fas fa-save"></i> Guardar cambios
+                         Guardar cambios
                     </button>
                 </div>
             </div>
