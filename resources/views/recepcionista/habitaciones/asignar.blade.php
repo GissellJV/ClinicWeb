@@ -1,4 +1,5 @@
 @extends('layouts.plantillaRecepcion')
+<link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 @section('contenido')
 
     <style>
@@ -113,25 +114,40 @@
             gap: 8px;
         }
 
-        .btn-primary {
+        .btn-asignar {
+            padding: 0.875rem 2rem;
             background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border: none;
+            border-radius: 8px;
             color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
         }
 
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #44a08d 0%, #3a8f7f 100%);
+        .btn-asignar:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
         }
 
-        .btn-secondary {
-            background: #e5e7eb;
-            color: #374151;
+        .btn-cancel {
+            padding: 0.875rem 2rem;
+            background: white;
+            border: 2px solid #dc3545;
+            border-radius: 8px;
+            color: #dc3545;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
         }
 
-        .btn-secondary:hover {
-            background: #d1d5db;
+        .btn-cancel:hover {
+            background: #dc3545;
+            color: white;
             transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
         }
 
         .alert {
@@ -156,10 +172,20 @@
             color: #856404;
             border-left: 4px solid #f39c12;
         }
+
+        .text-info-emphasis {
+
+            font-weight: bold;
+        }
     </style>
 
-    <div class="main-container">
-        <h1><i class="fas fa-bed"></i> Asignar Habitación a Paciente</h1>
+    <br> <br>
+    <h1 class="text-info-emphasis"> Asignar Habitación a Paciente</h1>
+    <div class="formulario">
+
+
+    <div class="form-container">
+
 
         @if(session('success'))
             <div class="alert alert-success">
@@ -262,15 +288,16 @@
 
             <!-- Botones -->
             <div class="button-group">
-                <button type="submit" class="btn btn-primary"
+                <button type="submit" class="btn btn-asignar"
                     {{ count($habitacionesDisponibles) == 0 || count($pacientes) == 0 ? 'disabled' : '' }}>
                     <i class="fas fa-save"></i> Asignar Habitación
                 </button>
-                <a href="{{ route('listadocitas') }}" class="btn btn-secondary">
+                <a href="{{ route('listadocitas') }}" class="btn btn-cancel">
                     <i class="fas fa-times"></i> Cancelar
                 </a>
             </div>
         </form>
+    </div>
     </div>
 
     <script>
