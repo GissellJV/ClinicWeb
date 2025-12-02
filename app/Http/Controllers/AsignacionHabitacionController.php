@@ -23,7 +23,7 @@ class AsignacionHabitacionController extends Controller
     }
 
     // Formulario de asignación
-    public function create()
+    public function create($paciente_id = null)
     {
         if (!session('cargo') || session('cargo') != 'Enfermero') {
             return redirect()->route('inicioSesion')
@@ -41,6 +41,14 @@ class AsignacionHabitacionController extends Controller
             })
             ->get();
 
+        $pacienteSeleccionado = null;
+        if (!$paciente_id) {
+            $paciente_id = request('paciente_id');
+        }
+
+        if ($paciente_id) {
+            $pacienteSeleccionado = Paciente::find($paciente_id);
+        }
         return view('enfermeria.habitaciones.asignar', compact('habitacionesDisponibles', 'pacientes'));
     }
 

@@ -173,13 +173,6 @@
             </div>
         @endif
 
-        @if($pacienteSeleccionado)
-            <div class="alert alert-info">
-                <i class="fas fa-info-circle"></i>
-                <strong>Paciente seleccionado:</strong>
-                {{ $pacienteSeleccionado->nombres }} {{ $pacienteSeleccionado->apellidos }}
-            </div>
-        @endif
 
         @if(count($habitacionesDisponibles) == 0)
             <div class="info-banner" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
@@ -194,8 +187,22 @@
             <!-- Seleccionar Paciente -->
             <div class="form-group">
                 <label class="form-label">
+                    @if($pacienteSeleccionado)
+                        {{-- SI YA EXISTE UN PACIENTE SELECCIONADO--}}
+                  Paciente
+                    @else
+
                     Seleccionar Paciente <span class="required">*</span>
+                    @endif
                 </label>
+                @if($pacienteSeleccionado)
+                    {{-- SI YA EXISTE UN PACIENTE SELECCIONADO--}}
+
+                    <input type="text" class="form-control"
+                           value="{{ $pacienteSeleccionado->nombres }} - {{ $pacienteSeleccionado->numero_identidad }}"
+                           readonly>
+                    <input type="hidden" name="paciente_id" value="{{ $pacienteSeleccionado->id }}">
+                @else
                 <select name="paciente_id" id="paciente_id" class="form-select" required>
                     <option value="">-- Seleccione un paciente --</option>
                     @foreach($pacientes as $paciente)
@@ -208,6 +215,7 @@
                         </option>
                     @endforeach
                 </select>
+                @endif
                 @if(count($pacientes) == 0)
                     <p class="helper-text" style="color: #ef4444;">
                         <i class="fas fa-exclamation-triangle"></i>

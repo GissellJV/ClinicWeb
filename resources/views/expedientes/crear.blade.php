@@ -370,7 +370,11 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="paciente_id">Seleccionar Paciente *</label>
+                    @if($pacienteSeleccionado)
+                        <label for="paciente_id"> Paciente </label>
+                    @else
+                        <label for="paciente_id">Seleccionar Paciente *</label>
+                    @endif
                     <div class="input-wrapper">
                         @if($pacienteSeleccionado)
                             {{-- SI YA EXISTE UN PACIENTE SELECCIONADO, DESDE EL BOTON CREAR EXPEDIENTE--}}

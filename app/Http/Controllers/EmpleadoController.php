@@ -109,6 +109,109 @@ class EmpleadoController extends Controller
 
         return redirect()->route('empleados.lista')->with('success', 'Empleado registrado exitosamente.');
     }
+    public function edit($id)
+    {
+        if (!session('cargo') || strtolower(session('cargo')) != 'recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
+        $empleado = Empleado::findOrFail($id);
+
+        // Ya no necesitas pasar cargos y departamentos porque estarán bloqueados
+        return view('empleados.editar', compact('empleado'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nombre' => [
+                'required',
+                'string',
+                'max:50',
+                'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/'
+            ],
+            'apellido' => [
+                'required',
+                'string',
+                'max:50',
+                'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/'
+            ],
+            'telefono' => 'required|string|size:8|regex:/^[2389]\d{7}$/',
+            'password' => 'nullable|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]/',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ],[
+            'nombre.required' => 'El nombre es obligatorio',
+            'nombre.regex' => 'El nombre solo puede contener letras y espacios',
+            'nombre.max' => 'El nombre no puede tener más de 50 caracteres',
+            'apellido.required' => 'El apellido es obligatorio',
+            'apellido.regex' => 'El apellido solo puede contener letras y espacios',
+            'apellido.max' => 'El apellido no puede tener más de 50 caracteres',
+            'telefono.required' => 'El número de teléfono es obligatorio',
+            'telefono.regex' => 'El número de teléfono no es válido',
+            'telefono.size' => 'El número de teléfono debe tener 8 dígitos',
+            'password.min' => 'La contraseña debe tener mínimo 8 caracteres',
+            'password.regex' => 'La contraseña debe incluir mayúsculas, minúsculas y números',
+            'foto.image' => 'El archivo debe ser una imagen',
+            'foto.mimes' => 'La foto debe ser formato jpeg, png o jpg',
+            'foto.max' => 'La foto no puede superar los 2MB',
+        ]);
+
+        $empleado = Empleado::findOrFail($id);
+
+        // Solo actualizar nombre y apellido
+        $empleado->update([
+            'nombre' => $request->nombre,
+            'apellido' => $request->apellido,
+        ]);
+
+        // Actualizar foto solo si se subió una nueva
+        if ($request->hasFile('foto')) {
+            $foto = file_get_contents($request->file('foto')->getRealPath());
+            $empleado->foto = $foto;
+            $empleado->save();
+        }
+
+        // Preparar datos para actualizar login
+        $loginData = [
+            'empleado_nombre' => $request->nombre,
+            'empleado_apellido' => $request->apellido,
+            'telefono' => $request->telefono,
+        ];
+
+        // Actualizar contraseña solo si se proporcionó una nueva
+        if ($request->filled('password')) {
+            $loginData['password'] = bcrypt($request->password);
+        }
+
+        // Actualizar login asociado
+        $empleado->loginEmpleado()->update($loginData);
+
+        return redirect()->route('empleados.lista')->with('success', 'Empleado actualizado con exito');
+    }
+
+    public function destroy($id)
+    {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Enfermero');
+        }
+
+        $empleado = Empleado::findOrFail($id);
+
+
+        if ($empleado->loginEmpleado) {
+            $empleado->loginEmpleado->delete();
+        }
+
+        // Ahora sí, eliminar el empleado
+        $empleado->delete();
+
+        return redirect()->route('empleados.lista')
+            ->with('success', 'Empleado eliminado con exito.');
+    }
+
+
 
     public function lista()
     {

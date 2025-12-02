@@ -924,7 +924,7 @@
         }
 
 
-        /* Animación de respiración luminosa */
+
 
         /* BOOKING - Carrusel a pantalla completa */
         .booking {
@@ -1028,7 +1028,7 @@
             animation: glowPulse 2s ease-in-out infinite alternate;
         }
 
-        /* Animación de respiración luminosa */
+
         @keyframes glowPulse {
             0% {
                 box-shadow:

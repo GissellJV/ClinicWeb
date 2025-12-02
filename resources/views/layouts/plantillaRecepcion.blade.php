@@ -421,6 +421,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link offcanvas-nav-link" href="{{ route('empleados.lista') }}">
+                            <i class="bi bi-person"></i> Lista de Empleados
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link offcanvas-nav-link" href="{{ route('listadocitas') }}">
                             <i class="bi bi-calendar-check"></i> Citas Programadas
                         </a>

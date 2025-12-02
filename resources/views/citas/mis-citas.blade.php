@@ -23,10 +23,14 @@
         }
 
         .header h1 {
-            color: #2c3e50;
+            color: #0f766e;
             font-size: 2.5rem;
-            margin-bottom: 10px;
+            margin-bottom: 30px;
             font-weight: 700;
+
+
+
+
         }
 
         .header p {
@@ -46,7 +50,7 @@
             background: white;
             border-radius: 16px;
             padding: 25px;
-            text-align: center;
+            text-align: left;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s ease;
             border-left: 5px solid;
@@ -57,18 +61,26 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
         }
 
-        .stat-card.total { border-left-color: #4ECDC4; }
-        .stat-card.programadas { border-left-color: #2ecc71; }
-        .stat-card.canceladas { border-left-color: #e74c3c; }
-        .stat-card.reprogramadas { border-left-color: #f39c12; }
+        .stat-card.total {
+            border-left-color: #2c3e50;
+            background: linear-gradient(135deg, #fff 0%, #e8eaf0 100%);
+        }
+        .stat-card.programadas {border-left-color: #4ECDC4;
+            background: linear-gradient(135deg, #fff 0%, #e5f9f7 100%);
+        }
+        .stat-card.canceladas { border-left-color: #e74c3c;
+            background: linear-gradient(135deg, #fff 0%, #ffe5e5 100%);}
+        .stat-card.reprogramadas { border-left-color: #f39c12;
+            background: linear-gradient(135deg, #fff 0%, #fff4e5 100%);
+        }
 
         .stat-card i {
             font-size: 2.5rem;
             margin-bottom: 15px;
         }
 
-        .stat-card.total i { color: #4ECDC4; }
-        .stat-card.programadas i { color: #2ecc71; }
+        .stat-card.total i { color: #2c3e50; }
+        .stat-card.programadas i { color: #4ECDC4; }
         .stat-card.canceladas i { color: #e74c3c; }
         .stat-card.reprogramadas i { color: #f39c12; }
 
@@ -78,8 +90,8 @@
             margin-bottom: 5px;
         }
 
-        .stat-card.total .stat-number { color: #4ECDC4; }
-        .stat-card.programadas .stat-number { color: #2ecc71; }
+        .stat-card.total .stat-number { color: #2c3e50;}
+        .stat-card.programadas .stat-number { color: #4ECDC4; }
         .stat-card.canceladas .stat-number { color: #e74c3c; }
         .stat-card.reprogramadas .stat-number { color: #f39c12; }
 
@@ -537,7 +549,6 @@
         <!-- Header -->
         <div class="header">
             <h1> Mis Citas Médicas</h1>
-            <p>Gestiona y revisa todas tus citas programadas</p>
         </div>
 
         <!-- Alertas -->
@@ -565,28 +576,29 @@
             <!-- Estadísticas -->
         <div class="stats-grid">
             <div class="stat-card total">
-                <i class="fas fa-calendar"></i>
                 <div class="stat-number">{{ $total }}</div>
                 <div class="stat-label">Total de Citas</div>
             </div>
 
             <div class="stat-card programadas">
-                <i class="fas fa-calendar-check"></i>
+
                 <div class="stat-number">{{ $programadas }}</div>
                 <div class="stat-label">Programadas</div>
             </div>
 
+            <div class="stat-card reprogramadas">
+
+                <div class="stat-number">{{ $reprogramadas }}</div>
+                <div class="stat-label">Reprogramadas</div>
+            </div>
+
             <div class="stat-card canceladas">
-                <i class="fas fa-calendar-times"></i>
+
                 <div class="stat-number">{{ $canceladas }}</div>
                 <div class="stat-label">Canceladas</div>
             </div>
 
-            <div class="stat-card reprogramadas">
-                <i class="fas fa-calendar-alt"></i>
-                <div class="stat-number">{{ $reprogramadas }}</div>
-                <div class="stat-label">Reprogramadas</div>
-            </div>
+
         </div>
 
         <!-- Filtros -->
