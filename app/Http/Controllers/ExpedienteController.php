@@ -5,9 +5,75 @@ namespace App\Http\Controllers;
 use App\Models\Expediente;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ExpedienteController extends Controller
 {
+    public function verHistorial($id)
+    {
+        // Solo para doctores
+        if (session('cargo') !== 'Doctor') {
+            return redirect()->route('inicioSesion')->with('error', 'Acceso denegado.');
+        }
+
+        $expediente = Expediente::with('paciente')->findOrFail($id);
+
+        // Traer el historial del expediente
+        $historiales = DB::table('historial_expedientes')
+            ->where('expediente_id', $id)
+            ->orderBy('fecha', 'desc')
+            ->get();
+
+        return view('expedientes.historial', compact('expediente', 'historiales'));
+    }
+
+    public function historialExpediente($id)
+    {
+        $expediente = Expediente::with('paciente')->findOrFail($id);
+        $historiales = DB::table('historial_expedientes')
+            ->where('expediente_id', $id)
+            ->orderBy('fecha', 'desc')
+            ->get();
+
+        return view('expedientes.historial', compact('expediente', 'historiales'));
+    }
+
+    public function actualizarHistorialExpediente(Request $request, $expediente_id)
+    {
+        // Validación de los campos
+        $request->validate([
+            'peso' => 'nullable|numeric',
+            'altura' => 'nullable|numeric',
+            'temperatura' => 'nullable|string',
+            'presion_arterial' => 'nullable|string',
+            'frecuencia_cardiaca' => 'nullable|string',
+            'alergias' => 'nullable|string',
+            'medicamentos_actuales' => 'nullable|string',
+            'antecedentes_familiares' => 'nullable|string',
+            'antecedentes_personales' => 'nullable|string',
+            'observaciones' => 'nullable|string',
+        ]);
+
+        // Insertar un nuevo registro en historial_expediente
+        DB::table('historial_expedientes')->insert([
+            'expediente_id' => $expediente_id,
+            'fecha' => now()->toDateString(),
+            'peso' => $request->peso,
+            'altura' => $request->altura,
+            'temperatura' => $request->temperatura,
+            'presion_arterial' => $request->presion_arterial,
+            'frecuencia_cardiaca' => $request->frecuencia_cardiaca,
+            'alergias' => $request->alergias,
+            'medicamentos_actuales' => $request->medicamentos_actuales,
+            'antecedentes_familiares' => $request->antecedentes_familiares,
+            'antecedentes_personales' => $request->antecedentes_personales,
+            'observaciones' => $request->observaciones,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Registro agregado al historial correctamente.');
+    }
 
     public function crearExpediente($paciente_id = null)
     {
@@ -79,11 +145,15 @@ class ExpedienteController extends Controller
 
         $expediente = Expediente::with('paciente')->findOrFail($id);
 
+        $historial = \DB::table('historial_expedientes')
+            ->where('expediente_id', $id)
+            ->orderByDesc('fecha')
+            ->get();
+
         $cargo = session('cargo');
 
-
         if ($cargo === 'Recepcionista') {
-            return view('recepcionista.visualizarexpediente', compact('expediente'));
+            return view('recepcionista.visualizarexpediente', compact('expediente', 'historial'));
         } elseif ($cargo === 'Doctor') {
             return view('doctor.visualizarexpediente', compact('expediente'));
         }
@@ -121,16 +191,16 @@ class ExpedienteController extends Controller
     }
     public function actualizarHistorial(Request $request, $id)
     {
-        $expediente = Expediente::findOrFail($id);
+        $historial = Historial::findOrFail($request->input('historial_id'));
 
-        // Actualiza los campos desde el formulario
-        $expediente->alergias = $request->input('alergias');
-        $expediente->medicamentos_actuales = $request->input('medicamentos_actuales');
-        $expediente->antecedentes_familiares = $request->input('antecedentes_familiares');
-        $expediente->antecedentes_personales = $request->input('antecedentes_personales');
-        $expediente->observaciones = $request->input('observaciones');
+        // Actualizar los campos desde el formulario
+        $historial->alergias = $request->input('alergias');
+        $historial->medicamentos_actuales = $request->input('medicamentos_actuales');
+        $historial->antecedentes_familiares = $request->input('antecedentes_familiares');
+        $historial->antecedentes_personales = $request->input('antecedentes_personales');
+        $historial->observaciones = $request->input('observaciones');
 
-        $expediente->save();
+        $historial->save();
 
         return redirect()->back()->with('success', 'Historial actualizado correctamente');
     }

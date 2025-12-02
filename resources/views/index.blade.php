@@ -2107,6 +2107,7 @@
 
 
     <!-- SECCIÓN DOCTORES -->
+    <!-- SECCIÓN DOCTORES -->
     <section id="doctors" class="doctors">
         <div class="section-header">
             <p class="section-subtitle">Nuestro Equipo</p>
@@ -2120,27 +2121,26 @@
                 <i class="bi bi-chevron-left"></i>
             </button>
 
-            <!-- DOCTOR CON SU CALIFICACION -->
-        <!-- Contenedor deslizable -->
-        <div class="cards-wrapper"  id="doctorsWrapper" style="display: flex; gap: 2rem; overflow-x: auto; scroll-behavior: smooth; padding: 1rem 0; scrollbar-width: none; -ms-overflow-style: none;">
-            @forelse($doctores as $doctor)
-            <div class="doctor-card"  >
-                @if($doctor->foto)
-                    <img src="data:image/jpeg;base64,{{ base64_encode($doctor->foto) }}"
-                         alt="Foto {{ $doctor->nombre }}"
-                         class="doctor-img">
-                @else
-                    <div class="doctor-photo-placeholder">
-                        <i class="bi bi-person-circle"></i>
-                    </div>
-                @endif
+            <!-- Contenedor deslizable -->
+            <div class="cards-wrapper" id="doctorsWrapper" style="display: flex; gap: 2rem; overflow-x: auto; scroll-behavior: smooth; padding: 1rem 0; scrollbar-width: none; -ms-overflow-style: none;">
+                @forelse($doctores as $doctor)
+                    <div class="doctor-card">
+                        @if($doctor->foto)
+                            <img src="data:image/jpeg;base64,{{ base64_encode($doctor->foto) }}"
+                                 alt="Foto {{ $doctor->nombre }}"
+                                 class="doctor-img">
+                        @else
+                            <div class="doctor-photo-placeholder">
+                                <i class="bi bi-person-circle"></i>
+                            </div>
+                        @endif
 
-                <div class="doctor-info">
-                    <h3 class="doctor-name">{{ $doctor->genero === 'Femenino' ? 'Dra.' : 'Dr.' }} {{ $doctor->nombre }} {{ $doctor->apellido }}</h3>
-                    <p class="doctor-specialty">{{ $doctor->departamento === 'Medicina General'
-                    ? 'Medicina General'
-                    : 'Especialista en ' . $doctor->departamento }}</p>
-                    <div class="doctor-rating">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">{{ $doctor->genero === 'Femenino' ? 'Dra.' : 'Dr.' }} {{ $doctor->nombre }} {{ $doctor->apellido }}</h3>
+                            <p class="doctor-specialty">
+                                {{ $doctor->departamento === 'Medicina General' ? 'Medicina General' : 'Especialista en ' . $doctor->departamento }}
+                            </p>
+                            <div class="doctor-rating">
                             <span class="stars">
                                 @for ($i = 1; $i <= 5; $i++)
                                     @if ($doctor->promedio_calificacion >= $i)
@@ -2152,53 +2152,76 @@
                                     @endif
                                 @endfor
                             </span>
-                        <span class="rating-num">{{ number_format($doctor->promedio_calificacion, 1) }} ({{ $doctor->total_calificaciones }} reseñas)</span>
-                    </div>
-                    <div class="doctor-stats">
-                        <span class="doctor-stat"><i class="bi bi-people-fill"></i> 1,200+ pacientes</span>
-                        <span class="doctor-stat"><i class="bi bi-calendar-check"></i> 15 años exp.</span>
+                                <span class="rating-num">{{ number_format($doctor->promedio_calificacion, 1) }} ({{ $doctor->total_calificaciones }} reseñas)</span>
+                            </div>
+
+                            @php
+                                $esPaciente = session('tipo_usuario') === 'paciente';
+                                $calificacionPaciente = $doctor->calificaciones->firstWhere('paciente_id', session('paciente_id'));
+                            @endphp
+
+                            @if($esPaciente)
+                                @if($doctor->tuvo_cita)
+                                    @if(!$doctor->ya_califico)
+                                        <!-- Botón calificar -->
+                                        <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#calificarModal{{ $doctor->id }}">
+                                            <i class="bi bi-star"></i> Calificar Doctor
+                                        </button>
+                                    @else
+                                        <!-- Botón editar calificación -->
+                                        <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#editarCalificacionModal{{ $doctor->id }}">
+                                            <i class="bi bi-pencil-square"></i> Editar Calificación
+                                        </button>
+                                    @endif
+                                @else
+                                    <!-- No tuvo cita -->
+                                    <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#noCitaModal">
+                                        <i class="bi bi-x-circle"></i> No puedes calificar
+                                    </button>
+                                @endif
+                            @else
+                                <!-- No es paciente -->
+                                <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#loginRequiredModal">
+                                    <i class="bi bi-star"></i> Calificar Doctor
+                                </button>
+                            @endif
+                        </div>
                     </div>
 
-                    <!-- Botón calificar -->
-                    @php $esPaciente = session('tipo_usuario') === 'paciente'; @endphp
-                    @if($esPaciente && !$doctor->ya_califico)
-                        <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#calificarModal{{ $doctor->id }}">
-                            <i class="bi bi-star"></i> Calificar Doctor
-                        </button>
-                    @elseif($doctor->ya_califico)
-                        <button type="button" class="btn-book" disabled style="opacity: 0.6; cursor: not-allowed;">
-                            <i class="bi bi-check-circle"></i> Ya calificaste
-                        </button>
-                    @else
-                        <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#loginRequiredModal">
-                            <i class="bi bi-star"></i> Calificar Doctor
-                        </button>
-                    @endif
-                </div>
-            </div>
+                    <!-- Modal No Cita -->
+                    <div class="modal fade" id="noCitaModal" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-warning text-dark">
+                                    <h5 class="modal-title"><i class="bi bi-exclamation-triangle"></i> No puedes calificar</h5>
+                                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <p><strong>No puedes calificar a este doctor.</strong></p>
+                                    <p>Solo puedes calificar a doctores con los que has tenido cita.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    <!-- Modal para calificar (solo pacientes que no han calificado) -->
+                    <!-- Modal Calificar -->
                     @if($esPaciente && !$doctor->ya_califico)
-                        <div class="modal fade" id="calificarModal{{ $doctor->id }}" tabindex="-1" aria-labelledby="calificarModalLabel{{ $doctor->id }}" aria-hidden="true">
+                        <div class="modal fade" id="calificarModal{{ $doctor->id }}" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
-                                    <form action="{{ route('calificar') }}" method="POST" id="formCalificar{{ $doctor->id }}">
+                                    <form action="{{ route('calificacion.editar') }}" method="POST" id="formCalificar{{ $doctor->id }}">
                                         @csrf
                                         <input type="hidden" name="doctor_id" value="{{ $doctor->id }}">
+                                        <input type="hidden" name="paciente_id" value="{{ session('paciente_id') }}">
                                         <input type="hidden" name="estrellas" id="estrellasInput{{ $doctor->id }}" value="0">
-
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="calificarModalLabel{{ $doctor->id }}">
-                                                <i class="bi bi-star-fill"></i> Calificar a Dr. {{ $doctor->nombre }}
-                                            </h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                                        </div>
 
                                         <div class="modal-body">
                                             <label class="form-label text-center d-block mb-3" style="font-size: 1.1rem; font-weight: 600;">
                                                 ¿Cómo calificarías tu experiencia?
                                             </label>
-
                                             <div class="star-rating-input" id="starRating{{ $doctor->id }}">
                                                 @for ($i = 1; $i <= 5; $i++)
                                                     <button type="button" class="star-btn" data-value="{{ $i }}" data-modal="{{ $doctor->id }}">
@@ -2211,16 +2234,59 @@
                                             <label for="comentario{{ $doctor->id }}" class="form-label mt-3" style="font-weight: 600;">
                                                 <i class="bi bi-chat-left-text"></i> Comentario (opcional)
                                             </label>
-                                            <textarea class="form-control" id="comentario{{ $doctor->id }}" name="comentario" rows="4"
-                                                      placeholder="Cuéntanos sobre tu experiencia..." maxlength="500"
-                                                      style="border-radius: 12px; border: 2px solid #e9ecef;"></textarea>
+                                            <textarea class="form-control" id="comentario{{ $doctor->id }}" name="comentario" rows="4" maxlength="500"></textarea>
                                             <small class="text-muted">Máximo 500 caracteres</small>
                                         </div>
 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                            <button type="submit" class="btn btn-primary" id="btnSubmit{{ $doctor->id }}" disabled>
+                                            <button type="submit" class="btn btn-primary" disabled>
                                                 <i class="bi bi-send-fill"></i> Enviar Calificación
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                    <!-- Modal Editar Calificación -->
+                    @if($esPaciente && $calificacionPaciente)
+                        <div class="modal fade" id="editarCalificacionModal{{ $doctor->id }}" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <form action="{{ route('calificacion.editar') }}" method="POST" id="formEditarCalificacion{{ $doctor->id }}">
+                                        @csrf
+                                        <input type="hidden" name="doctor_id" value="{{ $doctor->id }}">
+                                        <input type="hidden" name="paciente_id" value="{{ session('paciente_id') }}">
+                                        <input type="hidden" name="estrellas" id="estrellasInputEdit{{ $doctor->id }}" value="{{ $calificacionPaciente->estrellas }}">
+
+                                        <div class="modal-body">
+                                            <label class="form-label text-center d-block mb-3" style="font-size: 1.1rem; font-weight: 600;">
+                                                ¿Cómo calificarías tu experiencia?
+                                            </label>
+                                            <div class="star-rating-input" id="starRatingEdit{{ $doctor->id }}">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    <button type="button" class="star-btn" data-value="{{ $i }}" data-modal="Edit{{ $doctor->id }}">
+                                                        <i class="bi bi-star-fill"></i>
+                                                    </button>
+                                                @endfor
+                                            </div>
+                                            <div class="rating-feedback" id="ratingFeedbackEdit{{ $doctor->id }}">
+                                                {{ $calificacionPaciente->estrellas > 0 ? ['Muy insatisfecho','Insatisfecho','Aceptable','Bueno','Excelente'][$calificacionPaciente->estrellas-1] : 'Selecciona una calificación' }}
+                                            </div>
+
+                                            <label for="comentarioEdit{{ $doctor->id }}" class="form-label mt-3" style="font-weight: 600;">
+                                                <i class="bi bi-chat-left-text"></i> Comentario (opcional)
+                                            </label>
+                                            <textarea class="form-control" id="comentarioEdit{{ $doctor->id }}" name="comentario" rows="4" maxlength="500">{{ $calificacionPaciente->comentario }}</textarea>
+                                            <small class="text-muted">Máximo 500 caracteres</small>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="bi bi-send-fill"></i> Actualizar Calificación
                                             </button>
                                         </div>
                                     </form>
@@ -2243,8 +2309,8 @@
         </div>
     </section>
 
-    <!-- Modal para usuarios no pacientes -->
-    <div class="modal fade" id="loginRequiredModal" tabindex="-1" aria-labelledby="loginRequiredModalLabel" aria-hidden="true">
+    <!-- Modal usuarios no pacientes -->
+    <div class="modal fade" id="loginRequiredModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header" style="background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);">
@@ -2264,6 +2330,9 @@
         </div>
     </div>
 
+    <!-- Estilos y JS para slider y estrellas se mantienen igual -->
+
+
     <!-- ESTILOS ADICIONALES -->
     <style>
         #doctorsWrapper::-webkit-scrollbar { display: none; }
@@ -2272,102 +2341,70 @@
 
     <!-- JS INTERACTIVO -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
+            const mensajes = ['Muy insatisfecho','Insatisfecho','Aceptable','Bueno','Excelente'];
 
-            const feedbackMessages = {
-                1: 'Muy insatisfecho',
-                2: 'Insatisfecho',
-                3: 'Aceptable',
-                4: 'Bueno',
-                5: 'Excelente'
-            };
+            document.querySelectorAll('.star-rating-input').forEach(starContainer => {
+                const stars = starContainer.querySelectorAll('.star-btn');
+                const modalId = starContainer.id; // id completo del contenedor
+                const isEdit = modalId.includes('Edit');
 
-            // Seleccionar todos los sistemas de estrellas
-            const starRatings = document.querySelectorAll('.star-rating-input');
+                // Obtener feedback e input correctos
+                const feedback = isEdit
+                    ? document.getElementById('ratingFeedbackEdit' + modalId.replace('starRatingEdit',''))
+                    : document.getElementById('ratingFeedback' + modalId.replace('starRating',''));
 
-            starRatings.forEach(container => {
-                const stars = container.querySelectorAll('.star-btn');
-                let selectedRating = 0; // Valor final
+                const input = isEdit
+                    ? document.getElementById('estrellasInputEdit' + modalId.replace('starRatingEdit',''))
+                    : document.getElementById('estrellasInput' + modalId.replace('starRating',''));
 
-                stars.forEach(star => {
-                    const value = parseInt(star.dataset.value);
-                    const modalId = star.dataset.modal;
-
-                    // Click: seleccionar calificación
-                    star.addEventListener('click', function() {
-                        selectedRating = value;
-
-                        // Actualizar input hidden
-                        const inputEstrellas = document.getElementById(`estrellasInput${modalId}`);
-                        inputEstrellas.value = selectedRating;
-
-                        // Actualizar feedback
-                        const feedback = document.getElementById(`ratingFeedback${modalId}`);
-                        feedback.textContent = feedbackMessages[selectedRating];
-
-                        // Activar botón submit
-                        const btnSubmit = document.getElementById(`btnSubmit${modalId}`);
-                        btnSubmit.disabled = false;
-
-                        // Actualizar apariencia de estrellas
-                        updateStars(stars, selectedRating);
-                    });
-
-                    // Hover para preview
-                    star.addEventListener('mouseenter', function() {
-                        updateStars(stars, value, true);
-                    });
-                });
-
-                // Mouseleave: restaurar selección
-                container.addEventListener('mouseleave', function() {
-                    updateStars(container.querySelectorAll('.star-btn'), selectedRating);
-                });
-            });
-
-            // Función para actualizar las estrellas visualmente
-            function updateStars(stars, rating, isHover = false) {
-                stars.forEach(star => {
-                    const value = parseInt(star.dataset.value);
-                    if (value <= rating) {
-                        star.classList.add('active');
-                        if (isHover) star.classList.add('hover');
-                    } else {
-                        star.classList.remove('active', 'hover');
+                // Pintar estrellas según valor actual
+                stars.forEach((star, index) => {
+                    const icon = star.querySelector('i');
+                    if (parseInt(input.value) > index) {
+                        icon.classList.add('text-warning');
                     }
-                });
-            }
 
-            // Reiniciar formulario al cerrar modal
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('hidden.bs.modal', function() {
-                    const modalId = this.id.replace('calificarModal', '');
-                    if (!modalId || modalId === 'loginRequired') return;
+                    star.addEventListener('click', function() {
+                        input.value = star.dataset.value;
+                        feedback.textContent = mensajes[index];
 
-                    const stars = this.querySelectorAll('.star-btn');
-                    stars.forEach(star => star.classList.remove('active','hover'));
+                        stars.forEach((s, i) => {
+                            const sIcon = s.querySelector('i');
+                            if (i < parseInt(input.value)) {
+                                sIcon.classList.add('text-warning');
+                            } else {
+                                sIcon.classList.remove('text-warning');
+                            }
+                        });
 
-                    const inputEstrellas = document.getElementById(`estrellasInput${modalId}`);
-                    const feedback = document.getElementById(`ratingFeedback${modalId}`);
-                    const btnSubmit = document.getElementById(`btnSubmit${modalId}`);
-                    const comentario = document.getElementById(`comentario${modalId}`);
-
-                    if (inputEstrellas) inputEstrellas.value = '0';
-                    if (feedback) feedback.textContent = 'Selecciona una calificación';
-                    if (btnSubmit) btnSubmit.disabled = true;
-                    if (comentario) comentario.value = '';
+                        const form = star.closest('form');
+                        const btnSubmit = form.querySelector('button[type="submit"]');
+                        if (btnSubmit) btnSubmit.disabled = false;
+                    });
                 });
             });
-
         });
-
-    // Slider
-        function scrollDoctors(direction){
-            const wrapper = document.getElementById("doctorsWrapper");
-            const cardWidth = 320 + 32;
-            wrapper.scrollBy({ left: direction*cardWidth, behavior:'smooth' });
-        }
     </script>
+<style>
+    /* Hover de estrellas: ilumina solo hasta la estrella que pasas */
+    .star-rating-input .star-btn i {
+        color: #ddd; /* color por defecto */
+        transition: color 0.2s;
+    }
+
+    /* Usando hover para iluminar todas las anteriores y la actual */
+    .star-rating-input .star-btn:hover i,
+    .star-rating-input .star-btn:hover ~ .star-btn i {
+        color: #ffc107;
+    }
+
+    /* Mantener seleccionadas las estrellas ya clickeadas */
+    .star-rating-input .text-warning {
+        color: #ffc107 !important;
+    }
+
+</style>
     <script>
         document.getElementById('btnAgregarEspecialidad')?.addEventListener('click', function () {
             const form = document.getElementById('formEspecialidad');
@@ -2484,7 +2521,7 @@
 
 
     <!-- PROMOS -->
-    <section class="promos">
+    <section id="promos" class="promos">
         <div class="section-header">
             <p class="section-subtitle">Promociones</p>
             <h2 class="section-title">Ofertas Especiales</h2>
@@ -2492,7 +2529,7 @@
         </div>
 
         <div class="order-controls" style="text-align:right; margin-bottom:20px;">
-            <a href="{{ url()->current() }}?orden={{ $orden === 'asc' ? 'desc' : 'asc' }}"
+            <a href="{{ url()->current() }}?orden={{ $orden === 'asc' ? 'desc' : 'asc' }}#promos"
                class="promo-link"
                style="padding:0.5rem 1.5rem; font-size:0.95rem; display:inline-block; text-decoration-line: none; color: #00bfa6 ">
                 Ordenar por título: {{ $orden === 'asc' ? 'Z → A' : 'A → Z' }}

@@ -375,11 +375,21 @@
 
         <h1 class="text-info-emphasis">Visualización de Expediente</h1>
 
+        {{-- Botón para Recepcionista --}}
         @if(session('cargo') === 'Recepcionista')
-        <a href="{{ route('recepcionista.vistaEnviarDoctor', $expediente->id) }}" class="btn-guardar">
-            Enviar Expediente
-        </a>
+            <a href="{{ route('recepcionista.vistaEnviarDoctor', $expediente->id) }}" class="btn-guardar">
+                Enviar Expediente
+            </a>
         @endif
+
+        {{-- Botón para Doctor --}}
+        @if(session('cargo') === 'Doctor')
+            <a href="{{ route('doctor.historial', $expediente->id) }}" class="btn-guardar">
+                Ver Historial
+            </a>
+        @endif
+
+
 
     </div>
     <br>
@@ -459,7 +469,7 @@
             </div>
 
 
-            <form id="formSignos" method="POST" action="{{ route('expedientes.actualizarSignos', $expediente->id) }}">
+            <form id="formSignos" method="POST" action="{{ route('expedientes.actualizarHistorial', $expediente->id) }}">
                 @csrf
                 <table class="info-table">
                     <tbody>
@@ -550,7 +560,9 @@
                     <h5 class="mb-0">Antecedentes</h5>
                 </div>
                 @if(session('cargo') === 'Recepcionista')
-                    <button type="button" id="btnEditarHistorial" class="btn-actualizar">Actualizar</button>
+                    <button type="button" id="btnActualizarHistorial" class="btn-actualizar">
+                        Actualizar Historial
+                    </button>
                 @endif
             </div>
 
