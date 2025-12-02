@@ -15,13 +15,18 @@
             margin: 0 auto;
             padding: 20px 15px;
         }
+        @media (min-width: 1400px) {
+            .main-container {
+                max-width: 1320px;
+            }
+        }
 
         h1 {
             color: #0f766e;
             font-weight: 700;
             font-size: 2.2rem;
             margin-bottom: 30px;
-            text-align: center;
+
         }
 
         .alert {
@@ -29,6 +34,7 @@
             border: none;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
             margin-bottom: 25px;
+            text-align: left;
         }
 
         /* Estadísticas */
@@ -46,7 +52,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             border-left: 5px solid;
             transition: all 0.3s;
-            text-align: center;
         }
 
         .stat-card:hover {
@@ -54,40 +59,44 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.12);
         }
 
+        /* Completadas - Gris azulado */
         .stat-card.completadas {
             border-left-color: #2c3e50;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: linear-gradient(135deg, #fff 0%, #e8eaf0 100%);
         }
 
         .stat-card.completadas h3 {
             color: #2c3e50;
         }
 
+        /* Pendientes - Amarillo */
         .stat-card.pendientes {
-            border-left-color: #6c757d;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left-color: #f39c12;
+            background: linear-gradient(135deg, #fff 0%, #fff4e5 100%);
         }
 
         .stat-card.pendientes h3 {
-            color: #6c757d;
+            color: #f39c12;
         }
 
+        /* Confirmadas - Turquesa */
         .stat-card.confirmadas {
             border-left-color: #4ecdc4;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: linear-gradient(135deg, #fff 0%, #e5f9f7 100%);
         }
 
         .stat-card.confirmadas h3 {
             color: #4ecdc4;
         }
 
+        /* Reprogramadas - Rojo */
         .stat-card.reprogramadas {
-            border-left-color: #17a2b8;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left-color: #e74c3c;
+            background: linear-gradient(135deg, #fff 0%, #ffe5e5 100%);
         }
 
         .stat-card.reprogramadas h3 {
-            color: #17a2b8;
+            color: #e74c3c;
         }
 
         .stat-card h3 {
@@ -115,36 +124,36 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             padding: 25px;
         }
+        .table-container {
+            overflow-x: visible;
+            width: 100%;
+            margin: 0 auto;
+        }
 
         table.dataTable {
             width: 100% !important;
             border-collapse: collapse;
+            table-layout: auto;
+            white-space: nowrap;
         }
 
         /* ENCABEZADOS UNIFORMES - TODOS VERDES */
         table.dataTable thead th {
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%) !important;
-            color: white !important;
-            padding: 16px 12px;
-            text-align: center;
+            padding: 20px;
+            text-align: left;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 13px;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            border: none;
+            border-bottom: 2px solid #e0e0e0;
+            background: #4ecdc4 !important;
+            color: white;
             white-space: nowrap;
-            border-bottom: 2px solid #3a9c95;
         }
 
-        table.dataTable thead th:first-child {
-            border-top-left-radius: 12px;
-            border-bottom-left-radius: 12px;
-        }
 
-        table.dataTable thead th:last-child {
-            border-top-right-radius: 12px;
-            border-bottom-right-radius: 12px;
-        }
+
+
 
         table.dataTable tbody tr {
             border-bottom: 1px solid #f0f0f0;
@@ -152,14 +161,14 @@
         }
 
         table.dataTable tbody tr:hover {
-            background-color: #f8fffe;
+            background: #f0fdfa;
+            transform: scale(1.01);
         }
 
         table.dataTable tbody td {
             padding: 16px 12px;
             color: #666;
-            text-align: center;
-            vertical-align: middle;
+            text-align: left;
             border: none;
             font-size: 14px;
         }
@@ -170,13 +179,13 @@
             color: #333;
             font-size: 14px;
             display: block;
-            text-align: center;
+            text-align: left;
         }
 
         .doctor-name {
             color: #555;
             font-size: 14px;
-            text-align: center;
+            text-align: left;
         }
 
         /* ESTADOS - COLORES UNIFORMES */
@@ -192,7 +201,16 @@
             min-width: 120px;
             margin: 0 auto;
         }
-
+        .badge-pill {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 13px;
+            min-width: 120px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
         .bg-warning {
             background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%) !important;
             color: #856404 !important;
@@ -223,11 +241,6 @@
             border: 1px solid #d6d8db;
         }
 
-        /* COLUMNA DE ACCIÓN - CENTRADA */
-        .action-column {
-            text-align: center;
-            min-width: 150px;
-        }
 
         .action-status {
             font-weight: 600;
@@ -240,6 +253,39 @@
             border-radius: 20px;
             min-width: 130px;
             margin: 0 auto;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-sm {
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            min-width: 110px;
+            justify-content: center;
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #44a08d 0%, #3a8f7f 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(78, 205, 196, 0.4);
         }
 
         .text-success-action {
@@ -259,32 +305,45 @@
             color: #856404;
             border: 1px solid #ffeaa7;
         }
-
         .text-muted-action {
-            background: linear-gradient(135deg, #e2e3e5 0%, #d6d8db 100%);
-            color: #6c757d;
-            border: 1px solid #d6d8db;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 12px;
+            min-width: 130px;
+            margin: 0 auto;
         }
+        .text-muted{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 12px;
+            min-width: 130px;
+            margin: 0 auto;
+        }
+
+
 
         /* BOTÓN ASIGNAR HABITACIÓN - VERDE COMO LOS ENCABEZADOS */
         .btn-habitacion {
             background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
             color: white !important;
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 8px;
             border: none;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            min-width: 110px;
             justify-content: center;
-            gap: 6px;
-            text-decoration: none;
-            font-size: 13px;
-            min-width: 160px;
-            margin: 0 auto;
-            box-shadow: 0 2px 8px rgba(78, 205, 196, 0.2);
+            text-decoration-line: none;
         }
 
         .btn-habitacion:hover {
@@ -327,55 +386,36 @@
             margin-bottom: 20px;
         }
 
-        .dataTables_wrapper .dataTables_filter label {
-            font-weight: 600;
-            color: #666;
-        }
-
         .dataTables_wrapper .dataTables_filter input {
             border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            border-radius: 8px;
             padding: 8px 15px;
             margin-left: 10px;
-            width: 250px;
         }
 
         .dataTables_wrapper .dataTables_filter input:focus {
             outline: none;
             border-color: #4ecdc4;
-            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
-        }
-
-        .dataTables_wrapper .dataTables_length label {
-            font-weight: 600;
-            color: #666;
         }
 
         .dataTables_wrapper .dataTables_length select {
             border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 6px 12px;
+            border-radius: 8px;
+            padding: 5px 10px;
             margin: 0 10px;
         }
 
-        .dataTables_wrapper .dataTables_paginate {
-            margin-top: 20px;
-        }
-
         .dataTables_wrapper .dataTables_paginate .paginate_button {
-            padding: 8px 16px !important;
-            border-radius: 10px !important;
+            padding: 8px 12px !important;
+            border-radius: 8px !important;
             transition: all 0.3s !important;
             box-shadow: none !important;
             font-weight: 600 !important;
-            margin: 0 4px !important;
-            border: 1px solid #e0e0e0 !important;
         }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%) !important;
             color: white !important;
-            border-color: #4ecdc4 !important;
+            box-shadow: none !important;
             transform: translateY(-2px);
         }
 
@@ -387,54 +427,29 @@
 
         .dataTables_wrapper .dataTables_info {
             font-size: 14px;
-            color: #666;
             padding-top: 15px;
-            font-weight: 600;
         }
 
-        /* Responsive */
         @media (max-width: 1200px) {
-            .main-container {
-                padding: 15px 10px;
-            }
-
             .table-container-card {
                 padding: 15px;
-                overflow-x: auto;
-            }
-
-            table.dataTable {
-                min-width: 1100px;
             }
 
             table.dataTable thead th,
             table.dataTable tbody td {
-                padding: 12px 8px;
-                font-size: 13px;
+                padding: 15px 10px;
             }
 
-            .badge, .action-status, .btn-habitacion, .btn-confirmar {
-                min-width: 110px;
-                padding: 6px 12px;
-                font-size: 12px;
-            }
-
-            .stats-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
             .stats-container {
                 grid-template-columns: 1fr;
             }
 
-            h1 {
-                font-size: 1.8rem;
+            .main-container {
+                padding: 20px 10px;
             }
-        }
 
-        .text-info-emphasis {
+        }
+            .text-info-emphasis {
             font-weight: bold;
         }
     </style>
@@ -444,14 +459,42 @@
         <h1 class="text-info-emphasis">Pacientes con Citas Programadas</h1>
 
         @if(session('success'))
-            <div class="alert alert-success text-center">
-                {{ session('success') }}
+            <div class="alert alert-dismissible fade show" role="alert" style="
+                    border-radius: 8px;
+                    border: none;
+                    border-left: 4px solid #17a2b8;
+                    background: #d1ecf1;
+                    color: #0c5460;
+                    padding: 15px 20px;
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    margin-bottom: 25px;
+                ">
+                <div style="flex: 1;">
+                    <p style="margin: 5px 0 0 0; font-size: 17px;">{{ session('success') }}</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
         @if(session('error'))
-            <div class="alert alert-danger text-center">
-                {{ session('error') }}
+            <div class="alert alert-danger " role="alert" style="
+                    border-radius: 8px;
+                    border: none;
+                    border-left: 4px solid #dc3545;
+                    background: #f8d7da;
+                    color: #721c24;
+                    padding: 15px 20px;
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    margin-bottom: 25px;
+                ">
+                <div style="flex: 1;">
+                    <p style="margin: 5px 0 0 0; font-size: 17px;">{{ session('error') }}</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
@@ -491,14 +534,14 @@
             <table id="citasTable" class="table table-hover display nowrap" style="width:100%">
                 <thead>
                 <tr>
-                    <th>PACIENTE</th>
-                    <th>DOCTOR</th>
-                    <th>FECHA</th>
-                    <th>HORA</th>
-                    <th>ESPECIALIDAD</th>
-                    <th>ESTADO</th>
-                    <th>ACCIÓN</th>
-                    <th>ASIGNAR HABITACIÓN</th>
+                    <th class="text-center">PACIENTE</th>
+                    <th class="text-center">DOCTOR</th>
+                    <th class="text-center">FECHA</th>
+                    <th class="text-center">HORA</th>
+                    <th class="text-center">ESPECIALIDAD</th>
+                    <th class="text-center">ESTADO</th>
+                    <th colspan="2" class="text-center">ACCIÓN</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -530,54 +573,41 @@
                                 @if($cita->estado == 'pendiente') bg-warning
                                 @elseif($cita->estado == 'programada') bg-success
                                 @elseif($cita->estado == 'cancelada') bg-danger
-                                @elseif($cita->estado == 'reprogramada') bg-info
+                                @elseif($cita->estado == 'reprogramada') bg-danger
                                 @elseif($cita->estado == 'completada') bg-secondary
                                 @endif">
-                                <i class="fas
-                                    @if($cita->estado == 'pendiente') fa-clock
-                                    @elseif($cita->estado == 'programada') fa-calendar-check
-                                    @elseif($cita->estado == 'cancelada') fa-times-circle
-                                    @elseif($cita->estado == 'reprogramada') fa-redo
-                                    @elseif($cita->estado == 'completada') fa-check-circle
-                                    @endif"></i>
+
                                 {{ ucfirst($cita->estado) }}
                             </span>
                         </td>
-                        <td class="action-column">
+                        <td class="action-buttons">
+
                             @if($cita->estado == 'pendiente')
                                 <form action="{{ route('citas.confirmar', $cita->id) }}" method="POST" style="display:inline;">
                                     @csrf
-                                    <button type="submit" class="btn-confirmar">
+                                    <button type="submit" class="btn-sm btn-success">
                                         <i class="fas fa-check"></i> Confirmar
                                     </button>
                                 </form>
                             @elseif($cita->estado == 'programada')
-                                <span class="action-status text-success-action">
-                                    <i class="fas fa-check-circle"></i> Confirmada
-                                </span>
+                                <span class="text-success fw-bold"> Confirmada</span>
                             @elseif($cita->estado == 'cancelada')
-                                <span class="action-status text-danger-action">
-                                    <i class="fas fa-times-circle"></i> Cancelada
-                                </span>
+                                <span class="text-danger fw-bold"> Cancelada</span>
                             @elseif($cita->estado == 'reprogramada')
-                                <span class="action-status text-warning-action">
-                                    <i class="fas fa-redo"></i> Reprogramada
-                                </span>
+                                <span class=" fw-bold" style=" color: #A55B65"> Reprogramada</span>
                             @else
-                                <span class="action-status text-muted-action">
-                                    <i class="fas fa-minus-circle"></i> Sin acción
-                                </span>
+                                <span class="text-muted fw-bold">Finalizada</span>
                             @endif
                         </td>
                         <td>
                             @if($cita->paciente && in_array($cita->estado, ['programada', 'pendiente', 'reprogramada']))
                                 <a href="{{ route('recepcionista.habitaciones.asignar', ['paciente_id' => $cita->paciente->id]) }}"
-                                   class="btn-habitacion">
-                                    <i class="fas fa-bed"></i> Asignar Habitación
+                                   class="btn-habitacion fw-bold">
+                                   Asignar Habitación
                                 </a>
                             @else
-                                <span class="action-status text-muted-action">
-                                    <i class="fas fa-ban"></i> No disponible
+                                <span class="action-buttons text-muted-action fw-bold">
+                                  No disponible
                                 </span>
                             @endif
                         </td>
@@ -611,7 +641,7 @@
                 searching: true,
                 ordering: true,
                 info: true,
-                scrollX: true,
+                scrollX: false,
                 language: {
                     processing: "Procesando...",
                     search: "Buscar:",

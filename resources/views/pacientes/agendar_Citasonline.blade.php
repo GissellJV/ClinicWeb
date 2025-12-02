@@ -18,9 +18,9 @@
 
         h1 {
             color: #0f766e;
+            font-size: 2.5rem;
             margin-bottom: 30px;
             font-weight: 700;
-            font-size: 2.2rem;
         }
 
         .calendar-container {
