@@ -3,12 +3,45 @@
 namespace App\Http\Controllers;
 
 use App\Models\Calificacion;
+use App\Models\Cita;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CalificacionController extends Controller
 {
+    // Mostrar el formulario de edición
+
+
+    // Guardar los cambios
+
+    public function editar(Request $request)
+    {
+        $request->validate([
+            'doctor_id' => 'required|integer',
+            'paciente_id' => 'required|integer',
+            'estrellas' => 'required|integer|min:1|max:5',
+        ]);
+
+        $calificacion = Calificacion::where('doctor_id', $request->doctor_id)
+            ->where('paciente_id', $request->paciente_id)
+            ->first();
+
+        if (!$calificacion) {
+            $calificacion = new Calificacion();
+            $calificacion->doctor_id = $request->doctor_id;
+            $calificacion->paciente_id = $request->paciente_id;
+        }
+
+        $calificacion->estrellas = $request->estrellas;
+        $calificacion->comentario = $request->comentario ?? '';
+        $calificacion->save();
+
+        // Redirigir a la sección #doctors
+        return redirect(url('/#doctors'))->with('success', 'Calificación actualizada correctamente');
+    }
+
+
     private function obtenerPacienteId()
     {
         return session('paciente_id');
@@ -18,29 +51,47 @@ class CalificacionController extends Controller
     public function store(Request $request)
     {
         if (!session('paciente_id')) {
-        return redirect()->route('inicioSesion')
-            ->with('error', 'Debes iniciar sesión para calificar al doctor');
-    }
-
-        // VERIFICAR SESIÓN
-        $pacienteId = session('paciente_id');
-        if (!$pacienteId) {
-            return redirect('/#doctors')->with('error', 'No se pudo identificar al paciente.');
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión para calificar al doctor');
         }
 
-        // VALIDAR
+        $pacienteId = session('paciente_id');
+
+        // Validación
         $validated = $request->validate([
             'doctor_id' => 'required|exists:empleados,id',
             'estrellas' => 'required|integer|min:1|max:5',
             'comentario' => 'nullable|string|max:500'
         ]);
 
-        // EVITAR DUPLICADO
-        if (Calificacion::yaCalificado($validated['doctor_id'], $pacienteId)) {
-            return redirect('/#doctors')->with('info', 'Ya has calificado a este doctor.');
+        //  1. VERIFICAR SI EL PACIENTE TUVO CITA CON ESTE DOCTOR
+        $tuvoCita = Cita::where('paciente_id', $pacienteId)
+            ->where('empleado_id', $validated['doctor_id'])
+            ->where('estado', 'Completada')
+            ->exists();
+
+
+        if (!$tuvoCita) {
+            // Mostrar modal o mensaje
+            return redirect('/#doctors')->with('error', 'No puedes calificar: no has tenido una cita con este doctor.');
         }
 
-        // GUARDAR
+        // 2. VERIFICAR SI YA HABÍA CALIFICADO
+        $calificacionExistente = Calificacion::where('doctor_id', $validated['doctor_id'])
+            ->where('paciente_id', $pacienteId)
+            ->first();
+
+        if ($calificacionExistente) {
+            //3. SI YA CALIFICÓ → se actualiza
+            $calificacionExistente->update([
+                'estrellas' => $validated['estrellas'],
+                'comentario' => $validated['comentario']
+            ]);
+
+            return redirect('/#doctors')->with('success', 'Calificación actualizada correctamente.');
+        }
+
+        // 4. SI NO EXISTE → se crea una nueva
         Calificacion::create([
             'doctor_id' => $validated['doctor_id'],
             'paciente_id' => $pacienteId,
@@ -49,8 +100,8 @@ class CalificacionController extends Controller
         ]);
 
         return redirect('/#doctors')->with('success', '¡Gracias por tu calificación!');
-
     }
+
 
     public function verCalificaciones($doctorId)
     {

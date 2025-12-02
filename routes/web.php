@@ -57,6 +57,10 @@ Route::get('/doctores', [DoctorController::class, 'visualizacion_Doctores'])->na
 //para calificar como paciente
 Route::post('/calificar', [CalificacionController::class, 'store'])->name('calificar');
 
+
+// Guardar cambios (POST)
+Route::post('/editar-calificacion', [CalificacionController::class, 'editar'])->name('calificacion.editar');
+
 // Rutas adicionales opcionales
 Route::get('/doctor/{id}/calificaciones', [CalificacionController::class, 'verCalificaciones'])->name('doctor.calificaciones');
 Route::put('/calificacion/{id}', [CalificacionController::class, 'update'])->name('calificacion.update');
