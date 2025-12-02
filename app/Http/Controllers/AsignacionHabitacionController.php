@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class AsignacionHabitacionController extends Controller
 {
-    // Mostrar lista de habitaciones (H28)
+    // Mostrar lista de habitaciones
     public function index()
     {
         if (!session('cargo') || session('cargo') != 'Enfermero') {
@@ -40,7 +40,6 @@ class AsignacionHabitacionController extends Controller
                 $query->where('fecha', '>=', now());
             })
             ->get();
-
 
         return view('enfermeria.habitaciones.asignar', compact('habitacionesDisponibles', 'pacientes'));
     }
@@ -128,7 +127,7 @@ class AsignacionHabitacionController extends Controller
         }
     }
 
-    public function liberarRecepcionista($id) // Resepcionista
+    public function liberarRecepcionista($id)
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
             return redirect()->route('inicioSesion')
@@ -156,7 +155,8 @@ class AsignacionHabitacionController extends Controller
         }
     }
 
-    public function createRecepcionista()
+    // ✨ MODIFICADO: Ahora acepta paciente_id opcional
+    public function createRecepcionista(Request $request)
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
             return redirect()->route('inicioSesion')
@@ -172,7 +172,29 @@ class AsignacionHabitacionController extends Controller
             // Solo habitaciones disponibles
             $habitacionesDisponibles = Habitacion::where('estado', 'disponible')->get();
 
-            return view('recepcionista.habitaciones.asignar', compact('habitacionesDisponibles', 'pacientes'));
+            // ✨ NUEVO: Obtener paciente seleccionado si viene el parámetro
+            $pacienteSeleccionado = null;
+            if ($request->has('paciente_id')) {
+                $pacienteSeleccionado = Paciente::find($request->paciente_id);
+
+                // Verificar si el paciente ya tiene habitación
+                if ($pacienteSeleccionado) {
+                    $tieneHabitacion = $pacienteSeleccionado->asignacionesHabitacion()
+                        ->where('estado', 'activo')
+                        ->exists();
+
+                    if ($tieneHabitacion) {
+                        return redirect()->route('listadocitas')
+                            ->with('error', 'El paciente ya tiene una habitación asignada');
+                    }
+                }
+            }
+
+            return view('recepcionista.habitaciones.asignar', compact(
+                'habitacionesDisponibles',
+                'pacientes',
+                'pacienteSeleccionado'
+            ));
 
         } catch (\Exception $e) {
             \Log::error('Error en createRecepcionista: ' . $e->getMessage());
@@ -187,7 +209,6 @@ class AsignacionHabitacionController extends Controller
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
 
-        // Usar la misma lógica de store pero sin la validación de enfermero
         $request->validate([
             'paciente_id' => 'required|exists:pacientes,id',
             'habitacion_id' => 'required|exists:habitaciones,id',
@@ -225,8 +246,8 @@ class AsignacionHabitacionController extends Controller
             $habitacion->update(['estado' => 'ocupada']);
 
             DB::commit();
-            return redirect()->route('recepcionista.habitaciones.ocupadas')
-                ->with('success', 'Habitación asignada correctamente');
+            return redirect()->route('listadocitas')
+                ->with('success', 'Habitación asignada correctamente al paciente');
 
         } catch (\Exception $e) {
             DB::rollBack();
