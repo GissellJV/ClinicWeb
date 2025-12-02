@@ -106,6 +106,11 @@
             text-shadow: 0 0 4px rgba(255,255,255,0.7);
         }
 
+        .nav-modern .nav-link-modern.dropdown-toggle {
+            font-weight: 600;
+        }
+
+
         /* Botón Registrarse */
         .btn-register {
             background: #ffffff;
@@ -209,7 +214,7 @@
                         </li>
                     @else
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-semibold text-custom d-flex align-items-center" href="#" id="userDropdown"
+                            <a class="nav-link nav-link-modern dropdown-toggle d-flex align-items-center" href="#" id="userDropdown"
                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-person-circle me-1"></i> {{ session('paciente_nombre') }}
                             </a>

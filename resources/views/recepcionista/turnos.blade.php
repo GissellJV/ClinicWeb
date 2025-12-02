@@ -101,19 +101,22 @@
         .formulario .btn-register {
             padding: 0.875rem 2rem;
             background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-            border: none;
-            border-radius: 8px;
-            color: white;
             font-weight: 600;
             font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+
+
+            background: #00ffe7;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            color: black;
+            transition: box-shadow .25s ease;
         }
 
         .formulario .btn-register:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            box-shadow: 0 0 15px #00ffe7;
+            background: linear-gradient(135deg, #4ecdc4 0%, #00ffe7 100%);
         }
 
         .formulario .btn-cancel {
@@ -223,20 +226,6 @@
             animation: modalSlideIn 0.3s ease-out;
         }
 
-        .modal-content-modern {
-            border: none;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        .modal-header-modern {
-            background: linear-gradient(135deg, #00bfa6, #009e8e);
-            color: white;
-            padding: 1.5rem 2rem;
-            border: none;
-        }
-
         .modal-title-modern {
             font-weight: 700;
             font-size: 1.4rem;
@@ -260,59 +249,15 @@
             transform: rotate(90deg);
         }
 
-        .modal-body-modern {
-            padding: 2rem;
-            background: linear-gradient(180deg, #ffffff, #f8fffe);
-        }
-
-        .field-label-modern {
-            font-weight: 600;
-            color: #009e8e;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-        }
-
         .field-label-modern i {
             margin-right: 0.5rem;
             color: #4ecdc4;
-        }
-
-        .field-value-modern {
-            background: white;
-            border: 2px solid #e7fffc;
-            border-radius: 12px;
-            padding: 0.875rem 1.25rem;
-            font-size: 1rem;
-            color: #2c3e50;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .field-value-modern::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 4px;
-            background: linear-gradient(180deg, #4ecdc4, #00bfa6);
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
         }
 
         .field-value-modern:hover {
             border-color: #4ecdc4;
             box-shadow: 0 4px 12px rgba(78, 205, 196, 0.2);
             transform: translateX(5px);
-        }
-
-        .field-value-modern:hover::before {
-            transform: scaleY(1);
         }
 
         .estado-badge {
@@ -349,42 +294,10 @@
             padding: 1.5rem 2rem;
         }
 
-        .btn-close-modal {
-            background: white;
-            border: 2px solid #dc3545;
-            color: #dc3545;
-            padding: 0.75rem 2rem;
-            border-radius: 12px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
 
-        .btn-close-modal::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(78, 205, 196, 0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.4s ease, height 0.4s ease;
-        }
-
-        .btn-close-modal:hover::before {
-            width: 300px;
-            height: 300px;
-        }
 
         .btn-close-modal:hover {
-            background: linear-gradient(135deg, #dc3545, #ff6b6b);
-            color: white;
-            border-color: #dc3545;
-            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
-            transform: translateY(-2px);
+            background: #d5d5d5;
         }
 
         @keyframes fadeInUp {
@@ -434,6 +347,72 @@
         .modal.show .field-group:nth-child(8) {
             animation-delay: 0.4s;
         }
+
+        /* --- CONTENEDOR DEL MODAL --- */
+        .modal-content-modern {
+            background: #ffffffee;
+            backdrop-filter: blur(12px);
+            border-radius: 22px;
+            border: 2px solid #00ffc8;
+            box-shadow: 0 0 30px #00ffe680;
+            overflow: hidden;
+        }
+
+        /* --- HEADER CON DEGRADADO --- */
+        .modal-header-modern {
+            background: linear-gradient(135deg, #00eaff, #00ffbd);
+            padding: 18px 24px;
+            border-bottom: none;
+        }
+
+        .modal-title-modern {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* --- X con ANIMACIÓN --- */
+        .btn-x-rotate {
+            transition: transform .35s ease;
+        }
+
+        .btn-x-rotate:hover {
+            transform: rotate(180deg);
+        }
+
+        /* --- BODY MODERNO --- */
+        .modal-body-modern {
+            padding: 28px;
+        }
+
+        /* Labels */
+        .field-label-modern {
+            font-weight: 600;
+            color: #000000;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Valores */
+        .field-value-modern {
+            padding: 12px 16px;
+            background: #f7fffe;
+            border: 2px solid #00e5d2;
+            border-radius: 14px;
+            font-size: 15px;
+            box-shadow: inset 0 0 6px #00ffe660;
+            overflow: hidden;
+        }
+
+        /* --- FOOTER --- */
+        .modal-footer-modern {
+            border-top: none;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+
+
     </style>
 
     <br><br><br>
@@ -450,15 +429,21 @@
                 <div class="modal fade" id="verDetallesModal" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered">
                         <div class="modal-content modal-content-modern">
+
+                            <!-- HEADER moderno -->
                             <div class="modal-header modal-header-modern">
                                 <h5 class="modal-title modal-title-modern">
-                                    Detalles del Turno
+                                    <i class="bi bi-info-circle me-2"></i> Detalles del Turno
                                 </h5>
-                                <button type="button" class="btn-close btn-close-modern" data-bs-dismiss="modal"></button>
+
+                                <!-- X con animación -->
+                                <button type="button" class="btn-close btn-close-modern btn-x-rotate" data-bs-dismiss="modal"></button>
                             </div>
 
+                            <!-- BODY moderno -->
                             <div class="modal-body modal-body-modern">
                                 <div class="row g-4">
+
                                     <div class="col-md-6 field-group">
                                         <label class="field-label-modern">
                                             <i class="bi bi-person-badge"></i> Doctor
@@ -516,14 +501,17 @@
                                         </label>
                                         <div class="field-value-modern" id="detalleMotivo" style="min-height: 60px;">—</div>
                                     </div>
+
                                 </div>
                             </div>
 
+                            <!-- FOOTER moderno -->
                             <div class="modal-footer modal-footer-modern">
-                                <button type="button" class="btn btn-close-modal" data-bs-dismiss="modal">
-                                    <i class="bi bi-x-circle me-2"></i>Cerrar
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 8px; padding: 10px 20px;">
+                                    Cerrar
                                 </button>
                             </div>
+
                         </div>
                     </div>
                 </div>
