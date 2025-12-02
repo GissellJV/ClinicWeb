@@ -56,6 +56,8 @@ Route::get('/doctores', [DoctorController::class, 'visualizacion_Doctores'])->na
 
 //para calificar como paciente
 Route::post('/calificar', [CalificacionController::class, 'store'])->name('calificar');
+// Guardar cambios (POST)
+Route::post('/editar-calificacion', [CalificacionController::class, 'editar'])->name('calificacion.editar');
 
 // Rutas adicionales opcionales
 Route::get('/doctor/{id}/calificaciones', [CalificacionController::class, 'verCalificaciones'])->name('doctor.calificaciones');
@@ -203,3 +205,10 @@ Route::post('/publicidad', [PublicidadController::class, 'store'])->name('public
 Route::get('/pacientes/medicamentos', [PacienteController::class, 'medicamentos'])->name('pacientes.medicamentos');
 Route::get('/pacientes/medicamentos', [PacienteController::class, 'medicamentosPorPaciente'])->name('enfermeria.historial');
 Route::post('/pacientes/asignar-medicamento', [PacienteController::class, 'asignarMedicamento'])->name('asignar.medicamento');
+
+
+// Historial por fecha (Recepcionista)
+Route::post('/expedientes/{id}/actualizar-historial', [ExpedienteController::class, 'actualizarHistorialExpediente'])
+    ->name('expedientes.actualizarHistorial');
+Route::get('/expedientes/{id}/historial', [ExpedienteController::class, 'verHistorial'])
+    ->name('doctor.historial');

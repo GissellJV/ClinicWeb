@@ -447,6 +447,81 @@
             color: white;
         }
 
+        /* === CONTENEDOR DEL MODAL === */
+        .modal-content {
+            background: #ffffffee !important;
+            backdrop-filter: blur(12px);
+            border-radius: 22px !important;
+            border: 2px solid #00ffc8 !important;
+            box-shadow: 0 0 30px #00ffe680 !important;
+            overflow: hidden;
+        }
+
+        /* --- HEADER DEL MODAL --- */
+        .modal-header {
+            background: linear-gradient(90deg, #00e1ff, #00ffc8) !important;
+            padding: 15px 20px !important;
+            border-bottom: none !important;
+        }
+
+        .modal-title {
+            color: #fff !important;
+            margin: 0 !important;
+            font-size: 26px !important;
+            font-weight: 800 !important;
+        }
+
+        /* --- BOTÓN CERRAR --- */
+        .btn-close {
+            transition: transform .35s ease !important;
+        }
+
+        .btn-close:hover {
+            transform: rotate(180deg) !important;
+        }
+
+        /* --- FOOTER DEL MODAL --- */
+        .modal-footer {
+            border-top: none !important;
+            padding: 16px 24px !important;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* --- BOTONES --- */
+        .modal-footer .btn-danger {
+            border-radius: 10px !important;
+            padding: 10px 20px !important;
+            font-weight: 600 !important;
+            transition: all 0.3s ease;
+            border: none !important;
+            cursor: pointer;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f) !important;
+            color: white !important;
+        }
+
+        .modal-footer .btn-danger:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5) !important;
+        }
+
+        /* --- BODY DEL MODAL --- */
+        .modal-body {
+            padding: 30px !important;
+        }
+
+        /* --- PARÁGRAFOS DEL BODY --- */
+        .modal-body p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-body p small {
+            font-size: 14px;
+            color: #999;
+        }
     </style>
 
     <div class="empleados-container">

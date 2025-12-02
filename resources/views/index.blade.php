@@ -100,15 +100,7 @@
             filter: brightness(0) invert(1);
         }
 
-        /* Alerta de acceso denegado */
-        .alert-login {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
-            color: white;
-            border: none;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-        }
+
 
         .alert-login strong {
             font-size: 1.1rem;
@@ -321,15 +313,7 @@
             padding: 100px 20px;
         }
 
-        .booking-form {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(15px);
-            padding: 50px;
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
+
 
         .booking h2 {
             text-align: center;
@@ -339,12 +323,7 @@
             font-weight: 700;
         }
 
-        .inputs {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
+
 
         .input-group label {
             color: var(--white);
@@ -377,27 +356,6 @@
             background: var(--dark);
         }
 
-        .btn-search {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: var(--dark);
-            padding: 16px 60px;
-            border: none;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.4s;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 0 auto;
-            box-shadow: 0 8px 25px rgba(0, 217, 192, 0.4);
-        }
-
-        .btn-search:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 35px rgba(0, 217, 192, 0.6);
-        }
 
         /* SECTIONS */
         section {
@@ -699,15 +657,6 @@
         }
 
 
-        /* TESTIMONIALS */
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 35px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
         .testimonial {
             background: var(--light);
             padding: 40px;
@@ -915,12 +864,6 @@
             .inputs {
                 grid-template-columns: 1fr;
             }
-        }
-
-        /* Mantener el fondo oscuro */
-        .promo-section {
-            background: #0f0f0f;
-            padding: 50px 0;
         }
 
 
@@ -1170,22 +1113,6 @@
             scroll-behavior: smooth;
         }
 
-        /* Tarjetas */
-        .testimonial-card {
-            min-width: 300px;
-            background: #e8fefe;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.10);
-            border: 2px solid transparent;
-            transition: all .3s ease;
-        }
-
-        .testimonial-card:hover {
-            border-color: #4ecdc4;
-            transform: translateY(-4px);
-        }
-
         /* Texto */
         .testimonial-text {
             font-size: 1rem;
@@ -1212,16 +1139,6 @@
             font-weight: 700;
         }
 
-        .author-name {
-            font-size: 1.1rem;
-            margin: 0;
-        }
-
-        .author-info {
-            font-size: .85rem;
-            color: #555;
-            margin: 0;
-        }
         .service-icon {
             font-size: 2.4rem;
             color: #4ecdc4;
@@ -1269,12 +1186,6 @@
             }
         }
 
-
-        .comentario-widget {
-            margin-top: 30px;
-            text-align: center;
-        }
-
         /* Botón para abrir */
         .open-comentario-btn {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
@@ -1295,35 +1206,6 @@
         .open-comentario-btn:hover {
             transform: translateY(-4px);
             box-shadow: 0 12px 35px rgba(0, 217, 192, 0.6);
-        }
-
-        /* Tarjeta oculta */
-        .comentario-card {
-            width: 100%;
-            max-width: 500px;
-            margin: 20px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-            transform: translateY(10px);
-            opacity: 0;
-            pointer-events: none;
-            transition: 0.3s ease;
-        }
-
-        .comentario-card.show {
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        /* Encabezado con X */
-        .comentario-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
         }
 
         .close-btn {
@@ -1482,21 +1364,6 @@
             margin-top: 20px;
         }
 
-        .btn-agregar-especialidad {
-            background: #00c6ff;
-            padding: 10px 18px;
-            border-radius: 10px;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-
-        .btn-agregar-especialidad:hover {
-            background: #008ecc;
-        }
-
         .form-especialidad {
             text-align: left;
             background: white;
@@ -1577,6 +1444,428 @@
             .stat-number {
                 font-size: 2.2rem;
             }
+        }
+
+
+        /* Fondo oscuro */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.35);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal.show {
+            display: flex; /* solo se muestra cuando se agrega la clase */
+        }
+
+
+
+        /* Caja */
+        .modal-content {
+            background: white;
+            width: 550px;
+            padding:  0;
+            border-radius: 20px;
+            position: relative;
+            animation: pop 0.25s ease-out;
+        }
+
+        .modal-content form {
+            padding: 20px 30px;
+        }
+
+        /* Animación de aparición */
+        @keyframes pop {
+            0% { transform: scale(.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Botón de la X */
+        .close-btn {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            font-size: 22px;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform .35s ease, background .3s;
+            background: none;
+            color: white;
+        }
+
+        /* Aquí está la animación de giro */
+        .close-btn:hover {
+            transform: rotate(180deg);
+        }
+
+        /* Header */
+        .modal-header {
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            padding: 15px 20px;
+        }
+
+        .modal-header h2 {
+            color: #fff;;
+            margin: 0;
+            font-size: 26px;
+            font-weight: 800;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+
+
+        /* Caja de texto */
+        textarea {
+            width: 100%;
+            height: 160px;
+            border-radius: 12px;
+            border: 2px solid #00e5d2;
+            padding: 12px;
+            outline: none;
+            font-size: 16px;
+            resize: none;
+        }
+
+        textarea:focus {
+            border-color: #00f3ff;
+            box-shadow: 0 0 10px #00fff36b;
+        }
+
+        /* Footer */
+        .modal-footer {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 25px 0;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .cancel-btn {
+            background: #e6e6e6;
+            padding: 10px 22px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .open-comentario-btn {
+            background: #00ffe7;
+            padding: 10px 22px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            color: black;
+            transition: box-shadow .25s ease;
+        }
+
+        /* Brillo al pasar */
+        .open-comentario-btn:hover {
+            box-shadow: 0 0 15px #00ffe7;
+        }
+
+
+
+        .comentario-area {
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 30px;
+        }
+
+        .open-comentario-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .modal-content {
+            position: relative;
+            background: #fff;
+            padding: 0;
+            overflow: hidden;
+            border: 3px solid #24f3e2;
+            box-shadow: 0 0 20px rgba(36, 243, 226, 0.4);
+            border-radius: 18px;
+        }
+        .modal-content form {
+            padding: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            border: 2px solid #00e1ff;
+            border-radius: 10px;
+            padding: 10px;
+            resize: vertical;
+            margin-top: 10px;
+        }
+        .cancel-btn,
+        .send-comentario-btn {
+            padding: 12px 35px;
+            font-size: 15px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s ease;
+        }
+        .send-comentario-btn {
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            color: #000;
+        }
+        .cancel-btn:hover {
+            background: #d5d5d5;
+        }
+
+        .send-comentario-btn:hover {
+            opacity: 0.85;
+        }
+        /* Estilo luminoso para inputs del modal */
+        .modal-content input,
+        .modal-content textarea {
+            border: 2px solid #24f3e2;
+            border-radius: 14px;
+            background: white;
+            padding: 10px 14px;
+            font-size: 16px;
+            width: 100%;
+            box-shadow: 0 0 12px rgba(36, 243, 226, 0.25);
+            transition: 0.2s;
+        }
+
+        /* Hover luminoso */
+        .modal-content input:hover,
+        .modal-content textarea:hover {
+            box-shadow: 0 0 18px rgba(36, 243, 226, 0.35);
+        }
+
+
+        .modal-content input[type="file"] {
+            padding: 8px;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* === Modal de Especialidades (clon exacto del de comentarios) === */
+
+        /* Fondo */
+        .modal-especialidad {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.35);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+            z-index: 9999;
+        }
+
+        .modal-especialidad.show {
+            display: flex;
+        }
+
+        /* Caja */
+        .modal-especialidad-content {
+            background: white;
+            width: 550px;
+            padding: 30px;
+            border-radius: 20px;
+            position: relative;
+            animation: pop 0.25s ease-out;
+            overflow: hidden;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Botón X */
+        .close-especialidad-btn {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            font-size: 22px;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform .35s ease, background .3s;
+            background: none;
+            color: white;
+        }
+
+        .close-especialidad-btn:hover {
+            transform: rotate(180deg);
+        }
+
+        /* Título */
+        .modal-especialidad-header h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        /* Labels */
+        .modal-especialidad-content label {
+            display: block;
+            text-align: left;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        /* Inputs */
+        .modal-especialidad-content input[type="text"],
+        .modal-especialidad-content input[type="file"],
+        .modal-especialidad-content textarea {
+            width: 100%;
+            border-radius: 12px;
+            border: 2px solid #00e5d2;
+            padding: 12px;
+            outline: none;
+            font-size: 16px;
+            margin-bottom: 18px;
+        }
+
+        /* textarea igual al otro */
+        .modal-especialidad-content textarea {
+            height: 140px;
+            resize: none;
+        }
+
+        .modal-especialidad-content input:focus,
+        .modal-especialidad-content textarea:focus {
+            border-color: #00f3ff;
+            box-shadow: 0 0 10px #00fff36b;
+        }
+
+        /* Footer (botones) */
+        .modal-especialidad-footer {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        /* Botón cancelar */
+        .especialidad-cancel-btn {
+            border-radius: 8px;
+            padding: 10px 20px;
+            border: 1px solid #6c757d;
+            background: #6c757d;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .especialidad-cancel-btn:hover {
+            background: #5a6268;
+            border-color: #545b62;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Botón guardar */
+        .especialidad-save-btn {
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            padding: 12px 35px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .especialidad-save-btn:hover {
+            opacity: .85;
+        }
+
+        /* Botón abrir */
+        .btn-especialidad-open {
+            background: #00ffe7;
+            padding: 10px 22px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            color: black;
+            transition: box-shadow .25s ease;
+        }
+        .btn-especialidad-open:hover {
+            box-shadow: 0 0 15px #00ffe7;
+        }
+
+        .modal-especialidad-header {
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            padding: 15px 20px;
+        }
+        .modal-especialidad-header h2 {
+            color: #fff;
+            margin: 0;
+            font-size: 26px;
+            font-weight: 800;
+        }
+        .modal-especialidad-content {
+            background: white;
+            width: 550px;
+            padding:  0;
+            position: relative;
+            animation: pop 0.25s ease-out;
+            border: 3px solid #24f3e2;
+            box-shadow: 0 0 20px rgba(36, 243, 226, 0.4);
+            border-radius: 18px;
+        }
+        .modal-especialidad-content form {
+            padding: 20px 30px;
+        }
+
+        /* Estilo luminoso para inputs del modal */
+        .modal-especialidad-content input,
+        .modal-especialidad-content textarea {
+            border: 2px solid #24f3e2;
+            border-radius: 14px;
+            background: white;
+            padding: 10px 14px;
+            font-size: 16px;
+            width: 100%;
+            box-shadow: 0 0 12px rgba(36, 243, 226, 0.25);
+            transition: 0.2s;
+        }
+
+        /* Hover luminoso */
+        .modal-especialidad-content input:hover,
+        .modal-especialidad-content textarea:hover {
+            box-shadow: 0 0 18px rgba(36, 243, 226, 0.35);
+        }
+
+        /* Igual estilo luminoso para el área del archivo */
+        .modal-especialidad-content input[type="file"] {
+            padding: 8px;
+            background: white;
+            cursor: pointer;
         }
     </style>
 
@@ -1712,27 +2001,46 @@
     </div>
     @if(session('cargo') === 'Recepcionista')
         <div class="especialidad-wrapper">
+
             <button id="btnAgregarEspecialidad" class="btn-especialidad-open">
                 Agregar Especialidad
             </button>
 
-            <div id="formEspecialidad" class="form-especialidad">
-                <h3>Agregar Especialidad</h3>
-                <form id="especialidadForm" enctype="multipart/form-data"
-                      action="{{ route('especialidades.store') }}" method="POST">
-                    @csrf
-                    <label>Nombre de la especialidad</label>
-                    <input type="text" name="nombre" required>
-                    <label>Descripción</label>
-                    <textarea name="descripcion" required></textarea>
-                    <label>Ícono</label>
-                    <input type="file" name="icono" accept="image/*" required>
-                    <button type="submit">Guardar</button>
-                </form>
-                @if(session('success'))
-                    <p>{{ session('success') }}</p>
-                @endif
+            <div id="modalEspecialidad" class="modal-especialidad">
+                <div class="modal-especialidad-content">
+
+                    <button class="close-especialidad-btn" id="closeEspecialidad">✕</button>
+
+                    <div class="modal-especialidad-header">
+                        <h2>Agregar Especialidad</h2>
+                    </div>
+
+                    <form id="especialidadForm" enctype="multipart/form-data"
+                          action="{{ route('especialidades.store') }}" method="POST">
+
+                        @csrf
+                        <label>Nombre de la especialidad</label>
+                        <div class="input-wrapper">
+                        <input type="text" placeholder="Escribe el nombre de la especialidad aquí..." name="nombre" required>
+                        </div>
+
+                        <label>Descripción</label>
+                            <div class="input-wrapper">
+                        <textarea name="descripcion" placeholder="Escribe la descripción de la especialidad aquí..." required></textarea>
+                            </div>
+
+                        <label>Ícono</label>
+                        <input type="file" name="icono" accept="image/*" required>
+
+                        <div class="modal-especialidad-footer">
+                            <button type="button" class="especialidad-cancel-btn" id="cancelEspecialidad">Cancelar</button>
+                            <button type="submit" class="especialidad-save-btn">Guardar</button>
+                        </div>
+                    </form>
+
+                </div>
             </div>
+
         </div>
     @endif
     </section>
@@ -1799,6 +2107,7 @@
 
 
     <!-- SECCIÓN DOCTORES -->
+    <!-- SECCIÓN DOCTORES -->
     <section id="doctors" class="doctors">
         <div class="section-header">
             <p class="section-subtitle">Nuestro Equipo</p>
@@ -1812,27 +2121,26 @@
                 <i class="bi bi-chevron-left"></i>
             </button>
 
-            <!-- DOCTOR CON SU CALIFICACION -->
-        <!-- Contenedor deslizable -->
-        <div class="cards-wrapper"  id="doctorsWrapper" style="display: flex; gap: 2rem; overflow-x: auto; scroll-behavior: smooth; padding: 1rem 0; scrollbar-width: none; -ms-overflow-style: none;">
-            @forelse($doctores as $doctor)
-            <div class="doctor-card"  >
-                @if($doctor->foto)
-                    <img src="data:image/jpeg;base64,{{ base64_encode($doctor->foto) }}"
-                         alt="Foto {{ $doctor->nombre }}"
-                         class="doctor-img">
-                @else
-                    <div class="doctor-photo-placeholder">
-                        <i class="bi bi-person-circle"></i>
-                    </div>
-                @endif
+            <!-- Contenedor deslizable -->
+            <div class="cards-wrapper" id="doctorsWrapper" style="display: flex; gap: 2rem; overflow-x: auto; scroll-behavior: smooth; padding: 1rem 0; scrollbar-width: none; -ms-overflow-style: none;">
+                @forelse($doctores as $doctor)
+                    <div class="doctor-card">
+                        @if($doctor->foto)
+                            <img src="data:image/jpeg;base64,{{ base64_encode($doctor->foto) }}"
+                                 alt="Foto {{ $doctor->nombre }}"
+                                 class="doctor-img">
+                        @else
+                            <div class="doctor-photo-placeholder">
+                                <i class="bi bi-person-circle"></i>
+                            </div>
+                        @endif
 
-                <div class="doctor-info">
-                    <h3 class="doctor-name">{{ $doctor->genero === 'Femenino' ? 'Dra.' : 'Dr.' }} {{ $doctor->nombre }} {{ $doctor->apellido }}</h3>
-                    <p class="doctor-specialty">{{ $doctor->departamento === 'Medicina General'
-                    ? 'Medicina General'
-                    : 'Especialista en ' . $doctor->departamento }}</p>
-                    <div class="doctor-rating">
+                        <div class="doctor-info">
+                            <h3 class="doctor-name">{{ $doctor->genero === 'Femenino' ? 'Dra.' : 'Dr.' }} {{ $doctor->nombre }} {{ $doctor->apellido }}</h3>
+                            <p class="doctor-specialty">
+                                {{ $doctor->departamento === 'Medicina General' ? 'Medicina General' : 'Especialista en ' . $doctor->departamento }}
+                            </p>
+                            <div class="doctor-rating">
                             <span class="stars">
                                 @for ($i = 1; $i <= 5; $i++)
                                     @if ($doctor->promedio_calificacion >= $i)
@@ -1844,53 +2152,76 @@
                                     @endif
                                 @endfor
                             </span>
-                        <span class="rating-num">{{ number_format($doctor->promedio_calificacion, 1) }} ({{ $doctor->total_calificaciones }} reseñas)</span>
-                    </div>
-                    <div class="doctor-stats">
-                        <span class="doctor-stat"><i class="bi bi-people-fill"></i> 1,200+ pacientes</span>
-                        <span class="doctor-stat"><i class="bi bi-calendar-check"></i> 15 años exp.</span>
+                                <span class="rating-num">{{ number_format($doctor->promedio_calificacion, 1) }} ({{ $doctor->total_calificaciones }} reseñas)</span>
+                            </div>
+
+                            @php
+                                $esPaciente = session('tipo_usuario') === 'paciente';
+                                $calificacionPaciente = $doctor->calificaciones->firstWhere('paciente_id', session('paciente_id'));
+                            @endphp
+
+                            @if($esPaciente)
+                                @if($doctor->tuvo_cita)
+                                    @if(!$doctor->ya_califico)
+                                        <!-- Botón calificar -->
+                                        <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#calificarModal{{ $doctor->id }}">
+                                            <i class="bi bi-star"></i> Calificar Doctor
+                                        </button>
+                                    @else
+                                        <!-- Botón editar calificación -->
+                                        <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#editarCalificacionModal{{ $doctor->id }}">
+                                            <i class="bi bi-pencil-square"></i> Editar Calificación
+                                        </button>
+                                    @endif
+                                @else
+                                    <!-- No tuvo cita -->
+                                    <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#noCitaModal">
+                                        <i class="bi bi-x-circle"></i> No puedes calificar
+                                    </button>
+                                @endif
+                            @else
+                                <!-- No es paciente -->
+                                <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#loginRequiredModal">
+                                    <i class="bi bi-star"></i> Calificar Doctor
+                                </button>
+                            @endif
+                        </div>
                     </div>
 
-                    <!-- Botón calificar -->
-                    @php $esPaciente = session('tipo_usuario') === 'paciente'; @endphp
-                    @if($esPaciente && !$doctor->ya_califico)
-                        <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#calificarModal{{ $doctor->id }}">
-                            <i class="bi bi-star"></i> Calificar Doctor
-                        </button>
-                    @elseif($doctor->ya_califico)
-                        <button type="button" class="btn-book" disabled style="opacity: 0.6; cursor: not-allowed;">
-                            <i class="bi bi-check-circle"></i> Ya calificaste
-                        </button>
-                    @else
-                        <button type="button" class="btn-book" data-bs-toggle="modal" data-bs-target="#loginRequiredModal">
-                            <i class="bi bi-star"></i> Calificar Doctor
-                        </button>
-                    @endif
-                </div>
-            </div>
+                    <!-- Modal No Cita -->
+                    <div class="modal fade" id="noCitaModal" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-warning text-dark">
+                                    <h5 class="modal-title"><i class="bi bi-exclamation-triangle"></i> No puedes calificar</h5>
+                                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <p><strong>No puedes calificar a este doctor.</strong></p>
+                                    <p>Solo puedes calificar a doctores con los que has tenido cita.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    <!-- Modal para calificar (solo pacientes que no han calificado) -->
+                    <!-- Modal Calificar -->
                     @if($esPaciente && !$doctor->ya_califico)
-                        <div class="modal fade" id="calificarModal{{ $doctor->id }}" tabindex="-1" aria-labelledby="calificarModalLabel{{ $doctor->id }}" aria-hidden="true">
+                        <div class="modal fade" id="calificarModal{{ $doctor->id }}" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
-                                    <form action="{{ route('calificar') }}" method="POST" id="formCalificar{{ $doctor->id }}">
+                                    <form action="{{ route('calificacion.editar') }}" method="POST" id="formCalificar{{ $doctor->id }}">
                                         @csrf
                                         <input type="hidden" name="doctor_id" value="{{ $doctor->id }}">
+                                        <input type="hidden" name="paciente_id" value="{{ session('paciente_id') }}">
                                         <input type="hidden" name="estrellas" id="estrellasInput{{ $doctor->id }}" value="0">
-
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="calificarModalLabel{{ $doctor->id }}">
-                                                <i class="bi bi-star-fill"></i> Calificar a Dr. {{ $doctor->nombre }}
-                                            </h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                                        </div>
 
                                         <div class="modal-body">
                                             <label class="form-label text-center d-block mb-3" style="font-size: 1.1rem; font-weight: 600;">
                                                 ¿Cómo calificarías tu experiencia?
                                             </label>
-
                                             <div class="star-rating-input" id="starRating{{ $doctor->id }}">
                                                 @for ($i = 1; $i <= 5; $i++)
                                                     <button type="button" class="star-btn" data-value="{{ $i }}" data-modal="{{ $doctor->id }}">
@@ -1903,16 +2234,59 @@
                                             <label for="comentario{{ $doctor->id }}" class="form-label mt-3" style="font-weight: 600;">
                                                 <i class="bi bi-chat-left-text"></i> Comentario (opcional)
                                             </label>
-                                            <textarea class="form-control" id="comentario{{ $doctor->id }}" name="comentario" rows="4"
-                                                      placeholder="Cuéntanos sobre tu experiencia..." maxlength="500"
-                                                      style="border-radius: 12px; border: 2px solid #e9ecef;"></textarea>
+                                            <textarea class="form-control" id="comentario{{ $doctor->id }}" name="comentario" rows="4" maxlength="500"></textarea>
                                             <small class="text-muted">Máximo 500 caracteres</small>
                                         </div>
 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                            <button type="submit" class="btn btn-primary" id="btnSubmit{{ $doctor->id }}" disabled>
+                                            <button type="submit" class="btn btn-primary" disabled>
                                                 <i class="bi bi-send-fill"></i> Enviar Calificación
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                    <!-- Modal Editar Calificación -->
+                    @if($esPaciente && $calificacionPaciente)
+                        <div class="modal fade" id="editarCalificacionModal{{ $doctor->id }}" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <form action="{{ route('calificacion.editar') }}" method="POST" id="formEditarCalificacion{{ $doctor->id }}">
+                                        @csrf
+                                        <input type="hidden" name="doctor_id" value="{{ $doctor->id }}">
+                                        <input type="hidden" name="paciente_id" value="{{ session('paciente_id') }}">
+                                        <input type="hidden" name="estrellas" id="estrellasInputEdit{{ $doctor->id }}" value="{{ $calificacionPaciente->estrellas }}">
+
+                                        <div class="modal-body">
+                                            <label class="form-label text-center d-block mb-3" style="font-size: 1.1rem; font-weight: 600;">
+                                                ¿Cómo calificarías tu experiencia?
+                                            </label>
+                                            <div class="star-rating-input" id="starRatingEdit{{ $doctor->id }}">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    <button type="button" class="star-btn" data-value="{{ $i }}" data-modal="Edit{{ $doctor->id }}">
+                                                        <i class="bi bi-star-fill"></i>
+                                                    </button>
+                                                @endfor
+                                            </div>
+                                            <div class="rating-feedback" id="ratingFeedbackEdit{{ $doctor->id }}">
+                                                {{ $calificacionPaciente->estrellas > 0 ? ['Muy insatisfecho','Insatisfecho','Aceptable','Bueno','Excelente'][$calificacionPaciente->estrellas-1] : 'Selecciona una calificación' }}
+                                            </div>
+
+                                            <label for="comentarioEdit{{ $doctor->id }}" class="form-label mt-3" style="font-weight: 600;">
+                                                <i class="bi bi-chat-left-text"></i> Comentario (opcional)
+                                            </label>
+                                            <textarea class="form-control" id="comentarioEdit{{ $doctor->id }}" name="comentario" rows="4" maxlength="500">{{ $calificacionPaciente->comentario }}</textarea>
+                                            <small class="text-muted">Máximo 500 caracteres</small>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="bi bi-send-fill"></i> Actualizar Calificación
                                             </button>
                                         </div>
                                     </form>
@@ -1935,8 +2309,8 @@
         </div>
     </section>
 
-    <!-- Modal para usuarios no pacientes -->
-    <div class="modal fade" id="loginRequiredModal" tabindex="-1" aria-labelledby="loginRequiredModalLabel" aria-hidden="true">
+    <!-- Modal usuarios no pacientes -->
+    <div class="modal fade" id="loginRequiredModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header" style="background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);">
@@ -1956,6 +2330,9 @@
         </div>
     </div>
 
+    <!-- Estilos y JS para slider y estrellas se mantienen igual -->
+
+
     <!-- ESTILOS ADICIONALES -->
     <style>
         #doctorsWrapper::-webkit-scrollbar { display: none; }
@@ -1964,102 +2341,70 @@
 
     <!-- JS INTERACTIVO -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
+            const mensajes = ['Muy insatisfecho','Insatisfecho','Aceptable','Bueno','Excelente'];
 
-            const feedbackMessages = {
-                1: 'Muy insatisfecho',
-                2: 'Insatisfecho',
-                3: 'Aceptable',
-                4: 'Bueno',
-                5: 'Excelente'
-            };
+            document.querySelectorAll('.star-rating-input').forEach(starContainer => {
+                const stars = starContainer.querySelectorAll('.star-btn');
+                const modalId = starContainer.id; // id completo del contenedor
+                const isEdit = modalId.includes('Edit');
 
-            // Seleccionar todos los sistemas de estrellas
-            const starRatings = document.querySelectorAll('.star-rating-input');
+                // Obtener feedback e input correctos
+                const feedback = isEdit
+                    ? document.getElementById('ratingFeedbackEdit' + modalId.replace('starRatingEdit',''))
+                    : document.getElementById('ratingFeedback' + modalId.replace('starRating',''));
 
-            starRatings.forEach(container => {
-                const stars = container.querySelectorAll('.star-btn');
-                let selectedRating = 0; // Valor final
+                const input = isEdit
+                    ? document.getElementById('estrellasInputEdit' + modalId.replace('starRatingEdit',''))
+                    : document.getElementById('estrellasInput' + modalId.replace('starRating',''));
 
-                stars.forEach(star => {
-                    const value = parseInt(star.dataset.value);
-                    const modalId = star.dataset.modal;
-
-                    // Click: seleccionar calificación
-                    star.addEventListener('click', function() {
-                        selectedRating = value;
-
-                        // Actualizar input hidden
-                        const inputEstrellas = document.getElementById(`estrellasInput${modalId}`);
-                        inputEstrellas.value = selectedRating;
-
-                        // Actualizar feedback
-                        const feedback = document.getElementById(`ratingFeedback${modalId}`);
-                        feedback.textContent = feedbackMessages[selectedRating];
-
-                        // Activar botón submit
-                        const btnSubmit = document.getElementById(`btnSubmit${modalId}`);
-                        btnSubmit.disabled = false;
-
-                        // Actualizar apariencia de estrellas
-                        updateStars(stars, selectedRating);
-                    });
-
-                    // Hover para preview
-                    star.addEventListener('mouseenter', function() {
-                        updateStars(stars, value, true);
-                    });
-                });
-
-                // Mouseleave: restaurar selección
-                container.addEventListener('mouseleave', function() {
-                    updateStars(container.querySelectorAll('.star-btn'), selectedRating);
-                });
-            });
-
-            // Función para actualizar las estrellas visualmente
-            function updateStars(stars, rating, isHover = false) {
-                stars.forEach(star => {
-                    const value = parseInt(star.dataset.value);
-                    if (value <= rating) {
-                        star.classList.add('active');
-                        if (isHover) star.classList.add('hover');
-                    } else {
-                        star.classList.remove('active', 'hover');
+                // Pintar estrellas según valor actual
+                stars.forEach((star, index) => {
+                    const icon = star.querySelector('i');
+                    if (parseInt(input.value) > index) {
+                        icon.classList.add('text-warning');
                     }
-                });
-            }
 
-            // Reiniciar formulario al cerrar modal
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('hidden.bs.modal', function() {
-                    const modalId = this.id.replace('calificarModal', '');
-                    if (!modalId || modalId === 'loginRequired') return;
+                    star.addEventListener('click', function() {
+                        input.value = star.dataset.value;
+                        feedback.textContent = mensajes[index];
 
-                    const stars = this.querySelectorAll('.star-btn');
-                    stars.forEach(star => star.classList.remove('active','hover'));
+                        stars.forEach((s, i) => {
+                            const sIcon = s.querySelector('i');
+                            if (i < parseInt(input.value)) {
+                                sIcon.classList.add('text-warning');
+                            } else {
+                                sIcon.classList.remove('text-warning');
+                            }
+                        });
 
-                    const inputEstrellas = document.getElementById(`estrellasInput${modalId}`);
-                    const feedback = document.getElementById(`ratingFeedback${modalId}`);
-                    const btnSubmit = document.getElementById(`btnSubmit${modalId}`);
-                    const comentario = document.getElementById(`comentario${modalId}`);
-
-                    if (inputEstrellas) inputEstrellas.value = '0';
-                    if (feedback) feedback.textContent = 'Selecciona una calificación';
-                    if (btnSubmit) btnSubmit.disabled = true;
-                    if (comentario) comentario.value = '';
+                        const form = star.closest('form');
+                        const btnSubmit = form.querySelector('button[type="submit"]');
+                        if (btnSubmit) btnSubmit.disabled = false;
+                    });
                 });
             });
-
         });
-
-    // Slider
-        function scrollDoctors(direction){
-            const wrapper = document.getElementById("doctorsWrapper");
-            const cardWidth = 320 + 32;
-            wrapper.scrollBy({ left: direction*cardWidth, behavior:'smooth' });
-        }
     </script>
+<style>
+    /* Hover de estrellas: ilumina solo hasta la estrella que pasas */
+    .star-rating-input .star-btn i {
+        color: #ddd; /* color por defecto */
+        transition: color 0.2s;
+    }
+
+    /* Usando hover para iluminar todas las anteriores y la actual */
+    .star-rating-input .star-btn:hover i,
+    .star-rating-input .star-btn:hover ~ .star-btn i {
+        color: #ffc107;
+    }
+
+    /* Mantener seleccionadas las estrellas ya clickeadas */
+    .star-rating-input .text-warning {
+        color: #ffc107 !important;
+    }
+
+</style>
     <script>
         document.getElementById('btnAgregarEspecialidad')?.addEventListener('click', function () {
             const form = document.getElementById('formEspecialidad');
@@ -2135,35 +2480,39 @@
 
         <div class="comentario-area">
             @if(session('tipo_usuario') === 'paciente')
+                <!-- Botón de abrir -->
+                <button class="open-comentario-btn" id="openModal">
+                    <i class="bi bi-chat-dots"></i> Agregar comentario
+                </button>
 
-                <div class="comentario-widget">
+                <!-- Tarjeta oculta -->
+                <div id="modal" class="modal">
+                    <div class="modal-content">
 
-                    <!-- Botón de abrir -->
-                    <button class="open-comentario-btn" onclick="toggleComentario(true)">
-                        <i class="bi bi-chat-dots"></i> Agregar comentario
-                    </button>
+                        <!-- Botón cerrar -->
+                        <button class="close-btn" id="closeModal">✕</button>
 
-                    <!-- Tarjeta oculta -->
-                    <div id="comentarioCard" class="comentario-card hidden">
-                        <div class="comentario-card-header">
-                            <h4>Nuevo comentario</h4>
-                            <button class="close-btn" onclick="toggleComentario(false)">
-                                <i class="bi bi-x-lg"></i>
-                            </button>
+                        <div class="modal-header">
+                            <h2>Agregar comentario</h2>
                         </div>
 
                         <form id="formComentario" onsubmit="enviarComentario(event)">
-                            @csrf
-                            <textarea id="comentarioTextarea" name="comentario" required placeholder="Escribe tu comentario..." rows="3"></textarea>
+                        @csrf
 
-                            <button type="submit" class="send-comentario-btn" onclick="enviarComentario(event)">
-                                <i class="bi bi-send-fill"></i> Publicar
-                            </button>
+                            <label>Comentará como {{ session('paciente_nombre') }}</label>
+                            <textarea id="comentarioTextarea" name="comentario"
+                             placeholder="Escribe tu comentario aquí..." required rows="4"></textarea>
+
+                            <div class="modal-footer">
+
+                                <button type="submit" class="send-comentario-btn">
+                                    <i class="bi bi-send-fill"></i> Publicar
+                                </button>
+                            </div>
                         </form>
+
                     </div>
-
                 </div>
-
             @else
                 <p class="text-center mt-3">Debes iniciar sesión como paciente para dejar un comentario.</p>
             @endif
@@ -2172,7 +2521,7 @@
 
 
     <!-- PROMOS -->
-    <section class="promos">
+    <section id="promos" class="promos">
         <div class="section-header">
             <p class="section-subtitle">Promociones</p>
             <h2 class="section-title">Ofertas Especiales</h2>
@@ -2180,7 +2529,7 @@
         </div>
 
         <div class="order-controls" style="text-align:right; margin-bottom:20px;">
-            <a href="{{ url()->current() }}?orden={{ $orden === 'asc' ? 'desc' : 'asc' }}"
+            <a href="{{ url()->current() }}?orden={{ $orden === 'asc' ? 'desc' : 'asc' }}#promos"
                class="promo-link"
                style="padding:0.5rem 1.5rem; font-size:0.95rem; display:inline-block; text-decoration-line: none; color: #00bfa6 ">
                 Ordenar por título: {{ $orden === 'asc' ? 'Z → A' : 'A → Z' }}
@@ -2398,6 +2747,42 @@
     </script>
 
     <script>
+        // Abrir modal
+        document.getElementById("openModal").onclick = function () {
+            document.getElementById("modal").classList.add("show");
+        };
+
+        // Cerrar modal con X o Cancelar
+        document.getElementById("closeModal").onclick = closeModal;
+        const modal = document.getElementById('modal');
+        const modalContent = document.querySelector('.modal-content');
+
+        // Cerrar al hacer clic fuera del contenido
+        modal.addEventListener('click', function(e) {
+            if (!modalContent.contains(e.target)) {
+                cerrarModal();
+            }
+        });
+
+
+        function closeModal() {
+            document.getElementById("modal").classList.remove("show");
+        }
+
+        // Evita que clics dentro del modal lo cierren
+        document.querySelector('.modal-content').onclick = function (e) {
+            e.stopPropagation();
+        };
+
+        // Cierra solo si hacen clic fuera del cuadro
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+
+    <script>
         async function enviarComentario(e) {
             e.preventDefault();
 
@@ -2413,7 +2798,8 @@
                     "X-Requested-With": "XMLHttpRequest"
                 },
                 body: formData
-            });
+            }
+            );
 
             const data = await response.json();
 
@@ -2429,6 +2815,7 @@
             agregarTestimonio(data);
             document.querySelector("#comentarioTextarea").value = "";
             toggleComentario(false);
+            cerrarModal();
         }
 
         function agregarTestimonio(c) {
@@ -2456,6 +2843,22 @@
             track.prepend(card); // Lo agrega al inicio sin recargar
         }
     </script>
+
+    <script>
+        document.getElementById("btnAgregarEspecialidad").onclick = function () {
+            document.getElementById("modalEspecialidad").classList.add("show");
+        };
+
+        document.getElementById("closeEspecialidad").onclick =
+            document.getElementById("cancelEspecialidad").onclick =
+                function () { document.getElementById("modalEspecialidad").classList.remove("show"); };
+
+        document.getElementById("modalEspecialidad").addEventListener("click", function(e) {
+            if (e.target === this) this.classList.remove("show");
+        });
+    </script>
+
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

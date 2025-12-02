@@ -60,21 +60,37 @@ class RutasController extends Controller
         $esPaciente = session('tipo_usuario') === 'paciente';
 
         if ($esPaciente && $pacienteId) {
-            // Obtener IDs de doctores que ya calificó
+
+            // Doctores que el paciente ya calificó
             $doctoresCalificados = Calificacion::where('paciente_id', $pacienteId)
                 ->pluck('doctor_id')
                 ->toArray();
 
-            // Agregar información al objeto de doctores
-            $doctores->each(function($doctor) use ($doctoresCalificados) {
-                $doctor->yacalifico = in_array($doctor->id, $doctoresCalificados);
+            // Doctores con los que el paciente SÍ ha tenido cita
+            $doctoresConCita = Cita::where('paciente_id', $pacienteId)
+                ->where('estado', ['Completada', 'Reprogramada', 'Finalizada']) // o el estado que uses
+                ->pluck('empleado_id')
+                ->toArray();
+
+            // Agregar información al array de doctores
+            $doctores->each(function($doctor) use ($doctoresCalificados, $doctoresConCita) {
+
+                // Ya calificó
+                $doctor->ya_califico = in_array($doctor->id, $doctoresCalificados);
+
+                // Puede calificar SOLO si tuvo cita
+                $doctor->tuvo_cita = in_array($doctor->id, $doctoresConCita);
+
             });
+
         } else {
-            // Si no es paciente, marcar todos como no calificados
+            // Usuarios no pacientes
             $doctores->each(function($doctor) {
-                $doctor->yacalifico = false;
+                $doctor->ya_califico = false;
+                $doctor->tuvo_cita = false;
             });
         }
+
 
         // Calcular promedios y estadísticas por doctor
         $doctores->each(function($doctor) {
