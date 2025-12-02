@@ -1,0 +1,476 @@
+@extends('layouts.plantillaRecepcion')
+<link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
+
+@section('titulo', 'Editar Empleado')
+
+@section('contenido')
+    <style>
+        small.text-danger {
+            font-size: 0.875em;
+        }
+
+        .container-empleado {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .card-empleado {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card-header-empleado {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            padding: 30px 40px;
+            color: white;
+        }
+
+        .card-header-empleado h4 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .card-body-empleado {
+            padding: 50px 60px;
+        }
+
+        .form-row-custom {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-group-custom {
+            margin-bottom: 30px;
+        }
+
+        .form-group-custom label {
+            display: block;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+
+        .form-control-custom,
+        .form-select-custom,
+        .form-control {
+            width: 100%;
+            background: rgba(248, 250, 255, 0.6);
+            color: #555;
+            padding: 16px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-control-custom:focus,
+        .form-select-custom:focus,
+        .form-control:focus {
+            outline: none;
+            border-color: #4ECDC4;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.1);
+        }
+
+        .form-control:disabled,
+        .form-select-custom:disabled {
+            background-color: #e9ecef;
+            color: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        /* Ocultar el ícono de calendario en inputs tipo date */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            display: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="date"]::-webkit-inner-spin-button,
+        input[type="date"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .input-group-custom {
+            display: flex;
+        }
+
+        .input-group-text {
+            background: #4ECDC4;
+            color: white;
+            padding: 16px 20px;
+            border: 2px solid #4ECDC4;
+            border-radius: 12px 0 0 12px;
+            font-weight: 600;
+            font-size: 0.7rem;
+        }
+
+        .input-group-custom .form-control {
+            border-radius: 0 12px 12px 0;
+            border-left: none;
+        }
+
+        .input-group-text.disabled {
+            background: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .btn-group-custom {
+            display: flex;
+            gap: 20px;
+            justify-content: flex-end;
+            margin-top: 40px;
+        }
+
+        .btn-custom {
+            padding: 16px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom,
+        .btn-register {
+            background: #4ECDC4;
+            color: white;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+            padding: 16px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom:hover,
+        .btn-register:hover {
+            background: #45b8b0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+        }
+
+        .btn-secondary-custom,
+        .btn-cancel {
+            background: #f8f9fa;
+            color: #6c757d;
+            border: 2px solid #e9ecef;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-secondary-custom:hover,
+        .btn-cancel:hover {
+            background: #e9ecef;
+        }
+        .alert-success-custom {
+            background: #d1ecf1;
+            border: 1px solid #c3e6cb;
+            color: #0c5460;
+            padding: 15px 45px 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+            position: relative;
+            border-left:solid #0c5460;
+        }
+        .alert-success-custom .btn-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .alert-info-custom {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 15px 45px 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+            position: relative;
+
+            border-left:solid #0c5460;
+        }
+
+        .alert-info-custom .btn-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+
+        .gender-options {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .form-check {
+            display: inline-flex;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .form-check-input {
+            margin: 0 8px 0 0 !important;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+
+        .form-check-label {
+            cursor: pointer;
+            margin: 0 !important;
+            padding: 0 !important;
+            vertical-align: middle;
+        }
+
+        .form-check-input:checked ~ .form-check-label {
+            color: #4ECDC4;
+            font-weight: 600;
+        }
+
+        .form-check-input:checked {
+            background-color: #4ECDC4;
+            border-color: #4ECDC4;
+        }
+
+        .locked-badge {
+            display: inline-block;
+            background: #e9ecef;
+            color: #6c757d;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            font-weight: 600;
+        }
+
+        .locked-badge i {
+            margin-right: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row-custom {
+                grid-template-columns: 1fr;
+            }
+
+            .card-body-empleado {
+                padding: 30px 25px;
+            }
+
+            .card-header-empleado {
+                padding: 25px 25px;
+            }
+
+            .card-header-empleado h4 {
+                font-size: 1.4rem;
+            }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: whitesmoke;
+            padding-top: 100px;
+        }
+
+        .text-info-emphasis {
+            font-weight: bold;
+        }
+
+        .foto-preview {
+            margin-top: 15px;
+            max-width: 200px;
+        }
+
+        .foto-preview img {
+            width: 100%;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+</style>
+    <div class="formulario">
+        <br>
+        <h1 class="text-center text-info-emphasis">Editar Empleado</h1>
+        <br><br>
+        <div class="form-container" style="margin: 10px auto; max-width: 900px">
+
+            <div class="card-body-empleado" >
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" id="alertSuc">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+
+
+                @endif
+
+
+                <div class="alert alert-success-custom" id="alertInfo">
+                        <div>
+                           Solo puedes editar el nombre, apellido, teléfono, contraseña y foto.
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+
+                    <script>
+                        setTimeout(function() {
+                            let alert = document.getElementById('alertInfo');
+                            if (alert) {
+                                alert.style.transition = "opacity 0.5s ease";
+                                alert.style.opacity = "0";
+                                setTimeout(() => alert.remove(), 500);
+                            }
+                        }, 5000);
+                    </script>
+
+                    <form action="{{ route('empleados.update',['id'=>$empleado->id])}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+
+                    <!-- Nombre y Apellido -->
+                    <div class="form-row-custom">
+                        <div class="form-group-custom">
+                            <label for="nombre">Nombre </label>
+                            <input type="text" class="form-control" id="nombre" name="nombre"
+                                   value="{{ old('nombre', $empleado->nombre) }}" placeholder="Ingrese el nombre">
+                            @error('nombre')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="form-group-custom">
+                            <label for="apellido">Apellido </label>
+                            <input type="text" class="form-control" id="apellido" name="apellido"
+                                   value="{{ old('apellido', $empleado->apellido) }}" placeholder="Ingrese el apellido">
+                            @error('apellido')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Genero y Numero de identidad -->
+                    <div class="form-row-custom">
+                        <div class="form-group-custom">
+                            <label for="genero">
+                                Género
+
+                            </label>
+                            <select class="form-control" name="genero" id="genero" disabled>
+                                <option value="{{ $empleado->genero }}" selected>{{ $empleado->genero }}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group-custom">
+                            <label for="numero_identidad">
+                                Número de Identidad
+
+                            </label>
+                            <input type="text" class="form-control" id="numero_identidad" name="numero_identidad"
+                                   value="{{ $empleado->numero_identidad }}" disabled>
+                        </div>
+                    </div>
+
+                    <!-- Número de Telefono y Fecha de Ingreso -->
+                    <div class="form-row-custom">
+                        <div class="form-group-custom">
+                            <label for="telefono">Número de Teléfono *</label>
+                            <div class="input-group-custom">
+                                <span class="input-group-text">+504</span>
+                                <input type="text" class="form-control" id="telefono" name="telefono"
+                                       value="{{ old('telefono', $empleado->loginEmpleado->telefono ?? '') }}" placeholder="00000000">
+                            </div>
+                            @error('telefono')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="form-group-custom">
+                            <label for="fecha_ingreso">
+                                Fecha de Ingreso
+
+                            </label>
+                            <input type="text" class="form-control" id="fecha_ingreso" name="fecha_ingreso"
+                                   value="{{ $empleado->fecha_ingreso->format('d/m/Y') }}" disabled>
+                        </div>
+                    </div>
+
+                    <!-- Cargo y Departamento -->
+                    <div class="form-row-custom">
+                        <div class="form-group-custom">
+                            <label for="cargo">
+                                Cargo
+
+                            </label>
+                            <select class="form-select-custom" id="cargo" name="cargo" disabled>
+                                <option value="{{ $empleado->cargo }}" selected>{{ $empleado->cargo }}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group-custom">
+                            <label for="departamento">
+                                Departamento
+
+                            </label>
+                            <select class="form-select-custom" id="departamento" name="departamento" disabled>
+                                <option value="{{ $empleado->departamento }}" selected>{{ $empleado->departamento }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Foto y Contraseña -->
+                    <div class="form-row-custom">
+                        <div class="form-group-custom">
+                            <label for="password">Nueva Contraseña</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="Dejar en blanco para mantener la actual">
+                            @error('password')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+
+                        <div class="form-group-custom">
+                            <label for="foto">Foto (opcional)</label>
+                            <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
+                            @error('foto')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="btn-group-custom">
+                        <a href="{{ route('empleados.lista') }}" class="btn-cancel" style="text-decoration-line: none">
+                            Cancelar
+                        </a>
+                        <button type="submit" class="btn-register">
+                            Guardar
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+@endsection

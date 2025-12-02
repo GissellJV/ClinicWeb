@@ -111,6 +111,9 @@ Route::post('/expedientes/{id}/actualizar-historial', [ExpedienteController::cla
 Route::get('/empleados/crear', [EmpleadoController::class, 'crear'])->name('empleados.crear');
 Route::post('/empleados/guardar', [EmpleadoController::class, 'store'])->name('empleados.guardar');
 Route::get('/empleados/lista', [EmpleadoController::class, 'lista'])->name('empleados.lista');
+Route::get('/empleados/editar/{id}', [EmpleadoController::class, 'edit'])->name('empleados.editar');
+Route::put('/empleados/actualizar/{id}', [EmpleadoController::class, 'update'])->name('empleados.update');
+Route::delete('/empleados/eliminar/{id}', [EmpleadoController::class, 'destroy'])->name('empleados.eliminar');
 Route::get('/empleados/{id}/foto', [EmpleadoController::class, 'mostrarFoto'])->name('empleados.foto');
 Route::post('/doctor/subir-foto', [EmpleadoController::class, 'subirFoto'])->name('doctor.subirFoto');
 

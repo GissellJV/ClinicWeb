@@ -163,7 +163,7 @@ class CitaController extends Controller
             'fecha' => [
                 'required',
                 'date',
-                'after_or_equal:today'  //
+                'after_or_equal:today'
             ],
             'hora' => 'required|string',
             'doctor_id' => 'required|exists:empleados,id',
@@ -177,11 +177,11 @@ class CitaController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Debe iniciar sesión como paciente'
-            ]);
+            ], 401);
         }
 
         try {
-            // Validación adicional manual por seguridad
+
             $fechaSeleccionada = Carbon::parse($request->fecha);
             $hoy = Carbon::today();
 
@@ -189,13 +189,27 @@ class CitaController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'No se pueden agendar citas en fechas pasadas.'
-                ], 422);
+                ]);
+            }
+
+            // NUEVA VALIDACIÓN: Verificar si el PACIENTE ya tiene una cita en esa fecha y hora
+            $pacienteTieneCita = Cita::where('paciente_id', $paciente_id)
+                ->where('fecha', $request->fecha)
+                ->where('hora', $request->hora)
+                ->whereIn('estado', ['pendiente', 'programada'])
+                ->exists();
+
+            if ($pacienteTieneCita) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Ya tienes una cita agendada para esta fecha y hora. No puedes agendar otra cita al mismo tiempo.'
+                ]);
             }
 
             // Obtener información del doctor
             $doctor = Empleado::findOrFail($request->doctor_id);
 
-            // Verificar disponibilidad
+            // Verificar disponibilidad del DOCTOR
             $citaExistente = Cita::where('empleado_id', $request->doctor_id)
                 ->where('fecha', $request->fecha)
                 ->where('hora', $request->hora)
@@ -205,7 +219,7 @@ class CitaController extends Controller
             if ($citaExistente) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Este horario ya está ocupado. Por favor seleccione otro.'
+                    'message' => 'Este horario ya está ocupado con el doctor seleccionado. Por favor seleccione otro horario.'
                 ]);
             }
 
@@ -238,6 +252,8 @@ class CitaController extends Controller
 
     public function obtenerHorarios($doctorId, $fecha)
     {
+        $paciente_id = session('paciente_id');
+
         // Horarios base del consultorio
         $horariosBase = [
             '08:00 AM', '09:00 AM', '10:00 AM', '11:00 AM',
@@ -245,17 +261,32 @@ class CitaController extends Controller
         ];
 
         // Obtener citas ya agendadas para ese doctor en esa fecha
-        $citasOcupadas = Cita::where('empleado_id', $doctorId)
+        $citasOcupadasDoctor = Cita::where('empleado_id', $doctorId)
             ->where('fecha', $fecha)
+            ->whereIn('estado', ['pendiente', 'programada'])
             ->pluck('hora')
             ->toArray();
+
+
+        $citasPaciente = [];
+        if ($paciente_id) {
+            $citasPaciente = Cita::where('paciente_id', $paciente_id)
+                ->where('fecha', $fecha)
+                ->whereIn('estado', ['pendiente', 'programada'])
+                ->pluck('hora')
+                ->toArray();
+        }
 
         // Crear array de horarios con disponibilidad
         $horarios = [];
         foreach ($horariosBase as $hora) {
+            $ocupadoDoctor = in_array($hora, $citasOcupadasDoctor);
+            $ocupadoPaciente = in_array($hora, $citasPaciente);
+
             $horarios[] = [
                 'hora' => $hora,
-                'disponible' => !in_array($hora, $citasOcupadas)
+                'disponible' => !$ocupadoDoctor && !$ocupadoPaciente,
+                'motivo' => $ocupadoPaciente ? 'paciente' : ($ocupadoDoctor ? 'doctor' : null)
             ];
         }
 

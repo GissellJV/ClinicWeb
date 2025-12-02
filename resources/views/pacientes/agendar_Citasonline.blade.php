@@ -18,9 +18,9 @@
 
         h1 {
             color: #0f766e;
+            font-size: 2.5rem;
             margin-bottom: 30px;
             font-weight: 700;
-            font-size: 2.2rem;
         }
 
         .calendar-container {
@@ -471,21 +471,6 @@
                 <a href="{{ route('citas.mis-citas') }}" class="btn-citas">
                     Ver Mis Citas
                 </a>
-
-                <div class="legend">
-                    <div class="legend-item">
-                        <div class="legend-color disponible"></div>
-                        <span>Disponible</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color agendada"></div>
-                        <span>Cita agendada</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color no-disponible"></div>
-                        <span>No disponible</span>
-                    </div>
-                </div>
             </div>
 
             <!-- Calendario Mensual -->
@@ -503,6 +488,7 @@
         <!-- Modal de Horarios -->
         <div class="modal" id="modal-doctores">
             <div class="modal-content">
+                <div id="alert-modal-container" style="margin-bottom: 15px;"></div>
                 <h3 id="titulo-doctores"></h3>
                 <div id="doctores-container" class="doctores"></div>
                 <button class="btn-cerrar" id="cerrar-modal-doctores">Cerrar</button>
@@ -527,6 +513,7 @@
             const nombreLabel = document.getElementById('nombre');
             const fechaDisplay = document.getElementById('fecha-display');
             const alertContainer = document.getElementById('alert-container');
+            const alertModalContainer = document.getElementById('alert-modal-container');
             const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
             const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -538,7 +525,6 @@
             let selectedDate = null;
             let selectedDayElement = null;
 
-            // Inicializar encabezados de días
             diasSemana.forEach(dia => {
                 const div = document.createElement('div');
                 div.classList.add('day-name');
@@ -546,7 +532,6 @@
                 daysHeader.appendChild(div);
             });
 
-            // Filtrar doctores por especialidad
             especialidadSelect.addEventListener('change', function () {
                 const especialidad = this.value;
                 doctorSelect.innerHTML = '<option value="">Seleccione Doctor</option>';
@@ -560,7 +545,7 @@
                             data.forEach(doctor => {
                                 const option = document.createElement('option');
                                 option.value = doctor.id;
-                                option.textContent = `Dr. ${doctor.nombre} ${doctor.apellido || ''} (${doctor.departamento})`;
+                                option.textContent = `${doctor.genero === 'Femenino' ? 'Dra.' : 'Dr.'} ${doctor.nombre} ${doctor.apellido || ''}`;
                                 doctorSelect.appendChild(option);
                             });
                         })
@@ -572,15 +557,12 @@
                 }
             });
 
-            // Función para mostrar alertas
+            // ALERTA PRINCIPAL (SIN ICONO, SIN X)
             function mostrarAlerta(tipo, mensaje) {
                 const alert = document.createElement('div');
-                alert.className = `alert alert-${tipo} alert-dismissible fade show mt-2`;
+                alert.className = `alert alert-${tipo} fade show mt-2`;
                 alert.role = 'alert';
-                alert.innerHTML = `
-                    ${mensaje}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                `;
+                alert.innerHTML = mensaje;
                 alertContainer.appendChild(alert);
 
                 setTimeout(() => {
@@ -590,6 +572,24 @@
                 }, 4000);
             }
 
+            // ALERTA EN MODAL (SIN ICONO, SIN X)
+            function mostrarAlertaModal(tipo, mensaje) {
+                alertModalContainer.innerHTML = '';
+
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${tipo} fade show`;
+                alert.role = 'alert';
+                alert.style.marginBottom = '15px';
+                alert.innerHTML = mensaje;
+                alertModalContainer.appendChild(alert);
+
+                setTimeout(() => {
+                    alert.classList.remove('show');
+                    alert.classList.add('fade');
+                    setTimeout(() => alert.remove(), 300);
+                }, 5000);
+            }
+
             function renderCalendar() {
                 daysGrid.innerHTML = '';
                 monthTitle.textContent = `${meses[currentMonth]} ${currentYear}`;
@@ -597,7 +597,6 @@
                 const firstDay = new Date(currentYear, currentMonth, 1).getDay();
                 const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-                // Espacios vacíos antes del primer día
                 const offset = firstDay === 0 ? 6 : firstDay - 1;
                 for (let i = 0; i < offset; i++) {
                     const emptyDiv = document.createElement('div');
@@ -606,7 +605,7 @@
                 }
 
                 const hoy = new Date();
-                hoy.setHours(0, 0, 0, 0); // medianoche para comparar solo fechas
+                hoy.setHours(0, 0, 0, 0);
 
                 for (let day = 1; day <= daysInMonth; day++) {
                     const dayDiv = document.createElement('div');
@@ -619,23 +618,19 @@
                     const fechaObj = new Date(fecha);
 
                     if (fechaObj < hoy) {
-                        // días anteriores → no disponibles
                         dayDiv.classList.add('no-disponible');
                         dayDiv.style.cursor = 'not-allowed';
                         dayDiv.addEventListener('click', () => {
-                            mostrarAlerta('warning', 'No se puede agendar citas en fechas anteriores a hoy.');
+                            mostrarAlerta('warning', 'No se puede agendar citas en fechas  pasadas.');
                         });
                     } else {
-                        // hoy y días futuros → seleccionables
                         dayDiv.addEventListener('click', () => handleDayClick(dayDiv, day, fecha));
                     }
 
-                    // Marcar día actual
                     if (fechaObj.getTime() === hoy.getTime()) {
                         dayDiv.classList.add('today');
                     }
 
-                    // Mantener selección si es el mismo día
                     if (selectedDate === fecha) {
                         dayDiv.classList.add('selected');
                         selectedDayElement = dayDiv;
@@ -665,7 +660,6 @@
                     return;
                 }
 
-                // Actualizar selección visual
                 if (selectedDayElement) {
                     selectedDayElement.classList.remove('selected');
                 }
@@ -673,14 +667,11 @@
                 selectedDayElement = dayDiv;
                 selectedDate = fecha;
 
-                // Actualizar display de fecha
                 fechaDisplay.textContent = `${day} de ${meses[currentMonth]} ${currentYear}`;
 
-                // Abrir modal con horarios
                 abrirModalDoctores(esp, fecha, nombrePaciente, doctorId);
             }
 
-            // Navegación de meses
             prevMonthBtn.addEventListener('click', () => {
                 currentMonth--;
                 if (currentMonth < 0) {
@@ -699,26 +690,26 @@
                 renderCalendar();
             });
 
-            // Horarios disponibles por defecto
             const horariosDisponibles = [
                 { hora: '08:00 AM', disponible: true },
                 { hora: '09:00 AM', disponible: true },
                 { hora: '10:00 AM', disponible: true },
                 { hora: '11:00 AM', disponible: true },
-                { hora: '12:00 PM', disponible: false },
+                { hora: '12:00 PM', disponible: true },
                 { hora: '01:00 PM', disponible: true },
                 { hora: '02:00 PM', disponible: true },
                 { hora: '03:00 PM', disponible: true },
                 { hora: '04:00 PM', disponible: true },
-                { hora: '05:00 PM', disponible: false }
+                { hora: '05:00 PM', disponible: true }
             ];
 
             let horaSeleccionada = null;
             let horaSeleccionadaElement = null;
 
-            // Modal de doctores/horarios
             function abrirModalDoctores(especialidad, fecha, nombrePaciente, doctorId) {
                 modalDoctores.style.display = 'flex';
+                alertModalContainer.innerHTML = '';
+
                 const doctorNombre = doctorSelect.options[doctorSelect.selectedIndex].text;
                 tituloDoctores.textContent = `Horarios disponibles - ${formatoFecha(fecha)}`;
                 doctoresContainer.innerHTML = '';
@@ -754,13 +745,12 @@
 
                 card.appendChild(horasDiv);
 
-                // Botón Agendar Cita
                 const btnAgendar = document.createElement('button');
                 btnAgendar.textContent = 'Agendar Cita';
                 btnAgendar.classList.add('btn-agendar');
                 btnAgendar.addEventListener('click', async () => {
                     if (!horaSeleccionada) {
-                        mostrarAlerta('warning', 'Seleccione un horario primero.');
+                        mostrarAlertaModal('warning', 'Seleccione un horario primero.');
                         return;
                     }
 
@@ -785,16 +775,20 @@
                         const data = await response.json();
 
                         if (data.success) {
-                            mostrarAlerta('success', 'Tu cita ha sido agendada exitosamente.');
                             modalDoctores.style.display = 'none';
+                            mostrarAlerta('success', 'Tu cita ha sido agendada exitosamente.');
+                            renderCalendar();
                         } else {
-                            mostrarAlerta('danger', 'Error: ' + (data.message || 'No se pudo agendar la cita'));
+                            mostrarAlertaModal(
+                                response.status === 422 ? 'warning' : 'danger',
+                                data.message || 'No se pudo agendar la cita'
+                            );
                             btnAgendar.disabled = false;
                             btnAgendar.textContent = 'Agendar Cita';
                         }
                     } catch (error) {
                         console.error('Error:', error);
-                        mostrarAlerta('danger', 'Error al agendar la cita. Intente nuevamente.');
+                        mostrarAlertaModal('danger', 'Error al agendar la cita. Intente nuevamente.');
                         btnAgendar.disabled = false;
                         btnAgendar.textContent = 'Agendar Cita';
                     }
@@ -809,16 +803,20 @@
                 return `${d}/${m}/${y}`;
             }
 
-            cerrarModalDoctores.addEventListener('click', () => modalDoctores.style.display = 'none');
+            cerrarModalDoctores.addEventListener('click', () => {
+                alertModalContainer.innerHTML = '';
+                modalDoctores.style.display = 'none';
+            });
 
             modalDoctores.addEventListener('click', (e) => {
                 if (e.target === modalDoctores) {
+                    alertModalContainer.innerHTML = '';
                     modalDoctores.style.display = 'none';
                 }
             });
 
-            // Inicializar calendario
             renderCalendar();
         });
     </script>
+
 @endsection
