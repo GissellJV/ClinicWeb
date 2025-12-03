@@ -1867,6 +1867,369 @@
             background: white;
             cursor: pointer;
         }
+
+        /* === CONTENEDOR DEL MODAL noCitas=== */
+        #noCitaModal .modal-content {
+            background: #ffffffee;
+            backdrop-filter: blur(12px);
+            border-radius: 22px;
+            border: 2px solid #00ffc8;
+            box-shadow: 0 0 30px #00ffe680;
+            overflow: hidden;
+        }
+
+        /* --- HEADER DEL MODAL --- */
+        #noCitaModal .modal-header {
+            background: linear-gradient(90deg, #00e1ff, #00ffc8); /* Gradiente luminoso */
+            padding: 15px 20px;
+            border-bottom: none;
+        }
+
+        #noCitaModal .modal-title {
+            color: #fff;
+            margin: 0;
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        /* --- BOTÓN CERRAR --- */
+        #noCitaModal .btn-close {
+            transition: transform .35s ease;
+        }
+
+        #noCitaModal .btn-close:hover {
+            transform: rotate(180deg);
+        }
+
+        /* --- BODY DEL MODAL --- */
+        #noCitaModal .modal-body {
+            padding: 28px;
+            text-align: center;
+        }
+
+        #noCitaModal .modal-body p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        #noCitaModal .modal-body p strong {
+            color: #000;
+        }
+
+        /* --- FOOTER DEL MODAL --- */
+        #noCitaModal .modal-footer {
+            border-top: none;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* --- BOTÓN CERRAR DEL FOOTER --- */
+        #noCitaModal .btn-secondary {
+            border-radius: 10px;
+            padding: 10px 20px;
+            border: 1px solid #6c757d;
+            background: #6c757d;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #noCitaModal .btn-secondary:hover {
+            background: #5a6268;
+            border-color: #545b62;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* === CONTENEDOR DEL MODAL Calificar modal=== */
+        div[id^="calificarModal"] .modal-content {
+            background: #ffffffee;
+            backdrop-filter: blur(12px);
+            border-radius: 22px;
+            border: 2px solid #00ffc8;
+            box-shadow: 0 0 30px #00ffe680;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        /* --- BODY DEL MODAL --- */
+        div[id^="calificarModal"] .modal-body {
+            padding: 28px;
+        }
+
+        div[id^="calificarModal"] .modal-body label {
+            font-weight: 600;
+            color: #000;
+        }
+
+        div[id^="calificarModal"] textarea.form-control {
+            border: 2px solid #24f3e2;
+            border-radius: 14px;
+            background: white;
+            padding: 10px 14px;
+            font-size: 16px;
+            width: 100%;
+            box-shadow: 0 0 12px rgba(36, 243, 226, 0.25);
+            transition: 0.2s;
+        }
+
+        div[id^="calificarModal"] textarea.form-control:hover {
+            box-shadow: 0 0 18px rgba(36, 243, 226, 0.35);
+        }
+
+        /* --- FOOTER DEL MODAL --- */
+        div[id^="calificarModal"] .modal-footer {
+            border-top: none;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* --- BOTÓN CANCELAR --- */
+        div[id^="calificarModal"] .btn-secondary {
+            border-radius: 10px;
+            padding: 10px 20px;
+            border: 1px solid #6c757d;
+            background: #6c757d;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        div[id^="calificarModal"] .btn-secondary:hover {
+            background: #5a6268;
+            border-color: #545b62;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* --- BOTÓN ENVIAR --- */
+        div[id^="calificarModal"] .btn-primary {
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #4ecdc4, #00bfa6);
+            border: none;
+            color: white;
+        }
+
+        div[id^="calificarModal"] .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(78, 205, 196, 0.5);
+        }
+
+        /* --- STAR RATING --- */
+        div[id^="calificarModal"] .star-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #ccc;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        div[id^="calificarModal"] .star-btn:hover,
+        div[id^="calificarModal"] .star-btn.active {
+            color: #ffcd00;  /* Estrellas amarillas al seleccionar */
+            transform: scale(1.2);
+        }
+
+        /* --- FEEDBACK CALIFICACIÓN --- */
+        div[id^="calificarModal"] .rating-feedback {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        /* === TÍTULO DEL MODAL CALIFICAR === */
+        div[id^="calificarModal"] .modal-title {
+            font-weight: 800;
+            font-size: 26px;
+            color: #fff;
+            margin: 0;
+            width: 100%; /* ocupa todo el ancho */
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            padding: 15px 20px;
+            border-top-left-radius: 22px;
+            border-top-right-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* centra el contenido */
+            gap: 10px;
+            box-sizing: border-box; /* para que el padding no rompa el ancho */
+        }
+
+        /* === BOTÓN CERRAR DEL MODAL CALIFICAR === */
+        div[id^="calificarModal"] .btn-close-calificar {
+            background: none;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.35s ease, opacity 0.3s ease;
+            opacity: 0.8;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+        }
+
+        div[id^="calificarModal"] .btn-close-calificar:hover {
+            transform: rotate(180deg);
+            opacity: 1;
+        }
+
+        /* === TÍTULO DEL MODAL EDITAR CALIFICACIÓN === */
+        div[id^="editarCalificacionModal"] .modal-content {
+            background: #ffffffee;
+            backdrop-filter: blur(12px);
+            border-radius: 22px;
+            border: 2px solid #00ffc8;
+            box-shadow: 0 0 30px #00ffe680;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        /* --- BODY DEL MODAL --- */
+        div[id^="editarCalificacionModal"] .modal-body {
+            padding: 28px;
+        }
+
+        div[id^="editarCalificacionModal"] .modal-body label {
+            font-weight: 600;
+            color: #000;
+        }
+
+        div[id^="editarCalificacionModal"] textarea.form-control {
+            border: 2px solid #24f3e2;
+            border-radius: 14px;
+            background: white;
+            padding: 10px 14px;
+            font-size: 16px;
+            width: 100%;
+            box-shadow: 0 0 12px rgba(36, 243, 226, 0.25);
+            transition: 0.2s;
+        }
+
+        div[id^="editarCalificacionModal"] textarea.form-control:hover {
+            box-shadow: 0 0 18px rgba(36, 243, 226, 0.35);
+        }
+
+        /* --- FOOTER DEL MODAL --- */
+        div[id^="editarCalificacionModal"] .modal-footer {
+            border-top: none;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* --- BOTÓN CANCELAR --- */
+        div[id^="editarCalificacionModal"] .btn-secondary {
+            border-radius: 10px;
+            padding: 10px 20px;
+            border: 1px solid #6c757d;
+            background: #6c757d;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        div[id^="editarCalificacionModal"] .btn-secondary:hover {
+            background: #5a6268;
+            border-color: #545b62;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* --- BOTÓN ENVIAR --- */
+        div[id^="editarCalificacionModal"] .btn-primary {
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #4ecdc4, #00bfa6);
+            border: none;
+            color: white;
+        }
+
+        div[id^="editarCalificacionModal"] .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(78, 205, 196, 0.5);
+        }
+
+        /* --- STAR RATING --- */
+        div[id^="editarCalificacionModal"] .star-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #ccc;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        div[id^="editarCalificacionModal"] .star-btn:hover,
+        div[id^="editarCalificacionModal"] .star-btn.active {
+            color: #ffcd00;  /* Estrellas amarillas al seleccionar */
+            transform: scale(1.2);
+        }
+
+        /* --- FEEDBACK CALIFICACIÓN --- */
+        div[id^="editarCalificacionModal"] .rating-feedback {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        /* === TÍTULO DEL MODAL CALIFICAR === */
+        div[id^="editarCalificacionModal"] .modal-title {
+            font-weight: 800;
+            font-size: 26px;
+            color: #fff;
+            margin: 0;
+            width: 100%; /* ocupa todo el ancho */
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            padding: 15px 20px;
+            border-top-left-radius: 22px;
+            border-top-right-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* centra el contenido */
+            gap: 10px;
+            box-sizing: border-box; /* para que el padding no rompa el ancho */
+        }
+
+        /* === BOTÓN CERRAR DEL MODAL CALIFICAR === */
+        div[id^="editarCalificacionModal"] .btn-close-calificar {
+            background: none;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.35s ease, opacity 0.3s ease;
+            opacity: 0.8;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+        }
+
+        div[id^="editarCalificacionModal"] .btn-close-calificar:hover {
+            transform: rotate(180deg);
+            opacity: 1;
+        }
     </style>
 
     <!-- HERO -->
@@ -2104,9 +2467,6 @@
         </div>
     </section>
 
-
-
-    <!-- SECCIÓN DOCTORES -->
     <!-- SECCIÓN DOCTORES -->
     <section id="doctors" class="doctors">
         <div class="section-header">
@@ -2212,6 +2572,10 @@
                         <div class="modal fade" id="calificarModal{{ $doctor->id }}" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
+                                    <h2 class="modal-title">
+                                        <i class="bi bi-star-fill"></i> Califica tu experiencia
+                                    </h2>
+                                    <button type="button" class="btn-close-calificar" data-bs-dismiss="modal" aria-label="Close">&times;</button>
                                     <form action="{{ route('calificacion.editar') }}" method="POST" id="formCalificar{{ $doctor->id }}">
                                         @csrf
                                         <input type="hidden" name="doctor_id" value="{{ $doctor->id }}">
@@ -2234,7 +2598,7 @@
                                             <label for="comentario{{ $doctor->id }}" class="form-label mt-3" style="font-weight: 600;">
                                                 <i class="bi bi-chat-left-text"></i> Comentario (opcional)
                                             </label>
-                                            <textarea class="form-control" id="comentario{{ $doctor->id }}" name="comentario" rows="4" maxlength="500"></textarea>
+                                            <textarea class="form-control" id="comentario{{ $doctor->id }}" name="comentario" rows="4" maxlength="500" placeholder="Escribe tu comentario aquí..."></textarea>
                                             <small class="text-muted">Máximo 500 caracteres</small>
                                         </div>
 
@@ -2255,6 +2619,10 @@
                         <div class="modal fade" id="editarCalificacionModal{{ $doctor->id }}" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
+                                    <h2 class="modal-title">
+                                        <i class="bi bi-star-fill"></i> Editar calificación
+                                    </h2>
+                                    <button type="button" class="btn-close-calificar" data-bs-dismiss="modal" aria-label="Close">&times;</button>
                                     <form action="{{ route('calificacion.editar') }}" method="POST" id="formEditarCalificacion{{ $doctor->id }}">
                                         @csrf
                                         <input type="hidden" name="doctor_id" value="{{ $doctor->id }}">
@@ -2277,9 +2645,9 @@
                                             </div>
 
                                             <label for="comentarioEdit{{ $doctor->id }}" class="form-label mt-3" style="font-weight: 600;">
-                                                <i class="bi bi-chat-left-text"></i> Comentario (opcional)
+                                                <i class="bi bi-chat-left-text" ></i> Comentario (opcional)
                                             </label>
-                                            <textarea class="form-control" id="comentarioEdit{{ $doctor->id }}" name="comentario" rows="4" maxlength="500">{{ $calificacionPaciente->comentario }}</textarea>
+                                            <textarea class="form-control" id="comentarioEdit{{ $doctor->id }}"  name="comentario" rows="4" maxlength="500" placeholder="Escribe tu comentario aquí...">{{ $calificacionPaciente->comentario }}</textarea>
                                             <small class="text-muted">Máximo 500 caracteres</small>
                                         </div>
 
