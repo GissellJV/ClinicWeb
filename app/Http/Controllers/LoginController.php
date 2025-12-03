@@ -52,7 +52,7 @@ class LoginController extends Controller
                 $cargo = strtolower($empleado->cargo);
 
                 if ($cargo == 'doctor') {
-                    return redirect()->route('doctor.receta')->with('mensaje', $mensaje);
+                    return redirect()->route('doctor.citas')->with('mensaje', $mensaje);
                 } elseif ($cargo == 'recepcionista') {
                     return redirect()->route('recepcionista.busquedaexpediente')->with('mensaje', $mensaje);
                 } elseif ($cargo == 'enfermero') {

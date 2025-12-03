@@ -320,6 +320,19 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        table.dataTable thead th {
+            padding: 20px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #e0e0e0;
+            background:  #4ecdc4 !important;
+            color: white;
+            white-space: nowrap;
+        }
     </style>
     <div class="administracion">
         <div class="container mt-5 pt-5">
