@@ -27,6 +27,12 @@ class Expediente extends Model
         'antecedentes_personales',
         'observaciones'
     ];
+    public function historiales()
+    {
+        return $this->hasMany(HistorialExpediente::class);
+    }
+
+
 
     public function paciente()
     {

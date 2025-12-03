@@ -11,18 +11,20 @@
             padding: 0;
             box-sizing: border-box;
         }
+        .administracion .paciente {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f4544;
+            margin-bottom: 2rem;
+            text-decoration-line: none;
+        }
+
 
         h1{
             font-size: 2rem;
             font-weight: 700;
             color: #0f4544;
             margin-bottom: 2rem;
-        } a{
-            font-size: 2rem;
-            font-weight: 700;
-            color: #0f4544;
-            margin-bottom: 2rem;
-            text-decoration-line: none;
         }
 
         body {
@@ -321,7 +323,7 @@
     </style>
     <div class="administracion">
         <div class="container mt-5 pt-5">
-            <h1>Historial del paciente:   <a href="{{ route('expedientes.visualizar', $expediente->id) }}">
+            <h1>Historial del paciente:   <a class="paciente" href="{{ route('expedientes.visualizar', $expediente->id) }}">
                     {{ $expediente->paciente->nombres }} {{ $expediente->paciente->apellidos }}
                 </a></h1>
 

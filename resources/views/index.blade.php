@@ -1447,6 +1447,7 @@
         }
 
 
+
         /* Fondo oscuro */
         .modal {
             position: fixed;
@@ -1540,6 +1541,431 @@
             font-size: 16px;
             resize: none;
         }
+
+        textarea:focus {
+            border-color: #00f3ff;
+            box-shadow: 0 0 10px #00fff36b;
+        }
+
+        /* Footer */
+        .modal-footer {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 25px 0;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .cancel-btn {
+            background: #e6e6e6;
+            padding: 10px 22px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .open-comentario-btn {
+            background: #00ffe7;
+            padding: 10px 22px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            color: black;
+            transition: box-shadow .25s ease;
+        }
+
+        /* Brillo al pasar */
+        .open-comentario-btn:hover {
+            box-shadow: 0 0 15px #00ffe7;
+        }
+
+
+
+        .comentario-area {
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 30px;
+        }
+
+        .open-comentario-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .modal-content {
+            position: relative;
+            background: #fff;
+            padding: 0;
+            overflow: hidden;
+            border: 3px solid #24f3e2;
+            box-shadow: 0 0 20px rgba(36, 243, 226, 0.4);
+            border-radius: 18px;
+        }
+        .modal-content form {
+            padding: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            border: 2px solid #00e1ff;
+            border-radius: 10px;
+            padding: 10px;
+            resize: vertical;
+            margin-top: 10px;
+        }
+        .cancel-btn,
+        .send-comentario-btn {
+            padding: 12px 35px;
+            font-size: 15px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s ease;
+        }
+        .send-comentario-btn {
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            color: #000;
+        }
+        .cancel-btn:hover {
+            background: #d5d5d5;
+        }
+
+        .send-comentario-btn:hover {
+            opacity: 0.85;
+        }
+        /* Estilo luminoso para inputs del modal */
+        .modal-content input,
+        .modal-content textarea {
+            border: 2px solid #24f3e2;
+            border-radius: 14px;
+            background: white;
+            padding: 10px 14px;
+            font-size: 16px;
+            width: 100%;
+            box-shadow: 0 0 12px rgba(36, 243, 226, 0.25);
+            transition: 0.2s;
+        }
+
+        /* Hover luminoso */
+        .modal-content input:hover,
+        .modal-content textarea:hover {
+            box-shadow: 0 0 18px rgba(36, 243, 226, 0.35);
+        }
+
+
+        .modal-content input[type="file"] {
+            padding: 8px;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* === Modal de Especialidades (clon exacto del de comentarios) === */
+
+        /* Fondo */
+        .modal-especialidad {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.35);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+            z-index: 9999;
+        }
+
+        .modal-especialidad.show {
+            display: flex;
+        }
+
+        /* Caja */
+        .modal-especialidad-content {
+            background: white;
+            width: 550px;
+            padding: 30px;
+            border-radius: 20px;
+            position: relative;
+            animation: pop 0.25s ease-out;
+            overflow: hidden;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Botón X */
+        .close-especialidad-btn {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            font-size: 22px;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform .35s ease, background .3s;
+            background: none;
+            color: white;
+        }
+
+        .close-especialidad-btn:hover {
+            transform: rotate(180deg);
+        }
+
+        /* Título */
+        .modal-especialidad-header h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        /* Labels */
+        .modal-especialidad-content label {
+            display: block;
+            text-align: left;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        /* Inputs */
+        .modal-especialidad-content input[type="text"],
+        .modal-especialidad-content input[type="file"],
+        .modal-especialidad-content textarea {
+            width: 100%;
+            border-radius: 12px;
+            border: 2px solid #00e5d2;
+            padding: 12px;
+            outline: none;
+            font-size: 16px;
+            margin-bottom: 18px;
+        }
+
+        /* textarea igual al otro */
+        .modal-especialidad-content textarea {
+            height: 140px;
+            resize: none;
+        }
+
+        .modal-especialidad-content input:focus,
+        .modal-especialidad-content textarea:focus {
+            border-color: #00f3ff;
+            box-shadow: 0 0 10px #00fff36b;
+        }
+
+        /* Footer (botones) */
+        .modal-especialidad-footer {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        /* Botón cancelar */
+        .especialidad-cancel-btn {
+            border-radius: 8px;
+            padding: 10px 20px;
+            border: 1px solid #6c757d;
+            background: #6c757d;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .especialidad-cancel-btn:hover {
+            background: #5a6268;
+            border-color: #545b62;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Botón guardar */
+        .especialidad-save-btn {
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            padding: 12px 35px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .especialidad-save-btn:hover {
+            opacity: .85;
+        }
+
+        /* Botón abrir */
+        .btn-especialidad-open {
+            background: #00ffe7;
+            padding: 10px 22px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            color: black;
+            transition: box-shadow .25s ease;
+        }
+        .btn-especialidad-open:hover {
+            box-shadow: 0 0 15px #00ffe7;
+        }
+
+        .modal-especialidad-header {
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            padding: 15px 20px;
+        }
+        .modal-especialidad-header h2 {
+            color: #fff;
+            margin: 0;
+            font-size: 26px;
+            font-weight: 800;
+        }
+        .modal-especialidad-content {
+            background: white;
+            width: 550px;
+            padding:  0;
+            position: relative;
+            animation: pop 0.25s ease-out;
+            border: 3px solid #24f3e2;
+            box-shadow: 0 0 20px rgba(36, 243, 226, 0.4);
+            border-radius: 18px;
+        }
+        .modal-especialidad-content form {
+            padding: 20px 30px;
+        }
+
+        /* Estilo luminoso para inputs del modal */
+        .modal-especialidad-content input,
+        .modal-especialidad-content textarea {
+            border: 2px solid #24f3e2;
+            border-radius: 14px;
+            background: white;
+            padding: 10px 14px;
+            font-size: 16px;
+            width: 100%;
+            box-shadow: 0 0 12px rgba(36, 243, 226, 0.25);
+            transition: 0.2s;
+        }
+
+        /* Hover luminoso */
+        .modal-especialidad-content input:hover,
+        .modal-especialidad-content textarea:hover {
+            box-shadow: 0 0 18px rgba(36, 243, 226, 0.35);
+        }
+
+        /* Igual estilo luminoso para el área del archivo */
+        .modal-especialidad-content input[type="file"] {
+            padding: 8px;
+            background: white;
+            cursor: pointer;
+        }
+    </style>
+
+
+
+        /* Fondo oscuro */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.35);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal.show {
+            display: flex; /* solo se muestra cuando se agrega la clase */
+        }
+
+
+
+        /* Caja */
+        .modal-content {
+            background: white;
+            width: 550px;
+            padding:  0;
+            border-radius: 20px;
+            position: relative;
+            animation: pop 0.25s ease-out;
+        }
+
+        .modal-content form {
+            padding: 20px 30px;
+        }
+
+        /* Animación de aparición */
+        @keyframes pop {
+            0% { transform: scale(.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Botón de la X */
+        .close-btn {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            font-size: 22px;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform .35s ease, background .3s;
+            background: none;
+            color: white;
+        }
+
+        /* Aquí está la animación de giro */
+        .close-btn:hover {
+            transform: rotate(180deg);
+        }
+
+        /* Header */
+        .modal-header {
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            padding: 15px 20px;
+        }
+
+        .modal-header h2 {
+            color: #fff;;
+            margin: 0;
+            font-size: 26px;
+            font-weight: 800;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+
+
+        /* Caja de texto */
+        textarea {
+            width: 100%;
+            height: 160px;
+            border-radius: 12px;
+            border: 2px solid #00e5d2;
+            padding: 12px;
+            outline: none;
+            font-size: 16px;
+            resize: none;
+        }
+
 
         textarea:focus {
             border-color: #00f3ff;

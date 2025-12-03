@@ -3,12 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expediente;
+use App\Models\HistorialExpediente;
 use App\Models\Paciente;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ExpedienteController extends Controller
 {
+    public function actualizarUltimoHistorial(Request $request, $expediente)
+    {
+        $request->validate([
+            'historial_id' => 'required|exists:historial_expedientes,id',
+            'alergias' => 'nullable|string',
+            'medicamentos_actuales' => 'nullable|string',
+            'antecedentes_familiares' => 'nullable|string',
+            'antecedentes_personales' => 'nullable|string',
+            'observaciones' => 'nullable|string',
+        ]);
+
+        $historial = HistorialExpediente::findOrFail($request->historial_id);
+
+        $historial->update($request->only([
+            'alergias',
+            'medicamentos_actuales',
+            'antecedentes_familiares',
+            'antecedentes_personales',
+            'observaciones'
+        ]));
+
+        return response()->json(['success' => true, 'message' => 'Historial clínico actualizado correctamente']);
+    }
+    public function actualizarHistorial(Request $request, $id)
+    {
+        $historial = HistorialExpediente::find($request->historial_id);
+
+        if ($historial) {
+            $historial->update($request->only([
+                'alergias',
+                'antecedentes_familiares',
+                'antecedentes_personales',
+                'medicamentos_actuales',
+                'observaciones',
+            ]));
+        }
+
+        return redirect()->back()->with('success', 'Historial actualizado');
+    }
     public function verHistorial($id)
     {
         // Solo para doctores
@@ -160,23 +201,18 @@ class ExpedienteController extends Controller
     }
     public function actualizarSignos(Request $request, $id)
     {
-        $request->validate([
-            'peso' => 'required|numeric',
-            'altura' => 'required|numeric',
-            'temperatura' => 'required|numeric',
-            'presion_arterial' => 'required',
-            'frecuencia_cardiaca' => 'required',
+        $expediente = Expediente::findOrFail($id);
+
+        $historial = $expediente->historiales()->create([
+            'peso' => $request->peso,
+            'altura' => $request->altura,
+            'temperatura' => $request->temperatura,
+            'presion_arterial' => $request->presion_arterial,
+            'frecuencia_cardiaca' => $request->frecuencia_cardiaca,
+            'fecha' => Carbon::today()->toDateString(), // formato Y-m-d
         ]);
 
-        $expediente = Expediente::findOrFail($id);
-        $expediente->peso = $request->peso;
-        $expediente->altura = $request->altura;
-        $expediente->temperatura = $request->temperatura;
-        $expediente->presion_arterial = $request->presion_arterial;
-        $expediente->frecuencia_cardiaca = $request->frecuencia_cardiaca;
-        $expediente->save();
-
-        return redirect()->back()->with('success_signos', 'Signos vitales actualizados correctamente.');
+        return redirect()->back()->with('success', 'Signos vitales agregados correctamente.');
     }
 
     public function actualizarConsulta(Request $request, $id)
@@ -189,22 +225,6 @@ class ExpedienteController extends Controller
 
         return redirect()->back()->with('success_consulta', 'Registro médico actualizado correctamente.');
     }
-    public function actualizarHistorial(Request $request, $id)
-    {
-        $historial = Historial::findOrFail($request->input('historial_id'));
-
-        // Actualizar los campos desde el formulario
-        $historial->alergias = $request->input('alergias');
-        $historial->medicamentos_actuales = $request->input('medicamentos_actuales');
-        $historial->antecedentes_familiares = $request->input('antecedentes_familiares');
-        $historial->antecedentes_personales = $request->input('antecedentes_personales');
-        $historial->observaciones = $request->input('observaciones');
-
-        $historial->save();
-
-        return redirect()->back()->with('success', 'Historial actualizado correctamente');
-    }
-
 
 
 

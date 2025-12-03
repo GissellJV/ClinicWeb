@@ -469,7 +469,7 @@
             </div>
 
 
-            <form id="formSignos" method="POST" action="{{ route('expedientes.actualizarHistorial', $expediente->id) }}">
+            <form id="formSignos" method="POST" action="{{ route('expedientes.actualizarSignos', $expediente->id) }}">
                 @csrf
                 <table class="info-table">
                     <tbody>
@@ -554,77 +554,106 @@
 
         <!-- HISTORIAL CLINICO -->
         <div class="tab-content" id="antecedentes">
-            <div class="card-header-custom" style="display: flex; align-items: center; justify-content: space-between;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="{{ asset('imagenes/ante.png') }}" alt="antecedentes" style="height: 25px; width: 24px; filter: grayscale(1) brightness(0.5);">
+            <div class="card-header-custom d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-2">
+                    <img src="{{ asset('imagenes/ante.png') }}" alt="antecedentes" style="height:25px;width:24px;filter:grayscale(1) brightness(0.5);">
                     <h5 class="mb-0">Antecedentes</h5>
                 </div>
                 @if(session('cargo') === 'Recepcionista')
-                    <button type="button" id="btnActualizarHistorial" class="btn-actualizar">
-                        Actualizar Historial
-                    </button>
+                    <button type="button" id="btnEditarHistorial" class="btn-actualizar">Actualizar</button>
                 @endif
             </div>
 
-            <form id="formHistorial" method="POST" action="{{ route('expedientes.actualizarHistorial', $expediente->id) }}">
+            <form id="formHistorial" method="POST" action="{{ route('expedientes.actualizarUltimoHistorial', $expediente->id) }}">
                 @csrf
+                <input type="hidden" name="historial_id" value="{{ $expediente->historiales->last()->id ?? '' }}">
                 <table class="info-table">
-                <tbody>
-
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Alergias:</span>
-                        <input class="info-value" name="alergias" value="{{ $expediente->alergias }}" disabled>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Medicamentos Actuales:</span>
-                        <input class="info-value" name="medicamentos_actuales" value="{{$expediente->medicamentos_actuales}}" disabled>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Antecedentes Familiares:</span>
-                        <input class="info-value" name="antecedentes_familiares" value="{{$expediente->antecedentes_familiares}}" disabled>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Antecedentes Personales:</span>
-                        <input class="info-value" name="antecedentes_personales" value="{{$expediente->antecedentes_personales}}" disabled>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-            <div class="card-header-custom mt-4">
-                <img src="{{ asset('imagenes/notas.png') }}" alt="notas" style="height: 25px; width: 24px; filter: grayscale(1) brightness(0.5);">
-                <h5 class="mb-0">Notas Adicionales</h5>
-            </div>
-
-            <table class="info-table">
-                <tbody>
-                <tr>
-                    <td class="info-item" style="grid-column: 1 / -1;">
-                        <span class="info-label">Observaciones Generales:</span>
-                        <textarea class="form-control" name="observaciones" rows="2" disabled>{{ $expediente->observaciones }}</textarea>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-                <div class="text-end mt-3">
-                    <button type="submit" id="btnGuardarHistorial" class="btn btn-guardar d-none">Guardar</button>
-                </div>
+                    <tbody>
+                    <tr>
+                        <td class="info-item" style="grid-column:1/-1;">
+                            <span class="info-label">Alergias:</span>
+                            <input id="alergias" class="info-value" name="alergias" value="{{ $expediente->alergias }}" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="info-item" style="grid-column:1/-1;">
+                            <span class="info-label">Medicamentos Actuales:</span>
+                            <input id="medicamentos_actuales" class="info-value" name="medicamentos_actuales" value="{{ $expediente->medicamentos_actuales }}" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="info-item" style="grid-column:1/-1;">
+                            <span class="info-label">Antecedentes Familiares:</span>
+                            <input id="antecedentes_familiares" class="info-value" name="antecedentes_familiares" value="{{ $expediente->antecedentes_familiares }}" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="info-item" style="grid-column:1/-1;">
+                            <span class="info-label">Antecedentes Personales:</span>
+                            <input id="antecedentes_personales" class="info-value" name="antecedentes_personales" value="{{ $expediente->antecedentes_personales }}" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="info-item" style="grid-column:1/-1;">
+                            <span class="info-label">Observaciones:</span>
+                            <textarea id="observaciones" class="form-control" name="observaciones" rows="2" disabled>{{ $expediente->observaciones }}</textarea>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </form>
-    </div>
-</div>
-</div>
-</div>
-<br><br>
+        </div>
 
-<script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const btnActualizar = document.getElementById('btnActualizarHistorial');
+                const btnGuardar = document.getElementById('btnGuardarHistorial');
+                const form = document.getElementById('formHistorial');
+                const inputs = form.querySelectorAll('input, textarea');
+
+                btnActualizar.addEventListener('click', function() {
+                    // Habilitar campos
+                    inputs.forEach(i => i.disabled = false);
+                    btnActualizar.classList.add('d-none');
+                    btnGuardar.classList.remove('d-none');
+                });
+
+                btnGuardar.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const token = '{{ csrf_token() }}';
+                    const data = {};
+                    inputs.forEach(i => data[i.name] = i.value);
+
+                    fetch("/expedientes/{{ $expediente->id }}/actualizar-historial-clinico", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token
+                        },
+                        body: JSON.stringify(data)
+                    })
+                        .then(res => res.json())
+                        .then(result => {
+                            if(result.success){
+                                // Deshabilitar campos nuevamente
+                                inputs.forEach(i => i.disabled = true);
+                                btnGuardar.classList.add('d-none');
+                                btnActualizar.classList.remove('d-none');
+
+                                // Mostrar modal de éxito
+                                $('#modalExito').modal('show');
+                            } else {
+                                alert(result.message || "Error al actualizar.");
+                            }
+                        });
+                });
+            });
+
+
+        </script>
+
+        <script>
     document.addEventListener('DOMContentLoaded', function() {
 
         function habilitarEdicion(btnEditarId, formId) {
