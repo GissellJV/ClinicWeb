@@ -67,7 +67,7 @@ class CitaController extends Controller
 
         $citas = Cita::with('doctor')
             ->where('paciente_id', $paciente->id)
-            ->Paginate(10);
+            ->Paginate(9);
 
         return view('citas.mis-citas', compact('citas'));
     }
@@ -151,7 +151,7 @@ class CitaController extends Controller
         }
 
         $cita->estado = 'programada';
-        $cita->mensaje = "Tu cita con el {$doctorNombre} ha sido confirmada para las {$cita->hora}.";
+        $cita->mensaje = "Tu cita con  {$doctorNombre} ha sido confirmada para las {$cita->hora}.";
         $cita->save();
 
         return redirect()->back()->with('success', 'Cita confirmada correctamente.');
