@@ -208,7 +208,8 @@ Route::post('/pacientes/asignar-medicamento', [PacienteController::class, 'asign
 
 
 // Historial por fecha (Recepcionista)
-Route::post('/expedientes/{id}/actualizar-historial', [ExpedienteController::class, 'actualizarHistorialExpediente'])
-    ->name('expedientes.actualizarHistorial');
 Route::get('/expedientes/{id}/historial', [ExpedienteController::class, 'verHistorial'])
     ->name('doctor.historial');
+// Actualizar el último historial clínico de un expediente
+Route::post('/expedientes/{expediente}/actualizar-historial', [ExpedienteController::class, 'actualizarUltimoHistorial'])
+    ->name('expedientes.actualizarUltimoHistorial');
