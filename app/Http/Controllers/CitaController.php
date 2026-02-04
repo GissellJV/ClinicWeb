@@ -98,12 +98,16 @@ class CitaController extends Controller
     }
 
     //  Cancelar cita
-    public function cancelarCita($id)
+    public function cancelarCita(Request $request, $id)
     {
         if (!session('paciente_id')) {
             return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión primero');
         }
+
+        $request->validate([
+            'motivo_cancelacion' => 'required|string|min:5|max:500'
+        ]);
 
         $cita = Cita::findOrFail($id);
         $paciente_id = session('paciente_id');
@@ -115,6 +119,7 @@ class CitaController extends Controller
 
         $cita->update([
             'estado' => 'cancelada',
+            'motivo_cancelacion' => $request->motivo_cancelacion,
             'mensaje' => null
         ]);
 

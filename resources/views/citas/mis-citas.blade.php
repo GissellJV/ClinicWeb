@@ -750,9 +750,10 @@
                             </div>
 
                             <!-- Mensaje de Confirmación -->
-                            @if($cita->mensaje)
+                            @if($cita->estado == 'cancelada' && $cita->motivo_cancelacion)
                                 <div class="mensaje-info">
-                                    <i class="fas fa-info-circle"></i> {{ $cita->mensaje }}
+                                    <strong>Motivo de cancelación:</strong><br>
+                                    {{ $cita->motivo_cancelacion }}
                                 </div>
                             @endif
 
@@ -771,6 +772,7 @@
 
                                     <form action="{{ route('citas.cancelar', $cita->id) }}" method="POST" id="formCancelar{{ $cita->id }}" style="flex: 1; margin: 0;">
                                         @csrf
+                                        <input type="hidden" name="motivo_cancelacion" id="hidden_motivo_{{ $cita->id }}">
                                         <button type="button" class="btn-action btn-cancelar" style="width: 100%;"
                                                 onclick="confirmarCancelacion(
                                             {{ $cita->id }},
@@ -829,7 +831,26 @@
                     <p>¿Estás seguro de que deseas cancelar esta cita médica?</p>
                     <div class="cita-info-box" id="modalCancelarTexto"></div>
                     <p class="text-muted mb-0" style="font-size: 0.9rem;">Esta acción no se puede deshacer</p>
+                    <!-- ALERTA BOOTSTRAP -->
+                    <div id="alertaMotivoCancelar" class="alert alert-danger d-none" role="alert">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Debe ingresar el motivo de la cancelación.
+                    </div>
+                    <div class="mb-3 text-start">
+                        <label class="form-label">
+                            Motivo de la cancelación <span class="text-danger">*</span>
+                        </label>
+                        <textarea
+                            id="motivo_cancelacion"
+                            class="form-control form-control-modal"
+                            rows="3"
+                            placeholder="Escriba el motivo de la cancelación"
+                            required
+                        ></textarea>
+                    </div>
+
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-modal-cancel" data-bs-dismiss="modal">No, mantener cita</button>
                     <button type="button" class="btn btn-modal-danger" id="btnConfirmarCancelar">
@@ -868,19 +889,33 @@
     <script>
         function confirmarCancelacion(id, doctor, fecha, hora) {
             document.getElementById('modalCancelarTexto').innerHTML = `
-                <strong>Doctor:</strong> ${doctor}<br>
-                <strong>Fecha:</strong> ${fecha}<br>
-                <strong>Hora:</strong> ${hora}
-            `;
+        <strong>Doctor:</strong> ${doctor}<br>
+        <strong>Fecha:</strong> ${fecha}<br>
+        <strong>Hora:</strong> ${hora}
+    `;
 
             document.getElementById('btnConfirmarCancelar').onclick = function () {
+                let motivo = document.getElementById('motivo_cancelacion').value.trim();
+                let alerta = document.getElementById('alertaMotivoCancelar');
+
+                if (!motivo) {
+                    alerta.classList.remove('d-none');
+                    return;
+                }
+
+                alerta.classList.add('d-none');
+
+                document.getElementById('hidden_motivo_' + id).value = motivo;
                 document.getElementById('formCancelar' + id).submit();
             };
+
+            document.getElementById('motivo_cancelacion').value = '';
+            document.getElementById('alertaMotivoCancelar').classList.add('d-none');
 
             new bootstrap.Modal(document.getElementById('modalCancelar')).show();
         }
 
-        function confirmarReprogramacion(id, doctor, fecha, hora) {
+    function confirmarReprogramacion(id, doctor, fecha, hora) {
             document.getElementById('modalReprogramarContenido').innerHTML = `
                 <p>Selecciona la nueva fecha y hora para tu cita</p>
 
