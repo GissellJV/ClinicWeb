@@ -140,6 +140,39 @@
             box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
         }
 
+        .filters-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group:last-child {
+            flex: 0;
+            min-width:12%;
+            margin-left: auto;
+        }
+
+        .filter-group label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .filter-group select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
         .btn-filter {
             padding: 12px 30px;
             background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
@@ -149,6 +182,11 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+        }
+
+        .btn-filter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
         }
 
         .btn-filter:hover {
@@ -181,11 +219,11 @@
         }
 
         .alert-info-custom {
-            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
-            border-left: 5px solid #17a2b8;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+
             color: #0c5460;
             text-align: center;
-            padding: 40px;
+
         }
 
         .alert-info-custom i {
@@ -622,7 +660,6 @@
                         <select name="orden">
                             <option value="fecha_desc" {{ request('orden') == 'fecha_desc' ? 'selected' : '' }}>Fecha (más reciente)</option>
                             <option value="fecha_asc" {{ request('orden') == 'fecha_asc' ? 'selected' : '' }}>Fecha (más antigua)</option>
-                            <option value="doctor" {{ request('orden') == 'doctor' ? 'selected' : '' }}>Doctor</option>
                         </select>
                     </div>
 
@@ -766,12 +803,12 @@
             </div>
         @else
             <div class="alert-custom alert-info-custom">
-                <i class="fas fa-calendar-times"></i>
-                <h3>No tienes citas programadas</h3>
-                <p>Agenda tu primera cita médica con nosotros</p>
+                <h3>No tienes citas {{request('estado')}}s </h3>
+                <div class="filter-group">
                 <a href="{{ route('agendarcitas') }}" class="btn-filter" style="display: inline-flex; text-decoration: none;">
-                    <i class="fas fa-plus"></i> Agendar Cita
+                   Agendar Cita
                 </a>
+                </div>
             </div>
         @endif
     </div>

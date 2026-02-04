@@ -449,17 +449,15 @@
 
         /* === CONTENEDOR DEL MODAL === */
         .modal-content {
-            background: #ffffffee !important;
-            backdrop-filter: blur(12px);
+            background: #ffffff !important;
             border-radius: 22px !important;
-            border: 2px solid #00ffc8 !important;
-            box-shadow: 0 0 30px #00ffe680 !important;
+            border: none !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
             overflow: hidden;
         }
 
         /* --- HEADER DEL MODAL --- */
         .modal-header {
-            background: linear-gradient(90deg, #00e1ff, #00ffc8) !important;
             padding: 15px 20px !important;
             border-bottom: none !important;
         }
@@ -497,7 +495,6 @@
             transition: all 0.3s ease;
             border: none !important;
             cursor: pointer;
-            background: linear-gradient(135deg, #ff6b6b, #ee5a6f) !important;
             color: white !important;
         }
 
