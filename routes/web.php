@@ -213,3 +213,8 @@ Route::get('/expedientes/{id}/historial', [ExpedienteController::class, 'verHist
 // Actualizar el último historial clínico de un expediente
 Route::post('/expedientes/{expediente}/actualizar-historial', [ExpedienteController::class, 'actualizarUltimoHistorial'])
     ->name('expedientes.actualizarUltimoHistorial');
+
+// Rutas Sprint 4
+// rutas para editar publicidad de las promo
+Route::get('/publicidad/{id}/edit', [PublicidadController::class, 'edit'])->name('publicidad.edit');
+Route::put('/publicidad/{id}', [PublicidadController::class, 'update'])->name('publicidad.update');

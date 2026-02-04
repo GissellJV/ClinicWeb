@@ -47,20 +47,30 @@
             @endif
 
             {{-- Formulario --}}
-            <form action="{{ route('publicidad.store') }}" method="POST">
+            <form method="POST"
+                  action="{{ isset($publicidad)
+          ? route('publicidad.update', $publicidad->id)
+          : route('publicidad.store') }}">
                 @csrf
 
+                @if(isset($publicidad))
+                    @method('PUT')
+                @endif
+
                 <label>Título</label>
-                <input type="text" name="titulo" class="form-control" required>
+                <input type="text" name="titulo" class="form-control" value="{{ $publicidad->titulo ?? '' }}" required>
 
                 <label>Subtitulo</label>
-                <input type="text" name="subtitulo" class="form-control" required>
+                <input type="text" name="subtitulo" class="form-control" value="{{ $publicidad->subtitulo ?? '' }}" required>
 
                 <label class="mt-3">Descripción</label>
-                <textarea name="descripcion" class="form-control" required></textarea>
+                <textarea name="descripcion" class="form-control" required>{{ $publicidad->descripcion ?? '' }}</textarea>
 
                 <div style="margin-top: 20px">
-                    <button class="btn-guardar">Guardar</button>
+                    <button class="btn-guardar">
+                        {{ isset($publicidad) ? 'Actualizar' : 'Guardar' }}
+                    </button>
+
                 </div>
 
             </form>
