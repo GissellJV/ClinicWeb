@@ -46,7 +46,7 @@ class CitaController extends Controller
     }
 
     //Vista del paciente
-    public function misCitas()
+    public function misCitas(Request $request)
     {
         if (!session('paciente_id')) {
             return redirect()->route('inicioSesion')
@@ -65,9 +65,34 @@ class CitaController extends Controller
             return redirect()->back()->with('error', 'No se encontró información del paciente');
         }
 
-        $citas = Cita::with('doctor')
-            ->where('paciente_id', $paciente->id)
-            ->Paginate(9);
+        // Iniciar la consulta
+        $query = Cita::with('doctor')->where('paciente_id', $paciente->id);
+
+        // Filtro por estado
+        if ($request->filled('estado')) {
+            $query->where('estado', $request->estado);
+        }
+
+        // Ordenamiento
+        switch ($request->get('orden', 'fecha_desc')) {
+            case 'fecha_asc':
+                $query->orderBy('fecha', 'asc')->orderBy('hora', 'asc');
+                break;
+            case 'fecha_desc':
+                $query->orderBy('fecha', 'desc')->orderBy('hora', 'desc');
+                break;
+            case 'doctor':
+                $query->join('empleados', 'citas.doctor_id', '=', 'empleados.id')
+                    ->orderBy('empleados.nombre', 'asc')
+                    ->orderBy('empleados.apellido', 'asc')
+                    ->select('citas.*');
+                break;
+            default:
+                $query->orderBy('fecha', 'desc')->orderBy('hora', 'desc');
+                break;
+        }
+
+        $citas = $query->paginate(9);
 
         return view('citas.mis-citas', compact('citas'));
     }
