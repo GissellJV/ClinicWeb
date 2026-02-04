@@ -3345,7 +3345,13 @@
 
                                 <div class="promo-footer">
                                     <span class="promo-brand">ClinicWeb</span>
-
+                                    @if(session('cargo') === 'Recepcionista')
+                                        <a href="{{ route('publicidad.edit', $pub->id) }}"
+                                           class="promo-brand"
+                                           style=" font-weight:bold; cursor:pointer;">
+                                            Editar
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
