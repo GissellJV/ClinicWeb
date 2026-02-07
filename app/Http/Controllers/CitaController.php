@@ -469,4 +469,30 @@ class CitaController extends Controller
 
         return redirect()->back()->with('success', 'Cita marcada como completada');
     }
+    // ELIMINAR CITA COMPLETADA (PACIENTE)
+    public function eliminarCitaCompletada($id)
+    {
+        if (!session('paciente_id')) {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión primero');
+        }
+
+        $paciente_id = session('paciente_id');
+
+        $cita = Cita::where('id', $id)
+            ->where('paciente_id', $paciente_id)
+            ->firstOrFail();
+
+        // Validar que la cita esté completada
+        if ($cita->estado !== 'completada') {
+            return redirect()->back()
+                ->with('error', 'Solo se pueden eliminar citas que estén completadas.');
+        }
+
+        $cita->delete();
+
+        return redirect()->back()
+            ->with('success', 'La cita completada fue eliminada correctamente.');
+    }
+
 }
