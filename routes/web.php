@@ -223,3 +223,7 @@ Route::put('/publicidad/{id}', [PublicidadController::class, 'update'])->name('p
 //Perfil del paciente
 Route::get('/mi-perfil', [PacienteController::class, 'miPerfil'])->name('perfil');
 Route::put('/mi-perfil/actualizar', [PacienteController::class, 'actualizarPerfil'])->name('perfil.actualizar');
+
+
+//Eliminar citas completadas
+Route::delete('/citas/completadas/{id}',[CitaController::class, 'eliminarCitaCompletada'])->name('citas.eliminar.completada');
