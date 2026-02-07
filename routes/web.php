@@ -8,6 +8,7 @@ use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\PreguntaController;
+use App\Http\Controllers\PreguntaPacienteController;
 use App\Http\Controllers\TurnoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RutasController;
@@ -227,3 +228,30 @@ Route::put('/mi-perfil/actualizar', [PacienteController::class, 'actualizarPerfi
 
 //Eliminar citas completadas
 Route::delete('/citas/completadas/{id}',[CitaController::class, 'eliminarCitaCompletada'])->name('citas.eliminar.completada');
+
+
+//Gestion de preguntas
+Route::get('/preguntas', [PreguntaController::class, 'index'])
+    ->name('preguntas.index');
+
+Route::get('/preguntas/crear', [PreguntaController::class, 'create'])
+    ->name('preguntas.create');
+
+Route::post('/preguntas', [PreguntaController::class, 'store'])
+    ->name('preguntas.store');
+
+Route::get('/preguntas/{id}/editar', [PreguntaController::class, 'edit'])
+    ->name('preguntas.edit');
+
+Route::put('/preguntas/{id}', [PreguntaController::class, 'update'])
+    ->name('preguntas.update');
+
+Route::delete('/preguntas/{id}', [PreguntaController::class, 'destroy'])
+    ->name('preguntas.destroy');
+
+Route::post('/preguntas/orden', [PreguntaController::class, 'updateOrden'])
+    ->name('preguntas.orden');
+
+// Ruta pública (para todos los usuarios) - Esta va AL FINAL
+Route::get('/preguntas-frecuentes', [PreguntaController::class, 'publico'])
+    ->name('preguntas.publico');
