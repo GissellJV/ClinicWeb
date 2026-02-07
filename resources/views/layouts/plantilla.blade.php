@@ -164,6 +164,35 @@
             background: white;
             color: #009e8e;
         }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #4ecdc4;
+            margin-right: 8px;
+        }
+
+        .user-initials {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            border: 2px solid #4ecdc4;
+            margin-right: 8px;
+        }
+
+        .nav-link-modern {
+            display: flex;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -216,11 +245,33 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link nav-link-modern dropdown-toggle d-flex align-items-center" href="#" id="userDropdown"
                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-person-circle me-1"></i> {{ session('paciente_nombre') }}
+
+                                @php
+                                    $pacienteId = session('paciente_id');
+                                    $paciente = \App\Models\Paciente::find($pacienteId);
+                                @endphp
+
+                                @if($paciente && $paciente->foto)
+                                    <img src="{{ asset('storage/' . $paciente->foto) }}"
+                                         alt="Foto de perfil"
+                                         class="user-avatar">
+                                @else
+                                    <div class="user-initials">
+                                        @if($paciente)
+                                            {{ strtoupper(substr($paciente->nombres, 0, 1) . substr($paciente->apellidos, 0, 1)) }}
+                                        @else
+                                            <i class="bi bi-person-circle"></i>
+                                        @endif
+                                    </div>
+                                @endif
+
+                                {{ session('paciente_nombre') }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="{{ route('agendarcitas') }}"><i class="bi bi-calendar-plus"></i> Agendar cita</a></li>
                                 <li><a class="dropdown-item" href="{{ route('citas.mis-citas') }}"><i class="bi bi-calendar-check"></i> Mis citas</a></li>
+                                <li><a class="dropdown-item" href="{{ route('perfil') }}"><i class="bi bi-person-fill"></i> Mi Perfil</a></li>
+
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <form action="{{ route('pacientes.logout') }}" method="POST">

@@ -33,4 +33,27 @@ class PublicidadController extends Controller
 
         return redirect()->back()->with('success', 'Publicidad guardada correctamente');
     }
+    public function edit($id)
+    {
+        $publicidad = Publicidad::findOrFail($id);
+
+        return view('recepcionista.publicidad', compact('publicidad'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'titulo' => 'required',
+            'subtitulo' => 'required',
+            'descripcion' => 'required',
+        ]);
+
+        $publicidad = Publicidad::findOrFail($id);
+        $publicidad->update($request->all());
+
+        return redirect('/#promos')
+            ->with('success', 'Publicidad actualizada correctamente');
+
+    }
+
 }

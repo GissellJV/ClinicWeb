@@ -59,9 +59,6 @@ class PacienteController extends Controller
     }
 
 
-
-
-
     public function medicamentosPorPaciente()
     {
         if (!session('cargo') || session('cargo') != 'Enfermero') {
@@ -70,7 +67,7 @@ class PacienteController extends Controller
         }
         $pacientes = Paciente::with([
             'medicamentos',
-            'asignacionesHabitacion' => function($query) {
+            'asignacionesHabitacion' => function ($query) {
                 $query->where('estado', 'activo')->with('habitacion');
             }
         ])->get();
@@ -82,7 +79,8 @@ class PacienteController extends Controller
 
     }
 
-    public function registrarpaciente(){
+    public function registrarpaciente()
+    {
 
         return view('pacientes.registrarpaciente');
     }
@@ -121,27 +119,27 @@ class PacienteController extends Controller
         ],
             [
 
-            'nombres.required' => 'Nombres obligatorios',
-            'nombres.regex' => 'Ingrese nombres válidos (solo letras y espacios)',
-            'nombres.max' => 'Los nombres no pueden tener más de 50 caracteres',
-            'apellidos.required' => 'Apellidos obligatorios',
-            'apellidos.regex' => 'Ingrese apellidos válidos (solo letras y espacios)',
-            'apellidos.max' => 'Los apellidos no pueden tener más de 50 caracteres',
-            'fecha_nacimiento.required' => 'Fecha de nacimiento obligatoria',
-            'fecha_nacimiento.before' => 'Ingresa una fecha válida',
-            'genero.required' => 'Selecciona un género',
-            'numero_identidad.required' => 'El número de identidad es obligatorio',
-            'numero_identidad.regex' => 'El formato del número de identidad no es válido',
-            'numero_identidad.size' => 'El número de identidad debe tener 13 dígitos',
-            'numero_identidad.unique' => 'El número de identidad ya ha sido registrado',
-            'telefono.required' => 'El número de teléfono es obligatorio',
-            'telefono.regex' => 'El número de teléfono no es válido',
-            'telefono.size' => 'El número de teléfono debe tener 8 dígitos',
-            'password.required' => 'La contraseña es obligatoria',
-            'password.min' => 'La contraseña debe tener mínimo 8 caracteres',
-            'password.regex' => 'Mínimo 8 caracteres, incluye mayúsculas, minúsculas y números',
-            'password.confirmed' => 'Las contraseñas no coinciden',
-        ]);
+                'nombres.required' => 'Nombres obligatorios',
+                'nombres.regex' => 'Ingrese nombres válidos (solo letras y espacios)',
+                'nombres.max' => 'Los nombres no pueden tener más de 50 caracteres',
+                'apellidos.required' => 'Apellidos obligatorios',
+                'apellidos.regex' => 'Ingrese apellidos válidos (solo letras y espacios)',
+                'apellidos.max' => 'Los apellidos no pueden tener más de 50 caracteres',
+                'fecha_nacimiento.required' => 'Fecha de nacimiento obligatoria',
+                'fecha_nacimiento.before' => 'Ingresa una fecha válida',
+                'genero.required' => 'Selecciona un género',
+                'numero_identidad.required' => 'El número de identidad es obligatorio',
+                'numero_identidad.regex' => 'El formato del número de identidad no es válido',
+                'numero_identidad.size' => 'El número de identidad debe tener 13 dígitos',
+                'numero_identidad.unique' => 'El número de identidad ya ha sido registrado',
+                'telefono.required' => 'El número de teléfono es obligatorio',
+                'telefono.regex' => 'El número de teléfono no es válido',
+                'telefono.size' => 'El número de teléfono debe tener 8 dígitos',
+                'password.required' => 'La contraseña es obligatoria',
+                'password.min' => 'La contraseña debe tener mínimo 8 caracteres',
+                'password.regex' => 'Mínimo 8 caracteres, incluye mayúsculas, minúsculas y números',
+                'password.confirmed' => 'Las contraseñas no coinciden',
+            ]);
 
 
         $nuevoPaciente = new Paciente();
@@ -159,7 +157,8 @@ class PacienteController extends Controller
     }
 
 
-    public function listado_citaspro(Request $request){
+    public function listado_citaspro(Request $request)
+    {
 
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
             return redirect()->route('inicioSesion')
@@ -221,7 +220,7 @@ class PacienteController extends Controller
     {
         $request->validate([
             'telefono' => 'required|string|size:8|regex:/^[2389]\d{7}$/'
-        ],[
+        ], [
             'telefono.required' => 'El número de teléfono es obligatorio',
             'telefono.regex' => 'El número de teléfono no es válido',
             'telefono.size' => 'El número de teléfono debe tener 8 dígitos',
@@ -278,7 +277,7 @@ class PacienteController extends Controller
         $request->validate([
             'token' => 'required',
             'password' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]/|confirmed',
-        ],[
+        ], [
             'password.required' => 'La contraseña es obligatoria',
             'password.min' => 'La contraseña debe tener mínimo 8 caracteres',
             'password.regex' => 'Mínimo 8 caracteres, incluye mayúsculas, minúsculas y números',
@@ -307,4 +306,109 @@ class PacienteController extends Controller
     {
         return view('pacientes.informacion_clinica');
     }
+
+    public function miPerfil()
+    {
+
+        if (!session('paciente_id')) {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión para ver tu perfil');
+        }
+
+        $paciente = Paciente::find(session('paciente_id'));
+
+        // Verificar que el paciente existe
+        if (!$paciente) {
+            session()->flush(); // Limpiar sesión inválida
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Sesión inválida. Por favor, inicia sesión nuevamente');
+        }
+
+
+        return view('pacientes.mi_perfil', compact('paciente'));
+    }
+
+    public function editarPerfil()
+    {
+        if (!session('paciente_id')) {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión para editar tu perfil');
+        }
+
+        $paciente = Paciente::find(session('paciente_id'));
+
+        if (!$paciente) {
+            session()->flush();
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Sesión inválida');
+        }
+
+        return view('pacientes.editar_perfil.blade.php', compact('paciente'));
+    }
+
+    // Actualizacion del numero de telefono y foto
+
+    public function actualizarPerfil(Request $request)
+    {
+        if (!session('paciente_id')) {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión');
+        }
+
+        $paciente = Paciente::find(session('paciente_id'));
+
+        if (!$paciente) {
+            session()->flush();
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Sesión inválida');
+        }
+
+        // Validar los datos
+        $request->validate([
+            'telefono' => 'required|string|size:8|regex:/^[389]\d{7}$/',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // 2MB max
+        ], [
+            'telefono.required' => 'El número de teléfono es obligatorio',
+            'telefono.regex' => 'El número de teléfono debe comenzar con 3, 8 o 9',
+            'telefono.size' => 'El número de teléfono debe tener 8 dígitos',
+            'foto.image' => 'El archivo debe ser una imagen',
+            'foto.mimes' => 'La foto debe ser JPG, JPEG o PNG',
+            'foto.max' => 'La foto no puede pesar más de 2MB',
+        ]);
+
+        $mensajeActualizacion = [];
+
+        // Actualizar teléfono solo si cambió
+        if ($request->telefono !== $paciente->telefono) {
+            $paciente->telefono = $request->telefono;
+            $mensajeActualizacion[] = 'teléfono';
+        }
+
+        // Manejar la subida de foto si existe
+        if ($request->hasFile('foto')) {
+            try {
+                // Eliminar foto existente
+                if ($paciente->foto && file_exists(storage_path('app/public/' . $paciente->foto))) {
+                    unlink(storage_path('app/public/' . $paciente->foto));
+                }
+
+                // Guardar nueva foto
+                $fotoPath = $request->file('foto')->store('fotos_perfil', 'public');
+                $paciente->foto = $fotoPath;
+                $mensajeActualizacion[] = 'foto';
+            } catch (\Exception $e) {
+                return redirect()->route('perfil')
+                    ->with('error', 'Error al subir la foto, intenta de nuevo.');
+            }
+        }
+
+        // Guardar cambios
+        if (!empty($mensajeActualizacion)) {
+            $paciente->save();
+        }
+
+        return redirect()->route('perfil')
+            ->with('success', 'Se actualizó correctamente ');
+    }
+
 }

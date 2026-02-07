@@ -20,7 +20,8 @@ class Cita extends Model
         'hora',
         'estado',
         'mensaje',
-        'motivo'
+        'motivo',
+        'motivo_cancelacion',
     ];
 
     protected $casts = [

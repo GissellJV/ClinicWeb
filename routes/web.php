@@ -7,6 +7,7 @@ use App\Http\Controllers\EnfermeriaController;
 use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\TurnoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RutasController;
@@ -213,3 +214,16 @@ Route::get('/expedientes/{id}/historial', [ExpedienteController::class, 'verHist
 // Actualizar el último historial clínico de un expediente
 Route::post('/expedientes/{expediente}/actualizar-historial', [ExpedienteController::class, 'actualizarUltimoHistorial'])
     ->name('expedientes.actualizarUltimoHistorial');
+
+// Rutas Sprint 4
+// rutas para editar publicidad de las promo
+Route::get('/publicidad/{id}/edit', [PublicidadController::class, 'edit'])->name('publicidad.edit');
+Route::put('/publicidad/{id}', [PublicidadController::class, 'update'])->name('publicidad.update');
+
+//Perfil del paciente
+Route::get('/mi-perfil', [PacienteController::class, 'miPerfil'])->name('perfil');
+Route::put('/mi-perfil/actualizar', [PacienteController::class, 'actualizarPerfil'])->name('perfil.actualizar');
+
+
+//Eliminar citas completadas
+Route::delete('/citas/completadas/{id}',[CitaController::class, 'eliminarCitaCompletada'])->name('citas.eliminar.completada');

@@ -46,7 +46,7 @@ class CitaController extends Controller
     }
 
     //Vista del paciente
-    public function misCitas()
+    public function misCitas(Request $request)
     {
         if (!session('paciente_id')) {
             return redirect()->route('inicioSesion')
@@ -65,20 +65,49 @@ class CitaController extends Controller
             return redirect()->back()->with('error', 'No se encontró información del paciente');
         }
 
-        $citas = Cita::with('doctor')
-            ->where('paciente_id', $paciente->id)
-            ->Paginate(9);
+        // Iniciar la consulta
+        $query = Cita::with('doctor')->where('paciente_id', $paciente->id);
+
+        // Filtro por estado
+        if ($request->filled('estado')) {
+            $query->where('estado', $request->estado);
+        }
+
+        // Ordenamiento
+        switch ($request->get('orden', 'fecha_desc')) {
+            case 'fecha_asc':
+                $query->orderBy('fecha', 'asc')->orderBy('hora', 'asc');
+                break;
+            case 'fecha_desc':
+                $query->orderBy('fecha', 'desc')->orderBy('hora', 'desc');
+                break;
+            case 'doctor':
+                $query->join('empleados', 'citas.doctor_id', '=', 'empleados.id')
+                    ->orderBy('empleados.nombre', 'asc')
+                    ->orderBy('empleados.apellido', 'asc')
+                    ->select('citas.*');
+                break;
+            default:
+                $query->orderBy('fecha', 'desc')->orderBy('hora', 'desc');
+                break;
+        }
+
+        $citas = $query->paginate(9);
 
         return view('citas.mis-citas', compact('citas'));
     }
 
     //  Cancelar cita
-    public function cancelarCita($id)
+    public function cancelarCita(Request $request, $id)
     {
         if (!session('paciente_id')) {
             return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión primero');
         }
+
+        $request->validate([
+            'motivo_cancelacion' => 'required|string|min:5|max:500'
+        ]);
 
         $cita = Cita::findOrFail($id);
         $paciente_id = session('paciente_id');
@@ -90,6 +119,7 @@ class CitaController extends Controller
 
         $cita->update([
             'estado' => 'cancelada',
+            'motivo_cancelacion' => $request->motivo_cancelacion,
             'mensaje' => null
         ]);
 
@@ -439,4 +469,30 @@ class CitaController extends Controller
 
         return redirect()->back()->with('success', 'Cita marcada como completada');
     }
+    // ELIMINAR CITA COMPLETADA (PACIENTE)
+    public function eliminarCitaCompletada($id)
+    {
+        if (!session('paciente_id')) {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión primero');
+        }
+
+        $paciente_id = session('paciente_id');
+
+        $cita = Cita::where('id', $id)
+            ->where('paciente_id', $paciente_id)
+            ->firstOrFail();
+
+        // Validar que la cita esté completada
+        if ($cita->estado !== 'completada') {
+            return redirect()->back()
+                ->with('error', 'Solo se pueden eliminar citas que estén completadas.');
+        }
+
+        $cita->delete();
+
+        return redirect()->back()
+            ->with('success', 'La cita completada fue eliminada correctamente.');
+    }
+
 }
