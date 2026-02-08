@@ -350,6 +350,9 @@
                     <i class="bi bi-person-fill"></i> Doctores
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link nav-link-glow" href="{{ route('preguntas.publico') }}"> <i class="bi bi-question-circle"></i>Preguntas Frecuentes</a>
+            </li>
 
             <li class="nav-item dropdown">
                 <a class="nav-link nav-link-glow dropdown-toggle profile-badge" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -466,6 +469,12 @@
                             <i class="bi bi-journal-text"></i> Historial Diario
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link offcanvas-nav-link" href="{{ route('preguntas.index') }}">
+                            <i class="bi bi-question-circle"></i> Administración de Preguntas</a>
+                    </li>
+
                 </ul>
 
                 <!-- BOTÓN CERRAR SESIÓN -->

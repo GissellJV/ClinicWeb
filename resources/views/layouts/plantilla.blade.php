@@ -231,6 +231,10 @@
                         <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#comentarios' : url('/#comentarios') }}">Comentarios</a>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-modern" href="{{ route('preguntas.publico') }}"> Preguntas Frecuentes</a>
+                    </li>
+
                     @if(!session('paciente_id'))
                         <li class="nav-item">
                             <a class="nav-link nav-link-modern" href="{{ route('inicioSesion') }}">Acceder</a>
