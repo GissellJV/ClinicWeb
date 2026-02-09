@@ -22,14 +22,14 @@ class RecepcionistaController extends Controller
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
 
-        // VALIDACIÓN
+        // VALIDAR datos de envío
         $request->validate([
             'paciente_id'   => 'required|exists:pacientes,id',
             'empleado_id'   => 'required|exists:empleados,id',
             'especialidad'  => 'required|string'
         ]);
 
-        // GUARDAR EL ENVÍO
+        // IMPLEMENTAR creación del envío
         EnviarDoctor::create([
             'paciente_id'  => $request->paciente_id,
             'empleado_id'  => $request->empleado_id,
@@ -37,11 +37,9 @@ class RecepcionistaController extends Controller
             'estado'       => 'pendiente'
         ]);
 
-
         return redirect()->route('recepcionista.busquedaexpediente')
             ->with('success', 'Expediente enviado correctamente al doctor.');
     }
-
 
     public function vistaEnviarDoctor($id)
     {
@@ -52,7 +50,6 @@ class RecepcionistaController extends Controller
 
         $expediente = Expediente::findOrFail($id);
 
-        // Traer solo los departamentos de los doctores, sin duplicados
         $especialidades = Empleado::where('cargo', 'Doctor')
             ->select('departamento')
             ->distinct()
@@ -61,16 +58,12 @@ class RecepcionistaController extends Controller
         return view('recepcionista.enviar_doctor', compact('expediente', 'especialidades'));
     }
 
-
-
-
     public function buscarExpediente(Request $request)
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
             return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
-        // Obtener TODOS los pacientes con expediente
         $expedientes = Paciente::with('expediente')
             ->orderBy('apellidos')
             ->orderBy('nombres')
@@ -102,7 +95,6 @@ class RecepcionistaController extends Controller
         $dataVisitas = $visitasPorDia->pluck('total');
 
         $filtro = $request->get('filtro', 'recientes');
-
         $query = Paciente::orderBy('created_at', 'desc');
 
         if ($filtro == 'hoy') {
@@ -125,9 +117,7 @@ class RecepcionistaController extends Controller
             });
         }
 
-
         $pacientes = $query->paginate(10);
-
         $citas = Cita::with('paciente')->get();
 
         foreach ($citas as $cita) {
@@ -135,15 +125,8 @@ class RecepcionistaController extends Controller
         }
 
         return view('recepcionista.Registro_Asistencia', compact(
-            'ninos',
-            'adolescentes',
-            'adultos',
-            'terceraEdad',
-            'labelsVisitas',
-            'dataVisitas',
-            'pacientes',
-            'filtro',
-            'citas'
+            'ninos', 'adolescentes', 'adultos', 'terceraEdad',
+            'labelsVisitas', 'dataVisitas', 'pacientes', 'filtro', 'citas'
         ));
     }
 
@@ -153,13 +136,9 @@ class RecepcionistaController extends Controller
             return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
-
         $historial = HistorialDiario::whereDate('fecha', now())->get();
-
-
         return view('recepcionista.historial', compact('historial'));
     }
-
 
     public function listaDoctores()
     {
@@ -167,12 +146,69 @@ class RecepcionistaController extends Controller
             return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
-
         $doctores = Empleado::where('cargo', 'Doctor')->paginate(6);
-
-        return view('recepcionista.lista_doctores', compact('doctores', ));
+        return view('recepcionista.lista_doctores', compact('doctores'));
     }
 
+    // --- MÉTODOS PARA  REGISTRO DE VISITANTES ---
 
+    /**
+     * Mostrar el formulario de registro de visitantes.
+     * Acción: Validar sesión y Cargar pacientes.
+     */
+    public function indexVisitantes()
+    {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
 
+        // Obtener pacientes para el select del formulario
+        $pacientes = Paciente::orderBy('nombres')->get();
+
+        return view('recepcionista.registro_visitantes', compact('pacientes'));
+    }
+
+    /**
+     * Guardar el registro del visitante.
+     * Acción: Validar datos, Validar habitación e Implementar guardado.
+     */
+    public function storeVisitante(Request $request)
+    {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion');
+        }
+
+        // 1. VALIDAR datos técnicos (nombres de inputs en el formulario)
+        $request->validate([
+            'nombre_visitante' => 'required|string|max:255',
+            'dni_visitante'    => 'required|string|max:20',
+            'paciente_id'      => 'required|exists:pacientes,id',
+        ]);
+
+        // 2. VALIDAR Criterio de Aceptación: El paciente debe estar hospitalizado
+        $tieneHabitacion = \App\Models\AsignacionHabitacion::where('paciente_id', $request->paciente_id)
+            ->exists();
+
+        if (!$tieneHabitacion) {
+            return back()->with('error', 'Validación fallida: El paciente seleccionado no tiene una habitación asignada actualmente.');
+        }
+
+        // 3. IMPLEMENTAR guardado en la tabla 'visitantes'
+        // NOTA: Se usa la columna 'dni' para coincidir con tu base de datos MySQL
+        try {
+            DB::table('visitantes')->insert([
+                'nombre_visitante' => $request->nombre_visitante,
+                'dni'              => $request->dni_visitante,
+                'paciente_id'      => $request->paciente_id,
+                'fecha_ingreso'    => now(),
+                'created_at'       => now(),
+                'updated_at'       => now(),
+            ]);
+
+            return back()->with('success', 'Registro completado: Ingreso de visitante validado e implementado correctamente.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error técnico al registrar: ' . $e->getMessage());
+        }
+    }
 }

@@ -255,3 +255,7 @@ Route::post('/preguntas/orden', [PreguntaController::class, 'updateOrden'])
 // Ruta pública (para todos los usuarios) - Esta va AL FINAL
 Route::get('/preguntas-frecuentes', [PreguntaController::class, 'publico'])
     ->name('preguntas.publico');
+
+////////Registro de Visitantes//////
+Route::get('/visitantes/registro', [RecepcionistaController::class, 'indexVisitantes'])->name('visitantes.index');
+Route::post('/visitantes/guardar', [RecepcionistaController::class, 'storeVisitante'])->name('visitantes.store');
