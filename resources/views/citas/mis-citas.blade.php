@@ -785,6 +785,23 @@
                                     </form>
                                 </div>
                             @endif
+
+                            @if($cita->estado == 'completada')
+                                <div class="cita-actions">
+
+                                    <form id="formEliminar{{ $cita->id }}"
+                                          action="{{ route('citas.eliminar.completada', $cita->id) }}"
+                                          method="POST">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="button" class="btn-action btn-cancelar" onclick="confirmarEliminar({{ $cita->id }})">
+                                            Eliminar cita
+                                        </button>
+                                    </form>
+
+                                </div>
+                            @endif
                         </div>
                     </div>
 
@@ -953,5 +970,24 @@
 
             new bootstrap.Modal(document.getElementById('modalReprogramar')).show();
         }
+
+        function confirmarEliminar(id) {
+            Swal.fire({
+                title: 'Eliminar cita',
+                text: '¿Estas seguro de eliminar la cita?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Sí, eliminar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('formEliminar' + id).submit();
+                }
+            });
+        }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 @endsection
