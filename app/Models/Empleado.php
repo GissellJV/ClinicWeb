@@ -144,4 +144,8 @@ class Empleado extends Model
     {
         return $this->cargo === 'Gerente';
     }
+    public function incidentes()
+    {
+        return $this->hasMany(Incidente::class, 'empleado_id');
+    }
 }

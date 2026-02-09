@@ -24,6 +24,7 @@ use App\Http\Controllers\DoctorHabitacionController; // Nuevo
 use \App\Http\Controllers\EnviarDoctorController;
 use App\Http\Controllers\PromocionController;
 use App\Http\Controllers\PublicidadController;
+use App\Http\Controllers\IncidenteController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 
@@ -259,3 +260,10 @@ Route::get('/preguntas-frecuentes', [PreguntaController::class, 'publico'])
 ////////Registro de Visitantes//////
 Route::get('/visitantes/registro', [RecepcionistaController::class, 'indexVisitantes'])->name('visitantes.index');
 Route::post('/visitantes/guardar', [RecepcionistaController::class, 'storeVisitante'])->name('visitantes.store');
+
+// Rutas de incidentes para enfermero
+Route::get('/enfermeria/incidentes', [IncidenteController::class, 'index'])->name('incidentes.index');
+Route::get('/enfermeria/incidentes/crear', [IncidenteController::class, 'crear'])->name('incidentes.crear');
+Route::post('/enfermeria/incidentes/guardar', [IncidenteController::class, 'guardar'])->name('incidentes.guardar');
+Route::get('/enfermeria/incidentes/{id}', [IncidenteController::class, 'show'])->name('incidentes.show');
+Route::put('/enfermeria/incidentes/{id}/estado', [IncidenteController::class, 'actualizarEstado'])->name('incidentes.actualizar-estado');
