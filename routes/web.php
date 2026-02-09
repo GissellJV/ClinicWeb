@@ -7,6 +7,7 @@ use App\Http\Controllers\EnfermeriaController;
 use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\PacienteCotizacionController;
 use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\PreguntaPacienteController;
 use App\Http\Controllers\TurnoController;
@@ -259,3 +260,8 @@ Route::get('/preguntas-frecuentes', [PreguntaController::class, 'publico'])
 ////////Registro de Visitantes//////
 Route::get('/visitantes/registro', [RecepcionistaController::class, 'indexVisitantes'])->name('visitantes.index');
 Route::post('/visitantes/guardar', [RecepcionistaController::class, 'storeVisitante'])->name('visitantes.store');
+
+//Rutas de cotizar medicamentos como paciente
+Route::get('/paciente/cotizar', [PacienteCotizacionController::class, 'cotizar'])->name('paciente.cotizar');
+Route::get('/paciente/medicamentos-buscar', [PacienteCotizacionController::class, 'buscarMedicamentos'])
+    ->name('paciente.medicamentos.buscar');
