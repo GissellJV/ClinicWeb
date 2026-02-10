@@ -7,6 +7,7 @@ use App\Http\Controllers\EnfermeriaController;
 use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\PacienteCotizacionController;
 use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\PreguntaPacienteController;
 use App\Http\Controllers\TurnoController;
