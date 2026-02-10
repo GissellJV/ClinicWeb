@@ -16,6 +16,7 @@ class Paciente extends Model
         'numero_identidad',
         'genero',
         'telefono',
+        'email',
         'password'
     ];
 

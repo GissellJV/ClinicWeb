@@ -21,6 +21,7 @@ class Empleado extends Model
         'departamento',
         'fecha_ingreso',
         'genero',
+        'email',
         'foto'
     ];
 

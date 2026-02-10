@@ -328,7 +328,21 @@
                             @enderror
                         </div>
 
+                        <!-- correo -->
+                        <div class="form-group-custom">
+                            <label for="email">Correo electrónico *</label>
 
+                            <input type="email"
+                                   class="form-control"
+                                   id="email"
+                                   name="email"
+                                   value="{{ old('email') }}"
+                                   placeholder="ejemplo@gmail.com">
+
+                            @error('email')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
 
                     </div>
                     <!-- Cargo y Departamento -->

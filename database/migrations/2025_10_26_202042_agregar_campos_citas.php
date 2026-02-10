@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
+    /*public function up(): void
     {
         Schema::table('citas', function (Blueprint $table) {
             $table->string('especialidad')->after('doctor_nombre')->nullable();
@@ -26,5 +26,5 @@ return new class extends Migration
         Schema::table('citas', function (Blueprint $table) {
             $table->dropColumn(['especialidad','fecha','hora','estado', 'mensaje', 'doctor_nombre', 'paciente_nombre']);
         });
-    }
+    }*/
 };
