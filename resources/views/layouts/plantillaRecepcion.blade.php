@@ -454,6 +454,7 @@
                             <i class="bi bi-house-add"></i> Asignar Habitación
                         </a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link offcanvas-nav-link" href="{{route('promociones')}}">
                             <i class="bi bi-folder-plus"></i> Agregar Publicidad
@@ -473,6 +474,16 @@
                     <li class="nav-item">
                         <a class="nav-link offcanvas-nav-link" href="{{ route('preguntas.index') }}">
                             <i class="bi bi-question-circle"></i> Administración de Preguntas</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link offcanvas-nav-link" href="{{ route('expedientes.archivados') }}">
+                            <i class="bi bi-folder-plus"></i> Expedientes Archivados</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link offcanvas-nav-link" href="{{ route('visitantes.index') }}">
+                            <i class="bi bi-person-check-fill"></i>Registro de Visitantes</a>
                     </li>
 
                 </ul>

@@ -132,9 +132,10 @@
             letter-spacing: 0.5px;
             text-transform: uppercase;
             border-bottom: 2px solid #e0e0e0;
-            color: #2c3e50;
-            background: white;
             white-space: nowrap;
+            border-bottom: 2px solid #e0e0e0;
+            color: white !important;
+            background: #4ecdc4 !important;
         }
 
         table.dataTable tbody tr {
@@ -306,6 +307,11 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .text-info-emphasis {
+
+            font-weight: bold;
+        }
     </style>
     <div class="administracion">
         <br>
@@ -313,7 +319,7 @@
             <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
             </div>
             <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <h2 class="text-info-emphasis" style="margin: 0;">Historial de medicamnetos por habitacion</h2>
+                <h2 class="text-info-emphasis" style="margin: 0;">Historial de medicamentos por habitacion</h2>
 
             </div>
 

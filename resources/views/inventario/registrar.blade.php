@@ -46,6 +46,11 @@
             box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
         }
 
+        .text-info-emphasis {
+
+            font-weight: bold;
+        }
+
 
     </style>
 

@@ -65,9 +65,16 @@ class RecepcionistaController extends Controller
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
         $expedientes = Paciente::with('expediente')
+            ->where(function ($query) {
+                $query->whereDoesntHave('expediente')
+                ->orWhereHas('expediente', function ($q) {
+                    $q->where('estado', 'activo');
+                });
+            })
             ->orderBy('apellidos')
             ->orderBy('nombres')
             ->get();
+
         return view('recepcionista.busquedaexpediente', compact('expedientes'));
     }
 
