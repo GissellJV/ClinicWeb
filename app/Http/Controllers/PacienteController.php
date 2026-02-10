@@ -14,6 +14,9 @@ use Vonage\Client;
 use Vonage\Client\Credentials\Basic;
 use Illuminate\Support\Facades\Http;
 use App\Models\Inventario;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ResetPasswordMail;
+
 
 class PacienteController extends Controller
 {
@@ -115,6 +118,7 @@ class PacienteController extends Controller
             'numero_identidad' => 'required|string|size:13|regex:/^\d{4}\d{4}\d{5}$/|unique:pacientes',
             'genero' => 'required|in:Femenino,Masculino',
             'telefono' => 'required|string|size:8|regex:/^[389]\d{7}$/',
+            'email' => 'required|email|unique:pacientes,email',
             'password' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]/|confirmed',
         ],
             [
@@ -149,6 +153,7 @@ class PacienteController extends Controller
         $nuevoPaciente->genero = $request->input('genero');
         $nuevoPaciente->numero_identidad = $request->input('numero_identidad');
         $nuevoPaciente->telefono = $request->input('telefono');
+        $nuevoPaciente->email = $request->input('email');
         $nuevoPaciente->password = bcrypt($request->input('password'));
         $nuevoPaciente->save();
 

@@ -12,10 +12,6 @@ class EmpleadoController extends Controller
 {
     public function crear()
     {
-        if (!session('cargo') || strtolower(session('cargo')) != 'recepcionista') {
-            return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
-        }
 
         $cargos = ['Recepcionista', 'Doctor', 'Enfermero', 'Gerente', 'Administrativo'];
         $departamentos = ['Recepción', 'Medicina General', 'Pediatría', 'Cirugía', 'Administración'];
@@ -54,7 +50,8 @@ class EmpleadoController extends Controller
             'telefono' => 'required|string|size:8|regex:/^[2389]\d{7}$/',
             'password' => 'required|string|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]/',
             'genero' => 'required|in:Femenino,Masculino',
-            'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'email' => 'required|email|unique:empleados,email',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ],[
             'nombre.required' => 'El nombre es obligatorio',
             'nombre.regex' => 'El nombre solo puede contener letras y espacios',
@@ -90,6 +87,7 @@ class EmpleadoController extends Controller
             'departamento' => $request->departamento,
             'fecha_ingreso' => $request->fecha_ingreso,
             'genero' => $request->genero,
+            'email' => $request->email
         ]);
 
         // Guardar la foto si existe

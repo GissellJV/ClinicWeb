@@ -97,6 +97,15 @@
                     <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
+                <!-- CORREO -->
+                <div class="mb-3">
+                    <label class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="ejemplo@gmail.com">
+
+                    @error('email')
+                    <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
                 <!-- CONTRASEÑA -->
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Contraseña</label>

@@ -42,10 +42,27 @@ Route::post('/registrar',[PacienteController::class,'store'])->name('pacientes.s
 Route::get('/agendarcitas', [PacienteController::class, 'agendar_Citasonline'])->name('agendarcitas');
 
 //Route::get('/loginpaciente', [PacienteController::class, 'loginp'])->name('pacientes.loginp');
-Route::get('/recuperar', [PacienteController::class, 'enviar_codigo_recuperacion'])->name('pacientes.enviar_codigo_recuperacion');
-Route::post('/recuperar', [PacienteController::class, 'enviarCodigoRecuperacion'])->name('enviarCodigoRecuperacion');
-Route::get('/restablecer/{token}', [PacienteController::class, 'cambio_contra'])->name('pacientes.cambio_contra');
-Route::post('/restablecer', [PacienteController::class, 'actualizarContra'])->name('password.update');
+Route::get('/recuperar', function () {
+    return view('pacientes.enviar_codigo_recuperacion');
+})->name('password.request');
+Route::post('/recuperar', [LoginController::class, 'enviarCodigoRecuperacion'])
+    ->name('pacientes.enviar_codigo_recuperacion');
+Route::get('/restablecer/{token}', [LoginController::class, 'mostrarFormularioCambio'])
+    ->name('password.reset');
+Route::post('/restablecer', [LoginController::class, 'actualizarContra'])
+    ->name('password.update');
+
+
+Route::get('/recuperar-password', function () {
+    return view('auth.recuperar_password');
+})->name('password.request');
+Route::post('/recuperar-password', [LoginController::class, 'enviarEnlace'])
+    ->name('password.email');
+Route::get('/restablecer/{token}', [LoginController::class, 'mostrarFormularioReset'])
+    ->name('password.reset');
+Route::post('/restablecer', [LoginController::class, 'actualizarPassword'])
+    ->name('password.update');
+
 Route::post('/loginpaciente', [PacienteController::class, 'login'])->name('pacientes.login');
 
 Route::post('/logout', [PacienteController::class, 'logout'])->name('pacientes.logout');

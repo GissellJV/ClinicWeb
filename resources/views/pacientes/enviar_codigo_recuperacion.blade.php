@@ -45,13 +45,19 @@
 <div class="container d-flex justify-content-center align-items-center vh-80">
     <div class="card shadow p-4" style="width: 400px;">
         <h3 class="text-center mb-3 text-info-emphasis">Recuperar Contraseña</h3>
-        <p class="text-muted text-center">Ingresa tu número de WhastsApp para restablecer tu contraseña.</p>
+        <p class="text-muted text-center">Ingresa tu correo electrónico registrado para restablecer tu contraseña..</p>
 
         <form action="{{route('pacientes.enviar_codigo_recuperacion')}}" method="POST">
             @csrf
             <div class="mb-3">
-                <label for="telefono" class="form-label">Número de WhatsApp</label>
-                <input type="text" class="form-control" id="telefono" name="telefono" placeholder="00000000" >
+                <label for="email" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="correo@ejemplo.com"
+                       value="{{ old('email') }}"
+                       required
+                >
+                @error('email')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
                 @error('telefono')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
