@@ -182,7 +182,7 @@
         .navbar-toggler-modern:hover {
             background: #4ecdc4;
             box-shadow: 0 0 20px rgba(78, 205, 196, 0.6),
-            0 0 40px rgba(78, 205, 196, 0.4),
+            0 0 40px rgba(78, 205,196, 0.4),
             0 4px 8px rgba(0, 0, 0, 0.2);
             transform: translateY(-2px);
         }
@@ -335,7 +335,7 @@
 
         <!-- LINKS VISIBLES SOLO EN PC -->
         <ul class="navbar-nav flex-row ms-auto me-4 gap-3 d-none d-lg-flex nav-ul-tight">
-        <li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link nav-link-glow active" href="{{ request()->routeIs('/') ? '#hero' : url('/#hero') }}">
                     <i class="bi bi-house-door-fill me-1"></i> Inicio
                 </a>
@@ -351,7 +351,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link nav-link-glow" href="{{ route('preguntas.publico') }}"> <i class="bi bi-question-circle"></i>Preguntas Frecuentes</a>
+                <a class="nav-link nav-link-glow" href="{{ route('preguntas.publico') }}">
+                    <i class="bi bi-question-circle me-1"></i> Preguntas Frecuentes
+                </a>
             </li>
 
             <li class="nav-item dropdown">
@@ -443,7 +445,6 @@
                             <i class="bi bi-clock-history"></i> Turnos de Doctores
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.habitaciones.ocupadas') }}">
                             <i class="bi bi-door-closed"></i> Habitaciones Ocupadas
@@ -454,14 +455,13 @@
                             <i class="bi bi-house-add"></i> Asignar Habitación
                         </a>
                     </li>
-
                     <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{route('promociones')}}">
+                        <a class="nav-link offcanvas-nav-link" href="{{ route('promociones') }}">
                             <i class="bi bi-folder-plus"></i> Agregar Publicidad
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{route('publicidad')}}">
+                        <a class="nav-link offcanvas-nav-link" href="{{ route('publicidad') }}">
                             <i class="bi bi-folder-plus"></i> Agregar Promociones
                         </a>
                     </li>
@@ -470,22 +470,29 @@
                             <i class="bi bi-journal-text"></i> Historial Diario
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link offcanvas-nav-link" href="{{ route('preguntas.index') }}">
-                            <i class="bi bi-question-circle"></i> Administración de Preguntas</a>
+                            <i class="bi bi-question-circle"></i> Administración de Preguntas
+                        </a>
                     </li>
-
+                    <!-- NUEVO: Reportes de Incidentes (del segundo código) -->
+                    <li class="nav-item">
+                        <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.incidentes.index') }}">
+                            <i class="bi bi-exclamation-triangle"></i> Reportes de Incidentes
+                        </a>
+                    </li>
+                    <!-- EXPEDIENTES ARCHIVADOS (del primer código) -->
                     <li class="nav-item">
                         <a class="nav-link offcanvas-nav-link" href="{{ route('expedientes.archivados') }}">
-                            <i class="bi bi-folder-plus"></i> Expedientes Archivados</a>
+                            <i class="bi bi-folder-plus"></i> Expedientes Archivados
+                        </a>
                     </li>
-
+                    <!-- REGISTRO DE VISITANTES (combinado de ambos) -->
                     <li class="nav-item">
                         <a class="nav-link offcanvas-nav-link" href="{{ route('visitantes.index') }}">
-                            <i class="bi bi-person-check-fill"></i>Registro de Visitantes</a>
+                            <i class="bi bi-person-check-fill"></i> Registro de Visitantes
+                        </a>
                     </li>
-
                 </ul>
 
                 <!-- BOTÓN CERRAR SESIÓN -->
@@ -513,7 +520,7 @@
             </div> <!-- FIN OFFCANVAS BODY -->
 
         </div>
-        </div>
+    </div>
 
 </nav>
 
