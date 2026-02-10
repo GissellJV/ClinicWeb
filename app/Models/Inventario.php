@@ -32,6 +32,7 @@ class Inventario extends Model
     }
     public function cotizacionDetalles()
     {
-        return $this->hasMany(CotizacionDetalle::class);
+        return $this->hasMany(CotizacionDetalle::class,
+            'inventario_medicamento_id');
     }
 }

@@ -10,22 +10,17 @@ class PacienteCotizacionController extends Controller
 {
     public function cotizar(Request $request)
     {
-        // Consulta base
-        $query = Inventario::where('cantidad', '>', 0)
-            ->orderBy('nombre');
 
-        // Si hay búsqueda
-        if ($request->filled('buscar')) {
-            $query->where('nombre', 'like', '%' . $request->buscar . '%');
-        }
-
-        // Paginación de 10 en 10
-        $medicamentos = $query->paginate(10);
+        $medicamentos = Inventario::with(['cotizacionDetalles'])
+            ->when($request->buscar, function($q) use ($request) {
+                $q->where('nombre', 'like', '%' . $request->buscar . '%');
+            })
+            ->paginate(10);
 
         return view('pacientes.cotizar', compact('medicamentos'));
     }
 
-// Método AJAX para búsqueda en tiempo real
+
     public function buscarMedicamentos(Request $request)
     {
         $query = $request->input('q', '');
