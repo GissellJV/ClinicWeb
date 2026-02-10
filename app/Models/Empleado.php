@@ -21,6 +21,7 @@ class Empleado extends Model
         'departamento',
         'fecha_ingreso',
         'genero',
+        'email',
         'foto'
     ];
 
@@ -121,7 +122,6 @@ class Empleado extends Model
     }
 
 
-
     // Relación: Un empleado tiene un login
     public function loginEmpleado()
     {
@@ -144,4 +144,27 @@ class Empleado extends Model
     {
         return $this->cargo === 'Gerente';
     }
+
+    public function incidentes()
+    {
+        return $this->hasMany(Incidente::class, 'empleado_id');
+    }
+
+    public function notificacionesIncidentes()
+    {
+        return $this->hasMany(NotificacionIncidente::class, 'empleado_id');
+    }
+
+    public function esAdministrador()
+    {
+        return $this->cargo === 'Recepcionista';
+
+    }
 }
+
+
+
+
+
+
+

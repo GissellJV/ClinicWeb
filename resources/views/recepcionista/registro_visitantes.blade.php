@@ -4,10 +4,19 @@
 @section('contenido')
     <style>
         body { padding-top: 100px; }
-        .text-info-emphasis { font-weight: bold; color: #2C5F5D; } /* Color turquesa oscuro de la marca */
+        .text-info-emphasis { font-weight: bold; color: #2C5F5D; }
 
-        /* Mantenemos tus estilos originales para asegurar consistencia visual */
         .form-group { margin-bottom: 20px; }
+
+        /* Estilo para los mensajes de error en letras rojas */
+        .text-danger {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 5px;
+            display: block;
+            font-weight: 600;
+        }
+
         .button-group {
             display: flex;
             gap: 15px;
@@ -15,7 +24,6 @@
             margin-top: 30px;
         }
 
-        /* Estilo de botones heredado de tu código de citas */
         .btn-primary {
             padding: 0.875rem 2rem;
             background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
@@ -56,7 +64,6 @@
             <h1 class="text-center text-info-emphasis">Registro de Visitantes</h1>
         </div>
 
-        {{-- Feedback de Validar operaciones --}}
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <i class="fas fa-check-circle"></i> {{ session('success') }}
@@ -65,36 +72,45 @@
         @endif
 
         @if(session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="fas fa-exclamation-triangle"></i> {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <div class="alert alert-danger shadow-sm border-0" style="border-radius: 10px;">
+                <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
             </div>
         @endif
 
         <div class="form-container">
-            <form method="POST" action="{{ route('visitantes.store') }}" id="visitanteForm">
+            {{-- Quitamos 'required' de los inputs para que Laravel tome el control de la validación roja --}}
+            <form method="POST" action="{{ route('visitantes.store') }}" id="visitanteForm" novalidate>
                 @csrf
 
                 <div class="form-group">
                     <label class="form-label" for="nombre_visitante">Nombre Completo del Visitante</label>
-                    <input type="text" class="form-control" id="nombre_visitante" name="nombre_visitante" placeholder="Ej: Juan Pérez" required>
+                    <input type="text" class="form-control @error('nombre_visitante') is-invalid @enderror" id="nombre_visitante" name="nombre_visitante" placeholder="Ej: Juan Pérez" value="{{ old('nombre_visitante') }}">
+                    @error('nombre_visitante')
+                    <span class="text-danger"><i class="fas fa-info-circle"></i> {{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="dni_visitante">Documento de Identidad (DNI)</label>
-                    <input type="text" class="form-control" id="dni_visitante" name="dni_visitante" placeholder="0000-0000-00000" required>
+                    <input type="text" class="form-control @error('dni_visitante') is-invalid @enderror" id="dni_visitante" name="dni_visitante" placeholder="0000-0000-00000" value="{{ old('dni_visitante') }}">
+                    @error('dni_visitante')
+                    <span class="text-danger"><i class="fas fa-info-circle"></i> {{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="paciente_id">Paciente a Visitar</label>
-                    <select class="form-control" id="paciente_id" name="paciente_id" required>
+                    <select class="form-control @error('paciente_id') is-invalid @enderror" id="paciente_id" name="paciente_id">
                         <option value="">Seleccionar paciente internado...</option>
                         @foreach($pacientes as $paciente)
-                            <option value="{{ $paciente->id }}">
+                            <option value="{{ $paciente->id }}" {{ old('paciente_id') == $paciente->id ? 'selected' : '' }}>
                                 {{ $paciente->nombres }} {{ $paciente->apellidos }}
                             </option>
                         @endforeach
                     </select>
+                    @error('paciente_id')
+                    <span class="text-danger"><i class="fas fa-info-circle"></i> {{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="button-group">
@@ -110,11 +126,10 @@
     </div>
 
     <script>
-        // Validar el envío para dar feedback visual al usuario
         document.getElementById('visitanteForm').addEventListener('submit', function(e) {
+            // Solo mostramos el spinner si los campos básicos están llenos (opcional)
             const submitBtn = this.querySelector('button[type="submit"]');
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Implementando...';
-            submitBtn.disabled = true;
         });
     </script>
 @endsection

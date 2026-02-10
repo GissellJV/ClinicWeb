@@ -16,6 +16,7 @@ class Paciente extends Model
         'numero_identidad',
         'genero',
         'telefono',
+        'email',
         'password'
     ];
 
@@ -47,6 +48,11 @@ class Paciente extends Model
     public function citas()
     {
         return $this->hasMany(Cita::class, 'paciente_id');
+    }
+
+    public function incidentes()
+    {
+        return $this->hasMany(Incidente::class, 'paciente_id');
     }
 
 
