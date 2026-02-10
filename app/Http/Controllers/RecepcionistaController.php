@@ -150,12 +150,8 @@ class RecepcionistaController extends Controller
         return view('recepcionista.lista_doctores', compact('doctores'));
     }
 
-    // --- MÉTODOS PARA  REGISTRO DE VISITANTES ---
+    //MÉTODOS PARA REGISTRO DE VISITANTES (H56 e H57)
 
-    /**
-     * Mostrar el formulario de registro de visitantes.
-     * Acción: Validar sesión y Cargar pacientes.
-     */
     public function indexVisitantes()
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
@@ -163,39 +159,41 @@ class RecepcionistaController extends Controller
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
 
-        // Obtener pacientes para el select del formulario
         $pacientes = Paciente::orderBy('nombres')->get();
 
         return view('recepcionista.registro_visitantes', compact('pacientes'));
     }
 
-    /**
-     * Guardar el registro del visitante.
-     * Acción: Validar datos, Validar habitación e Implementar guardado.
-     */
     public function storeVisitante(Request $request)
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
             return redirect()->route('inicioSesion');
         }
 
-        // 1. VALIDAR datos técnicos (nombres de inputs en el formulario)
+        // --- SOLO SE MODIFICÓ ESTA PARTE PARA PONER LOS MENSAJES EN ESPAÑOL ---
         $request->validate([
             'nombre_visitante' => 'required|string|max:255',
             'dni_visitante'    => 'required|string|max:20',
             'paciente_id'      => 'required|exists:pacientes,id',
+        ], [
+            'nombre_visitante.required' => 'El nombre del visitante es requerido.',
+            'dni_visitante.required'    => 'El DNI del visitante es requerido.',
+            'paciente_id.required'      => 'Debe seleccionar un paciente.',
         ]);
 
-        // 2. VALIDAR Criterio de Aceptación: El paciente debe estar hospitalizado
-        $tieneHabitacion = \App\Models\AsignacionHabitacion::where('paciente_id', $request->paciente_id)
-            ->exists();
+        // LÓGICA H57: VALIDAR CAPACIDAD DE VISITAS
+        $limiteMaximo = 2; // Límite establecido para evitar aglomeraciones
 
-        if (!$tieneHabitacion) {
-            return back()->with('error', 'Validación fallida: El paciente seleccionado no tiene una habitación asignada actualmente.');
+        $visitantesActivos = DB::table('visitantes')
+            ->where('paciente_id', $request->paciente_id)
+            ->whereDate('created_at', Carbon::today())
+            ->count();
+
+        if ($visitantesActivos >= $limiteMaximo) {
+            return back()->with('error', "La habitación alcanzó el límite máximo de $limiteMaximo visitantes. Registro denegado.")
+                ->withInput();
         }
 
-        // 3. IMPLEMENTAR guardado en la tabla 'visitantes'
-        // NOTA: Se usa la columna 'dni' para coincidir con tu base de datos MySQL
         try {
             DB::table('visitantes')->insert([
                 'nombre_visitante' => $request->nombre_visitante,
@@ -206,9 +204,10 @@ class RecepcionistaController extends Controller
                 'updated_at'       => now(),
             ]);
 
-            return back()->with('success', 'Registro completado: Ingreso de visitante validado e implementado correctamente.');
+            return back()->with('success', 'Registro completado: Ingreso de visitante autorizado.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Error técnico al registrar: ' . $e->getMessage());
+            return back()->with('error', 'Error técnico: ' . $e->getMessage());
         }
     }
 }
+
