@@ -5,8 +5,10 @@ use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\EnfermeriaController;
 use App\Http\Controllers\EspecialidadController;
+use App\Http\Controllers\IncidenteController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\PacienteCotizacionController;
 use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\PreguntaPacienteController;
 use App\Http\Controllers\TurnoController;
@@ -24,7 +26,6 @@ use App\Http\Controllers\DoctorHabitacionController; // Nuevo
 use \App\Http\Controllers\EnviarDoctorController;
 use App\Http\Controllers\PromocionController;
 use App\Http\Controllers\PublicidadController;
-use App\Http\Controllers\IncidenteController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 
@@ -294,6 +295,7 @@ Route::get('/recepcionista/incidentes', [RecepcionistaController::class, 'incide
 Route::get('/recepcionista/incidentes/{id}', [RecepcionistaController::class, 'incidentesShow'])->name('recepcionista.incidentes.show');
 Route::put('/recepcionista/incidentes/{id}/estado', [RecepcionistaController::class, 'incidentesActualizarEstado'])->name('recepcionista.incidentes.actualizar-estado');
 Route::get('/recepcionista/notificaciones/contador', [RecepcionistaController::class, 'contadorNotificaciones'])->name('recepcionista.notificaciones.contador');
+
 //Rutas de cotizar medicamentos como paciente
 Route::get('/paciente/cotizar', [PacienteCotizacionController::class, 'cotizar'])->name('paciente.cotizar');
 Route::get('/paciente/medicamentos-buscar', [PacienteCotizacionController::class, 'buscarMedicamentos'])
