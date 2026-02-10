@@ -231,6 +231,13 @@ Route::put('/mi-perfil/actualizar', [PacienteController::class, 'actualizarPerfi
 Route::delete('/citas/completadas/{id}',[CitaController::class, 'eliminarCitaCompletada'])->name('citas.eliminar.completada');
 
 
+// archivar expedientes inactivos
+
+Route::put('/expedientes/{id}/archivar', [ExpedienteController::class, 'archivarExpediente'])->name('expedientes.archivar');
+
+Route::get('/expedientes/archivados', [ExpedienteController::class, 'expedientesArchivados'])->name('expedientes.archivados');
+
+
 //Gestion de preguntas
 Route::get('/preguntas', [PreguntaController::class, 'index'])
     ->name('preguntas.index');

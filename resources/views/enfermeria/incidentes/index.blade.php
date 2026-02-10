@@ -135,11 +135,11 @@
         }
 
         table.dataTable thead th {
-            background: #f8f9fa;
-            color: #2c3e50;
             font-weight: 700;
             padding: 15px;
             border-bottom: 2px solid #e0e0e0;
+            color: white !important;
+            background: #4ecdc4 !important;
         }
 
         table.dataTable tbody td {
@@ -224,6 +224,7 @@
             }
         }
     </style>
+    <br> <br>
 
     <div class="incidentes-container">
         <!-- Header -->
