@@ -5,6 +5,7 @@ use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\EnfermeriaController;
 use App\Http\Controllers\EspecialidadController;
+use App\Http\Controllers\IncidenteController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\PacienteCotizacionController;
