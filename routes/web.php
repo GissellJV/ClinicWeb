@@ -24,6 +24,7 @@ use App\Http\Controllers\DoctorHabitacionController; // Nuevo
 use \App\Http\Controllers\EnviarDoctorController;
 use App\Http\Controllers\PromocionController;
 use App\Http\Controllers\PublicidadController;
+use App\Http\Controllers\IncidenteController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 
@@ -171,8 +172,8 @@ Route::prefix('recepcionista')->name('recepcionista.')->group(function () {
 
 // HABITACIONES - DOCTOR
 Route::prefix('doctor')->name('doctor.')->group(function () {
-   // Route::get('/habitaciones', [DoctorHabitacionController::class, 'index'])->name('habitaciones.index');
-   // Route::get('/habitaciones/buscar', [DoctorHabitacionController::class, 'buscar'])->name('habitaciones.buscar');
+    // Route::get('/habitaciones', [DoctorHabitacionController::class, 'index'])->name('habitaciones.index');
+    // Route::get('/habitaciones/buscar', [DoctorHabitacionController::class, 'buscar'])->name('habitaciones.buscar');
     Route::get('/habitaciones/pacientes-hospitalizados', [DoctorHabitacionController::class, 'misPacientes'])->name('habitaciones.mis-pacientes');
 });
 
@@ -229,6 +230,10 @@ Route::put('/mi-perfil/actualizar', [PacienteController::class, 'actualizarPerfi
 //Eliminar citas completadas
 Route::delete('/citas/completadas/{id}',[CitaController::class, 'eliminarCitaCompletada'])->name('citas.eliminar.completada');
 
+// archivar expedientes inactivos
+Route::put('/expedientes/{id}/archivar', [ExpedienteController::class, 'archivarExpediente'])->name('expedientes.archivar');
+Route::get('/expedientes/archivados', [ExpedienteController::class, 'expedientesArchivados'])->name('expedientes.archivados');
+
 
 //Gestion de preguntas
 Route::get('/preguntas', [PreguntaController::class, 'index'])
@@ -259,3 +264,16 @@ Route::get('/preguntas-frecuentes', [PreguntaController::class, 'publico'])
 ////////Registro de Visitantes//////
 Route::get('/visitantes/registro', [RecepcionistaController::class, 'indexVisitantes'])->name('visitantes.index');
 Route::post('/visitantes/guardar', [RecepcionistaController::class, 'storeVisitante'])->name('visitantes.store');
+
+// Rutas de incidentes para enfermero
+Route::get('/enfermeria/incidentes', [IncidenteController::class, 'index'])->name('incidentes.index');
+Route::get('/enfermeria/incidentes/crear', [IncidenteController::class, 'crear'])->name('incidentes.crear');
+Route::post('/enfermeria/incidentes/guardar', [IncidenteController::class, 'guardar'])->name('incidentes.guardar');
+Route::get('/enfermeria/incidentes/{id}', [IncidenteController::class, 'show'])->name('incidentes.show');
+Route::put('/enfermeria/incidentes/{id}/estado', [IncidenteController::class, 'actualizarEstado'])->name('incidentes.actualizar-estado');
+
+// Rutas de incidentes para recepcionista
+Route::get('/recepcionista/incidentes', [RecepcionistaController::class, 'incidentesIndex'])->name('recepcionista.incidentes.index');
+Route::get('/recepcionista/incidentes/{id}', [RecepcionistaController::class, 'incidentesShow'])->name('recepcionista.incidentes.show');
+Route::put('/recepcionista/incidentes/{id}/estado', [RecepcionistaController::class, 'incidentesActualizarEstado'])->name('recepcionista.incidentes.actualizar-estado');
+Route::get('/recepcionista/notificaciones/contador', [RecepcionistaController::class, 'contadorNotificaciones'])->name('recepcionista.notificaciones.contador');

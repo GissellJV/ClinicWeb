@@ -131,9 +131,10 @@
             letter-spacing: 0.5px;
             text-transform: uppercase;
             border-bottom: 2px solid #e0e0e0;
-            color: #2c3e50;
-            background: white;
             white-space: nowrap;
+            border-bottom: 2px solid #e0e0e0;
+            color: white !important;
+            background: #4ecdc4 !important;
         }
 
         table.dataTable tbody tr {
@@ -304,6 +305,11 @@
             .stock-alerts {
                 grid-template-columns: 1fr;
             }
+        }
+
+        .text-info-emphasis {
+
+            font-weight: bold;
         }
     </style>
 

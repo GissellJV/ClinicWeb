@@ -226,6 +226,43 @@ class ExpedienteController extends Controller
         return redirect()->back()->with('success_consulta', 'Registro médico actualizado correctamente.');
     }
 
+    public function archivarExpediente($id)
+    {
+
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
+        $expediente = Expediente::findOrFail($id);
+        $expediente->estado = 'archivado';
+        $expediente->save();
+
+        return redirect()
+            ->route('recepcionista.busquedaexpediente')
+            ->with('success', 'Expediente archivado correctamente.');
+    }
+
+    public function expedientesArchivados()
+    {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
+        $expedientes = Paciente::whereHas('expediente', function ($query) {
+            $query->where('estado', 'archivado','sin expediente');
+        })
+            ->with('expediente')
+            ->orderBy('apellidos')
+            ->orderBy('nombres')
+            ->get();
+
+        return view('expedientes.archivados', compact('expedientes'));
+    }
+
+
+
 
 
 }

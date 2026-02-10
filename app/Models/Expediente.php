@@ -25,7 +25,8 @@ class Expediente extends Model
         'medicamentos_actuales',
         'antecedentes_familiares',
         'antecedentes_personales',
-        'observaciones'
+        'observaciones',
+        'estado'
     ];
     public function historiales()
     {

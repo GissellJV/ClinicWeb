@@ -367,6 +367,59 @@
             padding: 1.5rem;
         }
     }
+
+
+    .modal-header-archivar {
+        background-color: #4ecdc4;
+        color: white;
+    }
+
+    .modal-header-archivar .modal-title {
+        color: white;
+        font-weight: 600;
+    }
+
+    .modal-header-archivar .btn-close {
+        filter: brightness(0) invert(1);
+    }
+
+    .btn-cancel {
+        padding: 0.875rem 2rem;
+        background: white;
+        border: 2px solid #dc3545;
+        border-radius: 8px;
+        color: #dc3545;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-cancel:hover {
+        background: #dc3545;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+    }
+
+    .btn-archivar {
+        padding: 0.875rem 2rem;
+        background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+    }
+
+    .btn-archivar:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+        background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+    }
+
+
 </style>
 <div class="ver-expediente">
 <div class="container-fluid p-0" style="margin-top: 100px;">
@@ -376,11 +429,12 @@
         <h1 class="text-info-emphasis">Visualización de Expediente</h1>
 
         {{-- Botón para Recepcionista --}}
-        @if(session('cargo') === 'Recepcionista')
+        @if(session('cargo') === 'Recepcionista' && $expediente->estado === 'activo')
             <a href="{{ route('recepcionista.vistaEnviarDoctor', $expediente->id) }}" class="btn-guardar">
                 Enviar Expediente
             </a>
         @endif
+
 
         {{-- Botón para Doctor --}}
         @if(session('cargo') === 'Doctor')
@@ -389,7 +443,55 @@
             </a>
         @endif
 
+        {{-- Botón para Recepcionista  --}}
+        @if(session('cargo') === 'Recepcionista' && $expediente->estado === 'activo')
+            <button type="button"
+                    class="btn-guardar"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalArchivarExpediente">
+                Archivar Expediente
+            </button>
+        @endif
 
+        @if(session('cargo') === 'Recepcionista' && $expediente->estado === 'activo')
+            <div class="modal fade" id="modalArchivarExpediente" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <div class="modal-header modal-header-archivar">
+                            <h5 class="modal-title">Archivar Expediente</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <p>
+                                ¿Está seguro que desea archivar este expediente?
+                            </p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button"
+                                    class="btn-cancel"
+                                    data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
+
+
+                            <form action="{{ route('expedientes.archivar', $expediente->id) }}"
+                                  method="POST">
+                                @csrf
+                                @method('PUT')
+
+                                <button type="submit" class="btn-archivar">
+                                    Sí, archivar
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        @endif
 
     </div>
     <br>

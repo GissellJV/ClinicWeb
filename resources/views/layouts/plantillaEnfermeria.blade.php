@@ -278,6 +278,12 @@
                                 <i class="bi bi-clipboard2-pulse"></i> Historial Medicamentos
                             </a>
                         </li>
+                        <li>
+                            <a class="dropdown-item dropdown-item-modern"
+                               href="{{route('incidentes.index')}}">
+                                <i class="bi bi-exclamation-triangle-fill"></i> Reportes de Incidentes
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
