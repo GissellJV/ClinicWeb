@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('genero');
             $table->string('numero_identidad')->unique();
             $table->string('telefono');
+            $table->string('email');
             $table->string('password');
             $table->timestamps();
 

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('departamento');
             $table->date('fecha_ingreso');
             $table->string('especialidad')->nullable();
+            $table->string('genero');
+            $table->string('email');
             $table->timestamps();
         });
     }
