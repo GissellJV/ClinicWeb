@@ -7,7 +7,6 @@ use App\Http\Controllers\EnfermeriaController;
 use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\PacienteController;
-use App\Http\Controllers\PacienteCotizacionController;
 use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\PreguntaPacienteController;
 use App\Http\Controllers\TurnoController;
@@ -25,6 +24,7 @@ use App\Http\Controllers\DoctorHabitacionController; // Nuevo
 use \App\Http\Controllers\EnviarDoctorController;
 use App\Http\Controllers\PromocionController;
 use App\Http\Controllers\PublicidadController;
+use App\Http\Controllers\IncidenteController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 
@@ -42,10 +42,27 @@ Route::post('/registrar',[PacienteController::class,'store'])->name('pacientes.s
 Route::get('/agendarcitas', [PacienteController::class, 'agendar_Citasonline'])->name('agendarcitas');
 
 //Route::get('/loginpaciente', [PacienteController::class, 'loginp'])->name('pacientes.loginp');
-Route::get('/recuperar', [PacienteController::class, 'enviar_codigo_recuperacion'])->name('pacientes.enviar_codigo_recuperacion');
-Route::post('/recuperar', [PacienteController::class, 'enviarCodigoRecuperacion'])->name('enviarCodigoRecuperacion');
-Route::get('/restablecer/{token}', [PacienteController::class, 'cambio_contra'])->name('pacientes.cambio_contra');
-Route::post('/restablecer', [PacienteController::class, 'actualizarContra'])->name('password.update');
+Route::get('/recuperar', function () {
+    return view('pacientes.enviar_codigo_recuperacion');
+})->name('password.request');
+Route::post('/recuperar', [LoginController::class, 'enviarCodigoRecuperacion'])
+    ->name('pacientes.enviar_codigo_recuperacion');
+Route::get('/restablecer/{token}', [LoginController::class, 'mostrarFormularioCambio'])
+    ->name('password.reset');
+Route::post('/restablecer', [LoginController::class, 'actualizarContra'])
+    ->name('password.update');
+
+
+Route::get('/recuperar-password', function () {
+    return view('auth.recuperar_password');
+})->name('password.request');
+Route::post('/recuperar-password', [LoginController::class, 'enviarEnlace'])
+    ->name('password.email');
+Route::get('/restablecer/{token}', [LoginController::class, 'mostrarFormularioReset'])
+    ->name('password.reset');
+Route::post('/restablecer', [LoginController::class, 'actualizarPassword'])
+    ->name('password.update');
+
 Route::post('/loginpaciente', [PacienteController::class, 'login'])->name('pacientes.login');
 
 Route::post('/logout', [PacienteController::class, 'logout'])->name('pacientes.logout');
@@ -172,8 +189,8 @@ Route::prefix('recepcionista')->name('recepcionista.')->group(function () {
 
 // HABITACIONES - DOCTOR
 Route::prefix('doctor')->name('doctor.')->group(function () {
-   // Route::get('/habitaciones', [DoctorHabitacionController::class, 'index'])->name('habitaciones.index');
-   // Route::get('/habitaciones/buscar', [DoctorHabitacionController::class, 'buscar'])->name('habitaciones.buscar');
+    // Route::get('/habitaciones', [DoctorHabitacionController::class, 'index'])->name('habitaciones.index');
+    // Route::get('/habitaciones/buscar', [DoctorHabitacionController::class, 'buscar'])->name('habitaciones.buscar');
     Route::get('/habitaciones/pacientes-hospitalizados', [DoctorHabitacionController::class, 'misPacientes'])->name('habitaciones.mis-pacientes');
 });
 
@@ -230,6 +247,10 @@ Route::put('/mi-perfil/actualizar', [PacienteController::class, 'actualizarPerfi
 //Eliminar citas completadas
 Route::delete('/citas/completadas/{id}',[CitaController::class, 'eliminarCitaCompletada'])->name('citas.eliminar.completada');
 
+// archivar expedientes inactivos
+Route::put('/expedientes/{id}/archivar', [ExpedienteController::class, 'archivarExpediente'])->name('expedientes.archivar');
+Route::get('/expedientes/archivados', [ExpedienteController::class, 'expedientesArchivados'])->name('expedientes.archivados');
+
 
 //Gestion de preguntas
 Route::get('/preguntas', [PreguntaController::class, 'index'])
@@ -261,6 +282,18 @@ Route::get('/preguntas-frecuentes', [PreguntaController::class, 'publico'])
 Route::get('/visitantes/registro', [RecepcionistaController::class, 'indexVisitantes'])->name('visitantes.index');
 Route::post('/visitantes/guardar', [RecepcionistaController::class, 'storeVisitante'])->name('visitantes.store');
 
+// Rutas de incidentes para enfermero
+Route::get('/enfermeria/incidentes', [IncidenteController::class, 'index'])->name('incidentes.index');
+Route::get('/enfermeria/incidentes/crear', [IncidenteController::class, 'crear'])->name('incidentes.crear');
+Route::post('/enfermeria/incidentes/guardar', [IncidenteController::class, 'guardar'])->name('incidentes.guardar');
+Route::get('/enfermeria/incidentes/{id}', [IncidenteController::class, 'show'])->name('incidentes.show');
+Route::put('/enfermeria/incidentes/{id}/estado', [IncidenteController::class, 'actualizarEstado'])->name('incidentes.actualizar-estado');
+
+// Rutas de incidentes para recepcionista
+Route::get('/recepcionista/incidentes', [RecepcionistaController::class, 'incidentesIndex'])->name('recepcionista.incidentes.index');
+Route::get('/recepcionista/incidentes/{id}', [RecepcionistaController::class, 'incidentesShow'])->name('recepcionista.incidentes.show');
+Route::put('/recepcionista/incidentes/{id}/estado', [RecepcionistaController::class, 'incidentesActualizarEstado'])->name('recepcionista.incidentes.actualizar-estado');
+Route::get('/recepcionista/notificaciones/contador', [RecepcionistaController::class, 'contadorNotificaciones'])->name('recepcionista.notificaciones.contador');
 //Rutas de cotizar medicamentos como paciente
 Route::get('/paciente/cotizar', [PacienteCotizacionController::class, 'cotizar'])->name('paciente.cotizar');
 Route::get('/paciente/medicamentos-buscar', [PacienteCotizacionController::class, 'buscarMedicamentos'])
