@@ -3348,7 +3348,7 @@
                                     @if(session('cargo') === 'Recepcionista')
                                         <a href="{{ route('publicidad.edit', $pub->id) }}"
                                            class="promo-brand"
-                                           style=" font-weight:bold; cursor:pointer;">
+                                           style=" font-weight:bold; cursor:pointer; text-decoration-line: none">
                                             Editar
                                         </a>
                                     @endif

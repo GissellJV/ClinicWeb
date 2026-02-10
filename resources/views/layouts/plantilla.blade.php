@@ -274,6 +274,7 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="{{ route('agendarcitas') }}"><i class="bi bi-calendar-plus"></i> Agendar cita</a></li>
                                 <li><a class="dropdown-item" href="{{ route('citas.mis-citas') }}"><i class="bi bi-calendar-check"></i> Mis citas</a></li>
+                                <li><a class="dropdown-item" href="{{ route('paciente.cotizar') }}"><i class="bi bi-capsule"></i> Cotizar Medicamentos</a></li>
                                 <li><a class="dropdown-item" href="{{ route('perfil') }}"><i class="bi bi-person-fill"></i> Mi Perfil</a></li>
 
                                 <li><hr class="dropdown-divider"></li>

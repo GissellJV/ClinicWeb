@@ -30,5 +30,9 @@ class Inventario extends Model
             ->withPivot('cantidad', 'habitacion_id', 'fecha_aplicacion', 'observaciones')
             ->withTimestamps();
     }
-
+    public function cotizacionDetalles()
+    {
+        return $this->hasMany(CotizacionDetalle::class,
+            'inventario_medicamento_id');
+    }
 }

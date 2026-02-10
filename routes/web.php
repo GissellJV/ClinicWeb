@@ -294,3 +294,7 @@ Route::get('/recepcionista/incidentes', [RecepcionistaController::class, 'incide
 Route::get('/recepcionista/incidentes/{id}', [RecepcionistaController::class, 'incidentesShow'])->name('recepcionista.incidentes.show');
 Route::put('/recepcionista/incidentes/{id}/estado', [RecepcionistaController::class, 'incidentesActualizarEstado'])->name('recepcionista.incidentes.actualizar-estado');
 Route::get('/recepcionista/notificaciones/contador', [RecepcionistaController::class, 'contadorNotificaciones'])->name('recepcionista.notificaciones.contador');
+//Rutas de cotizar medicamentos como paciente
+Route::get('/paciente/cotizar', [PacienteCotizacionController::class, 'cotizar'])->name('paciente.cotizar');
+Route::get('/paciente/medicamentos-buscar', [PacienteCotizacionController::class, 'buscarMedicamentos'])
+    ->name('paciente.medicamentos.buscar');
