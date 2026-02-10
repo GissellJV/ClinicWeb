@@ -7,7 +7,6 @@ use App\Http\Controllers\EnfermeriaController;
 use App\Http\Controllers\EspecialidadController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\PacienteController;
-use App\Http\Controllers\PacienteCotizacionController;
 use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\PreguntaPacienteController;
 use App\Http\Controllers\TurnoController;
@@ -25,7 +24,6 @@ use App\Http\Controllers\DoctorHabitacionController; // Nuevo
 use \App\Http\Controllers\EnviarDoctorController;
 use App\Http\Controllers\PromocionController;
 use App\Http\Controllers\PublicidadController;
-use App\Http\Controllers\IncidenteController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 
