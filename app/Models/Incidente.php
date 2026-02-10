@@ -33,4 +33,9 @@ class Incidente extends Model
     {
         return $this->belongsTo(Empleado::class, 'empleado_id');
     }
+    // Relación con Notificaciones
+    public function notificaciones()
+    {
+        return $this->hasMany(NotificacionIncidente::class, 'incidente_id');
+    }
 }
