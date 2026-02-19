@@ -541,6 +541,7 @@
                     <th class="text-center">ESPECIALIDAD</th>
                     <th class="text-center">ESTADO</th>
                     <th colspan="2" class="text-center">ACCIÓN</th>
+                    <th class="text-center">MOTIVO</th>
 
                 </tr>
                 </thead>
@@ -609,6 +610,13 @@
                                 <span class="action-buttons text-muted-action fw-bold">
                                   No disponible
                                 </span>
+                            @endif
+                        </td>
+                        <td>
+                            @if($cita->estado == 'cancelada')
+                                {{ $cita->motivo_cancelacion ?? 'Sin motivo' }}
+                            @else
+                                 —
                             @endif
                         </td>
                     </tr>

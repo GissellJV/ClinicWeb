@@ -216,7 +216,7 @@ class RecepcionistaController extends Controller
         try {
             DB::table('visitantes')->insert([
                 'nombre_visitante' => $request->nombre_visitante,
-                'dni'              => $request->dni_visitante,
+                'dni_visitante'              => $request->dni_visitante,
                 'paciente_id'      => $request->paciente_id,
                 'fecha_ingreso'    => now(),
                 'created_at'       => now(),

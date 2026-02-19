@@ -8,6 +8,12 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background:whitesmoke;
         }
+        .button-group {
+            display: flex;
+            justify-content: flex-end; 
+            gap: 15px;
+            margin-top: 20px;
+        }
         .text-info-emphasis {
 
             font-weight: bold;
@@ -66,11 +72,14 @@
                 <label class="mt-3">Descripción</label>
                 <textarea name="descripcion" class="form-control" required>{{ $publicidad->descripcion ?? '' }}</textarea>
 
-                <div style="margin-top: 20px">
+                <div style="margin-top: 20px" class="button-group">
                     <button class="btn-guardar">
                         {{ isset($publicidad) ? 'Actualizar' : 'Guardar' }}
                     </button>
-
+                    <button type="button" class="btn-cancel"
+                            onclick="window.location.href='/#promos'">
+                        Cancelar
+                    </button>
                 </div>
 
             </form>
