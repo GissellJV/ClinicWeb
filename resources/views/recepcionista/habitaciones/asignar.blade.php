@@ -273,18 +273,7 @@
                 </div>
             </div>
 
-            <!-- Observaciones -->
-            <div class="form-group">
-                <label class="form-label">
-                    Observaciones <span style="color: #999;">(opcional)</span>
-                </label>
-                <textarea
-                    name="observaciones"
-                    class="form-control"
-                    placeholder="Ingrese observaciones adicionales sobre la asignación (opcional)"
-                    maxlength="500"></textarea>
-                <p class="helper-text">Máximo 500 caracteres</p>
-            </div>
+
 
             <!-- Botones -->
             <div class="button-group">
