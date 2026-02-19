@@ -2656,6 +2656,73 @@
             transform: rotate(180deg);
             opacity: 1;
         }
+        .promo{
+            position: relative;
+            overflow: visible; /* importante */
+        }
+
+        /* contenedor */
+        .delete-btn-form{
+            position: absolute;
+            top: 12px;   /* lo sube sobre el header */
+            right: 16px;  /* lado izquierdo */
+            z-index: 10;
+        }
+
+        /* boton */
+        .delete-btn{
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 2px solid #c82432;
+            background: transparent;
+            color: #dc3545;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .delete-btn:hover{
+            background:#dc3545;
+            color:white;
+            transform: scale(1.1);
+        }
+        .btn-cancel {
+            padding: 0.875rem 2rem;
+            background: white;
+            border: 2px solid #131212;
+            border-radius: 8px;
+            color: #221414;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        .btn-cancel:hover {
+            background: #dc3545;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+        }
+        .btn-register {
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+
     </style>
 
     <!-- HERO -->
@@ -3337,6 +3404,22 @@
                 @foreach($publicidades as $pub)
                     <div class="swiper-slide">
                         <div class="promo">
+                            @if(session('cargo') === 'Recepcionista')
+                                <form id="deleteForm{{ $pub->id }}"
+                                      action="{{ route('publicidad.destroy', $pub->id) }}"
+                                      method="POST"
+                                      class="delete-btn-form">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="button"
+                                            class="delete-btn openDeleteModal"
+                                            data-id="{{ $pub->id }}">
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                </form>
+                            @endif
+
                             <div class="promo-badge">{{ $pub->titulo }}</div>
 
                             <div class="promo-content">
@@ -3365,7 +3448,64 @@
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
         </div>
+
+        <div class="modal fade" id="deleteModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmar eliminación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        ¿Desea eliminar esta promoción?
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-cancel"
+                                data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                        <button type="button" class="btn btn-register"
+                                id="confirmDelete">
+                            Sí, eliminar
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+
+            let formToDelete = null;
+
+            let deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'),{
+                backdrop:'static',
+                keyboard:false
+            });
+
+            document.querySelectorAll('.openDeleteModal').forEach(btn=>{
+                btn.addEventListener('click', function(){
+                    let id = this.dataset.id;
+                    formToDelete = document.getElementById('deleteForm'+id);
+                    deleteModal.show();
+                });
+            });
+
+            document.getElementById('confirmDelete').addEventListener('click', function(){
+                if(formToDelete){
+                    formToDelete.submit();
+                }
+            });
+
+        });
+    </script>
+
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

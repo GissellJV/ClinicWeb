@@ -300,3 +300,6 @@ Route::get('/recepcionista/notificaciones/contador', [RecepcionistaController::c
 Route::get('/paciente/cotizar', [PacienteCotizacionController::class, 'cotizar'])->name('paciente.cotizar');
 Route::get('/paciente/medicamentos-buscar', [PacienteCotizacionController::class, 'buscarMedicamentos'])
     ->name('paciente.medicamentos.buscar');
+
+//Rutas de eliminar promocion publicidad
+Route::delete('/publicidad/{id}', [PublicidadController::class, 'destroy'])->name('publicidad.destroy');
