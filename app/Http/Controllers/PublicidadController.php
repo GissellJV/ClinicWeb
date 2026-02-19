@@ -55,5 +55,13 @@ class PublicidadController extends Controller
             ->with('success', 'Publicidad actualizada correctamente');
 
     }
+    public function destroy($id)
+    {
+        $pub = Publicidad::findOrFail($id);
+        $pub->delete();
+
+        return redirect()->back()->with('success', 'Promoción eliminada');
+    }
+
 
 }
