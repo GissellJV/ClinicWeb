@@ -275,7 +275,7 @@ Route::delete('/preguntas/{id}', [PreguntaController::class, 'destroy'])
 Route::post('/preguntas/orden', [PreguntaController::class, 'updateOrden'])
     ->name('preguntas.orden');
 
-// Ruta pública
+// Ruta pública (para todos los usuarios) - Esta va AL FINAL
 Route::get('/preguntas-frecuentes', [PreguntaController::class, 'publico'])
     ->name('preguntas.publico');
 
@@ -301,9 +301,6 @@ Route::get('/paciente/cotizar', [PacienteCotizacionController::class, 'cotizar']
 Route::get('/paciente/medicamentos-buscar', [PacienteCotizacionController::class, 'buscarMedicamentos'])
     ->name('paciente.medicamentos.buscar');
 
-//Rutas de eliminar promocion publicidad
-Route::delete('/publicidad/{id}', [PublicidadController::class, 'destroy'])->name('publicidad.destroy');
+Route::put('/expedientes/{id}/desarchivar', [ExpedienteController::class, 'desarchivar'])->name('expedientes.desarchivar');
 
-//Ruta formulario alta de pacientes
-Route::get('/habitaciones/alta/{id}', [AsignacionHabitacionController::class, 'mostrarFormularioAlta'])->name('recepcionista.habitaciones.alta');
 

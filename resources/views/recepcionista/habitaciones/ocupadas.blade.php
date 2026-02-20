@@ -307,7 +307,6 @@
             color: white;
             font-weight: 600;
             font-size: 1.1rem;
-            cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
         }
@@ -315,7 +314,6 @@
         .btn-register:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
         }
 
         .btn-cancel {
@@ -326,7 +324,6 @@
             color: #dc3545;
             font-weight: 600;
             font-size: 1.1rem;
-            cursor: pointer;
             transition: all 0.3s ease;
         }
 
@@ -334,7 +331,6 @@
             background: #dc3545;
             color: white;
             transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
         }
 
         /* DataTables */
@@ -386,52 +382,6 @@
             font-size: 14px;
             padding-top: 15px;
         }
-
-        /* Estilos para los campos de formulario */
-        .form-label {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        .form-control, .form-select {
-            width: 100%;
-            background: rgba(248, 250, 255, 0.6);
-            color: #555;
-            padding: 16px 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: #f8f9fa;
-
-        }
-
-        .form-control:focus, .form-select:focus {
-            border-color: #4ecdc4;
-            box-shadow: 0 0 0 0.2rem rgba(78, 205, 196, 0.25);
-            outline: none;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            padding: 2.5rem;
-            max-width: 600px;
-            max-height: 700px;
-            margin: 0 auto;
-            border-top: 5px solid #4ecdc4;
-            position: relative;
-        }
-        .modal-section-title {
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-size: 1.8rem;
-            text-align: center;
-        }
-
 
         @media (max-width: 1200px) {
             .administracion .inventory-card {
@@ -498,8 +448,8 @@
                 </div>
             @endif
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="text-info-emphasis">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="text-info-emphasis">
                     <i class="fas fa-bed me-2"></i>Habitaciones Ocupadas
                 </h2>
 
@@ -584,6 +534,7 @@
                                 <th>Teléfono</th>
                                 <th>Ingreso</th>
                                 <th>Días</th>
+                                <th>Observaciones</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
@@ -624,12 +575,53 @@
                                                 {{ $asignacion->fecha_asignacion->startOfDay()->diffInDays(now()->startOfDay()) + 1 }} días
                                             </span>
                                     </td>
-
                                     <td>
-                                        <a href="{{ route('recepcionista.habitaciones.alta', $asignacion->id) }}" class="btn-sm btn-liberar" style="text-decoration-line: none">
-                                            <i class="fas fa-door-open"></i> Dar de Alta
-                                        </a>
+                                        @if($asignacion->observaciones)
+                                            {{ Str::limit($asignacion->observaciones, 30) }}
+                                        @else
+                                            <span class="text-muted">-</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn-sm btn-liberar"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalLiberar{{ $asignacion->id }}">
+                                            <i class="fas fa-door-open"></i> Liberar
+                                        </button>
 
+                                        <!-- Modal de Confirmación -->
+                                        <div class="modal fade" id="modalLiberar{{ $asignacion->id }}" tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content" style="border-radius: 15px; border: none;">
+                                                    <div class="modal-header text-white" style="background: linear-gradient(135deg, #4ecdc4 0%, #4FC3C3 100%);">
+                                                        <h5 class="modal-title">
+                                                            <i class="fas fa-exclamation-triangle"></i> Confirmar Liberación
+                                                        </h5>
+                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body" style="padding: 30px;">
+                                                        <p class="mb-2">¿Está seguro de que desea liberar la habitación?</p>
+                                                        <div class="alert alert-info mb-0">
+                                                            <strong>Habitación:</strong> {{ $asignacion->habitacion->numero_habitacion }}<br>
+                                                            <strong>Paciente:</strong> {{ $asignacion->paciente->nombres }} {{ $asignacion->paciente->apellidos }}<br>
+                                                            <small class="text-muted">El paciente será dado de alta.</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer" style="gap: 10px;">
+                                                        <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">
+                                                            <i class="fas fa-times"></i> Cancelar
+                                                        </button>
+                                                        <form action="{{ route('recepcionista.habitaciones.liberar', $asignacion->id) }}" method="POST" class="d-inline">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit" class="btn btn-register">
+                                                                <i class="fas fa-door-open"></i> Sí, Liberar
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -678,13 +670,13 @@
                 scrollX: false,
                 columnDefs: [
                     {
-                        targets: 7, // Columna de acciones
+                        targets: 8, // Columna de acciones
                         orderable: false,
                         searchable: false,
                         width: '120px'
                     },
                     {
-                        targets: 6, // Columna de observaciones
+                        targets: 7, // Columna de observaciones
                         width: '200px'
                     }
                 ]

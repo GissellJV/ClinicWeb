@@ -134,64 +134,34 @@ class AsignacionHabitacionController extends Controller
             return back()->with('error', 'Error al liberar habitación');
         }
     }
-    public function liberarRecepcionista(Request $request, $id)
+
+    public function liberarRecepcionista($id)
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
             return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
-
-        // Validar datos
-        $validated = $request->validate([
-            'fecha_salida' => 'required|date|before_or_equal:today',
-            'motivo_alta' => 'required',
-        ], [
-            'fecha_salida.required' => 'La fecha de salida es obligatoria',
-            'fecha_salida.before_or_equal' => 'La fecha no puede ser futura',
-            'motivo_alta.required' => 'Debe seleccionar un motivo de alta',
-        ]);
 
         DB::beginTransaction();
         try {
             $asignacion = AsignacionHabitacion::findOrFail($id);
 
-            // Combinar fecha de salida
-            $fechaSalida = $validated['fecha_salida'] ;
+            $asignacion->update([
+                'fecha_salida' => now(),
+                'estado' => 'finalizado'
+            ]);
 
-            // Actualizar asignación
-            $asignacion->fecha_salida = $fechaSalida;
-            $asignacion->motivo_alta = $validated['motivo_alta'];
-            $asignacion->observaciones = $request->observaciones_alta;
-            $asignacion->estado = 'finalizado';
-            $asignacion->save();
-
-            // Liberar habitación
             $asignacion->habitacion->update(['estado' => 'disponible']);
 
             DB::commit();
-
             return redirect()->route('recepcionista.habitaciones.ocupadas')
-                ->with('success', 'Paciente dado de alta correctamente');
-
+                ->with('success', 'Habitación liberada correctamente');
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Error al dar de alta: ' . $e->getMessage());
+            return back()->with('error', 'Error al liberar habitación: ' . $e->getMessage());
         }
     }
-    public function mostrarFormularioAlta($id)
-    {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
-            return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
-        }
-
-        $asignacion = AsignacionHabitacion::with(['paciente', 'habitacion'])
-            ->findOrFail($id);
-
-        return view('recepcionista.habitaciones.formulario_alta', compact('asignacion'));
-    }
-
 
     // ✨ MODIFICADO: Ahora acepta paciente_id opcional
     public function createRecepcionista(Request $request)

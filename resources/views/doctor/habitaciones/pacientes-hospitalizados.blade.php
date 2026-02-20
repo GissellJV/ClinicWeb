@@ -400,6 +400,7 @@
                                 <th>Teléfono</th>
                                 <th>fecha Ingreso</th>
                                 <th>Días</th>
+                                <th>Observaciones</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -432,7 +433,7 @@
                                                 <i class="fas fa-calendar-alt"></i>
                                                 {{ $asignacion->fecha_asignacion->startOfDay()->diffInDays(now()->startOfDay()) + 1 }} días
                                             </span>
-
+                                    <td>{{ $asignacion->observaciones ?? '-' }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -479,7 +480,7 @@
                 order: [[5, 'desc']], // Ordenar por fecha de ingreso descendente
                 columnDefs: [
                     {
-                        targets: 6, // Columnas
+                        targets: 7, // Columna de observaciones
                         orderable: false,
                         searchable: true
                     }

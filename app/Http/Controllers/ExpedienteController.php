@@ -261,6 +261,21 @@ class ExpedienteController extends Controller
         return view('expedientes.archivados', compact('expedientes'));
     }
 
+    public function desarchivar($id)
+    {
+        $expediente = Expediente::findOrFail($id);
+
+        $expediente->estado = 'activo';
+        $expediente->save();
+
+        return redirect()->route('expedientes.archivados')
+            ->with('success','Expediente desarchivado correctamente.');
+    }
+
+
+
+
+
 
 
 
