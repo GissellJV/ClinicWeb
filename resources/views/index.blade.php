@@ -2656,6 +2656,73 @@
             transform: rotate(180deg);
             opacity: 1;
         }
+        .promo{
+            position: relative;
+            overflow: visible; /* importante */
+        }
+
+        /* contenedor */
+        .delete-btn-form{
+            position: absolute;
+            top: 12px;   /* lo sube sobre el header */
+            right: 16px;  /* lado izquierdo */
+            z-index: 10;
+        }
+
+        /* boton */
+        .delete-btn{
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 2px solid #c82432;
+            background: transparent;
+            color: #dc3545;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .delete-btn:hover{
+            background:#dc3545;
+            color:white;
+            transform: scale(1.1);
+        }
+        .btn-cancel {
+            padding: 0.875rem 2rem;
+            background: white;
+            border: 2px solid #131212;
+            border-radius: 8px;
+            color: #221414;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        .btn-cancel:hover {
+            background: #dc3545;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+        }
+        .btn-register {
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+
     </style>
 
     <!-- HERO -->
@@ -2699,7 +2766,7 @@
         </div>
     </section>
 
-<!-- BOOKING -->
+    <!-- BOOKING -->
     <!-- BOOKING -->
     <section class="booking">
         <div id="promoCarousel" class="carousel slide promo-carousel" data-bs-ride="carousel">
@@ -2752,86 +2819,86 @@
         </div>
     </section>
 
-<!-- SERVICES -->
-<section id="servicios" class="services">
-    <div class="section-header">
-        <p class="section-subtitle">Nuestros Servicios</p>
-        <h2 class="section-title">Atención Médica Integral</h2>
-        <p class="section-description">Ofrecemos una amplia gama de servicios médicos de alta calidad para cuidar tu
-            salud y la de tu familia</p>
-    </div>
-    <div class="services-grid">
-        @if ($especialidades->isEmpty())
-            <div class="text-center p-4">
-                <h4 class="text-muted">No hay especialidades registradas aún.</h4>
-            </div>
-        @else
-            @foreach ($especialidades as $e)
-                <div class="service-card">
-                    @if(session('cargo') === 'Recepcionista')
-                        <form action="{{ route('especialidades.destroy', $e->id) }}" method="POST" class="delete-form">
-                            @csrf
-                            @method('DELETE')
-
-                            <button type="submit" class="btn-delete">
-                                <i class="bi bi-dash-circle"></i>
-                            </button>
-                        </form>
-                    @endif
-
-                    <div class="service-icon">
-                        <img src="{{ asset('storage/' . $e->icono) }}" alt="Icono" style="width: 60px; height: 60px;">
-                    </div>
-                    <h3 class="service-title">{{ $e->nombre }}</h3>
-                    <p class="service-description">{{ $e->descripcion }}</p>
+    <!-- SERVICES -->
+    <section id="servicios" class="services">
+        <div class="section-header">
+            <p class="section-subtitle">Nuestros Servicios</p>
+            <h2 class="section-title">Atención Médica Integral</h2>
+            <p class="section-description">Ofrecemos una amplia gama de servicios médicos de alta calidad para cuidar tu
+                salud y la de tu familia</p>
+        </div>
+        <div class="services-grid">
+            @if ($especialidades->isEmpty())
+                <div class="text-center p-4">
+                    <h4 class="text-muted">No hay especialidades registradas aún.</h4>
                 </div>
-            @endforeach
-        @endif
-    </div>
-    @if(session('cargo') === 'Recepcionista')
-        <div class="especialidad-wrapper">
+            @else
+                @foreach ($especialidades as $e)
+                    <div class="service-card">
+                        @if(session('cargo') === 'Recepcionista')
+                            <form action="{{ route('especialidades.destroy', $e->id) }}" method="POST" class="delete-form">
+                                @csrf
+                                @method('DELETE')
 
-            <button id="btnAgregarEspecialidad" class="btn-especialidad-open">
-                Agregar Especialidad
-            </button>
+                                <button type="submit" class="btn-delete">
+                                    <i class="bi bi-dash-circle"></i>
+                                </button>
+                            </form>
+                        @endif
 
-            <div id="modalEspecialidad" class="modal-especialidad">
-                <div class="modal-especialidad-content">
-
-                    <button class="close-especialidad-btn" id="closeEspecialidad">✕</button>
-
-                    <div class="modal-especialidad-header">
-                        <h2>Agregar Especialidad</h2>
+                        <div class="service-icon">
+                            <img src="{{ asset('storage/' . $e->icono) }}" alt="Icono" style="width: 60px; height: 60px;">
+                        </div>
+                        <h3 class="service-title">{{ $e->nombre }}</h3>
+                        <p class="service-description">{{ $e->descripcion }}</p>
                     </div>
+                @endforeach
+            @endif
+        </div>
+        @if(session('cargo') === 'Recepcionista')
+            <div class="especialidad-wrapper">
 
-                    <form id="especialidadForm" enctype="multipart/form-data"
-                          action="{{ route('especialidades.store') }}" method="POST">
+                <button id="btnAgregarEspecialidad" class="btn-especialidad-open">
+                    Agregar Especialidad
+                </button>
 
-                        @csrf
-                        <label>Nombre de la especialidad</label>
-                        <div class="input-wrapper">
-                        <input type="text" placeholder="Escribe el nombre de la especialidad aquí..." name="nombre" required>
+                <div id="modalEspecialidad" class="modal-especialidad">
+                    <div class="modal-especialidad-content">
+
+                        <button class="close-especialidad-btn" id="closeEspecialidad">✕</button>
+
+                        <div class="modal-especialidad-header">
+                            <h2>Agregar Especialidad</h2>
                         </div>
 
-                        <label>Descripción</label>
+                        <form id="especialidadForm" enctype="multipart/form-data"
+                              action="{{ route('especialidades.store') }}" method="POST">
+
+                            @csrf
+                            <label>Nombre de la especialidad</label>
                             <div class="input-wrapper">
-                        <textarea name="descripcion" placeholder="Escribe la descripción de la especialidad aquí..." required></textarea>
+                                <input type="text" placeholder="Escribe el nombre de la especialidad aquí..." name="nombre" required>
                             </div>
 
-                        <label>Ícono</label>
-                        <input type="file" name="icono" accept="image/*" required>
+                            <label>Descripción</label>
+                            <div class="input-wrapper">
+                                <textarea name="descripcion" placeholder="Escribe la descripción de la especialidad aquí..." required></textarea>
+                            </div>
 
-                        <div class="modal-especialidad-footer">
-                            <button type="button" class="especialidad-cancel-btn" id="cancelEspecialidad">Cancelar</button>
-                            <button type="submit" class="especialidad-save-btn">Guardar</button>
-                        </div>
-                    </form>
+                            <label>Ícono</label>
+                            <input type="file" name="icono" accept="image/*" required>
 
+                            <div class="modal-especialidad-footer">
+                                <button type="button" class="especialidad-cancel-btn" id="cancelEspecialidad">Cancelar</button>
+                                <button type="submit" class="especialidad-save-btn">Guardar</button>
+                            </div>
+                        </form>
+
+                    </div>
                 </div>
-            </div>
 
-        </div>
-    @endif
+            </div>
+        @endif
     </section>
 
     <!-- FEATURES -->
@@ -3180,25 +3247,25 @@
             });
         });
     </script>
-<style>
-    /* Hover de estrellas: ilumina solo hasta la estrella que pasas */
-    .star-rating-input .star-btn i {
-        color: #ddd; /* color por defecto */
-        transition: color 0.2s;
-    }
+    <style>
+        /* Hover de estrellas: ilumina solo hasta la estrella que pasas */
+        .star-rating-input .star-btn i {
+            color: #ddd; /* color por defecto */
+            transition: color 0.2s;
+        }
 
-    /* Usando hover para iluminar todas las anteriores y la actual */
-    .star-rating-input .star-btn:hover i,
-    .star-rating-input .star-btn:hover ~ .star-btn i {
-        color: #ffc107;
-    }
+        /* Usando hover para iluminar todas las anteriores y la actual */
+        .star-rating-input .star-btn:hover i,
+        .star-rating-input .star-btn:hover ~ .star-btn i {
+            color: #ffc107;
+        }
 
-    /* Mantener seleccionadas las estrellas ya clickeadas */
-    .star-rating-input .text-warning {
-        color: #ffc107 !important;
-    }
+        /* Mantener seleccionadas las estrellas ya clickeadas */
+        .star-rating-input .text-warning {
+            color: #ffc107 !important;
+        }
 
-</style>
+    </style>
     <script>
         document.getElementById('btnAgregarEspecialidad')?.addEventListener('click', function () {
             const form = document.getElementById('formEspecialidad');
@@ -3291,11 +3358,11 @@
                         </div>
 
                         <form id="formComentario" onsubmit="enviarComentario(event)">
-                        @csrf
+                            @csrf
 
                             <label>Comentará como {{ session('paciente_nombre') }}</label>
                             <textarea id="comentarioTextarea" name="comentario"
-                             placeholder="Escribe tu comentario aquí..." required rows="4"></textarea>
+                                      placeholder="Escribe tu comentario aquí..." required rows="4"></textarea>
 
                             <div class="modal-footer">
 
@@ -3337,6 +3404,22 @@
                 @foreach($publicidades as $pub)
                     <div class="swiper-slide">
                         <div class="promo">
+                            @if(session('cargo') === 'Recepcionista')
+                                <form id="deleteForm{{ $pub->id }}"
+                                      action="{{ route('publicidad.destroy', $pub->id) }}"
+                                      method="POST"
+                                      class="delete-btn-form">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="button"
+                                            class="delete-btn openDeleteModal"
+                                            data-id="{{ $pub->id }}">
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                </form>
+                            @endif
+
                             <div class="promo-badge">{{ $pub->titulo }}</div>
 
                             <div class="promo-content">
@@ -3365,7 +3448,64 @@
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
         </div>
+
+        <div class="modal fade" id="deleteModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmar eliminación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        ¿Desea eliminar esta promoción?
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-cancel"
+                                data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                        <button type="button" class="btn btn-register"
+                                id="confirmDelete">
+                            Sí, eliminar
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+
+            let formToDelete = null;
+
+            let deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'),{
+                backdrop:'static',
+                keyboard:false
+            });
+
+            document.querySelectorAll('.openDeleteModal').forEach(btn=>{
+                btn.addEventListener('click', function(){
+                    let id = this.dataset.id;
+                    formToDelete = document.getElementById('deleteForm'+id);
+                    deleteModal.show();
+                });
+            });
+
+            document.getElementById('confirmDelete').addEventListener('click', function(){
+                if(formToDelete){
+                    formToDelete.submit();
+                }
+            });
+
+        });
+    </script>
+
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -3592,13 +3732,13 @@
             formData.append("comentario", texto);
 
             const response = await fetch("{{ route('comentarios.store') }}", {
-                method: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                    "X-Requested-With": "XMLHttpRequest"
-                },
-                body: formData
-            }
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                        "X-Requested-With": "XMLHttpRequest"
+                    },
+                    body: formData
+                }
             );
 
             const data = await response.json();
