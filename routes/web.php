@@ -306,6 +306,8 @@ Route::delete('/publicidad/{id}', [PublicidadController::class, 'destroy'])->nam
 
 //Ruta formulario alta de pacientes
 Route::get('/habitaciones/alta/{id}', [AsignacionHabitacionController::class, 'mostrarFormularioAlta'])->name('recepcionista.habitaciones.alta');
+//Rutas ver pacientes dados de alta
+Route::get('/alta-pacientes', [DoctorHabitacionController::class, 'alta_pacientes'])->name('doctor.alta_pacientes');
 
 
 
