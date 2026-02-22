@@ -313,3 +313,5 @@ Route::get('/alta-pacientes', [DoctorHabitacionController::class, 'alta_paciente
 
 Route::put('/expedientes/{id}/desarchivar', [ExpedienteController::class, 'desarchivar'])->name('expedientes.desarchivar');
 
+//Ruta descargar comprobante de cita
+Route::get('/citas/{id}/comprobante', [CitaController::class, 'descargar'])->name('citas.comprobante');
