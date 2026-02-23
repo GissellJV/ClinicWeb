@@ -38,6 +38,52 @@
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* --- ESTILOS PARA IGUALAR BOTONES SEGÚN CAPTURA --- */
+        .btn-container-left {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-start; /* Alineado a la izquierda */
+            margin-top: 2rem;
+        }
+
+        .btn-custom {
+            width: 180px; /* Tamaño idéntico para ambos */
+            height: 45px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        /* Estilo Cancelar: Borde rojo */
+        .btn-custom-cancel {
+            background: white;
+            border: 2px solid #dc3545;
+            color: #dc3545;
+        }
+
+        .btn-custom-cancel:hover {
+            background: #fff5f5;
+            color: #c82333;
+        }
+
+        /* Estilo Confirmar: Fondo Verde/Teal */
+        .btn-custom-confirm {
+            background: #4ecdc4;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-custom-confirm:hover {
+            background: #3ebfb6;
+            box-shadow: 0 4px 10px rgba(78, 205, 196, 0.3);
+        }
     </style>
 
     <br><br>
@@ -58,7 +104,6 @@
                     </div>
                 @endif
 
-                <h2 class="form-title">Registro de Traslado en Ambulancia</h2>
 
                 <form action="{{ route('ambulancia.store') }}" method="POST" novalidate>
                     @csrf
@@ -151,13 +196,13 @@
                         </div>
                     </div>
 
-                    <div class="d-flex gap-3 mt-4">
-                        <button type="submit" class="btn-register flex-grow-1">
-                            <i class="bi bi-check-circle me-2"></i>Confirmar Traslado
-                        </button>
-                        <a href="{{ route('perfil') }}" class="btn-cancel text-decoration-none text-center d-flex align-items-center justify-content-center">
-                            <i class="bi bi-x-circle me-2"></i>Cancelar
+                    <div class="btn-container-left">
+                        <a href="{{ route('perfil') }}" class="btn-custom btn-custom-cancel">
+                            Cancelar
                         </a>
+                        <button type="submit" class="btn-custom btn-custom-confirm">
+                            Confirmar Traslado
+                        </button>
                     </div>
                 </form>
             </div>
