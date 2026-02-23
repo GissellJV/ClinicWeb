@@ -493,6 +493,12 @@
                             <i class="bi bi-person-check-fill"></i> Registro de Visitantes
                         </a>
                     </li>
+                    <!-- H74: Cirugías Programadas -->
+                    <li class="nav-item">
+                        <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.cirugias.index') }}">
+                            <i class="bi bi-scissors"></i> Cirugías Programadas
+                        </a>
+                    </li>
                 </ul>
 
                 <!-- BOTÓN CERRAR SESIÓN -->
@@ -545,7 +551,7 @@
                 <h5 class="footer-title">Contacto</h5>
                 <p class="footer-text"><i class="bi bi-geo-alt-fill me-2"></i> Danlí, El Paraíso, Honduras</p>
                 <p class="footer-text"><i class="bi bi-telephone-fill me-2"></i> +504 2234-5678</p>
-                <p class="footer-text"><i class="bi bi-envelope-fill me-2"></i> contacto@clinicweb.hn</p>
+                <p class="footer-text"><i class="bi bi-envelope-fill me-2"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a3c0cccdd7c2c0d7cce3c0cfcacdcac0d4c6c18dcbcd">[email&#160;protected]</a></p>
             </div>
 
             <!-- Columna 3 -->
@@ -570,5 +576,4 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
