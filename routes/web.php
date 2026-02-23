@@ -26,6 +26,7 @@ use App\Http\Controllers\DoctorHabitacionController; // Nuevo
 use \App\Http\Controllers\EnviarDoctorController;
 use App\Http\Controllers\PromocionController;
 use App\Http\Controllers\PublicidadController;
+use App\Http\Controllers\TrasladoController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 
@@ -275,7 +276,7 @@ Route::delete('/preguntas/{id}', [PreguntaController::class, 'destroy'])
 Route::post('/preguntas/orden', [PreguntaController::class, 'updateOrden'])
     ->name('preguntas.orden');
 
-// Ruta pública (para todos los usuarios) - Esta va AL FINAL
+// Ruta pública
 Route::get('/preguntas-frecuentes', [PreguntaController::class, 'publico'])
     ->name('preguntas.publico');
 
@@ -300,3 +301,32 @@ Route::get('/recepcionista/notificaciones/contador', [RecepcionistaController::c
 Route::get('/paciente/cotizar', [PacienteCotizacionController::class, 'cotizar'])->name('paciente.cotizar');
 Route::get('/paciente/medicamentos-buscar', [PacienteCotizacionController::class, 'buscarMedicamentos'])
     ->name('paciente.medicamentos.buscar');
+
+//Rutas de eliminar promocion publicidad
+Route::delete('/publicidad/{id}', [PublicidadController::class, 'destroy'])->name('publicidad.destroy');
+
+//Ruta formulario alta de pacientes
+Route::get('/habitaciones/alta/{id}', [AsignacionHabitacionController::class, 'mostrarFormularioAlta'])->name('recepcionista.habitaciones.alta');
+//Rutas ver pacientes dados de alta
+Route::get('/alta-pacientes', [DoctorHabitacionController::class, 'alta_pacientes'])->name('doctor.alta_pacientes');
+
+
+
+Route::put('/expedientes/{id}/desarchivar', [ExpedienteController::class, 'desarchivar'])->name('expedientes.desarchivar');
+
+
+
+// Rutas para la Historia H69/H80 - Emanuel Tercero
+Route::get('/traslado', [TrasladoController::class, 'create'])->name('ambulancia.create');
+Route::post('/traslado', [TrasladoController::class, 'store'])->name('ambulancia.store');
+
+
+//Ruta descargar comprobante de cita
+Route::get('/citas/{id}/comprobante', [CitaController::class, 'descargar'])->name('citas.comprobante');
+
+//Ruta Programar cita de seguimiento como doctor
+Route::get('/doctor/citaseguimiento', [CitaController::class, 'CitaSeguimiento'])
+    ->name('doctor.citaSeguimiento');
+
+Route::post('/doctor/citaseguimiento', [CitaController::class,'guardarSeguimiento'])
+    ->name('doctor.guardarSeguimiento');

@@ -492,6 +492,54 @@
                 </div>
             </div>
         @endif
+        {{-- BOTÓN DESARCHIVAR --}}
+        @if(session('cargo') === 'Recepcionista' && $expediente->estado === 'archivado')
+            <button type="button"
+                    class="btn-guardar"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalDesarchivarExpediente">
+                Desarchivar Expediente
+            </button>
+        @endif
+
+
+        {{-- MODAL DESARCHIVAR --}}
+        @if(session('cargo') === 'Recepcionista' && $expediente->estado === 'archivado')
+            <div class="modal fade" id="modalDesarchivarExpediente" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <div class="modal-header modal-header-archivar">
+                            <h5 class="modal-title">Desarchivar Expediente</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <p>¿Está seguro que desea desarchivar este expediente?</p>
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn-cancel" data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
+
+                            <form action="{{ route('expedientes.desarchivar', $expediente->id) }}"
+                                  method="POST">
+                                @csrf
+                                @method('PUT')
+
+                                <button type="submit" class="btn-archivar">
+                                    Sí, desarchivar
+                                </button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
 
     </div>
     <br>

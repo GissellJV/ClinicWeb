@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cita;
 use App\Models\Paciente;
 use App\Models\Empleado;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -494,5 +495,106 @@ class CitaController extends Controller
         return redirect()->back()
             ->with('success', 'La cita completada fue eliminada correctamente.');
     }
+// DESCARGAR COMPROBANTE DE PACIENTE
+
+    public function descargar($id)
+  {
+       if (!session('paciente_id')) {
+          return redirect()->route('inicioSesion')
+              ->with('error', 'Debes iniciar sesión para descargar el comprobante.');
+      }
+
+      // Buscar la cita y verificar que pertenece al paciente
+      $cita = Cita::findOrFail($id);
+
+       if ($cita->paciente_id !== session('paciente_id')) {
+              abort(403, 'No tienes permiso para descargar este comprobante.');
+      }
+
+      // Validar que el estado permite descargar comprobante
+      if (!in_array($cita->estado, ['programada', 'reprogramada'])) {
+             return redirect()->back()
+              ->with('error', 'Solo se puede descargar el comprobante de citas programadas o reprogramadas.');
+     }
+
+      // nombre del doctor
+      $doctorNombre = '';
+      if ($cita->doctor) {
+              $genero      = $cita->doctor->genero === 'Femenino' ? 'Dra.' : 'Dr.';
+         $doctorNombre = $genero . ' ' . $cita->doctor->nombre . ' ' . ($cita->doctor->apellido ?? '');
+    } else {
+              $doctorNombre = $cita->doctor_nombre ?? 'Doctor No Definido';
+     }
+
+     $data = [
+          'paciente'     => session('paciente_nombre') ?? 'No definido',
+          'doctor'       => trim($doctorNombre),
+          'especialidad' => $cita->especialidad ?? 'No definida',
+          'fecha'        => Carbon::parse($cita->fecha)->format('d/m/Y'),
+          'hora'         => $cita->hora,
+          'estado'       => ucfirst($cita->estado),
+          'fecha_gen'    => now()->format('d/m/Y'),
+          'hora_gen'     => now()->format('H:i'),
+      ];
+
+      $pdf = Pdf::loadView('pacientes.comprobante_pdf', $data)->setPaper('carta');
+
+      return $pdf->download('comprobante-cita-' . $data['paciente'] . '.pdf');
+ }
+
+
+    public function CitaSeguimiento()
+    {
+        if (!session('cargo') || session('cargo') != 'Doctor') {
+            return redirect()->route('inicioSesion')
+                ->with('error','Debes iniciar sesión como Doctor');
+        }
+
+        $doctor = Empleado::findOrFail(session('empleado_id'));
+        $pacientes = Paciente::all();
+
+        return view('doctor.citaSeguimiento', compact('doctor','pacientes'));
+    }
+
+
+    public function guardarSeguimiento(Request $request)
+    {
+        $request->validate([
+            'paciente_id' => 'required|exists:pacientes,id',
+            'fecha' => 'required|date|after_or_equal:today',
+            'hora' => 'required'
+        ],[
+            'paciente_id.required' => 'Seleccione un paciente',
+            'fecha.required' => 'Fecha obligatoria',
+            'hora.required' => 'Hora obligatoria',
+        ]);
+
+        $existe = Cita::where('empleado_id', session('empleado_id'))
+            ->where('fecha', $request->fecha)
+            ->where('hora', $request->hora)
+            ->exists();
+
+        if($existe){
+            return back()->with('error','Ya existe una cita en esa fecha y hora')->withInput();
+        }
+
+        $doctor = Empleado::findOrFail(session('empleado_id'));
+        $paciente = Paciente::findOrFail($request->paciente_id);
+
+        Cita::create([
+            'paciente_id' => $paciente->id,
+            'paciente_nombre' => $paciente->nombres.' '.$paciente->apellidos,
+            'empleado_id' => $doctor->id,
+            'doctor_nombre' => 'Dr. '.$doctor->nombre.' '.$doctor->apellido,
+            'especialidad' => $doctor->departamento,
+            'fecha' => $request->fecha,
+            'hora' => $request->hora,
+            'motivo' => 'Seguimiento médico',
+            'estado' => 'programada'
+        ]);
+
+        return back()->with('success','Cita de seguimiento creada correctamente');
+    }
+
 
 }

@@ -184,120 +184,109 @@
     <div class="formulario">
 
 
-    <div class="form-container">
+        <div class="form-container">
 
 
-        @if(session('success'))
-            <div class="alert alert-success">
-                <i class="fas fa-check-circle"></i> {{ session('success') }}
-            </div>
-        @endif
+            @if(session('success'))
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i> {{ session('success') }}
+                </div>
+            @endif
 
-        @if(session('error'))
-            <div class="alert alert-danger">
-                <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
-            </div>
-        @endif
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
+                </div>
+            @endif
 
 
-        @if(count($habitacionesDisponibles) == 0)
-            <div class="info-banner" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
-                <i class="fas fa-exclamation-triangle"></i>
-                Todos los pacientes ya tienen habitación asignada.
-            </div>
-        @endif
+            @if(count($habitacionesDisponibles) == 0)
+                <div class="info-banner" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Todos los pacientes ya tienen habitación asignada.
+                </div>
+            @endif
 
-        <form action="{{ route('recepcionista.habitaciones.store') }}" method="POST">
-            @csrf
+            <form action="{{ route('recepcionista.habitaciones.store') }}" method="POST">
+                @csrf
 
-            <!-- Seleccionar Paciente -->
-            <div class="form-group">
-                <label class="form-label">
+                <!-- Seleccionar Paciente -->
+                <div class="form-group">
+                    <label class="form-label">
+                        @if($pacienteSeleccionado)
+                            {{-- SI YA EXISTE UN PACIENTE SELECCIONADO--}}
+                            Paciente
+                        @else
+
+                            Seleccionar Paciente <span class="required">*</span>
+                        @endif
+                    </label>
                     @if($pacienteSeleccionado)
                         {{-- SI YA EXISTE UN PACIENTE SELECCIONADO--}}
-                  Paciente
+
+                        <input type="text" class="form-control"
+                               value="{{ $pacienteSeleccionado->nombres }} - {{ $pacienteSeleccionado->numero_identidad }}"
+                               readonly>
+                        <input type="hidden" name="paciente_id" value="{{ $pacienteSeleccionado->id }}">
                     @else
-
-                    Seleccionar Paciente <span class="required">*</span>
+                        <select name="paciente_id" id="paciente_id" class="form-select" required>
+                            <option value="">-- Seleccione un paciente --</option>
+                            @foreach($pacientes as $paciente)
+                                <option value="{{ $paciente->id }}"
+                                    {{ $pacienteSeleccionado && $pacienteSeleccionado->id == $paciente->id ? 'selected' : '' }}>
+                                    {{ $paciente->nombres }} {{ $paciente->apellidos }}
+                                    @if($paciente->numero_identidad)
+                                        - ID: {{ $paciente->numero_identidad }}
+                                    @endif
+                                </option>
+                            @endforeach
+                        </select>
                     @endif
-                </label>
-                @if($pacienteSeleccionado)
-                    {{-- SI YA EXISTE UN PACIENTE SELECCIONADO--}}
-
-                    <input type="text" class="form-control"
-                           value="{{ $pacienteSeleccionado->nombres }} - {{ $pacienteSeleccionado->numero_identidad }}"
-                           readonly>
-                    <input type="hidden" name="paciente_id" value="{{ $pacienteSeleccionado->id }}">
-                @else
-                <select name="paciente_id" id="paciente_id" class="form-select" required>
-                    <option value="">-- Seleccione un paciente --</option>
-                    @foreach($pacientes as $paciente)
-                        <option value="{{ $paciente->id }}"
-                            {{ $pacienteSeleccionado && $pacienteSeleccionado->id == $paciente->id ? 'selected' : '' }}>
-                            {{ $paciente->nombres }} {{ $paciente->apellidos }}
-                            @if($paciente->numero_identidad)
-                                - ID: {{ $paciente->numero_identidad }}
-                            @endif
-                        </option>
-                    @endforeach
-                </select>
-                @endif
-                @if(count($pacientes) == 0)
-                    <p class="helper-text" style="color: #ef4444;">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        No hay pacientes disponibles para asignar
-                    </p>
-                @endif
-            </div>
-
-            <!-- Habitación Disponible -->
-            <div class="form-group">
-                <label class="form-label">
-                    Habitación Disponible <span class="required">*</span>
-                </label>
-                <select name="habitacion_id" id="habitacion_id" class="form-select" required>
-                    <option value="">-- Seleccione una habitación --</option>
-                    @foreach($habitacionesDisponibles as $habitacion)
-                        <option value="{{ $habitacion->id }}">
-                            Habitación {{ $habitacion->numero_habitacion }}
-                            - {{ ucfirst($habitacion->tipo) }}
-                            @if($habitacion->descripcion)
-                                ({{ $habitacion->descripcion }})
-                            @endif
-                        </option>
-                    @endforeach
-                </select>
-                <div class="habitacion-info" id="habitacionInfo" style="display: none;">
-                    <i class="fas fa-info-circle"></i>
-                    <span id="habitacionDetalle"></span>
+                    @if(count($pacientes) == 0)
+                        <p class="helper-text" style="color: #ef4444;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            No hay pacientes disponibles para asignar
+                        </p>
+                    @endif
                 </div>
-            </div>
 
-            <!-- Observaciones -->
-            <div class="form-group">
-                <label class="form-label">
-                    Observaciones <span style="color: #999;">(opcional)</span>
-                </label>
-                <textarea
-                    name="observaciones"
-                    class="form-control"
-                    placeholder="Ingrese observaciones adicionales sobre la asignación (opcional)"
-                    maxlength="500"></textarea>
-                <p class="helper-text">Máximo 500 caracteres</p>
-            </div>
+                <!-- Habitación Disponible -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Habitación Disponible <span class="required">*</span>
+                    </label>
+                    <select name="habitacion_id" id="habitacion_id" class="form-select" required>
+                        <option value="">-- Seleccione una habitación --</option>
+                        @foreach($habitacionesDisponibles as $habitacion)
+                            <option value="{{ $habitacion->id }}">
+                                Habitación {{ $habitacion->numero_habitacion }}
+                                - {{ ucfirst($habitacion->tipo) }}
+                                @if($habitacion->descripcion)
+                                    ({{ $habitacion->descripcion }})
+                                @endif
+                            </option>
+                        @endforeach
+                    </select>
+                    <div class="habitacion-info" id="habitacionInfo" style="display: none;">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="habitacionDetalle"></span>
+                    </div>
+                </div>
 
-            <!-- Botones -->
-            <div class="button-group">
-                <button type="submit" class="btn btn-asignar"
-                    {{ count($habitacionesDisponibles) == 0 || count($pacientes) == 0 ? 'disabled' : '' }}>
-                    <i class="fas fa-save"></i> Asignar Habitación
-                </button>
-                <a href="{{ route('listadocitas') }}" class="btn btn-cancel">
-                    <i class="fas fa-times"></i> Cancelar
-                </a>
-            </div>
-        </form>
-    </div>
+
+
+                <!-- Botones -->
+                <div class="button-group">
+                    <button type="submit" class="btn btn-asignar"
+                        {{ count($habitacionesDisponibles) == 0 || count($pacientes) == 0 ? 'disabled' : '' }}>
+                        <i class="fas fa-save"></i> Asignar Habitación
+                    </button>
+                    <a href="{{ route('listadocitas') }}" class="btn btn-cancel">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script>

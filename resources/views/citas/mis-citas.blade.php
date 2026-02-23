@@ -13,7 +13,7 @@
         }
 
         .citas-container {
-            max-width: 1400px;
+            max-width: 1450px;
             margin: 40px auto;
         }
 
@@ -262,7 +262,7 @@
 
         .cita-header-card {
             background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
-            padding: 25px;
+            padding: 29px;
             color: white;
         }
 
@@ -582,6 +582,41 @@
                 grid-template-columns: 1fr 1fr;
             }
         }
+
+        .btn-descargar-comprobante {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 15%;
+            padding: 12px 20px;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.6rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0;
+            margin-left: auto;
+
+        }
+
+        .btn-descargar-comprobante:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26, 26, 46, 0.45);
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-descargar-comprobante:active {
+            transform: translateY(0);
+        }
+
+        .btn-descargar-comprobante i {
+            font-size: 1.1rem;
+        }
     </style>
 
     <div class="citas-container">
@@ -691,6 +726,14 @@
                                     {{ $cita->doctor->genero === 'Femenino' ? 'Dra.' : 'Dr.' }} {{ $cita->doctor->nombre }} {{ $cita->doctor->apellido ?? '' }}
                                 @else
                                     {{ $cita->doctor_nombre ?? 'Doctor No Definido' }}
+                                @endif
+
+                                @if(in_array($cita->estado, ['programada', 'reprogramada']))
+                                    <a href="{{ route('citas.comprobante', $cita->id) }}"
+                                       class="btn-descargar-comprobante">
+                                        <i class="bi bi-file-earmark-pdf-fill"></i>
+
+                                    </a>
                                 @endif
                             </div>
                             <span class="especialidad-badge">

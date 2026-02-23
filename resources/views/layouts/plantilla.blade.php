@@ -1,4 +1,4 @@
-<!doctype html>
+<!d<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -200,12 +200,10 @@
     <nav class="navbar navbar-expand-lg fixed-top shadow-sm nav-modern">
         <div class="container-fluid px-4">
 
-            <!-- LOGO -->
             <a class="navbar-brand d-flex align-items-center fw-bold text-white" href="{{ route('/') }}">
                 ClinicWeb
             </a>
 
-            <!-- Botón móvil -->
             <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarClinic">
                 <i class="bi bi-list" style="font-size: 1.8rem;"></i>
@@ -222,7 +220,6 @@
                         <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#servicios' : url('/#servicios') }}">Información</a>
                     </li>
 
-                    <!-- Doctores -->
                     <li class="nav-item">
                         <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#doctors' : url('/#doctors') }}">Doctores</a>
                     </li>
@@ -274,6 +271,9 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="{{ route('agendarcitas') }}"><i class="bi bi-calendar-plus"></i> Agendar cita</a></li>
                                 <li><a class="dropdown-item" href="{{ route('citas.mis-citas') }}"><i class="bi bi-calendar-check"></i> Mis citas</a></li>
+
+                                <li><a class="dropdown-item" href="{{ route('ambulancia.create') }}"><i class="bi bi-truck"></i> Solicitar Traslado</a></li>
+
                                 <li><a class="dropdown-item" href="{{ route('paciente.cotizar') }}"><i class="bi bi-capsule"></i> Cotizar Medicamentos</a></li>
                                 <li><a class="dropdown-item" href="{{ route('perfil') }}"><i class="bi bi-person-fill"></i> Mi Perfil</a></li>
 
@@ -299,14 +299,13 @@
 
 
 <main class="contenido">
-        @yield('contenido')
+    @yield('contenido')
 </main>
 
 <footer class="footer-modern mt-5">
     <div class="container py-5">
         <div class="row gy-4">
 
-            <!-- Columna 1 -->
             <div class="col-md-4">
                 <h4 class="fw-bold text-white mb-3">ClinicWeb</h4>
                 <p class="footer-text">
@@ -314,7 +313,6 @@
                 </p>
             </div>
 
-            <!-- Columna 2 -->
             <div class="col-md-4">
                 <h5 class="footer-title">Contacto</h5>
                 <p class="footer-text"><i class="bi bi-geo-alt-fill me-2"></i> Danlí, El Paraíso, Honduras</p>
@@ -322,7 +320,6 @@
                 <p class="footer-text"><i class="bi bi-envelope-fill me-2"></i> contacto@clinicweb.hn</p>
             </div>
 
-            <!-- Columna 3 -->
             <div class="col-md-4">
                 <h5 class="footer-title">Síguenos</h5>
                 <div class="d-flex gap-3">
@@ -343,6 +340,6 @@
 </footer>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
