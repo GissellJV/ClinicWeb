@@ -313,5 +313,10 @@ Route::get('/alta-pacientes', [DoctorHabitacionController::class, 'alta_paciente
 
 Route::put('/expedientes/{id}/desarchivar', [ExpedienteController::class, 'desarchivar'])->name('expedientes.desarchivar');
 
+use App\Http\Controllers\TrasladoController;
+
+// Rutas para la Historia H69/H80 - Emanuel Tercero
+Route::get('/traslado', [TrasladoController::class, 'create'])->name('ambulancia.create');
+Route::post('/traslado', [TrasladoController::class, 'store'])->name('ambulancia.store');
 //Ruta descargar comprobante de cita
 Route::get('/citas/{id}/comprobante', [CitaController::class, 'descargar'])->name('citas.comprobante');
