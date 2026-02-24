@@ -14,6 +14,9 @@
             padding-top: 60px;
             background-color: #f5f7fa;
         }
+        .alert {
+            transition: all 0.5s ease;
+        }
 
         main.contenido {
             flex: 1;
@@ -325,6 +328,20 @@
 </head>
 
 <body>
+@if(session('ok'))
+    <div id="globalAlert" class="alert alert-success alert-dismissible fade show text-center mb-0" role="alert">
+        {{ session('ok') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+
+@if(session('error'))
+    <div id="globalAlert" class="alert alert-danger alert-dismissible fade show text-center mb-0" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+
 <nav class="navbar navbar-modern fixed-top">
     <div class="container-fluid d-flex align-items-center justify-content-between">
 
@@ -582,8 +599,18 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
 @stack('scripts')
-
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const alert = document.getElementById('globalAlert');
+        if (alert) {
+            setTimeout(function () {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            }, 3000); // 3 segundos
+        }
+    });
+</script>
 </body>
+
 </html>
