@@ -284,7 +284,7 @@
         .profile-badge:hover img {
             transform: scale(1.05);
             box-shadow: 0 4px 12px rgba(0, 217, 192,0.5);
-        }
+           }
 
         .edit-icon-overlay {
             position: absolute;
@@ -483,11 +483,6 @@
                             <i class="bi bi-clipboard-check-fill"></i>  Historial de Altas
                         </a>
                     </li>
-                    <li>
-                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.cirugias') }}">
-                            <i class="bi bi-scissors me-1"></i> Mis Citas Quirúrgicas
-                        </a>
-                    </li>
                 </ul>
             </li>
 
@@ -553,7 +548,7 @@
                 <h5 class="footer-title">Contacto</h5>
                 <p class="footer-text"><i class="bi bi-geo-alt-fill me-2"></i> Danlí, El Paraíso, Honduras</p>
                 <p class="footer-text"><i class="bi bi-telephone-fill me-2"></i> +504 2234-5678</p>
-                <p class="footer-text"><i class="bi bi-envelope-fill me-2"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f3909c9d879290879cb3909f9a9d9a90849691dd9b9d">[email&#160;protected]</a></p>
+                <p class="footer-text"><i class="bi bi-envelope-fill me-2"></i> contacto@clinicweb.hn</p>
             </div>
 
             <!-- Columna 3 -->
@@ -576,7 +571,7 @@
     </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 
 <div class="modal fade" id="modalFotoDoctor" tabindex="-1" aria-labelledby="modalFotoDoctorLabel" aria-hidden="true">
@@ -757,4 +752,12 @@
     });
 
     // Mantener modal abierto si hay errores de validación del servidor
-    document.addEvent
+    document.addEventListener('DOMContentLoaded', function() {
+        @if($errors->has('foto'))
+        var modal = new bootstrap.Modal(document.getElementById('modalFotoDoctor'));
+        modal.show();
+        @endif
+    });
+</script>
+</body>
+</html>

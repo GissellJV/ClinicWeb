@@ -26,7 +26,6 @@ use App\Http\Controllers\DoctorHabitacionController; // Nuevo
 use \App\Http\Controllers\EnviarDoctorController;
 use App\Http\Controllers\PromocionController;
 use App\Http\Controllers\PublicidadController;
-use App\Http\Controllers\CirugiaController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 
@@ -316,18 +315,3 @@ Route::put('/expedientes/{id}/desarchivar', [ExpedienteController::class, 'desar
 
 //Ruta descargar comprobante de cita
 Route::get('/citas/{id}/comprobante', [CitaController::class, 'descargar'])->name('citas.comprobante');
-
-
-// DOCTOR: Evaluación Prequirúrgica
-Route::get('/doctor/evaluacion/crear/{cita_id}', [CirugiaController::class, 'crearEvaluacion'])->name('doctor.evaluacion.crear');
-Route::post('/doctor/evaluacion/guardar', [CirugiaController::class, 'guardarEvaluacion'])->name('doctor.evaluacion.guardar');
-Route::get('/doctor/evaluacion/{id}', [CirugiaController::class, 'verEvaluacion'])->name('doctor.evaluacion.ver');
-Route::get('/doctor/mis-cirugias', [CirugiaController::class, 'misCirugias'])->name('doctor.cirugias');
-
-// RECEPCIONISTA: Programar Cirugía en Quirófano
-
-Route::get('/recepcionista/cirugia/programar/{evaluacion_id}', [CirugiaController::class, 'programarCirugia'])->name('recepcionista.cirugia.programar');
-Route::post('/recepcionista/cirugia/guardar', [CirugiaController::class, 'guardarCirugia'])->name('recepcionista.cirugia.guardar');
-Route::get('/recepcionista/cirugia/verificar-quirofano', [CirugiaController::class, 'verificarQuirofano'])->name('recepcionista.cirugia.verificarQuirofano');
-Route::get('/recepcionista/cirugia/{id}', [CirugiaController::class, 'verCirugia'])->name('recepcionista.cirugia.ver');
-Route::get('/recepcionista/cirugias', [CirugiaController::class, 'indexRecepcionista'])->name('recepcionista.cirugias.index');
