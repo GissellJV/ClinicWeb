@@ -346,3 +346,11 @@ Route::get('/recepcionista/cirugia/programar/{evaluacion_id}', [DoctorController
 Route::post('/recepcionista/cirugia/guardar', [DoctorController::class, 'guardarCirugia'])->name('recepcionista.cirugia.guardar');
 Route::get('/recepcionista/cirugia/{id}', [DoctorController::class, 'verCirugia'])->name('recepcionista.cirugia.ver');
 Route::get('/recepcionista/cirugia/verificar-quirofano', [DoctorController::class, 'verificarQuirofano'])->name('recepcionista.cirugia.verificar-quirofano');
+
+// ---  GESTIÓN DE INVENTARIO DE EQUIPOS ---
+// Ruta para visualizar la tabla (Esta es la que faltaba en tu lista)
+Route::get('/inventario-equipos', [RecepcionistaController::class, 'inventarioEquipos'])->name('inventario.equipos.index');
+// Rutas de acción para los Modales
+Route::post('/inventario-equipos/guardar', [RecepcionistaController::class, 'guardarEquipo'])->name('inventario.guardar');
+Route::put('/inventario-equipos/actualizar/{id}', [RecepcionistaController::class, 'actualizarEquipo'])->name('inventario.actualizar');
+Route::delete('/inventario-equipos/eliminar/{id}', [RecepcionistaController::class, 'eliminarEquipo'])->name('inventario.eliminar');
