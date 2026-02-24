@@ -12,50 +12,59 @@ class TurnoController extends Controller
 {
     public function index(Request $request)
     {
-        // seguridad (según tu proyecto)
+
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
             return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
 
+        $query = Cita::with(['doctor', 'paciente']);
         $mes  = (int)($request->get('mes', now()->month));
         $anio = (int)($request->get('anio', now()->year));
 
+        // Filtrar por doctor
+        if ($request->filled('doctor')) {
+            $query->where('doctor_nombre', 'like', '%' . $request->doctor . '%');
+        }
         $inicioMes = Carbon::create($anio, $mes, 1)->startOfMonth();
         $finMes    = (clone $inicioMes)->endOfMonth();
         $diasEnMes = $inicioMes->daysInMonth;
 
-        // DOCTORES DESDE BD
+        // === DOCTORES DESDE BD ===
         $doctoresQuery = Empleado::query()
             ->where('cargo', 'Doctor');
 
-        // filtro por nombre (nombre o apellido)
-        if ($request->filled('nombre')) {
-            $nombre = $request->nombre;
-            $doctoresQuery->where(function($q) use ($nombre) {
-                $q->where('nombre', 'like', "%$nombre%")
-                    ->orWhere('apellido', 'like', "%$nombre%");
-            });
+        // Filtrar por especialidad
+        if ($request->filled('especialidad')) {
+            $query->where('especialidad', 'like', '%' . $request->especialidad . '%');
+            // filtro por nombre (nombre o apellido)
+            if ($request->filled('nombre')) {
+                $nombre = $request->nombre;
+                $doctoresQuery->where(function ($q) use ($nombre) {
+                    $q->where('nombre', 'like', "%$nombre%")
+                        ->orWhere('apellido', 'like', "%$nombre%");
+                });
+            }
         }
 
-        // filtro por especialidad (ajusta el campo real en tu BD)
-        if ($request->filled('departamento')) {
-            $doctoresQuery->where('departamento', $request->departamento);
-        }
+                // filtro por especialidad (ajusta el campo real en tu BD)
+                if ($request->filled('departamento')) {
+                    $doctoresQuery->where('departamento', $request->departamento);
+                }
 
-        // paginación: 10 doctores
-        $doctores = $doctoresQuery
-            ->orderBy('apellido')
-            ->orderBy('nombre')
-            ->paginate(10)
-            ->withQueryString();
+                // paginación: 10 doctores
+                $doctores = $doctoresQuery
+                    ->orderBy('apellido')
+                    ->orderBy('nombre')
+                    ->paginate(10)
+                    ->withQueryString();
 
         // lista de especialidades para el select
         $departamentos = Empleado::where('cargo','Doctor')
             ->whereNotNull('departamento')
             ->distinct()
             ->orderBy('departamento')
-            ->pluck('departamento');
+                    ->pluck('departamento');
 
         // días del mes (para el header)
         $dias = [];
@@ -69,7 +78,7 @@ class TurnoController extends Controller
             ];
         }
 
-        // TURNOS DEL MES
+        // === TURNOS DEL MES
         $turnosMes = RolTurnoDoctor::whereBetween('fecha', [$inicioMes->toDateString(), $finMes->toDateString()])
             ->get()
             ->groupBy(fn($t) => $t->empleado_id); // por doctor
@@ -127,7 +136,6 @@ class TurnoController extends Controller
             'nota'        => ['nullable','string','max:255'],
         ]);
 
-        // ✅ Upsert por (empleado_id + fecha)
         RolTurnoDoctor::updateOrCreate(
             [
                 'empleado_id' => $data['empleado_id'],
