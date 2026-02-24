@@ -107,6 +107,9 @@ Route::get('/asistenciapaciente', [RecepcionistaController::class, 'registroPaci
 //visualizacion de turnos doctores
 Route::get('/turnos', [TurnoController::class, 'index'])->name('recepcionista.index');
 Route::post('/turnos', [TurnoController::class, 'store'])->name('recepcionista.store');
+Route::get('/turnos', [TurnoController::class, 'index'])->name('recepcionista.index');
+Route::post('/turnos', [TurnoController::class, 'store'])->name('recepcionista.store');
+Route::delete('/turnos/{turno}', [TurnoController::class, 'destroy'])->name('recepcionista.destroy');
 
 //citas
 Route::get('/mis-citas', [CitaController::class, 'misCitas'])->name('citas.mis-citas');
