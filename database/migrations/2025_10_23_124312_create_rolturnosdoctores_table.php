@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('rolturnosdoctores', function (Blueprint $table) {
             $table->id();
             $table->date('fecha');
-            $table->string('hora_turno');
-           $table->foreignId('empleado_id')->constrained();
-           $table->foreignId('cita_id')->constrained();
+            $table->string('codigo_turno', 20);
+            $table->string('nota', 255)->nullable();
+            $table->foreignId('empleado_id')
+                ->constrained('empleados')
+                ->cascadeOnDelete();
+            $table->unique(['fecha', 'empleado_id']);
             $table->timestamps();
         });
     }

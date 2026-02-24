@@ -10,18 +10,13 @@ class RolTurnoDoctor extends Model
 
     protected $fillable = [
         'fecha',
-        'hora_turno',
         'empleado_id',
-        'cita_id',
+        'codigo_turno',
+        'nota',
     ];
 
     public function empleado()
     {
         return $this->belongsTo(Empleado::class, 'empleado_id');
-    }
-
-    public function cita()
-    {
-        return $this->belongsTo(Cita::class, 'cita_id');
     }
 }

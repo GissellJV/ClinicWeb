@@ -1,651 +1,991 @@
 @extends('layouts.plantillaRecepcion')
-@section('contenido')
-
-    <style>
-        body {
-            background:whitesmoke;
-            min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-        }
-        .formulario .register-section {
-            padding: 1rem 1rem 3rem 1rem;
-        }
-
-        .formulario .form-container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            padding: 2.5rem;
-            margin: 0 auto;
-
-            position: relative;
-        }
-
-        .stat-card {
-            border: none;
-            border-radius: 15px;
-            color: white;
-            padding: 1.2rem;
-            text-align: center;
-        }
-
-        .formulario .form-label {
-            font-weight: 600;
-            color: #555;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .formulario .form-control {
-            color: #555;
-            padding: 0.75rem 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: #f8f9fa;
-        }
-
-        .formulario .form-control:focus {
-            outline: none;
-            border-color: #4ecdc4;
-            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
-            background: white;
-        }
-
-        .formulario .form-control::placeholder {
-            color: #999;
-        }
-
-        /* RADIO BOTONES */
-        .formulario .form-check-input:checked {
-            background-color: #4ecdc4;
-            border-color: #4ecdc4;
-        }
-
-        .formulario .form-check-input:focus {
-            box-shadow: 0 0 0 0.25rem rgba(78, 205, 196, 0.25);
-            border-color: #4ecdc4;
-        }
-
-        /* INPUTS */
-        .formulario .input-group-text {
-            background: #e8f8f7;
-            border: 2px solid #e0e0e0;
-            border-right: none;
-            color: #4ecdc4;
-            font-weight: 600;
-        }
-
-        .formulario .input-group .form-control {
-            border-left: none;
-        }
-
-        .formulario .input-group:focus-within .input-group-text {
-            border-color: #4ecdc4;
-        }
-
-        .formulario .input-group:focus-within .form-control {
-            border-color: #4ecdc4;
-        }
-
-        /*MENSAJES DE ERROR*/
-        .formulario small.text-danger {
-            font-size: 0.875rem;
-            display: block;
-            margin-top: 0.5rem;
-        }
-
-        /* BOTONES */
-        .formulario .btn-register {
-            padding: 0.875rem 2rem;
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-            font-weight: 600;
-            font-size: 1.1rem;
-
-
-            background: #00ffe7;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            color: black;
-            transition: box-shadow .25s ease;
-        }
-
-        .formulario .btn-register:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 15px #00ffe7;
-            background: linear-gradient(135deg, #4ecdc4 0%, #00ffe7 100%);
-        }
-
-        .formulario .btn-cancel {
-            padding: 0.875rem 2rem;
-            background: white;
-            border: 2px solid #dc3545;
-            border-radius: 8px;
-            color: #dc3545;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-        }
-
-        .formulario .btn-cancel:hover {
-            background: #dc3545;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
-        }
-
-        @media (max-width: 768px) {
-            .formulario .form-container {
-                padding: 2rem 1.5rem;
+        <style>
+            /* Fondo general */
+            .turnos-page {
+                background: linear-gradient(135deg, #f8fffe 0%, #e6fffb 50%, #f0fffd 100%);
+                min-height: 100vh;
+                padding: 2rem 0 4rem;
             }
 
-            .formulario .form-title {
+            /* Header Card */
+            .turnos-header {
+                background: linear-gradient(135deg, #009e8e, #4ecdc4, #00ffe7);
+                border-radius: 20px;
+                padding: 2rem 2.5rem;
+                color: white;
+                box-shadow: 0 10px 40px rgba(78, 205, 196, 0.35);
+                margin-bottom: 2rem;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .turnos-header::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                right: -20%;
+                width: 300px;
+                height: 300px;
+                background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
+                border-radius: 50%;
+            }
+
+            .turnos-header h1 {
+                font-weight: 800;
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+                margin: 0;
+            }
+
+            .turnos-header .subtitle {
+                font-size: 1.2rem;
+                font-weight: 300;
+                opacity: 0.9;
+                letter-spacing: 1px;
+            }
+
+            /* Month Navigation */
+            .month-nav {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .month-nav .btn-nav {
+                background: rgba(255, 255, 255, 0.2);
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                color: white;
+                width: 44px;
+                height: 44px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2rem;
+                transition: all 0.3s ease;
+                text-decoration: none;
+            }
+
+            .month-nav .btn-nav:hover {
+                background: rgba(255, 255, 255, 0.35);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+                color: white;
+            }
+
+            .month-nav .month-label {
                 font-size: 1.5rem;
-            }
-        }
-
-        .table thead th {
-            border-bottom: 2px solid #e0e0e0;
-            color: white !important;
-            background: #4ecdc4 !important;
-        }
-
-        .table.table-hover tbody tr:hover,
-        .table.table-hover tbody tr:hover td {
-            background: rgb(222, 251, 249);
-            color: rgba(28, 27, 27, 0.95);
-        }
-        .text-info-emphasis{
-            font-weight: bold;
-        }
-
-        .demo-container {
-            max-width: 800px;
-            padding: 2rem;
-        }
-
-        .demo-card {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .demo-title {
-            color: #009e8e;
-            font-weight: 700;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .demo-subtitle {
-            color: #6c757d;
-            margin-bottom: 2rem;
-        }
-
-        .btn-demo {
-            background: linear-gradient(135deg, #4ecdc4, #00bfa6);
-            color: white;
-            border: none;
-            padding: 1rem 2.5rem;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
-            margin: 0.5rem;
-        }
-
-        .btn-demo:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
-        }
-
-        .btn-demo i {
-            margin-right: 0.5rem;
-        }
-
-        /* === ESTILOS DEL MODAL === */
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px) scale(0.9);
+                font-weight: 700;
+                letter-spacing: 3px;
+                min-width: 280px;
+                text-align: center;
             }
 
-            to {
+            /* Filter Bar */
+            .filter-bar {
+                background: white;
+                border-radius: 16px;
+                padding: 1.25rem 1.5rem;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+                margin-bottom: 1.5rem;
+                border: 1px solid rgba(78, 205, 196, 0.18);
+            }
+
+            .filter-bar .form-control,
+            .filter-bar .form-select {
+                border: 2px solid #e8f4f8;
+                border-radius: 10px;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+                transition: all 0.3s ease;
+            }
+
+            .filter-bar .form-control:focus,
+            .filter-bar .form-select:focus {
+                border-color: #4ecdc4;
+                box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.18);
+            }
+
+            .filter-bar .btn-filter {
+                background: linear-gradient(135deg, #4ecdc4, #00ffe7);
+                color: black;
+                border: none;
+                border-radius: 10px;
+                padding: 0.6rem 1.5rem;
+                font-weight: 700;
+                transition: all 0.3s ease;
+            }
+
+            .filter-bar .btn-filter:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 15px rgba(0, 255, 231, 0.25);
+            }
+
+            .filter-bar .btn-clear {
+                background: white;
+                border: 2px solid #dee2e6;
+                border-radius: 10px;
+                padding: 0.6rem 1.25rem;
+                font-weight: 600;
+                color: #6c757d;
+                transition: all 0.3s ease;
+            }
+
+            .filter-bar .btn-clear:hover {
+                border-color: #dc3545;
+                color: #dc3545;
+            }
+
+            /* Calendar Container */
+            .calendar-container {
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+                overflow: hidden;
+                border: 1px solid rgba(78, 205, 196, 0.18);
+            }
+
+            .calendar-scroll {
+                overflow-x: auto;
+                padding: 0;
+            }
+
+            .calendar-scroll::-webkit-scrollbar {
+                height: 8px;
+            }
+
+            .calendar-scroll::-webkit-scrollbar-track {
+                background: #f0f4f8;
+            }
+
+            .calendar-scroll::-webkit-scrollbar-thumb {
+                background: linear-gradient(90deg, #4ecdc4, #00ffe7);
+                border-radius: 4px;
+            }
+
+            /* Calendar Table */
+            .calendar-table {
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 0;
+                min-width: 1200px;
+            }
+
+            .calendar-table th,
+            .calendar-table td {
+                text-align: center;
+                vertical-align: middle;
+                font-size: 0.78rem;
+                border: 1px solid #e8edf2;
+            }
+
+            /* Header Rows */
+            .calendar-table thead .row-dias-semana th {
+                background: linear-gradient(135deg, #009e8e, #4ecdc4);
+                color: white;
+                padding: 8px 4px;
+                font-weight: 700;
+                font-size: 0.7rem;
+                letter-spacing: 1px;
+                position: sticky;
+                top: 0;
+                z-index: 10;
+            }
+
+            .calendar-table thead .row-dias-numero th {
+                background: linear-gradient(135deg, #4ecdc4, #00ffe7);
+                color: black;
+                padding: 6px 4px;
+                font-weight: 900;
+                font-size: 0.85rem;
+                position: sticky;
+                top: 32px;
+                z-index: 10;
+            }
+
+            .calendar-table thead .row-dias-semana th.col-doctor,
+            .calendar-table thead .row-dias-numero th.col-doctor {
+                min-width: 180px;
+                max-width: 220px;
+                text-align: left;
+                padding-left: 16px;
+                position: sticky;
+                left: 0;
+                z-index: 20;
+            }
+
+            /* Weekend headers (mismo estilo, pero rosa más suave) */
+            .calendar-table thead .row-dias-semana th.weekend-header {
+                background: linear-gradient(135deg, #ff6fb1, #ff4d6d);
+            }
+
+            .calendar-table thead .row-dias-numero th.weekend-header {
+                background: linear-gradient(135deg, #ff4d6d, #ff8fab);
+                color: white;
+            }
+
+            /* Doctor Name Column */
+            .calendar-table tbody td.col-doctor {
+                min-width: 180px;
+                max-width: 220px;
+                text-align: left;
+                padding: 10px 12px;
+                background: #f8fffe;
+                position: sticky;
+                left: 0;
+                z-index: 5;
+                border-right: 2px solid #4ecdc4;
+            }
+
+            .doctor-info {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+
+            .doctor-info .doctor-name {
+                font-weight: 800;
+                font-size: 0.82rem;
+                color: #009e8e;
+                line-height: 1.2;
+            }
+
+            .doctor-info .doctor-specialty {
+                font-size: 0.68rem;
+                color: #4ecdc4;
+                font-weight: 600;
+                opacity: 0.85;
+            }
+
+            /* Shift Cells */
+            .calendar-table tbody td.shift-cell {
+                padding: 4px 2px;
+                min-width: 48px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                position: relative;
+            }
+
+            .calendar-table tbody td.shift-cell:hover {
+                background: #e6fffb !important;
+                transform: scale(1.02);
+            }
+
+            .calendar-table tbody td.shift-cell.weekend-cell {
+                background: #fff5f7;
+            }
+
+            .calendar-table tbody tr:nth-child(even) td {
+                background-color: #fafcff;
+            }
+
+            .calendar-table tbody tr:nth-child(even) td.weekend-cell {
+                background-color: #fff0f3;
+            }
+
+            .calendar-table tbody tr:nth-child(even) td.col-doctor {
+                background-color: #f0faf8;
+            }
+
+            /* Shift Badges */
+            .shift-badge {
+                display: inline-block;
+                padding: 3px 6px;
+                border-radius: 6px;
+                font-weight: 900;
+                font-size: 0.65rem;
+                letter-spacing: 0.5px;
+                color: white;
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+                min-width: 32px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            }
+
+            .shift-badge:hover {
+                transform: scale(1.15);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            }
+
+            .shift-badge.turno-A { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+            .shift-badge.turno-B { background: linear-gradient(135deg, #4ecdc4, #009e8e); color: #000; text-shadow: none; }
+            .shift-badge.turno-C { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+            .shift-badge.turno-BC{ background: linear-gradient(135deg, #00ffe7, #4ecdc4); color: #000; text-shadow: none; }
+            .shift-badge.turno-ABC{ background: linear-gradient(135deg, #f4a261, #e76f51); }
+            .shift-badge.turno-L { background: linear-gradient(135deg, #95a5a6, #7f8c8d); }
+            .shift-badge.turno-LLAMADO { background: linear-gradient(135deg, #ff4d6d, #c9184a); font-size: 0.5rem; }
+
+            /* Empty cell click area */
+            .empty-cell {
+                width: 100%;
+                height: 28px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 6px;
+                transition: all 0.2s ease;
+            }
+
+            .shift-cell:hover .empty-cell {
+                background: rgba(78, 205, 196, 0.14);
+            }
+
+            .shift-cell:hover .empty-cell::after {
+                content: '+';
+                color: #009e8e;
+                font-weight: 900;
+                font-size: 1rem;
+            }
+
+            /* Legend */
+            .legend-container {
+                background: white;
+                border-radius: 16px;
+                padding: 1.5rem 2rem;
+                margin-top: 1.5rem;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+                border: 1px solid rgba(78, 205, 196, 0.18);
+            }
+
+            .legend-title {
+                font-weight: 800;
+                color: #009e8e;
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .legend-grid {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+
+            .legend-item {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.4rem 0.8rem;
+                background: #f8fffe;
+                border-radius: 10px;
+                border: 1px solid #e8edf2;
+                transition: all 0.2s ease;
+            }
+
+            .legend-item:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            }
+
+            .legend-color {
+                width: 28px;
+                height: 20px;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            }
+
+            .legend-text {
+                font-size: 0.8rem;
+                font-weight: 700;
+                color: #333;
+            }
+
+            .legend-hours {
+                font-size: 0.7rem;
+                color: #666;
+                font-weight: 400;
+            }
+            .legend-color.turno-LLAMADO {
+                width: auto !important;
+                min-width: 90px;
+                padding: 4px 12px;
+                white-space: nowrap;
+            }
+
+            /* Weekend schedules box */
+            .weekend-box {
+                background: linear-gradient(135deg, #fff5f7, #ffe0e6);
+                border: 2px solid #ff8fab;
+                border-radius: 12px;
+                padding: 1rem 1.5rem;
+            }
+
+            .weekend-box h6 {
+                color: #c9184a;
+                font-weight: 800;
+            }
+
+            /* Modal Styles */
+            .modal-turno .modal-content {
+                border-radius: 20px;
+                border: 2px solid #4ecdc4;
+                overflow: hidden;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            }
+
+            .modal-turno .modal-header {
+                background: linear-gradient(135deg, #009e8e, #4ecdc4);
+                color: white;
+                padding: 1.25rem 1.5rem;
+                border: none;
+            }
+
+            .modal-turno .modal-title {
+                font-weight: 800;
+                font-size: 1.1rem;
+            }
+
+            .modal-turno .btn-close {
+                filter: brightness(0) invert(1);
+                opacity: 0.85;
+                transition: transform 0.3s;
+            }
+
+            .modal-turno .btn-close:hover {
+                transform: rotate(90deg);
                 opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .modal.show .modal-dialog {
-            animation: modalSlideIn 0.3s ease-out;
-        }
-
-        .modal-title-modern {
-            font-weight: 700;
-            font-size: 1.4rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .modal-title-modern i {
-            font-size: 1.6rem;
-            margin-right: 0.75rem;
-        }
-
-        .btn-close-modern {
-            filter: brightness(0) invert(1);
-            opacity: 0.8;
-            transition: all 0.3s ease;
-        }
-
-        .btn-close-modern:hover {
-            opacity: 1;
-            transform: rotate(90deg);
-        }
-
-        .field-label-modern i {
-            margin-right: 0.5rem;
-            color: #4ecdc4;
-        }
-
-        .field-value-modern:hover {
-            border-color: #4ecdc4;
-            box-shadow: 0 4px 12px rgba(78, 205, 196, 0.2);
-            transform: translateX(5px);
-        }
-
-        .estado-badge {
-            display: inline-block;
-            padding: 0.5rem 1.25rem;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .estado-confirmada {
-            background: linear-gradient(135deg, #4ecdc4, #00bfa6);
-            color: white;
-            box-shadow: 0 4px 12px rgba(78, 205, 196, 0.3);
-        }
-
-        .estado-pendiente {
-            background: linear-gradient(135deg, #ffd93d, #f6c23e);
-            color: #856404;
-            box-shadow: 0 4px 12px rgba(255, 217, 61, 0.3);
-        }
-
-        .estado-cancelada {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
-            color: white;
-            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
-        }
-
-        .modal-footer-modern {
-            background: #f8fffe;
-            border-top: 2px solid #e7fffc;
-            padding: 1.5rem 2rem;
-        }
-
-
-
-        .btn-close-modal:hover {
-            background: #d5d5d5;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
             }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .modal-turno .modal-body {
+                padding: 1.5rem;
             }
-        }
 
-        .modal.show .field-group {
-            animation: fadeInUp 0.4s ease-out backwards;
-        }
+            .modal-turno .modal-footer {
+                border-top: 1px solid #e8f4f8;
+                padding: 1rem 1.5rem;
+            }
 
-        .modal.show .field-group:nth-child(1) {
-            animation-delay: 0.05s;
-        }
+            /* Shift Code Selector */
+            .turno-selector {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 0.5rem;
+                margin-top: 0.5rem;
+            }
 
-        .modal.show .field-group:nth-child(2) {
-            animation-delay: 0.1s;
-        }
+            .turno-option {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.6rem;
+                border-radius: 10px;
+                border: 2px solid #e8edf2;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                text-align: center;
+                font-weight: 800;
+                font-size: 0.85rem;
+            }
 
-        .modal.show .field-group:nth-child(3) {
-            animation-delay: 0.15s;
-        }
+            .turno-option:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            }
 
-        .modal.show .field-group:nth-child(4) {
-            animation-delay: 0.2s;
-        }
+            .turno-option.selected {
+                border-width: 3px;
+                transform: scale(1.05);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            }
 
-        .modal.show .field-group:nth-child(5) {
-            animation-delay: 0.25s;
-        }
+            .turno-option input[type="radio"] {
+                display: none;
+            }
 
-        .modal.show .field-group:nth-child(6) {
-            animation-delay: 0.3s;
-        }
+            /* Today highlight */
+            .calendar-table thead .today-col {
+                background: linear-gradient(135deg, #ffd93d, #ffe8a1) !important;
+                color: #333 !important;
+            }
 
-        .modal.show .field-group:nth-child(7) {
-            animation-delay: 0.35s;
-        }
+            .calendar-table tbody td.today-cell {
+                background: #fffde7 !important;
+                border-color: #ffd93d;
+            }
 
-        .modal.show .field-group:nth-child(8) {
-            animation-delay: 0.4s;
-        }
+            /* Stats row */
+            .stats-row {
+                display: flex;
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+                flex-wrap: wrap;
+            }
 
-        /* --- CONTENEDOR DEL MODAL --- */
-        .modal-content-modern {
-            background: #ffffffee;
-            backdrop-filter: blur(12px);
-            border-radius: 22px;
-            border: 2px solid #00ffc8;
-            box-shadow: 0 0 30px #00ffe680;
-            overflow: hidden;
-        }
+            .stat-mini {
+                background: white;
+                border-radius: 14px;
+                padding: 1rem 1.5rem;
+                flex: 1;
+                min-width: 160px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                border-left: 4px solid;
+                transition: all 0.3s ease;
+            }
 
-        /* --- HEADER CON DEGRADADO --- */
-        .modal-header-modern {
-            background: linear-gradient(135deg, #00eaff, #00ffbd);
-            padding: 18px 24px;
-            border-bottom: none;
-        }
+            .stat-mini:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            }
 
-        .modal-title-modern {
-            font-weight: 700;
-            color: #fff;
-        }
+            .stat-mini .stat-icon {
+                width: 45px;
+                height: 45px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.3rem;
+                color: white;
+            }
 
-        /* --- X con ANIMACIÓN --- */
-        .btn-x-rotate {
-            transition: transform .35s ease;
-        }
+            .stat-mini .stat-value {
+                font-size: 1.5rem;
+                font-weight: 900;
+                color: #009e8e;
+                line-height: 1;
+            }
 
-        .btn-x-rotate:hover {
-            transform: rotate(180deg);
-        }
+            .stat-mini .stat-label {
+                font-size: 0.75rem;
+                color: #6c757d;
+                font-weight: 500;
+            }
 
-        /* --- BODY MODERNO --- */
-        .modal-body-modern {
-            padding: 28px;
-        }
+            /* Animations */
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(20px); }
+                to   { opacity: 1; transform: translateY(0); }
+            }
 
-        /* Labels */
-        .field-label-modern {
-            font-weight: 600;
-            color: #000000;
-            display: block;
-            margin-bottom: 4px;
-        }
+            .calendar-container { animation: fadeInUp 0.5s ease-out; }
+            .filter-bar { animation: fadeInUp 0.3s ease-out; }
+            .legend-container { animation: fadeInUp 0.6s ease-out; }
 
-        /* Valores */
-        .field-value-modern {
-            padding: 12px 16px;
-            background: #f7fffe;
-            border: 2px solid #00e5d2;
-            border-radius: 14px;
-            font-size: 15px;
-            box-shadow: inset 0 0 6px #00ffe660;
-            overflow: hidden;
-        }
+            /* Responsive */
+            @media (max-width: 768px) {
+                .turnos-header {
+                    padding: 1.5rem;
+                    border-radius: 14px;
+                }
 
-        /* --- FOOTER --- */
-        .modal-footer-modern {
-            border-top: none;
-            padding: 16px 24px;
-            display: flex;
-            justify-content: flex-end;
-        }
+                .turnos-header h1 { font-size: 1.2rem; }
 
+                .month-nav .month-label {
+                    font-size: 1rem;
+                    min-width: auto;
+                }
 
+                .month-nav .btn-nav {
+                    width: 36px;
+                    height: 36px;
+                }
+            }
+        </style>
 
-    </style>
+    @section('contenido')
+        <div class="turnos-page">
+            <div class="container-fluid px-4">
 
-    <br><br><br>
-
-    <div class="container py-4 formulario">
-        <h1 class="text-info-emphasis">Turnos de Doctores</h1>
-
-        <div class="register-section">
-            <div class="form-container">
-
-
-
-                <!-- Modal Ver Detalles -->
-                <div class="modal fade" id="verDetallesModal" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-dialog-centered">
-                        <div class="modal-content modal-content-modern">
-
-                            <!-- HEADER moderno -->
-                            <div class="modal-header modal-header-modern">
-                                <h5 class="modal-title modal-title-modern">
-                                    <i class="bi bi-info-circle me-2"></i> Detalles del Turno
-                                </h5>
-
-                                <!-- X con animación -->
-                                <button type="button" class="btn-close btn-close-modern btn-x-rotate" data-bs-dismiss="modal"></button>
-                            </div>
-
-                            <!-- BODY moderno -->
-                            <div class="modal-body modal-body-modern">
-                                <div class="row g-4">
-
-                                    <div class="col-md-6 field-group">
-                                        <label class="field-label-modern">
-                                            <i class="bi bi-person-badge"></i> Doctor
-                                        </label>
-                                        <div class="field-value-modern" id="detalleEmpleado">—</div>
-                                    </div>
-
-                                    <div class="col-md-6 field-group">
-                                        <label class="field-label-modern">
-                                            <i class="bi bi-heart-pulse"></i> Especialidad
-                                        </label>
-                                        <div class="field-value-modern" id="detalleDepartamento">—</div>
-                                    </div>
-
-                                    <div class="col-md-6 field-group">
-                                        <label class="field-label-modern">
-                                            <i class="bi bi-person"></i> Paciente
-                                        </label>
-                                        <div class="field-value-modern" id="detallePaciente">—</div>
-                                    </div>
-
-                                    <div class="col-md-6 field-group">
-                                        <label class="field-label-modern">
-                                            <i class="bi bi-calendar-event"></i> Fecha
-                                        </label>
-                                        <div class="field-value-modern" id="detalleFecha">—</div>
-                                    </div>
-
-                                    <div class="col-md-6 field-group">
-                                        <label class="field-label-modern">
-                                            <i class="bi bi-clock"></i> Hora
-                                        </label>
-                                        <div class="field-value-modern" id="detalleHora">—</div>
-                                    </div>
-
-                                    <div class="col-md-6 field-group">
-                                        <label class="field-label-modern">
-                                            <i class="bi bi-check-circle"></i> Estado
-                                        </label>
-                                        <div class="field-value-modern">
-                                            <span class="estado-badge estado-confirmada" id="detalleEstado">—</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 field-group">
-                                        <label class="field-label-modern">
-                                            <i class="bi bi-chat-left-text"></i> Mensaje
-                                        </label>
-                                        <div class="field-value-modern" id="detalleMensaje" style="min-height: 60px;">—</div>
-                                    </div>
-
-                                    <div class="col-md-12 field-group">
-                                        <label class="field-label-modern">
-                                            <i class="bi bi-file-text"></i> Motivo
-                                        </label>
-                                        <div class="field-value-modern" id="detalleMotivo" style="min-height: 60px;">—</div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <!-- FOOTER moderno -->
-                            <div class="modal-footer modal-footer-modern">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 8px; padding: 10px 20px;">
-                                    Cerrar
-                                </button>
-                            </div>
-
+                {{-- Header --}}
+                <div class="turnos-header">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center">
+                        <div>
+                            <h1><i class="bi bi-calendar3-week me-2"></i>ROL DE TURNOS</h1>
+                            <span class="subtitle">Gestión de turnos médicos</span>
+                        </div>
+                        <div class="month-nav">
+                            <a href="{{ route('recepcionista.index', ['mes' => $prevMes, 'anio' => $prevAnio]) }}"
+                               class="btn-nav">
+                                <i class="bi bi-chevron-left"></i>
+                            </a>
+                            <span class="month-label">{{ $nombreMes }} {{ $anio }}</span>
+                            <a href="{{ route('recepcionista.index', ['mes' => $nextMes, 'anio' => $nextAnio]) }}"
+                               class="btn-nav">
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                <script>
-                    document.addEventListener('DOMContentLoaded', () => {
-                        const verDetallesModal = document.getElementById('verDetallesModal');
-                        verDetallesModal.addEventListener('show.bs.modal', event => {
-                            const button = event.relatedTarget;
-
-                            // Leer los datos del botón
-                            const doctor = button.getAttribute('data-empleado');
-                            const especialidad = button.getAttribute('data-departamento');
-                            const paciente = button.getAttribute('data-paciente');
-                            const fecha = button.getAttribute('data-fecha');
-                            const hora = button.getAttribute('data-hora');
-                            const estado = button.getAttribute('data-estado');
-                            const mensaje = button.getAttribute('data-mensaje');
-                            const motivo = button.getAttribute('data-motivo');
-
-                            // Asignarlos dentro del modal
-                            document.getElementById('detalleEmpleado').textContent = doctor;
-                            document.getElementById('detalleDepartamento').textContent = especialidad;
-                            document.getElementById('detallePaciente').textContent = paciente;
-                            document.getElementById('detalleFecha').textContent = fecha;
-                            document.getElementById('detalleHora').textContent = hora;
-                            document.getElementById('detalleEstado').textContent = estado;
-                            document.getElementById('detalleMensaje').textContent = mensaje;
-                            document.getElementById('detalleMotivo').textContent = motivo;
-                        });
-                    });
-                </script>
-
-                <!-- Filtro -->
-                <form method="GET" action="{{ route('recepcionista.index') }}" class="row g-2 mt-4">
-
-                    <div class="col">
-                        <label class="form-label">Doctor</label>
-                        <input type="text" name="doctor" class="form-control" value="{{ request('doctor') }}">
+                {{-- Stats --}}
+                <div class="stats-row">
+                    <div class="stat-mini" style="border-color: #0077b6;">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #00b4d8, #0077b6);">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <div>
+                            <div class="stat-value">{{ $doctores->total() }}</div>
+                            <div class="stat-label">Doctores</div>
+                        </div>
                     </div>
-
-                    <div class="col-md-4 dropdown">
-                        <label class="form-label fw-semibold">Especialidad</label>
-                        <button class="form-control text-start dropdown-toggle bg-white"
-                                type="button"
-                                id="dropdownEspecialidad"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                style="color: #495057; border: 1px solid #ced4da;">
-                            {{ request('especialidad') ?? 'Seleccione una especialidad' }}
-                        </button>
-
-                        <ul class="dropdown-menu w-100" aria-labelledby="dropdownEspecialidad">
-                            <li><a class="dropdown-item" href="#" onclick="seleccionarEspecialidad('')">Seleccione una especialidad</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            @foreach($especialidads as $esp)
-                                <li><a class="dropdown-item" href="#" onclick="seleccionarEspecialidad('{{ $esp }}')">{{ $esp }}</a></li>
-                            @endforeach
-                        </ul>
+                    <div class="stat-mini" style="border-color: #2ecc71;">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <div>
+                            <div class="stat-value">{{ $diasEnMes }}</div>
+                            <div class="stat-label">Días del mes</div>
+                        </div>
                     </div>
-                    <input type="hidden" name="especialidad" id="inputEspecialidad" value="{{ request('especialidad') }}">
-                    <script>
-                        function seleccionarEspecialidad(valor) {
-                            document.getElementById('inputEspecialidad').value = valor;
-                            document.getElementById('dropdownEspecialidad').innerText = valor || 'Seleccione una especialidad';
-                        }
-                    </script>
-
-
-                    <div class="col">
-                        <label class="form-label">Fecha</label>
-                        <input type="date" name="fecha" class="form-control" value="{{ request('fecha') }}">
+                    <div class="stat-mini" style="border-color: #9b59b6;">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                        <div>
+                            @php
+                                $totalAsignados = 0;
+                                foreach ($grid as $doctorId => $dias_grid) {
+                                    foreach ($dias_grid as $turno) {
+                                        if ($turno)
+                                            $totalAsignados++;
+                                    }
+                                }
+                            @endphp
+                            <div class="stat-value">{{ $totalAsignados }}</div>
+                            <div class="stat-label">Turnos asignados</div>
+                        </div>
                     </div>
-
-                    <div class="col-auto d-flex align-items-end">
-                        <button class="btn btn-register shadow-sm">Filtrar</button>
+                    <div class="stat-mini" style="border-color: #e67e22;">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #e67e22, #d35400);">
+                            <i class="bi bi-exclamation-triangle"></i>
+                        </div>
+                        <div>
+                            @php
+                                $totalVacios = ($doctores->count() * $diasEnMes) - $totalAsignados;
+                            @endphp
+                            <div class="stat-value">{{ $totalVacios }}</div>
+                            <div class="stat-label">Sin asignar</div>
+                        </div>
                     </div>
+                </div>
 
-                </form>
+                {{-- Filter --}}
+                <div class="filter-bar">
+                    <form method="GET" action="{{ route('recepcionista.index') }}" class="row g-2 align-items-end">
+                        <input type="hidden" name="mes" value="{{ $mes }}">
+                        <input type="hidden" name="anio" value="{{ $anio }}">
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold" style="font-size:0.85rem;">
+                                <i class="bi bi-search me-1"></i>Buscar Doctor
+                            </label>
+                            <input type="text" name="nombre" class="form-control" placeholder="Nombre del doctor..."
+                                   value="{{ request('nombre') }}">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold" style="font-size:0.85rem;">
+                                <i class="bi bi-heart-pulse me-1"></i>Especialidad
+                            </label>
+                            <select name="departamento" class="form-select">
+                                <option value="">Todas</option>
+                                @foreach($departamentos as $dep)
+                                    <option value="{{ $dep }}" {{ request('departamento') == $dep ? 'selected' : '' }}>
+                                        {{ $dep }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-filter">
+                                <i class="bi bi-funnel me-1"></i>Filtrar
+                            </button>
+                        </div>
+                        <div class="col-auto">
+                            <a href="{{ route('recepcionista.index', ['mes' => $mes, 'anio' => $anio]) }}"
+                               class="btn btn-clear">
+                                <i class="bi bi-x-lg me-1"></i>Limpiar
+                            </a>
+                        </div>
+                    </form>
+                </div>
 
-
-                <!-- Tabla -->
-                <div class="mt-5">
-                    <table class="table table-hover align-middle">
-                        <thead>
-                        <tr>
-                            <th>Doctor</th>
-                            <th>Especialidad</th>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                            <th>Paciente</th>
-                            <th>Estado</th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                        </thead>
-
-                        <tbody id="tablaTurnos">
-                        @forelse ($citas as $cita)
-                            <tr>
-                                <td>{{ $cita->doctor_nombre }}</td>
-                                <td>{{ $cita->especialidad }}</td>
-                                <td>{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}</td>
-                                <td>{{ $cita->hora }}</td>
-                                <td>{{ $cita->paciente_nombre }}</td>
-                                <td>{{ $cita->estado }}</td>
-                                <td class="text-center">
-                                    <button class="btn btn-outline-info btn-sm"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#verDetallesModal"
-                                            data-empleado="{{ $cita->doctor_nombre }}"
-                                            data-departamento="{{ $cita->especialidad }}"
-                                            data-paciente="{{ $cita->paciente_nombre }}"
-                                            data-fecha="{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}"
-                                            data-hora="{{ $cita->hora }}"
-                                            data-estado="{{ $cita->estado }}"
-                                            data-mensaje="{{ $cita->mensaje }}"
-                                            data-motivo="{{ $cita->motivo }}">
-                                        Ver más
-                                    </button>
-                                </td>
+                {{-- Calendar Grid --}}
+                <div class="calendar-container">
+                    <div class="calendar-scroll">
+                        <table class="calendar-table">
+                            <thead>
+                            {{-- Row 1: Day of week abbreviations --}}
+                            <tr class="row-dias-semana">
+                                <th class="col-doctor">NOMBRE DEL DOCTOR</th>
+                                @foreach($dias as $dia)
+                                    <th
+                                        class="{{ $dia['esFinDeSemana'] ? 'weekend-header' : '' }} {{ $dia['fecha'] == now()->format('Y-m-d') ? 'today-col' : '' }}">
+                                        {{ $dia['diaSemana'] }}
+                                    </th>
+                                @endforeach
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7" class="text-center text-muted">No hay turnos registrados</td>
+                            {{-- Row 2: Day numbers --}}
+                            <tr class="row-dias-numero">
+                                <th class="col-doctor"></th>
+                                @foreach($dias as $dia)
+                                    <th
+                                        class="{{ $dia['esFinDeSemana'] ? 'weekend-header' : '' }} {{ $dia['fecha'] == now()->format('Y-m-d') ? 'today-col' : '' }}">
+                                        {{ $dia['dia'] }}
+                                    </th>
+                                @endforeach
                             </tr>
-                        @endforelse
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            @forelse($doctores as $doctor)
+                                <tr>
+                                    <td class="col-doctor">
+                                        <div class="doctor-info">
+                                            <span class="doctor-name">
+                                                {{ $doctor->genero == 'Femenino' ? 'Dra.' : 'Dr.' }} {{ $doctor->nombre }}  {{ $doctor->apellido }}
+                                            </span>
+                                            <span class="doctor-specialty">
+                                                {{ $doctor->departamento ?? 'General' }}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    @foreach($dias as $dia)
+                                        @php $turno = $grid[$doctor->id][$dia['dia']] ?? null; @endphp
+                                        <td class="shift-cell {{ $dia['esFinDeSemana'] ? 'weekend-cell' : '' }} {{ $dia['fecha'] == now()->format('Y-m-d') ? 'today-cell' : '' }}"
+                                            onclick="openTurnoModal({{ $doctor->id }}, '{{ $doctor->nombre }} {{ $doctor->apellido }}', '{{ $dia['fecha'] }}', {{ $dia['dia'] }}, {{ $turno ? "'" . $turno->codigo_turno . "'" : 'null' }}, {{ $turno ? $turno->id : 'null' }}, {{ $turno && $turno->nota ? "'" . addslashes($turno->nota) . "'" : 'null' }})">
+                                            @if($turno)
+                                                <span class="shift-badge turno-{{ $turno->codigo_turno }}">
+                                                    {{ $turno->codigo_turno }}
+                                                </span>
+                                            @else
+                                                <div class="empty-cell"></div>
+                                            @endif
+                                        </td>
+                                    @endforeach
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="{{ $diasEnMes + 1 }}" class="text-center text-muted py-5">
+                                        <i class="bi bi-inbox" style="font-size:3rem;opacity:0.3;"></i>
+                                        <p class="mt-2 mb-0">No se encontraron doctores</p>
+                                    </td>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="mt-3 d-flex justify-content-center">
+                    {{ $doctores->links() }}
+                </div>
 
-                    <div class="mt-3">
-                        {{ $citas->links() }}
+                {{-- Legend --}}
+                <div class="legend-container">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <h6 class="legend-title"><i class="bi bi-palette me-2"></i>Horario de los Turnos</h6>
+                            <div class="legend-grid">
+                                @foreach($turnosCodigos as $codigo => $info)
+                                    <div class="legend-item">
+                                        <div class="legend-color shift-badge turno-{{ $codigo }}"
+                                             style="min-width:40px;text-align:center;">{{ $codigo }}</div>
+                                        <div>
+                                            <span class="legend-text">{{ $info['nombre'] }}</span>
+                                            @if($info['inicio'] && $info['fin'])
+                                                <br><span class="legend-hours">{{ $info['inicio'] }} – {{ $info['fin'] }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="col-lg-5 mt-3 mt-lg-0">
+                            <div class="weekend-box">
+                                <h6><i class="bi bi-calendar-heart me-1"></i> Horario Fines de Semana</h6>
+                                <ul class="mb-0 small" style="list-style:none;padding-left:0;">
+                                    <li><strong>Sábado:</strong> A = 7:00 AM – 2:00 PM</li>
+                                    <li class="text-muted"><em>Al llamado:</em></li>
+                                    <li><strong>Sábado:</strong> B = 2:00 PM – 7:00 AM</li>
+                                    <li><strong>Domingo:</strong> 24 hrs</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+
+        {{-- Modal: Assign / Edit Shift --}}
+        <div class="modal fade modal-turno" id="turnoModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="bi bi-calendar-plus me-2"></i>
+                            <span id="modalTitle">Asignar Turno</span>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form id="turnoForm" method="POST" action="{{ route('recepcionista.store') }}">
+                        @csrf
+                        <input type="hidden" name="empleado_id" id="modalEmpleadoId">
+                        <input type="hidden" name="fecha" id="modalFecha">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">
+                                    <i class="bi bi-person-badge me-1 text-primary"></i>Doctor
+                                </label>
+                                <div class="form-control bg-light" id="modalDoctorName" style="border:2px solid #e8f4f8;">—
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">
+                                    <i class="bi bi-calendar-event me-1 text-primary"></i>Fecha
+                                </label>
+                                <div class="form-control bg-light" id="modalFechaDisplay" style="border:2px solid #e8f4f8;">—
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">
+                                    <i class="bi bi-clock me-1 text-primary"></i>Código de Turno
+                                </label>
+                                <div class="turno-selector" id="turnoSelector">
+                                    @foreach($turnosCodigos as $codigo => $info)
+                                        <label class="turno-option"
+                                               style="border-color: {{ $info['color'] }}; color: {{ $info['color'] }};"
+                                               onclick="selectTurno(this, '{{ $codigo }}')">
+                                            <input type="radio" name="codigo_turno" value="{{ $codigo }}">
+                                            {{ $codigo }}
+                                        </label>
+                                    @endforeach
+                                </div>
+                                <div id="turnoError" class="text-danger small mt-2 d-none">
+                                    <i class="bi bi-exclamation-circle me-1"></i>
+                                    Debes seleccionar un código de turno.
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label fw-bold">
+                                    <i class="bi bi-chat-left-text me-1 text-primary"></i>Notas (opcional)
+                                </label>
+                                <textarea name="nota" id="modalNotas" class="form-control" rows="2"
+                                          placeholder="Observaciones..."
+                                          style="border:2px solid #e8f4f8;border-radius:10px;"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+                                    style="border-radius:10px;">Cancelar</button>
+                            <button type="button" class="btn btn-danger d-none" id="btnDeleteTurno" style="border-radius:10px;"
+                                    onclick="deleteTurno()">
+                                <i class="bi bi-trash me-1"></i>Eliminar
+                            </button>
+                            <button type="submit" class="btn text-white" id="btnSaveTurno"
+                                    style="background:linear-gradient(135deg,#00b4d8,#0077b6);border-radius:10px;">
+                                <i class="bi bi-check-lg me-1"></i>Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {{-- Modal Confirmación Eliminación --}}
+        <div class="modal fade" id="confirmDeleteModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="border-radius:15px;">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            Confirmar eliminación
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p class="mb-0">
+                            ¿Estás seguro de eliminar este turno?
+                        </p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="button" class="btn btn-danger"
+                                onclick="confirmDeleteTurno()">
+                            Sí, eliminar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Hidden delete form --}}
+        <form id="deleteForm" method="POST" style="display:none;">
+            @csrf
+            @method('DELETE')
+        </form>
+    @endsection
+
+    @push('scripts')
+        <script>
+            let currentTurnoId = null;
+
+            function openTurnoModal(empleadoId, doctorName, fecha, dia, currentCodigo, turnoId, notas) {
+                document.getElementById('modalEmpleadoId').value = empleadoId;
+                document.getElementById('modalFecha').value = fecha;
+                document.getElementById('modalDoctorName').textContent = doctorName;
+                document.getElementById('modalNotas').value = notas || '';
+                currentTurnoId = turnoId;
+
+                // Format date for display
+                const parts = fecha.split('-');
+                const displayDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+                document.getElementById('modalFechaDisplay').textContent = `Día ${dia} — ${displayDate}`;
+
+                // Reset selections
+                document.querySelectorAll('.turno-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                    opt.querySelector('input').checked = false;
+                });
+
+                if (currentCodigo) {
+                    document.getElementById('modalTitle').textContent = 'Editar Turno';
+                    document.getElementById('btnDeleteTurno').classList.remove('d-none');
+                    // Pre-select the current code
+                    document.querySelectorAll('.turno-option input').forEach(input => {
+                        if (input.value === currentCodigo) {
+                            input.checked = true;
+                            input.closest('.turno-option').classList.add('selected');
+                        }
+                    });
+                } else {
+                    document.getElementById('modalTitle').textContent = 'Asignar Turno';
+                    document.getElementById('btnDeleteTurno').classList.add('d-none');
+                }
+
+                const modal = new bootstrap.Modal(document.getElementById('turnoModal'));
+                modal.show();
+            }
+
+            function selectTurno(element, codigo) {
+                document.querySelectorAll('.turno-option').forEach(opt => opt.classList.remove('selected'));
+                element.classList.add('selected');
+                element.querySelector('input').checked = true;
+            }
+
+            function deleteTurno() {
+                if (!currentTurnoId) return;
+
+                const modal = new bootstrap.Modal(
+                    document.getElementById('confirmDeleteModal')
+                );
+
+                modal.show();
+            }
+
+            function confirmDeleteTurno() {
+                const form = document.getElementById('deleteForm');
+                form.action = '{{ url("turnos") }}/' + currentTurnoId;
+                form.submit();
+            }
+            document.getElementById('turnoForm').addEventListener('submit', function (e) {
+                const checked = document.querySelector('input[name="codigo_turno"]:checked');
+                if (!checked) {
+                    e.preventDefault();
+                    document.getElementById('turnoError').classList.remove('d-none');
+                }
+            });
+        </script>
+    @endpush

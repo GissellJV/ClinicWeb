@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Empleado;
 use App\Models\Paciente;
+use App\Models\Equipo; // Importamos el modelo Equipo de la H73
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -416,4 +417,66 @@ class PacienteController extends Controller
             ->with('success', 'Se actualizó correctamente ');
     }
 
+    // --- MÉTODOS H72: ALQUILER DE EQUIPO DE MOVILIDAD ---
+
+    /**
+     * Mostrar el formulario de alquiler.
+     */
+    public function formularioAlquiler()
+    {
+        if (!session('paciente_id')) {
+            return redirect()->route('inicioSesion')->with('error', 'Debes iniciar sesión.');
+        }
+
+        // Validar stock disponible de la tabla inventarios (H73)
+        $equipos = Equipo::where('estado', 'Disponible')
+            ->where('stock_actual', '>', 0)
+            ->get();
+
+        return view('pacientes.alquiler_equipo', compact('equipos'));
+    }
+
+    /**
+     * Validar y guardar el registro de alquiler.
+     */
+    public function guardarAlquiler(Request $request)
+    {
+        $request->validate([
+            'equipo_id' => 'required|exists:inventarios,id',
+            'fecha_inicio' => 'required|date|after_or_equal:today',
+            'fecha_fin' => 'required|date|after:fecha_inicio',
+        ]);
+
+        $equipo = Equipo::findOrFail($request->equipo_id);
+
+        // Validar stock antes de procesar
+        if ($equipo->stock_actual <= 0) {
+            return back()->with('error', 'No hay stock disponible para este equipo.');
+        }
+
+        DB::transaction(function () use ($request, $equipo) {
+            // Implementar inserción en la tabla de alquileres
+            DB::table('alquileres_equipos')->insert([
+                'paciente_id' => session('paciente_id'),
+                'equipo_id' => $request->equipo_id,
+                'fecha_inicio' => $request->fecha_inicio,
+                'fecha_fin' => $request->fecha_fin,
+                'costo_total' => $request->costo_alquiler ?? 0,
+                'estado' => 'Activo',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            // Descontar una unidad del inventario (H73)
+            $equipo->decrement('stock_actual', 1);
+
+            // Cambiar estado si se agota
+            if ($equipo->stock_actual == 0) {
+                $equipo->update(['estado' => 'No Disponible']);
+            }
+        });
+
+        // Corregido: Retornar a la misma vista de alquiler para mostrar el mensaje dentro del formulario
+        return back()->with('success', 'Alquiler registrado correctamente.');
+    }
 }
