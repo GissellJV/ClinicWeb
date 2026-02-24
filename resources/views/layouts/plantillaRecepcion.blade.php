@@ -463,6 +463,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.indexEnfer') }}">
+                            <i class="bi bi-clock-history"></i> Turnos de enfermeros
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.habitaciones.ocupadas') }}">
                             <i class="bi bi-door-closed"></i> Habitaciones Ocupadas
                         </a>

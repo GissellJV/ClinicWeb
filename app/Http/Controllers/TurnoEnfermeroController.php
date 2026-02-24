@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cita;
 use App\Models\Empleado;
-use App\Models\RolTurnoDoctor;
+use App\Models\RolTurnoEnfermero;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class TurnoController extends Controller
+class TurnoEnfermeroController extends Controller
 {
-    public function index(Request $request)
+    public function indexEnfermero(Request $request)
     {
-        // seguridad (según tu proyecto)
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
             return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
@@ -25,67 +23,60 @@ class TurnoController extends Controller
         $finMes    = (clone $inicioMes)->endOfMonth();
         $diasEnMes = $inicioMes->daysInMonth;
 
-        // DOCTORES DESDE BD
-        $doctoresQuery = Empleado::query()
-            ->where('cargo', 'Doctor');
+        // === ENFERMEROS DESDE BD ===
+        $enfermerosQuery = Empleado::query()
+            ->where('cargo', 'Enfermero');
 
-        // filtro por nombre (nombre o apellido)
         if ($request->filled('nombre')) {
             $nombre = $request->nombre;
-            $doctoresQuery->where(function($q) use ($nombre) {
+            $enfermerosQuery->where(function($q) use ($nombre) {
                 $q->where('nombre', 'like', "%$nombre%")
                     ->orWhere('apellido', 'like', "%$nombre%");
             });
         }
 
-        // filtro por especialidad (ajusta el campo real en tu BD)
         if ($request->filled('departamento')) {
-            $doctoresQuery->where('departamento', $request->departamento);
+            $enfermerosQuery->where('departamento', $request->departamento);
         }
 
-        // paginación: 10 doctores
-        $doctores = $doctoresQuery
+        $enfermeros = $enfermerosQuery
             ->orderBy('apellido')
             ->orderBy('nombre')
             ->paginate(10)
             ->withQueryString();
 
-        // lista de especialidades para el select
-        $departamentos = Empleado::where('cargo','Doctor')
-            ->whereNotNull('departamento')
+        $departamentos = Empleado::where('cargo','Enfermeria') // ✅ CAMBIO
+        ->whereNotNull('departamento')
             ->distinct()
             ->orderBy('departamento')
             ->pluck('departamento');
 
-        // días del mes (para el header)
         $dias = [];
         for ($d=1; $d <= $diasEnMes; $d++) {
             $fecha = Carbon::create($anio, $mes, $d);
             $dias[] = [
                 'dia' => $d,
                 'fecha' => $fecha->format('Y-m-d'),
-                'diaSemana' => mb_strtoupper($fecha->locale('es')->isoFormat('dd'), 'UTF-8'), // LU, MA...
+                'diaSemana' => mb_strtoupper($fecha->locale('es')->isoFormat('dd'), 'UTF-8'),
                 'esFinDeSemana' => $fecha->isWeekend(),
             ];
         }
 
-        // TURNOS DEL MES
-        $turnosMes = RolTurnoDoctor::whereBetween('fecha', [$inicioMes->toDateString(), $finMes->toDateString()])
+        // === TURNOS DEL MES ===
+        $turnosMes = RolTurnoEnfermero::whereBetween('fecha', [$inicioMes->toDateString(), $finMes->toDateString()])
             ->get()
-            ->groupBy(fn($t) => $t->empleado_id); // por doctor
+            ->groupBy(fn($t) => $t->empleado_id);
 
-        // grid: [doctorId][dia] => turno
         $grid = [];
-        foreach ($doctores as $doc) {
-            for ($d=1; $d <= $diasEnMes; $d++) $grid[$doc->id][$d] = null;
+        foreach ($enfermeros as $enf) {
+            for ($d=1; $d <= $diasEnMes; $d++) $grid[$enf->id][$d] = null;
 
-            foreach (($turnosMes[$doc->id] ?? collect()) as $t) {
+            foreach (($turnosMes[$enf->id] ?? collect()) as $t) {
                 $diaNum = Carbon::parse($t->fecha)->day;
-                $grid[$doc->id][$diaNum] = $t;
+                $grid[$enf->id][$diaNum] = $t;
             }
         }
 
-        // navegación mes
         $prev = (clone $inicioMes)->subMonth();
         $next = (clone $inicioMes)->addMonth();
         $prevMes = $prev->month; $prevAnio = $prev->year;
@@ -93,7 +84,6 @@ class TurnoController extends Controller
 
         $nombreMes = strtoupper($inicioMes->locale('es')->monthName);
 
-        // códigos
         $turnosCodigos = [
             'A' => ['nombre'=>'Turno A','inicio'=>'7:00 AM','fin'=>'1:00 PM','color'=>'#2ecc71'],
             'B' => ['nombre'=>'Turno B','inicio'=>'1:00 PM','fin'=>'7:00 PM','color'=>'#3498db'],
@@ -104,53 +94,52 @@ class TurnoController extends Controller
             'LLAMADO' => ['nombre'=>'Al llamado','inicio'=>null,'fin'=>null,'color'=>'#e74c3c'],
         ];
 
-        return view('recepcionista.turnos', compact(
+        return view('recepcionista.turnoEnfermeros', compact(
             'mes','anio','nombreMes',
             'prevMes','prevAnio','nextMes','nextAnio',
             'diasEnMes','dias',
-            'doctores','departamentos',
+            'enfermeros','departamentos',
             'grid','turnosCodigos'
         ));
     }
 
-
-    public function store(Request $request)
+    public function storeEnfermero(Request $request)
     {
         if (!session('cargo') || session('cargo') != 'Recepcionista') {
             return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista');
         }
+
         $data = $request->validate([
             'empleado_id'  => ['required','integer'],
             'fecha'        => ['required','date'],
             'codigo_turno' => ['required','in:A,B,C,BC,ABC,L,LLAMADO'],
-            'nota'        => ['nullable','string','max:255'],
+            'nota'         => ['nullable','string','max:255'],
         ]);
 
-        // ✅ Upsert por (empleado_id + fecha)
-        RolTurnoDoctor::updateOrCreate(
+        RolTurnoEnfermero::updateOrCreate(
             [
                 'empleado_id' => $data['empleado_id'],
                 'fecha'       => Carbon::parse($data['fecha'])->format('Y-m-d'),
             ],
             [
                 'codigo_turno' => $data['codigo_turno'],
-                'nota'        => $data['nota'] ?? null,
+                'nota'         => $data['nota'] ?? null,
             ]
         );
 
         return back()->with('ok', 'Turno guardado correctamente.');
     }
 
-    public function destroy(RolTurnoDoctor $turno)
+    public function destroyEnfermero(RolTurnoEnfermero $turno)
     {
         $turno->delete();
         return back()->with('ok', 'Turno eliminado.');
     }
 
-    public function show($id)
+    public function showEnfermero($id)
     {
-        $turno = RolTurnoDoctor::with(['empleado'])->findOrFail($id);
+        $turno = RolTurnoEnfermero::with(['empleado'])->findOrFail($id);
         return response()->json($turno);
     }
 }

@@ -12,7 +12,6 @@ class Empleado extends Model
     // Nombre de la tabla
     protected $table = 'empleados';
 
-    // Campos fillable (según tu tabla real)
     protected $fillable = [
         'nombre',
         'apellido',
@@ -30,7 +29,7 @@ class Empleado extends Model
         'foto', // Por si acaso las fotos son pesadas
     ];
 
-    // Casting de tipos
+
     protected $casts = [
         'fecha_ingreso' => 'date',
         'created_at' => 'datetime',
@@ -113,9 +112,6 @@ class Empleado extends Model
         return $this->hasMany(Cita::class, 'doctor_id');
     }
 
-    /**
-     * Relación con turnos (si la tienes)
-     */
     public function turnos()
     {
         return $this->hasMany(Turno::class, 'empleado_id');
