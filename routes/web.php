@@ -354,3 +354,10 @@ Route::get('/inventario-equipos', [RecepcionistaController::class, 'inventarioEq
 Route::post('/inventario-equipos/guardar', [RecepcionistaController::class, 'guardarEquipo'])->name('inventario.guardar');
 Route::put('/inventario-equipos/actualizar/{id}', [RecepcionistaController::class, 'actualizarEquipo'])->name('inventario.actualizar');
 Route::delete('/inventario-equipos/eliminar/{id}', [RecepcionistaController::class, 'eliminarEquipo'])->name('inventario.eliminar');
+
+// --- H72: Alquiler de Equipo de Movilidad ---
+// Ruta para mostrar el formulario (GET)
+Route::get('/paciente/alquiler-equipo', [PacienteController::class, 'formularioAlquiler'])->name('paciente.alquiler.crear');
+
+// Ruta para procesar y guardar el alquiler (POST) - YA ACTIVADA
+Route::post('/paciente/alquiler-equipo', [PacienteController::class, 'guardarAlquiler'])->name('paciente.alquiler.store');
