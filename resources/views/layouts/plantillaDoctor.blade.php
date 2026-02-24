@@ -483,6 +483,12 @@
                             <i class="bi bi-clipboard-check-fill"></i>  Historial de Altas
                         </a>
                     </li>
+
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.citaSeguimiento') }}">
+                            <i class="bi bi-calendar-plus"></i> Citas de Seguimiento
+                        </a>
+                    </li>
                 </ul>
             </li>
 

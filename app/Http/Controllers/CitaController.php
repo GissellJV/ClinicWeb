@@ -543,4 +543,58 @@ class CitaController extends Controller
  }
 
 
+    public function CitaSeguimiento()
+    {
+        if (!session('cargo') || session('cargo') != 'Doctor') {
+            return redirect()->route('inicioSesion')
+                ->with('error','Debes iniciar sesión como Doctor');
+        }
+
+        $doctor = Empleado::findOrFail(session('empleado_id'));
+        $pacientes = Paciente::all();
+
+        return view('doctor.citaSeguimiento', compact('doctor','pacientes'));
+    }
+
+
+    public function guardarSeguimiento(Request $request)
+    {
+        $request->validate([
+            'paciente_id' => 'required|exists:pacientes,id',
+            'fecha' => 'required|date|after_or_equal:today',
+            'hora' => 'required'
+        ],[
+            'paciente_id.required' => 'Seleccione un paciente',
+            'fecha.required' => 'Fecha obligatoria',
+            'hora.required' => 'Hora obligatoria',
+        ]);
+
+        $existe = Cita::where('empleado_id', session('empleado_id'))
+            ->where('fecha', $request->fecha)
+            ->where('hora', $request->hora)
+            ->exists();
+
+        if($existe){
+            return back()->with('error','Ya existe una cita en esa fecha y hora')->withInput();
+        }
+
+        $doctor = Empleado::findOrFail(session('empleado_id'));
+        $paciente = Paciente::findOrFail($request->paciente_id);
+
+        Cita::create([
+            'paciente_id' => $paciente->id,
+            'paciente_nombre' => $paciente->nombres.' '.$paciente->apellidos,
+            'empleado_id' => $doctor->id,
+            'doctor_nombre' => 'Dr. '.$doctor->nombre.' '.$doctor->apellido,
+            'especialidad' => $doctor->departamento,
+            'fecha' => $request->fecha,
+            'hora' => $request->hora,
+            'motivo' => 'Seguimiento médico',
+            'estado' => 'programada'
+        ]);
+
+        return back()->with('success','Cita de seguimiento creada correctamente');
+    }
+
+
 }
