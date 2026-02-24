@@ -213,28 +213,34 @@
                 <ul class="navbar-nav ms-auto align-items-center gap-2">
 
                     <li class="nav-item">
-                        <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#hero' : url('/#hero') }}">Inicio</a>
+                        <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#hero' : url('/#hero') }}">
+                            <i class="bi bi-house-door-fill me-1"></i>Inicio</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#servicios' : url('/#servicios') }}">Información</a>
+                        <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#servicios' : url('/#servicios') }}">
+                            <i class="bi bi-info-circle-fill me-1"></i>Información</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#doctors' : url('/#doctors') }}">Doctores</a>
+                        <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#doctors' : url('/#doctors') }}">
+                            <i class="bi bi-person-fill me-1"></i> Doctores</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#comentarios' : url('/#comentarios') }}">Comentarios</a>
+                        <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#comentarios' : url('/#comentarios') }}">
+                            <i class="bi bi-chat-right-text me-1"></i> Comentarios</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link nav-link-modern" href="{{ route('preguntas.publico') }}"> Preguntas Frecuentes</a>
+                        <a class="nav-link nav-link-modern" href="{{ route('preguntas.publico') }}">
+                            <i class="bi bi-question-circle me-1"></i> Preguntas Frecuentes</a>
                     </li>
 
                     @if(!session('paciente_id'))
                         <li class="nav-item">
-                            <a class="nav-link nav-link-modern" href="{{ route('inicioSesion') }}">Acceder</a>
+                            <a class="nav-link nav-link-modern" href="{{ route('inicioSesion') }}">
+                                <i class="bi bi-box-arrow-in-right me-1"></i>  Acceder</a>
                         </li>
 
                         <li class="nav-item">

@@ -12,6 +12,7 @@ use App\Http\Controllers\PacienteCotizacionController;
 use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\PreguntaPacienteController;
 use App\Http\Controllers\TurnoController;
+use App\Http\Controllers\TurnoEnfermeroController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RutasController;
 use App\Http\Controllers\RecepcionistaController;
@@ -364,3 +365,10 @@ Route::get('/paciente/alquiler-equipo', [PacienteController::class, 'formularioA
 
 // Ruta para procesar y guardar el alquiler (POST) - YA ACTIVADA
 Route::post('/paciente/alquiler-equipo', [PacienteController::class, 'guardarAlquiler'])->name('paciente.alquiler.store');
+
+//visualizacion de turnos enfermeros
+Route::get('/turnosEnfermero', [TurnoEnfermeroController::class, 'indexEnfermero'])->name('recepcionista.indexEnfer');
+Route::post('/turnosEnfermero', [TurnoEnfermeroController::class, 'storeEnfermero'])->name('recepcionista.storeEnfer');
+Route::get('/turnosEnfermero', [TurnoEnfermeroController::class, 'indexEnfermero'])->name('recepcionista.indexEnfer');
+Route::post('/turnosEnfermero', [TurnoEnfermeroController::class, 'storeEnfermero'])->name('recepcionista.storeEnfer');
+Route::delete('/turnosEnfermero/{turno}', [TurnoEnfermeroController::class, 'destroyEnfermero'])->name('recepcionista.destroyEnfer');
