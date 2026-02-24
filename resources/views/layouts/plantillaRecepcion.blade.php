@@ -475,7 +475,13 @@
                             <i class="bi bi-question-circle"></i> Administración de Preguntas
                         </a>
                     </li>
-                    <!-- NUEVO: Reportes de Incidentes (del segundo código) -->
+                    <!-- H74: Cirugías Programadas -->
+                    <li class="nav-item">
+                        <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.cirugias.index') }}">
+                            <i class="bi bi-scissors"></i> Cirugías Programadas
+                        </a>
+                    </li>
+                    <!-- Reportes de Incidentes -->
                     <li class="nav-item">
                         <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.incidentes.index') }}">
                             <i class="bi bi-exclamation-triangle"></i> Reportes de Incidentes
@@ -545,7 +551,7 @@
                 <h5 class="footer-title">Contacto</h5>
                 <p class="footer-text"><i class="bi bi-geo-alt-fill me-2"></i> Danlí, El Paraíso, Honduras</p>
                 <p class="footer-text"><i class="bi bi-telephone-fill me-2"></i> +504 2234-5678</p>
-                <p class="footer-text"><i class="bi bi-envelope-fill me-2"></i> contacto@clinicweb.hn</p>
+                <p class="footer-text"><i class="bi bi-envelope-fill me-2"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="46252928322725322906252a2f282f25312324682e28">[email&#160;protected]</a></p>
             </div>
 
             <!-- Columna 3 -->
@@ -565,10 +571,14 @@
         <div class="text-center text-white-50 small mt-3">
             © {{ date('Y') }} ClinicWeb. Todos los derechos reservados.
         </div>
+
+    </div>
     </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-</body>
 
+@stack('scripts')
+
+</body>
 </html>

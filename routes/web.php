@@ -28,6 +28,7 @@ use App\Http\Controllers\PromocionController;
 use App\Http\Controllers\PublicidadController;
 use App\Http\Controllers\TrasladoController;
 
+
 Route::get('/', [RutasController::class, 'index'])->name('/');
 
 //especialidades
@@ -330,3 +331,18 @@ Route::get('/doctor/citaseguimiento', [CitaController::class, 'CitaSeguimiento']
 
 Route::post('/doctor/citaseguimiento', [CitaController::class,'guardarSeguimiento'])
     ->name('doctor.guardarSeguimiento');
+
+
+//  RUTAS H71 / H74 – Cirugías
+// Cirugia Doctor
+Route::get('/evaluacion/crear/{cita_id}', [DoctorController::class, 'crearEvaluacion'])->name('doctor.evaluacion.crear');
+Route::post('/evaluacion/guardar', [DoctorController::class, 'guardarEvaluacion'])->name('doctor.evaluacion.guardar');
+Route::get('/evaluacion/{id}', [DoctorController::class, 'verEvaluacion'])->name('doctor.evaluacion.ver');
+Route::get('/mis-cirugias', [DoctorController::class, 'misCirugias'])->name('doctor.mis-cirugias');
+
+// Cirugia Recepcionista
+Route::get('/recepcionista/cirugias', [DoctorController::class, 'indexRecepcionista'])->name('recepcionista.cirugias.index');
+Route::get('/recepcionista/cirugia/programar/{evaluacion_id}', [DoctorController::class, 'programarCirugia'])->name('recepcionista.cirugia.programar');
+Route::post('/recepcionista/cirugia/guardar', [DoctorController::class, 'guardarCirugia'])->name('recepcionista.cirugia.guardar');
+Route::get('/recepcionista/cirugia/{id}', [DoctorController::class, 'verCirugia'])->name('recepcionista.cirugia.ver');
+Route::get('/recepcionista/cirugia/verificar-quirofano', [DoctorController::class, 'verificarQuirofano'])->name('recepcionista.cirugia.verificar-quirofano');

@@ -363,6 +363,28 @@
             color: white;
         }
 
+        .btn-evaluar {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+        }
+
+        .btn-evaluar:hover {
+            background: linear-gradient(135deg, #8e44ad, #7d3c98);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-evaluado {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+        }
+
+        .btn-evaluado:hover {
+            background: linear-gradient(135deg, #229954, #27ae60);
+            color: white;
+            transform: translateY(-2px);
+        }
+
         .btn-completar {
             background: #2ecc71;
             color: white;
@@ -580,11 +602,25 @@
                             </a>
 
                             @if(in_array($cita->estado, ['programada', 'pendiente']))
+                                {{-- Botón evaluar para cirugía --}}
+                                @php
+                                    $evaluacionExiste = \App\Models\EvaluacionPrequirurgica::where('cita_id', $cita->id)->first();
+                                @endphp
+
+                                @if(!$evaluacionExiste)
+                                    <a href="{{ route('doctor.evaluacion.crear', $cita->id) }}" class="btn btn-evaluar">
+                                        Evaluar para Cirugía
+                                    </a>
+                                @else
+                                    <a href="{{ route('doctor.evaluacion.ver', $evaluacionExiste->id) }}" class="btn btn-evaluado">
+                                        Ver Evaluación
+                                    </a>
+                                @endif
+
                                 <form method="POST" action="{{ route('doctor.cita.completar', $cita->id) }}" style="margin: 0;">
                                     @csrf
                                     @method('PUT')
                                     <button type="submit" class="btn btn-completar">
-                                        <i class="fas fa-check"></i>
                                         Marcar Completada
                                     </button>
                                 </form>
