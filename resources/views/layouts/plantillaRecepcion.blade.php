@@ -487,6 +487,11 @@
                             <i class="bi bi-exclamation-triangle"></i> Reportes de Incidentes
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link offcanvas-nav-link" href="{{ route('inventario.equipos.index') }}">
+                            <i class="bi bi-box-seam"></i> Inventario de Equipos
+                        </a>
+                    </li>
                     <!-- EXPEDIENTES ARCHIVADOS (del primer código) -->
                     <li class="nav-item">
                         <a class="nav-link offcanvas-nav-link" href="{{ route('expedientes.archivados') }}">
