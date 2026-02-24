@@ -28,6 +28,7 @@ use App\Http\Controllers\PromocionController;
 use App\Http\Controllers\PublicidadController;
 use App\Http\Controllers\TrasladoController;
 
+
 Route::get('/', [RutasController::class, 'index'])->name('/');
 
 //especialidades
@@ -106,6 +107,9 @@ Route::get('/asistenciapaciente', [RecepcionistaController::class, 'registroPaci
 //visualizacion de turnos doctores
 Route::get('/turnos', [TurnoController::class, 'index'])->name('recepcionista.index');
 Route::post('/turnos', [TurnoController::class, 'store'])->name('recepcionista.store');
+Route::get('/turnos', [TurnoController::class, 'index'])->name('recepcionista.index');
+Route::post('/turnos', [TurnoController::class, 'store'])->name('recepcionista.store');
+Route::delete('/turnos/{turno}', [TurnoController::class, 'destroy'])->name('recepcionista.destroy');
 
 //citas
 Route::get('/mis-citas', [CitaController::class, 'misCitas'])->name('citas.mis-citas');
@@ -330,3 +334,33 @@ Route::get('/doctor/citaseguimiento', [CitaController::class, 'CitaSeguimiento']
 
 Route::post('/doctor/citaseguimiento', [CitaController::class,'guardarSeguimiento'])
     ->name('doctor.guardarSeguimiento');
+
+
+//  RUTAS H71 / H74 – Cirugías
+// Cirugia Doctor
+Route::get('/evaluacion/crear/{cita_id}', [DoctorController::class, 'crearEvaluacion'])->name('doctor.evaluacion.crear');
+Route::post('/evaluacion/guardar', [DoctorController::class, 'guardarEvaluacion'])->name('doctor.evaluacion.guardar');
+Route::get('/evaluacion/{id}', [DoctorController::class, 'verEvaluacion'])->name('doctor.evaluacion.ver');
+Route::get('/mis-cirugias', [DoctorController::class, 'misCirugias'])->name('doctor.mis-cirugias');
+
+// Cirugia Recepcionista
+Route::get('/recepcionista/cirugias', [DoctorController::class, 'indexRecepcionista'])->name('recepcionista.cirugias.index');
+Route::get('/recepcionista/cirugia/programar/{evaluacion_id}', [DoctorController::class, 'programarCirugia'])->name('recepcionista.cirugia.programar');
+Route::post('/recepcionista/cirugia/guardar', [DoctorController::class, 'guardarCirugia'])->name('recepcionista.cirugia.guardar');
+Route::get('/recepcionista/cirugia/{id}', [DoctorController::class, 'verCirugia'])->name('recepcionista.cirugia.ver');
+Route::get('/recepcionista/cirugia/verificar-quirofano', [DoctorController::class, 'verificarQuirofano'])->name('recepcionista.cirugia.verificar-quirofano');
+
+// ---  GESTIÓN DE INVENTARIO DE EQUIPOS ---
+// Ruta para visualizar la tabla (Esta es la que faltaba en tu lista)
+Route::get('/inventario-equipos', [RecepcionistaController::class, 'inventarioEquipos'])->name('inventario.equipos.index');
+// Rutas de acción para los Modales
+Route::post('/inventario-equipos/guardar', [RecepcionistaController::class, 'guardarEquipo'])->name('inventario.guardar');
+Route::put('/inventario-equipos/actualizar/{id}', [RecepcionistaController::class, 'actualizarEquipo'])->name('inventario.actualizar');
+Route::delete('/inventario-equipos/eliminar/{id}', [RecepcionistaController::class, 'eliminarEquipo'])->name('inventario.eliminar');
+
+// --- H72: Alquiler de Equipo de Movilidad ---
+// Ruta para mostrar el formulario (GET)
+Route::get('/paciente/alquiler-equipo', [PacienteController::class, 'formularioAlquiler'])->name('paciente.alquiler.crear');
+
+// Ruta para procesar y guardar el alquiler (POST) - YA ACTIVADA
+Route::post('/paciente/alquiler-equipo', [PacienteController::class, 'guardarAlquiler'])->name('paciente.alquiler.store');
