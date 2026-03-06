@@ -6,6 +6,7 @@ use App\Models\Cita;
 use App\Models\Empleado;
 use App\Models\RolTurnoDoctor;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 
 class TurnoController extends Controller
@@ -160,5 +161,94 @@ class TurnoController extends Controller
     {
         $turno = RolTurnoDoctor::with(['empleado'])->findOrFail($id);
         return response()->json($turno);
+    }
+
+    public function exportPdf(Request $request)
+    {
+        // seguridad
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista');
+        }
+
+        $mes  = (int)($request->get('mes', now()->month));
+        $anio = (int)($request->get('anio', now()->year));
+
+        $inicioMes = Carbon::create($anio, $mes, 1)->startOfMonth();
+        $finMes    = (clone $inicioMes)->endOfMonth();
+        $diasEnMes = $inicioMes->daysInMonth;
+
+        // doctores (sin paginar en PDF)
+        $doctoresQuery = Empleado::query()->where('cargo', 'Doctor');
+
+        if ($request->filled('nombre')) {
+            $nombre = $request->nombre;
+            $doctoresQuery->where(function($q) use ($nombre) {
+                $q->where('nombre', 'like', "%$nombre%")
+                    ->orWhere('apellido', 'like', "%$nombre%");
+            });
+        }
+
+        if ($request->filled('departamento')) {
+            $doctoresQuery->where('departamento', $request->departamento);
+        }
+
+        $doctores = $doctoresQuery
+            ->orderBy('apellido')
+            ->orderBy('nombre')
+            ->get();
+
+        // días del mes
+        $dias = [];
+        for ($d=1; $d <= $diasEnMes; $d++) {
+            $fecha = Carbon::create($anio, $mes, $d);
+            $dias[] = [
+                'dia' => $d,
+                'fecha' => $fecha->format('Y-m-d'),
+                'diaSemana' => mb_strtoupper($fecha->locale('es')->isoFormat('dd'), 'UTF-8'),
+                'esFinDeSemana' => $fecha->isWeekend(),
+            ];
+        }
+
+        // turnos del mes agrupados por doctor
+        $turnosMes = RolTurnoDoctor::whereBetween('fecha', [$inicioMes->toDateString(), $finMes->toDateString()])
+            ->get()
+            ->groupBy(fn($t) => $t->empleado_id);
+
+        // grid
+        $grid = [];
+        foreach ($doctores as $doc) {
+            for ($d=1; $d <= $diasEnMes; $d++) $grid[$doc->id][$d] = null;
+
+            foreach (($turnosMes[$doc->id] ?? collect()) as $t) {
+                $diaNum = Carbon::parse($t->fecha)->day;
+                $grid[$doc->id][$diaNum] = $t;
+            }
+        }
+
+        // validar que haya al menos un turno
+        $hayTurnos = $turnosMes->isNotEmpty();
+        if (!$hayTurnos) {
+            return back()->with('error', 'No hay turnos registrados para el mes seleccionado.');
+        }
+
+        $nombreMes = strtoupper($inicioMes->locale('es')->monthName);
+
+        $turnosCodigos = [
+            'A' => ['nombre'=>'Turno A','inicio'=>'7:00 AM','fin'=>'1:00 PM'],
+            'B' => ['nombre'=>'Turno B','inicio'=>'1:00 PM','fin'=>'7:00 PM'],
+            'C' => ['nombre'=>'Turno C','inicio'=>'7:00 PM','fin'=>'7:00 AM'],
+            'BC' => ['nombre'=>'BC'],
+            'ABC' => ['nombre'=>'ABC'],
+            'L' => ['nombre'=>'Libre'],
+            'LLAMADO' => ['nombre'=>'Al llamado'],
+        ];
+
+        $pdf = Pdf::loadView('pdf.turnos-mensual', compact(
+            'mes','anio','nombreMes','diasEnMes','dias','doctores','grid','turnosCodigos'
+        ))->setPaper('a4', 'landscape');
+
+        $filename = "rol-turnos-doctores-{$anio}-" . str_pad((string)$mes, 2, '0', STR_PAD_LEFT) . ".pdf";
+        return $pdf->download($filename);
     }
 }
