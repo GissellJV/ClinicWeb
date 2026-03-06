@@ -596,5 +596,20 @@ class CitaController extends Controller
         return back()->with('success','Cita de seguimiento creada correctamente');
     }
 
+    public function archivar($id)
+    {
+        $cita = Cita::findOrFail($id);
+
+        if($cita->estado != 'completada'){
+            return redirect()->back()->with('error','Solo se pueden archivar citas completadas');
+        }
+
+        $cita->estado = 'archivada';
+        $cita->save();
+
+        return redirect()->back()->with('success','Cita archivada correctamente');
+    }
+
+
 
 }

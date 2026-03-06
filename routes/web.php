@@ -372,3 +372,6 @@ Route::post('/turnosEnfermero', [TurnoEnfermeroController::class, 'storeEnfermer
 Route::get('/turnosEnfermero', [TurnoEnfermeroController::class, 'indexEnfermero'])->name('recepcionista.indexEnfer');
 Route::post('/turnosEnfermero', [TurnoEnfermeroController::class, 'storeEnfermero'])->name('recepcionista.storeEnfer');
 Route::delete('/turnosEnfermero/{turno}', [TurnoEnfermeroController::class, 'destroyEnfermero'])->name('recepcionista.destroyEnfer');
+
+//Archivar las citas completadas
+Route::put('/citas/{id}/archivar',[CitaController::class,'archivar'])->name('citas.archivar');
