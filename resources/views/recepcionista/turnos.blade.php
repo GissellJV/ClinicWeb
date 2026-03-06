@@ -606,6 +606,10 @@
                                class="btn-nav">
                                 <i class="bi bi-chevron-right"></i>
                             </a>
+                            <a class="btn btn-danger"
+                               href="{{ route('recepcionista.turnos.pdf', request()->query()) }}">
+                                Exportar PDF
+                            </a>
                         </div>
                     </div>
                 </div>
