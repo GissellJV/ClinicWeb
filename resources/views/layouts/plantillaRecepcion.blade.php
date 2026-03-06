@@ -464,7 +464,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.indexEnfer') }}">
-                            <i class="bi bi-clock-history"></i> Turnos de enfermeros
+                            <i class="bi bi-calendar-week"></i> Turnos de enfermeros
                         </a>
                     </li>
                     <li class="nav-item">
