@@ -495,6 +495,11 @@
                             <i class="bi bi-scissors me-1"></i> Mis Cirugías
                         </a>
                     </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.emitir.incapacidad') }}">
+                            <i class="bi bi-person-badge-fill"></i> Emitir Incapacidad
+                        </a>
+                    </li>
                 </ul>
             </li>
 
