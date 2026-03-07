@@ -596,7 +596,7 @@ class CitaController extends Controller
         return back()->with('success','Cita de seguimiento creada correctamente');
     }
 
-    public function archivar($id)
+    public function Citasarchivar($id)
     {
         $cita = Cita::findOrFail($id);
 
@@ -609,6 +609,16 @@ class CitaController extends Controller
 
         return redirect()->back()->with('success','Cita archivada correctamente');
     }
+
+    public function Citasarchivadas()
+    {
+        $citas = Cita::where('paciente_id', session('paciente_id'))
+            ->where('estado','archivada')
+            ->paginate(6);
+
+        return view('citas.citasArchivadas', compact('citas'));
+    }
+
 
 
 
