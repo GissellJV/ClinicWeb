@@ -375,3 +375,7 @@ Route::delete('/turnosEnfermero/{turno}', [TurnoEnfermeroController::class, 'des
 
 //Archivar las citas completadas
 Route::put('/citas/{id}/archivar',[CitaController::class,'archivar'])->name('citas.archivar');
+
+//Ruta para emitir incapacidad médica
+Route::get('/doctor/emitir-incapacidad', [DoctorController::class, 'emitirIncapacidad'])->name('doctor.emitir.incapacidad');
+Route::post('/doctor/emitir-incapacidad', [DoctorController::class, 'guardarIncapacidad'])->name('doctor.guardar-incapacidad');
