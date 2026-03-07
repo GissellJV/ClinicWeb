@@ -206,7 +206,7 @@
                 </div>
 
 
-                <h2 class="login-title" >Iniciar sesión</h2>
+                <h2 class="login-title" >Iniciar Sesión</h2>
             <form action="{{route('login.sesion')}}" method="POST">
                 @csrf
                 <input type="hidden" name="redirect_to" value="{{ request('redirect_to') }}">
@@ -217,7 +217,7 @@
                 <img src="/imagenes/username-icon.svg" alt="usuario">
             </span>
                         <input class="form-control"
-                               placeholder="Numero de Telefono"  name="telefono" type="text" value="{{old('telefono')}}">
+                               placeholder="Número de Teléfono"  name="telefono" type="text" value="{{old('telefono')}}">
                     </div>
                     @error('telefono')
                     <div class="text-danger mt-1" style="font-size: 0.875rem;">

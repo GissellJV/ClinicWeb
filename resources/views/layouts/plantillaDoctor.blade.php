@@ -114,6 +114,7 @@
 
         main.contenido {
             flex: 1;
+            padding: 1rem;
             margin-top: 80px;
             padding: 1rem;
         }
@@ -538,7 +539,7 @@
     </div>
 </nav>
 
-<main class="container-fluid p-0 mt-0 pt-0">
+<main class="contenido container-fluid p-0 mt-0 pt-0">
     @yield('contenido')
 </main>
 
@@ -764,3 +765,4 @@
 
     // Mantener modal abierto si hay errores de validación del servidor
     document.addEvent
+</script>

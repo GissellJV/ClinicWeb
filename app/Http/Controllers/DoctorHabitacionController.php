@@ -49,23 +49,26 @@ class DoctorHabitacionController extends Controller
     }
 
     // Ver habitaciones de mis pacientes (opcional)
-    public function misPacientes()
-    {
+    public function misPacientes() {
         if (!session('cargo') || session('cargo') != 'Doctor') {
             return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Doctor');
         }
 
-        // Aquí puedes filtrar por las citas del doctor autenticado
-        // Por ahora mostramos todos los pacientes con habitación
+        $doctorId = session('empleado_id');
+
+        $pacienteIds = Cita::where('empleado_id', $doctorId)
+            ->pluck('paciente_id')
+            ->unique();
+
         $asignaciones = AsignacionHabitacion::with(['paciente', 'habitacion'])
             ->where('estado', 'activo')
+            ->whereIn('paciente_id', $pacienteIds)
             ->orderBy('habitacion_id')
             ->get();
 
         return view('doctor.habitaciones.pacientes-hospitalizados', compact('asignaciones'));
     }
-
     public function alta_pacientes(Request $request)
     {
        // Verificar sesión de doctor
