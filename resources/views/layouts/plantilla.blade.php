@@ -277,6 +277,7 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="{{ route('agendarcitas') }}"><i class="bi bi-calendar-plus"></i> Agendar cita</a></li>
                                 <li><a class="dropdown-item" href="{{ route('citas.mis-citas') }}"><i class="bi bi-calendar-check"></i> Mis citas</a></li>
+                                <li><a class="dropdown-item" href="{{ route('citas.citasArchivadas') }}"><i class="bi bi-archive"></i> Mis citas Archivadas</a></li>
 
                                 <li><a class="dropdown-item" href="{{ route('ambulancia.create') }}"><i class="bi bi-truck"></i> Solicitar Traslado</a></li>
 
