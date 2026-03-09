@@ -451,6 +451,25 @@
                     <i class="bi bi-house-door-fill me-1"></i> Inicio
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#servicios' : url('/#servicios') }}">
+                    <i class="bi bi-info-circle-fill me-1"></i>Información</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#doctors' : url('/#doctors') }}">
+                    <i class="bi bi-person-fill me-1"></i> Doctores</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#comentarios' : url('/#comentarios') }}">
+                    <i class="bi bi-chat-right-text me-1"></i> Comentarios</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link nav-link-modern" href="{{ route('preguntas.publico') }}">
+                    <i class="bi bi-question-circle me-1"></i> Preguntas Frecuentes</a>
+            </li>
 
             <!-- Acciones -->
             <li class="nav-item dropdown">
@@ -498,6 +517,11 @@
                     <li>
                         <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.emitir.incapacidad') }}">
                             <i class="bi bi-person-badge-fill"></i> Emitir Incapacidad
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.turnos') }}">
+                            <i class="bi bi-clock-history"></i> Ver  Rol de Turnos
                         </a>
                     </li>
                 </ul>
