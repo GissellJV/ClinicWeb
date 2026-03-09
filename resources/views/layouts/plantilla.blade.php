@@ -277,8 +277,17 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="{{ route('agendarcitas') }}"><i class="bi bi-calendar-plus"></i> Agendar cita</a></li>
                                 <li><a class="dropdown-item" href="{{ route('citas.mis-citas') }}"><i class="bi bi-calendar-check"></i> Mis citas</a></li>
+                                <li><a class="dropdown-item" href="{{ route('citas.citasArchivadas') }}"><i class="bi bi-archive"></i> Mis citas Archivadas</a></li>
 
                                 <li><a class="dropdown-item" href="{{ route('ambulancia.create') }}"><i class="bi bi-truck"></i> Solicitar Traslado</a></li>
+
+                                {{-- OPCIÓN AGREGADA PARA LA HISTORIA H83 --}}
+                                @php
+                                    $ultimoTraslado = \App\Models\Traslado::where('paciente_id', session('paciente_id'))->latest()->first();
+                                @endphp
+                                @if($ultimoTraslado)
+                                    <li><a class="dropdown-item" href="{{ route('traslado.calificar.ver', $ultimoTraslado->id) }}"><i class="bi bi-star-fill"></i> Calificar Traslado</a></li>
+                                @endif
 
                                 <li><a class="dropdown-item" href="{{ route('paciente.cotizar') }}"><i class="bi bi-capsule"></i> Cotizar Medicamentos</a></li>
 

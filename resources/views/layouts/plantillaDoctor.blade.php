@@ -114,6 +114,7 @@
 
         main.contenido {
             flex: 1;
+            padding: 1rem;
             margin-top: 80px;
             padding: 1rem;
         }
@@ -494,6 +495,11 @@
                             <i class="bi bi-scissors me-1"></i> Mis Cirugías
                         </a>
                     </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.emitir.incapacidad') }}">
+                            <i class="bi bi-person-badge-fill"></i> Emitir Incapacidad
+                        </a>
+                    </li>
                 </ul>
             </li>
 
@@ -538,7 +544,7 @@
     </div>
 </nav>
 
-<main class="container-fluid p-0 mt-0 pt-0">
+<main class="contenido container-fluid p-0 mt-0 pt-0">
     @yield('contenido')
 </main>
 
@@ -764,3 +770,4 @@
 
     // Mantener modal abierto si hay errores de validación del servidor
     document.addEvent
+</script>

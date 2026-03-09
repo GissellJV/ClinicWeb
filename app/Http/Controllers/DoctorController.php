@@ -8,6 +8,7 @@ use App\Models\Empleado;
 use App\Models\EnviarDoctor;
 use App\Models\EvaluacionPrequirurgica;
 use App\Models\Expediente;
+use App\Models\IncapacidadMedica;
 use App\Models\Paciente;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -332,5 +333,59 @@ class DoctorController extends Controller
             'cirugiasCompletadas',
             'cirugiasCanceladas'
         ));
+    }
+    // EMITIR INCAPACIDADES
+    public function emitirIncapacidad(){
+
+        if (!session('cargo') || session('cargo') != 'Doctor') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Doctor');
+        }
+
+        $pacientes = Paciente::orderBy('nombres')->get();
+        $empleado  = Empleado::find(session('empleado_id'));
+
+        return view('doctor.incapacidad', compact('empleado', 'pacientes'));
+    }
+    public function guardarIncapacidad(Request $request){
+        if (!session('cargo') || session('cargo') != 'Doctor') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesion como Doctor');
+        }
+
+        $validated = $request->validate([
+            'paciente_id'  => 'required|exists:pacientes,id',
+            'fecha_inicio' => 'required|date|before_or_equal:fecha_fin',
+            'fecha_fin'    => 'required|date|after_or_equal:fecha_inicio',
+            'motivo'       => 'required|string',
+        ], [
+            'paciente_id.required'     => 'Debe seleccionar un paciente',
+            'paciente_id.exists'       => 'El paciente seleccionado no existe en el sistema',
+            'fecha_inicio.required'    => 'La fecha de inicio es obligatoria',
+            'fecha_inicio.date'        => 'La fecha de inicio debe ser una fecha valida',
+            'fecha_inicio.before_or_equal' => 'La fecha de inicio debe ser anterior o igual a la fecha de fin',
+            'fecha_fin.required'       => 'La fecha de fin es obligatoria',
+            'fecha_fin.date'           => 'La fecha de fin debe ser una fecha valida',
+            'fecha_fin.after_or_equal' => 'La fecha de fin debe ser posterior o igual a la fecha de inicio',
+            'motivo.required'          => 'El motivo de la incapacidad es obligatorio',
+        ]);
+
+        // Calcular cantidad de días entre fecha inicio y fin
+        $fechaInicio    = Carbon::parse($validated['fecha_inicio']);
+        $fechaFin       = Carbon::parse($validated['fecha_fin']);
+        $cantidadDias   = $fechaInicio->diffInDays($fechaFin) + 1;
+
+        // Crear el registro
+        IncapacidadMedica::create([
+            'paciente_id'  => $validated['paciente_id'],
+            'empleado_id'  => session('empleado_id'),
+            'fecha_inicio' => $validated['fecha_inicio'],
+            'fecha_fin'    => $validated['fecha_fin'],
+            'cantidad_dias'=> $cantidadDias,
+            'motivo'       => $validated['motivo'],
+        ]);
+
+        return redirect()->route('doctor.guardar-incapacidad')
+            ->with('success', 'Se emitio la incapacidad correctamente');
     }
 }

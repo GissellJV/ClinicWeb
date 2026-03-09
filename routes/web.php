@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReporteTrasladoController;
 use App\Http\Controllers\CalificacionController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\DoctorController;
@@ -372,3 +373,18 @@ Route::post('/turnosEnfermero', [TurnoEnfermeroController::class, 'storeEnfermer
 Route::get('/turnosEnfermero', [TurnoEnfermeroController::class, 'indexEnfermero'])->name('recepcionista.indexEnfer');
 Route::post('/turnosEnfermero', [TurnoEnfermeroController::class, 'storeEnfermero'])->name('recepcionista.storeEnfer');
 Route::delete('/turnosEnfermero/{turno}', [TurnoEnfermeroController::class, 'destroyEnfermero'])->name('recepcionista.destroyEnfer');
+
+//Archivar las citas completadas
+Route::put('/citas/{id}/archivar',[CitaController::class, 'Citasarchivar'])->name('citas.archivar');
+Route::get('/citas/archivadas',[CitaController::class, 'Citasarchivadas'])->name('citas.citasArchivadas');
+
+//Ruta para emitir incapacidad médica
+Route::get('/doctor/emitir-incapacidad', [DoctorController::class, 'emitirIncapacidad'])->name('doctor.emitir.incapacidad');
+Route::post('/doctor/emitir-incapacidad', [DoctorController::class, 'guardarIncapacidad'])->name('doctor.guardar-incapacidad');
+
+// Rutas Historia H83
+Route::get('/traslado/calificar/{id}', [TrasladoController::class, 'calificar'])->name('traslado.calificar.ver');
+Route::post('/traslado/calificar/guardar', [TrasladoController::class, 'guardarCalificacion'])->name('traslado.calificar.guardar');
+
+// Ruta del Panel de Análisis de Calidad H86
+Route::get('/recepcionista/reporte-calidad', [ReporteTrasladoController::class, 'index'])->name('recepcionista.reporte.calidad');

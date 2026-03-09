@@ -617,6 +617,31 @@
         .btn-descargar-comprobante i {
             font-size: 1.1rem;
         }
+
+        .btn-accion {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+
+        .btn-archivar {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: white;
+        }
+
+        .btn-archivar:hover {
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            transform: translateY(-2px);
+        }
     </style>
 
     <div class="citas-container">
@@ -710,7 +735,7 @@
         <!-- Grid de Citas -->
         @if($citas->count() > 0)
             <div class="citas-grid">
-                @foreach($citas as $cita)
+                @foreach($citas->where('estado','!=','archivada') as $cita)
                     <div class="cita-card {{ $cita->estado }}">
                         <!-- Header de la Cita -->
                         <div class="cita-header-card">
@@ -831,14 +856,23 @@
 
                             @if($cita->estado == 'completada')
                                 <div class="cita-actions">
+                                    <form id="formArchivar{{ $cita->id }}" action="{{ route('citas.archivar', $cita->id) }}" method="POST" style="flex:1; margin:0;">
+                                        @csrf
+                                        @method('PUT')
+
+                                        <button type="button" class="btn-action btn-reprogramar" style="width:100%;"
+                                                onclick="confirmarArchivar({{ $cita->id }})">
+                                            Archivar cita
+                                        </button>
+                                    </form>
 
                                     <form id="formEliminar{{ $cita->id }}"
-                                          action="{{ route('citas.eliminar.completada', $cita->id) }}"
+                                          action="{{ route('citas.eliminar.completada', $cita->id) }}" style="flex: 1; margin: 0;"
                                           method="POST">
                                         @csrf
                                         @method('DELETE')
 
-                                        <button type="button" class="btn-action btn-cancelar" onclick="confirmarEliminar({{ $cita->id }})">
+                                        <button type="button" class="btn-action btn-cancelar" onclick="confirmarEliminar({{ $cita->id }})"style="width: 100%;">
                                             Eliminar cita
                                         </button>
                                     </form>
@@ -875,48 +909,58 @@
         @endif
     </div>
 
-    <!-- Modal Cancelar -->
-    <div class="modal fade" id="modalCancelar" tabindex="-1">
+
+    <div class="modal fade" id="modalArchivar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
                 <div class="modal-header">
-                    <div class="modal-icon modal-icon-danger">
-                    </div>
-                    <h5 class="modal-title">¿Cancelar Cita?</h5>
+                    <h5 class="modal-title">Archivar cita</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
                 <div class="modal-body">
-                    <p>¿Estás seguro de que deseas cancelar esta cita médica?</p>
-                    <div class="cita-info-box" id="modalCancelarTexto"></div>
-                    <p class="text-muted mb-0" style="font-size: 0.9rem;">Esta acción no se puede deshacer</p>
-                    <!-- ALERTA BOOTSTRAP -->
-                    <div id="alertaMotivoCancelar" class="alert alert-danger d-none" role="alert">
-                        <i class="fas fa-exclamation-circle"></i>
-                        Debe ingresar el motivo de la cancelación.
-                    </div>
-                    <div class="mb-3 text-start">
-                        <label class="form-label">
-                            Motivo de la cancelación <span class="text-danger">*</span>
-                        </label>
-                        <textarea
-                            id="motivo_cancelacion"
-                            class="form-control form-control-modal"
-                            rows="3"
-                            placeholder="Escriba el motivo de la cancelación"
-                            required
-                        ></textarea>
-                    </div>
-
+                    ¿Estás seguro de que deseas archivar esta cita?
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-modal-cancel" data-bs-dismiss="modal">No, mantener cita</button>
-                    <button type="button" class="btn btn-modal-danger" id="btnConfirmarCancelar">
-                         Sí, cancelar cita
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <button class="btn-accion btn-archivar" id="btnConfirmarArchivar">
+                        Sí, archivar
                     </button>
                 </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Cancelar -->
+    <div class="modal fade" id="modalEliminar" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Eliminar cita</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar esta cita?
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <button class="btn btn-danger" id="btnConfirmarEliminar">
+                        Sí, eliminar
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>
@@ -1014,21 +1058,31 @@
             new bootstrap.Modal(document.getElementById('modalReprogramar')).show();
         }
 
-        function confirmarEliminar(id) {
-            Swal.fire({
-                title: 'Eliminar cita',
-                text: '¿Estas seguro de eliminar la cita?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#dc3545',
-                cancelButtonText: 'Cancelar',
-                confirmButtonText: 'Sí, eliminar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('formEliminar' + id).submit();
-                }
-            });
+            let citaArchivar = null;
+
+            function confirmarArchivar(id){
+            citaArchivar = id;
+            let modal = new bootstrap.Modal(document.getElementById('modalArchivar'));
+            modal.show();
         }
+
+            document.getElementById('btnConfirmarArchivar').onclick = function(){
+            document.getElementById('formArchivar'+citaArchivar).submit();
+        };
+
+            let citaEliminar = null;
+
+            function confirmarEliminar(id){
+            citaEliminar = id;
+            let modal = new bootstrap.Modal(document.getElementById('modalEliminar'));
+            modal.show();
+        }
+
+            document.getElementById('btnConfirmarEliminar').onclick = function(){
+            document.getElementById('formEliminar'+citaEliminar).submit();
+        };
+
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
