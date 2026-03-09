@@ -380,3 +380,7 @@ Route::get('/citas/archivadas',[CitaController::class, 'Citasarchivadas'])->name
 //Ruta para emitir incapacidad médica
 Route::get('/doctor/emitir-incapacidad', [DoctorController::class, 'emitirIncapacidad'])->name('doctor.emitir.incapacidad');
 Route::post('/doctor/emitir-incapacidad', [DoctorController::class, 'guardarIncapacidad'])->name('doctor.guardar-incapacidad');
+
+// Rutas Historia H83
+Route::get('/traslado/calificar/{id}', [TrasladoController::class, 'calificar'])->name('traslado.calificar.ver');
+Route::post('/traslado/calificar/guardar', [TrasladoController::class, 'guardarCalificacion'])->name('traslado.calificar.guardar');
