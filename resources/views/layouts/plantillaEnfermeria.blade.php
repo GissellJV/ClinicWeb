@@ -284,6 +284,11 @@
                                 <i class="bi bi-exclamation-triangle-fill"></i> Reportes de Incidentes
                             </a>
                         </li>
+                        <li>
+                            <a class="dropdown-item dropdown-item-modern" href="{{ route('enfermeria.turnos') }}">
+                                <i class="bi bi-clock-history"></i> Ver  Rol de Turnos
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
