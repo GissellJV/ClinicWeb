@@ -1,4 +1,4 @@
-Plantilla Seguimiento
+
 @extends('layouts.plantillaDoctor')
 <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 
@@ -104,7 +104,7 @@ Plantilla Seguimiento
 
                     <br>
 
-                    <button class="btn-register">
+                    <button class="btn-register"style="margin-left: 200px;">
                         Guardar cita de seguimiento
                     </button>
                 </form>

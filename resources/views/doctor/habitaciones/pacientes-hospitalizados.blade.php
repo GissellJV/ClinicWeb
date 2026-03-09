@@ -11,10 +11,15 @@
             box-sizing: border-box;
         }
 
+        .administracion {
+            min-height: auto;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: whitesmoke;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
         }
 
         .administracion .btn {
@@ -339,7 +344,7 @@
             @if($asignaciones->isEmpty())
                 <div class="inventory-card text-center py-5">
                     <i class="fas fa-bed fa-3x mb-3" style="color: #4ECDC4;"></i>
-                    <h5 style="color: #4ECDC4;">No hay pacientes hospitalizados</h5>
+                    <h5 style="color: #4ECDC4;">No tienes pacientes hospitalizados</h5>
                     <p class="text-muted">Actualmente no hay pacientes con habitación asignada</p>
                 </div>
             @else
