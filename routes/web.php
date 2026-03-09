@@ -396,3 +396,11 @@ Route::get('/doctor/turnos-pdf', [TurnoController::class, 'exportPdf'])
 
 //Guardar turno en calendario
 Route::get('/doctor/turnos/calendario', [TurnoController::class, 'exportarMesCalendario'])->name('doctor.turnos.calendario');
+Route::get('/enfermeria/exportar-calendario', [TurnoEnfermeroController::class, 'exportarMesCalendario'])
+    ->name('enfermeria.exportarCalendario');
+
+//visualizacion de turnos como enfermero
+Route::get('/enfermeria/mis-turnos', [TurnoEnfermeroController::class, 'verTurnosE'])
+    ->name('enfermeria.turnos');
+Route::get('/enfermeria/exportar-pdf', [TurnoEnfermeroController::class, 'exportPdf'])
+    ->name('enfermeria.turnos.pdf');

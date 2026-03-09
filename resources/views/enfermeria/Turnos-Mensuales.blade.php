@@ -1,4 +1,4 @@
-@extends('layouts.plantillaDoctor')
+@extends('layouts.plantillaEnfermeria')
 <style>
     .btn-register {
         padding: 0.875rem 2rem;
@@ -602,20 +602,16 @@
                 <div class="d-flex flex-wrap justify-content-between align-items-center">
                     <div>
                         <h1><i class="bi bi-calendar3-week me-2"></i>ROL DE TURNOS</h1>
-                        <span class="subtitle">Gestión de turnos médicos</span>
+                        <span class="subtitle">Gestión de turnos de Enfermeros</span>
                     </div>
                     <div class="month-nav">
-                        <a href="{{ route('doctor.turnos', ['mes' => $prevMes, 'anio' => $prevAnio]) }}"
-                           class="btn-nav">
-                            <i class="bi bi-chevron-left"></i>
-                        </a>
+                        <a href="{{ route('enfermeria.turnos', ['mes' => $prevMes, 'anio' => $prevAnio]) }}"
+                           class="btn-nav"><i class="bi bi-chevron-left"></i></a>
                         <span class="month-label">{{ $nombreMes }} {{ $anio }}</span>
-                        <a href="{{ route('doctor.turnos', ['mes' => $nextMes, 'anio' => $nextAnio]) }}"
-                           class="btn-nav">
-                            <i class="bi bi-chevron-right"></i>
-                        </a>
+                        <a href="{{ route('enfermeria.turnos', ['mes' => $nextMes, 'anio' => $nextAnio]) }}"
+                           class="btn-nav"><i class="bi bi-chevron-right"></i></a>
                         <a class="btn btn-danger"
-                           href="{{ route('doctor.turnos.pdf', request()->query()) }}">
+                           href="{{ route('enfermeria.turnos.pdf', ['mes'=>$mes,'anio'=>$anio]) }}">
                             Exportar PDF
                         </a>
                     </div>
@@ -629,8 +625,8 @@
                         <i class="bi bi-people-fill"></i>
                     </div>
                     <div>
-                        <div class="stat-value">{{ $doctores->total() }}</div>
-                        <div class="stat-label">Doctores</div>
+                        <div class="stat-value">{{ $enfermeros->count() }}</div>
+                        <div class="stat-label">Enfermeros</div>
                     </div>
                 </div>
                 <div class="stat-mini" style="border-color: #2ecc71;">
@@ -649,10 +645,9 @@
                     <div>
                         @php
                             $totalAsignados = 0;
-                            foreach ($grid as $doctorId => $dias_grid) {
+                            foreach ($grid as $enfermeroId => $dias_grid) {
                                 foreach ($dias_grid as $turno) {
-                                    if ($turno)
-                                        $totalAsignados++;
+                                    if ($turno) $totalAsignados++;
                                 }
                             }
                         @endphp
@@ -666,7 +661,7 @@
                     </div>
                     <div>
                         @php
-                            $totalVacios = ($doctores->count() * $diasEnMes) - $totalAsignados;
+                            $totalVacios = ($enfermeros->count() * $diasEnMes) - $totalAsignados;
                         @endphp
                         <div class="stat-value">{{ $totalVacios }}</div>
                         <div class="stat-label">Sin asignar</div>
@@ -674,56 +669,16 @@
                 </div>
             </div>
 
-            {{-- Filter --}}
-            <div class="filter-bar">
-                <form method="GET" action="{{ route('doctor.turnos') }}" class="row g-2 align-items-end">
-                    <input type="hidden" name="mes" value="{{ $mes }}">
-                    <input type="hidden" name="anio" value="{{ $anio }}">
-                    <div class="col-md-4">
-                        <label class="form-label fw-semibold" style="font-size:0.85rem;">
-                            <i class="bi bi-search me-1"></i>Buscar Doctor
-                        </label>
-                        <input type="text" name="nombre" class="form-control" placeholder="Nombre del doctor..."
-                               value="{{ request('nombre') }}">
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label fw-semibold" style="font-size:0.85rem;">
-                            <i class="bi bi-heart-pulse me-1"></i>Especialidad
-                        </label>
-                        <select name="departamento" class="form-select">
-                            <option value="">Todas</option>
-                            @foreach($departamentos as $dep)
-                                <option value="{{ $dep }}" {{ request('departamento') == $dep ? 'selected' : '' }}>
-                                    {{ $dep }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-filter">
-                            <i class="bi bi-funnel me-1"></i>Filtrar
-                        </button>
-                    </div>
-                    <div class="col-auto">
-                        <a href="{{ route('recepcionista.index', ['mes' => $mes, 'anio' => $anio]) }}"
-                           class="btn btn-clear">
-                            <i class="bi bi-x-lg me-1"></i>Limpiar
-                        </a>
-                    </div>
-                </form>
-            </div>
-
             {{-- Calendar Grid --}}
             <div class="calendar-container">
                 <div class="calendar-scroll">
                     <table class="calendar-table">
                         <thead>
-                        {{-- Row 1: Day of week abbreviations --}}
+                        {{-- Row 1: Day of week --}}
                         <tr class="row-dias-semana">
-                            <th class="col-doctor">NOMBRE DEL DOCTOR</th>
+                            <th class="col-doctor">NOMBRE DEL ENFERMERO</th>
                             @foreach($dias as $dia)
-                                <th
-                                    class="{{ $dia['esFinDeSemana'] ? 'weekend-header' : '' }} {{ $dia['fecha'] == now()->format('Y-m-d') ? 'today-col' : '' }}">
+                                <th class="{{ $dia['esFinDeSemana'] ? 'weekend-header' : '' }} {{ $dia['fecha'] == now()->format('Y-m-d') ? 'today-col' : '' }}">
                                     {{ $dia['diaSemana'] }}
                                 </th>
                             @endforeach
@@ -732,33 +687,30 @@
                         <tr class="row-dias-numero">
                             <th class="col-doctor"></th>
                             @foreach($dias as $dia)
-                                <th
-                                    class="{{ $dia['esFinDeSemana'] ? 'weekend-header' : '' }} {{ $dia['fecha'] == now()->format('Y-m-d') ? 'today-col' : '' }}">
+                                <th class="{{ $dia['esFinDeSemana'] ? 'weekend-header' : '' }} {{ $dia['fecha'] == now()->format('Y-m-d') ? 'today-col' : '' }}">
                                     {{ $dia['dia'] }}
                                 </th>
                             @endforeach
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse($doctores as $doctor)
+                        @forelse($enfermeros as $enfermero)
                             <tr>
                                 <td class="col-doctor">
                                     <div class="doctor-info">
-                                            <span class="doctor-name">
-                                                {{ $doctor->genero == 'Femenino' ? 'Dra.' : 'Dr.' }} {{ $doctor->nombre }}  {{ $doctor->apellido }}
-                                            </span>
-                                        <span class="doctor-specialty">
-                                                {{ $doctor->departamento ?? 'General' }}
-                                            </span>
+                                        <span class="doctor-name">
+                                            {{ $enfermero->genero == 'Femenino' ? 'Licda.' : 'Lic.' }} {{ $enfermero->nombre }} {{ $enfermero->apellido }}
+                                        </span>
+                                        <span class="doctor-specialty">{{ $enfermero->departamento ?? 'General' }}</span>
                                     </div>
                                 </td>
                                 @foreach($dias as $dia)
-                                    @php $turno = $grid[$doctor->id][$dia['dia']] ?? null; @endphp
+                                    @php $turno = $grid[$enfermero->id][$dia['dia']] ?? null; @endphp
                                     <td class="shift-cell {{ $dia['esFinDeSemana'] ? 'weekend-cell' : '' }} {{ $dia['fecha'] == now()->format('Y-m-d') ? 'today-cell' : '' }}">
                                         @if($turno)
                                             <span class="shift-badge turno-{{ $turno->codigo_turno }}">
-                                                    {{ $turno->codigo_turno }}
-                                                </span>
+                                                {{ $turno->codigo_turno }}
+                                            </span>
                                         @else
                                             <div class="empty-cell"></div>
                                         @endif
@@ -769,7 +721,7 @@
                             <tr>
                                 <td colspan="{{ $diasEnMes + 1 }}" class="text-center text-muted py-5">
                                     <i class="bi bi-inbox" style="font-size:3rem;opacity:0.3;"></i>
-                                    <p class="mt-2 mb-0">No se encontraron doctores</p>
+                                    <p class="mt-2 mb-0">No se encontraron enfermeros</p>
                                 </td>
                             </tr>
                         @endforelse
@@ -777,20 +729,16 @@
                     </table>
                 </div>
             </div>
-            <div class="mt-3 d-flex justify-content-center">
-                {{ $doctores->links() }}
-            </div>
 
-            {{-- Legend --}}
-            <div class="legend-container">
+            {{-- Legend y Descargar --}}
+            <div class="legend-container mt-3">
                 <div class="row">
                     <div class="col-lg-7">
                         <h6 class="legend-title"><i class="bi bi-palette me-2"></i>Horario de los Turnos</h6>
                         <div class="legend-grid">
                             @foreach($turnosCodigos as $codigo => $info)
                                 <div class="legend-item">
-                                    <div class="legend-color shift-badge turno-{{ $codigo }}"
-                                         style="min-width:40px;text-align:center;">{{ $codigo }}</div>
+                                    <div class="legend-color shift-badge turno-{{ $codigo }}" style="min-width:40px;text-align:center;">{{ $codigo }}</div>
                                     <div>
                                         <span class="legend-text">{{ $info['nombre'] }}</span>
                                         @if($info['inicio'] && $info['fin'])
@@ -813,12 +761,13 @@
                         </div>
                         <p></p>
                         <a class="btn-register" style="text-decoration-line: none"
-                           href="{{ route('doctor.turnos.calendario', ['mes'=>$mes,'anio'=>$anio]) }}">
+                           href="{{ route('enfermeria.exportarCalendario', ['mes'=>$mes,'anio'=>$anio]) }}">
                             Descargar calendario
                         </a>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection
