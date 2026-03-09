@@ -437,6 +437,12 @@
                             <i class="bi bi-calendar-plus"></i> Agendar Cita
                         </a>
                     </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.reporte.calidad') }}">
+                            <i class="bi bi-patch-check-fill"></i> Calidad de Traslados
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link offcanvas-nav-link" href="{{ route('empleados.crear') }}">
                             <i class="bi bi-person-plus"></i> Registrar Empleado
