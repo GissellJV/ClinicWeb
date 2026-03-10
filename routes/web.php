@@ -359,6 +359,10 @@ Route::get('/inventario-equipos', [RecepcionistaController::class, 'inventarioEq
 Route::post('/inventario-equipos/guardar', [RecepcionistaController::class, 'guardarEquipo'])->name('inventario.guardar');
 Route::put('/inventario-equipos/actualizar/{id}', [RecepcionistaController::class, 'actualizarEquipo'])->name('inventario.actualizar');
 Route::delete('/inventario-equipos/eliminar/{id}', [RecepcionistaController::class, 'eliminarEquipo'])->name('inventario.eliminar');
+// RUTA PARA LA BAJA (H91)
+Route::patch('/inventario-equipos/baja/{id}', [RecepcionistaController::class, 'darBajaEquipo'])->name('inventario.baja');
+
+
 
 // --- H72: Alquiler de Equipo de Movilidad ---
 // Ruta para mostrar el formulario (GET)
