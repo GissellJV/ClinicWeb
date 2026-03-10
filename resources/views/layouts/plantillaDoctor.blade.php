@@ -1,4 +1,11 @@
-<!doctype html>
+@php
+    use App\Models\Cita;
+    $pendientes = Cita::where('empleado_id', session('empleado_id'))
+    ->whereIn('estado', ['programada','pendiente'])
+    ->count();
+@endphp
+
+    <!doctype html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -13,6 +20,7 @@
             padding-top: 60px;
             background-color: #f5f7fa;
         }
+
         .formulario small.text-danger {
             font-size: 0.875rem;
             display: block;
@@ -27,20 +35,24 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             overflow: visible !important;
         }
+
         .nav-link-glow {
             color: #e7fffc !important;
             font-weight: 500;
             transition: 0.25s ease;
         }
+
         .nav-link-modern {
             color: #e7fffc !important;
             font-weight: 500;
             transition: 0.25s ease;
         }
+
         .nav-link-glow:hover, .nav-link-glow.active {
             color: #ffffff !important;
             text-shadow: 0 0 10px #00ffe0, 0 0 20px #00d3b8;
         }
+
         /* ALINEACIÓN HORIZONTAL DEL NAVBAR */
         .navbar-nav {
             display: flex;
@@ -53,20 +65,23 @@
             display: flex;
             align-items: center;
         }
+
         /* Dropdown moderno */
         .dropdown-menu-modern {
             background-color: #00bfa6;
             border: none;
             min-width: 220px;
         }
+
         .dropdown-item-modern {
             color: #e7fffc;
             transition: all 0.3s ease;
         }
+
         .dropdown-item-modern:hover {
             color: #ffffff;
             text-shadow: 0 0 8px #00ffe0;
-            background-color: rgba(0,0,0,0.1);
+            background-color: rgba(0, 0, 0, 0.1);
         }
 
         /* Perfil badge */
@@ -87,6 +102,7 @@
             justify-content: center;
             text-align: center;
         }
+
         .btn-logout:hover {
             background-color: #e04344;
             box-shadow: 0 0 9px #ff6b6b;
@@ -103,10 +119,12 @@
             background: linear-gradient(180deg, #00bfa6, #009e8e);
             color: #e7fffc;
         }
+
         .offcanvas-modern .nav-link {
             color: #e7fffc;
             transition: 0.3s;
         }
+
         .offcanvas-modern .nav-link:hover {
             color: #fff;
             text-shadow: 0 0 10px #00ffe0;
@@ -124,14 +142,16 @@
             font-weight: 700;
             font-size: 1.4rem;
         }
+
         .nav-link-modern {
             color: #e7fffc !important;
             font-weight: 500;
             transition: 0.3s;
         }
+
         .nav-link-modern:hover {
             color: #ffffff !important;
-            text-shadow: 0 0 4px rgba(255,255,255,0.7);
+            text-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
         }
 
         /* BOTÓN HAMBURGUESA MODERNO */
@@ -149,6 +169,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .navbar-toggler::before {
             content: '';
             position: absolute;
@@ -161,10 +182,12 @@
             transform: translate(-50%, -50%);
             transition: width 0.4s ease, height 0.4s ease;
         }
+
         .navbar-toggler:hover::before {
             width: 200px;
             height: 200px;
         }
+
         .navbar-toggler:hover {
             background: #4ecdc4;
             box-shadow: 0 0 20px rgba(78, 205, 196, 0.6),
@@ -172,6 +195,7 @@
             0 4px 8px rgba(0, 0, 0, 0.2);
             transform: translateY(-2px);
         }
+
         .navbar-toggler-icon-modern {
             background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%2334b5ad' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
             width: 24px;
@@ -187,18 +211,23 @@
         .navbar-toggler.collapsed .bar:nth-child(2) {
             opacity: 1;
         }
+
         .navbar-toggler.collapsed .bar:nth-child(1) {
-            transform: rotate(0) translate(0,0);
+            transform: rotate(0) translate(0, 0);
         }
+
         .navbar-toggler.collapsed .bar:nth-child(3) {
-            transform: rotate(0) translate(0,0);
+            transform: rotate(0) translate(0, 0);
         }
+
         .navbar-toggler:not(.collapsed) .bar:nth-child(1) {
             transform: rotate(45deg) translate(5px, 5px);
         }
+
         .navbar-toggler:not(.collapsed) .bar:nth-child(2) {
             opacity: 0;
         }
+
         .navbar-toggler:not(.collapsed) .bar:nth-child(3) {
             transform: rotate(-45deg) translate(5px, -5px);
         }
@@ -210,6 +239,7 @@
             color: white;
             padding: 1rem;
         }
+
         .offcanvas-end .nav-link {
             color: white;
             padding: 0.6rem 0.8rem;
@@ -219,10 +249,12 @@
             align-items: center;
             gap: 0.5rem;
         }
+
         .offcanvas-end .nav-link:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             color: #ffffff;
         }
+
         .offcanvas-header .btn-close {
             filter: invert(1); /* botón blanco */
         }
@@ -233,12 +265,26 @@
             color: white;
             padding: 2rem 1rem;
         }
-        .footer-title { font-weight: 700; margin-bottom: 0.8rem; }
-        .footer-text { color: #eafffa; font-size: 0.95rem; margin-bottom: 0.4rem; }
-        .footer-divider { border-color: rgba(255,255,255,0.25); }
+
+        .footer-title {
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-text {
+            color: #eafffa;
+            font-size: 0.95rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .footer-divider {
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
         .social.modern {
-            width: 42px; height: 42px;
-            background: rgba(255,255,255,0.2);
+            width: 42px;
+            height: 42px;
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
@@ -247,44 +293,10 @@
             color: white;
             transition: 0.3s ease;
         }
-        .social.modern:hover { background: white; color: #009e8e; }
 
-        .edit-icon-overlay {
-            position: absolute;
-            bottom: -2px;
-            right: -2px;
-            background: #00bfa6;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid white;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .edit-icon-overlay i {
-            font-size: 10px;
-            color: white;
-        }
-
-        .edit-icon-overlay:hover {
-            background: #009e8e;
-            transform: scale(1.15);
-            box-shadow: 0 0 12px rgba(0, 217, 192, 0.8);
-        }
-
-        .profile-badge img {
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 217, 192, 0.3);
-        }
-
-        .profile-badge:hover img {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 217, 192,0.5);
+        .social.modern:hover {
+            background: white;
+            color: #009e8e;
         }
 
         .edit-icon-overlay {
@@ -322,7 +334,45 @@
 
         .profile-badge:hover img {
             transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 217, 192,0.5);
+            box-shadow: 0 4px 12px rgba(0, 217, 192, 0.5);
+        }
+
+        .edit-icon-overlay {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            background: #00bfa6;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .edit-icon-overlay i {
+            font-size: 10px;
+            color: white;
+        }
+
+        .edit-icon-overlay:hover {
+            background: #009e8e;
+            transform: scale(1.15);
+            box-shadow: 0 0 12px rgba(0, 217, 192, 0.8);
+        }
+
+        .profile-badge img {
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 217, 192, 0.3);
+        }
+
+        .profile-badge:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 217, 192, 0.5);
         }
 
         /* BOTONES */
@@ -361,6 +411,7 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
         }
+
         .foto-preview-container {
             width: 200px;
             height: 200px;
@@ -419,6 +470,16 @@
             object-fit: cover;
             border: 3px solid var(--primary);
         }
+        .badge {
+            background: red;
+            color: white;
+            font-size: 9px;
+            padding: 4px 7px;
+            border-radius: 20%;
+            position: absolute;
+            top: -5px;
+            right: -10px;
+        }
 
     </style>
 </head>
@@ -439,9 +500,6 @@
         </button>
 
 
-
-
-
         <!-- Desktop menu -->
 
         <ul class="navbar-nav flex-row ms-auto me-3 gap-2 d-none d-lg-flex">
@@ -452,17 +510,20 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#servicios' : url('/#servicios') }}">
+                <a class="nav-link nav-link-modern"
+                   href="{{ request()->routeIs('/') ? '#servicios' : url('/#servicios') }}">
                     <i class="bi bi-info-circle-fill me-1"></i>Información</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#doctors' : url('/#doctors') }}">
+                <a class="nav-link nav-link-modern"
+                   href="{{ request()->routeIs('/') ? '#doctors' : url('/#doctors') }}">
                     <i class="bi bi-person-fill me-1"></i> Doctores</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link nav-link-modern" href="{{ request()->routeIs('/') ? '#comentarios' : url('/#comentarios') }}">
+                <a class="nav-link nav-link-modern"
+                   href="{{ request()->routeIs('/') ? '#comentarios' : url('/#comentarios') }}">
                     <i class="bi bi-chat-right-text me-1"></i> Comentarios</a>
             </li>
 
@@ -473,7 +534,8 @@
 
             <!-- Acciones -->
             <li class="nav-item dropdown">
-                <a class="nav-link nav-link-glow dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link nav-link-glow dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
                     <i class="bi bi-lightning-fill me-1"></i> Acciones
                 </a>
                 <ul class="dropdown-menu dropdown-menu-modern">
@@ -489,7 +551,8 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.habitaciones.mis-pacientes') }}">
+                        <a class="dropdown-item dropdown-item-modern"
+                           href="{{ route('doctor.habitaciones.mis-pacientes') }}">
                             <i class="bi bi-hospital me-1"></i> Pacientes Hospitalizados
                         </a>
                     </li>
@@ -500,7 +563,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.alta_pacientes') }}">
-                            <i class="bi bi-clipboard-check-fill"></i>  Historial de Altas
+                            <i class="bi bi-clipboard-check-fill"></i> Historial de Altas
                         </a>
                     </li>
 
@@ -521,16 +584,29 @@
                     </li>
                     <li>
                         <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.turnos') }}">
-                            <i class="bi bi-clock-history"></i> Ver  Rol de Turnos
+                            <i class="bi bi-clock-history"></i> Ver Rol de Turnos
                         </a>
                     </li>
                 </ul>
             </li>
 
+            <li class="nav-item position-relative">
+                <a href="{{ route('doctor.citas') }}" class="nav-link">
+                    <i class="bi bi-bell-fill" style="color:white;"></i>
+
+                    @if($pendientes > 0)
+                        <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
+                {{ $pendientes }}
+            </span>
+                    @endif
+                </a>
+            </li>
+
             <!-- Perfil -->
             <li class="nav-item dropdown">
 
-                <a class="nav-link nav-link-glow dropdown-toggle profile-badge" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link nav-link-glow dropdown-toggle profile-badge" href="#" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
                     @php
                         $empleadoId = session('empleado_id');
                         $empleado = \App\Models\Empleado::find($empleadoId);
@@ -546,7 +622,8 @@
                         @endif
 
 
-                        <span class="edit-icon-overlay" data-bs-toggle="modal" data-bs-target="#modalFotoDoctor" onclick="event.stopPropagation();">
+                        <span class="edit-icon-overlay" data-bs-toggle="modal" data-bs-target="#modalFotoDoctor"
+                              onclick="event.stopPropagation();">
             <i class="bi bi-camera-fill"></i>
         </span>
                     </div>
@@ -589,7 +666,10 @@
                 <h5 class="footer-title">Contacto</h5>
                 <p class="footer-text"><i class="bi bi-geo-alt-fill me-2"></i> Danlí, El Paraíso, Honduras</p>
                 <p class="footer-text"><i class="bi bi-telephone-fill me-2"></i> +504 2234-5678</p>
-                <p class="footer-text"><i class="bi bi-envelope-fill me-2"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0a6965647e6b697e654a6966636463697d6f68246264">[email&#160;protected]</a></p>
+                <p class="footer-text"><i class="bi bi-envelope-fill me-2"></i> <a href="/cdn-cgi/l/email-protection"
+                                                                                   class="__cf_email__"
+                                                                                   data-cfemail="0a6965647e6b697e654a6966636463697d6f68246264">[email&#160;protected]</a>
+                </p>
             </div>
 
             <!-- Columna 3 -->
@@ -612,7 +692,8 @@
     </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 
 <div class="modal fade" id="modalFotoDoctor" tabindex="-1" aria-labelledby="modalFotoDoctorLabel" aria-hidden="true">
@@ -625,7 +706,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form action="{{ route('doctor.subirFoto') }}" method="POST" enctype="multipart/form-data" id="formFotoDoctor">
+            <form action="{{ route('doctor.subirFoto') }}" method="POST" enctype="multipart/form-data"
+                  id="formFotoDoctor">
                 @csrf
                 <div class="modal-body">
 
@@ -732,7 +814,7 @@
 
             // Si pasa las validaciones, mostrar preview
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 img.src = e.target.result;
                 preview.style.display = 'block';
             }
@@ -741,7 +823,7 @@
     }
 
     // Validar antes de enviar el formulario
-    document.getElementById('formFotoDoctor').addEventListener('submit', function(e) {
+    document.getElementById('formFotoDoctor').addEventListener('submit', function (e) {
         const fotoInput = document.getElementById('foto');
         const btnSubmit = document.getElementById('btnSubirFoto');
 
@@ -786,7 +868,7 @@
     });
 
     // Limpiar validación al cambiar archivo
-    document.getElementById('foto').addEventListener('change', function() {
+    document.getElementById('foto').addEventListener('change', function () {
         if (this.files.length > 0) {
             this.classList.remove('is-invalid');
         }

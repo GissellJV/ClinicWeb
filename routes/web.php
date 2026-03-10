@@ -179,6 +179,9 @@ Route::prefix('enfermeria')->name('enfermeria.')->group(function () {
     Route::get('/habitaciones/asignar', [AsignacionHabitacionController::class, 'create'])->name('habitaciones.asignar');
     Route::post('/habitaciones', [AsignacionHabitacionController::class, 'store'])->name('habitaciones.store');
     Route::put('/habitaciones/{id}/liberar', [AsignacionHabitacionController::class, 'liberar'])->name('habitaciones.liberar');
+
+    Route::get('/habitaciones/limpieza', [AsignacionHabitacionController::class, 'limpiezaIndex'])->name('habitaciones.limpieza');
+    Route::put('/habitaciones/{id}/limpieza', [AsignacionHabitacionController::class, 'actualizarLimpieza'])->name('habitaciones.actualizarLimpieza');
 });
 
 // Rutas para Recepcionista
@@ -359,6 +362,10 @@ Route::get('/inventario-equipos', [RecepcionistaController::class, 'inventarioEq
 Route::post('/inventario-equipos/guardar', [RecepcionistaController::class, 'guardarEquipo'])->name('inventario.guardar');
 Route::put('/inventario-equipos/actualizar/{id}', [RecepcionistaController::class, 'actualizarEquipo'])->name('inventario.actualizar');
 Route::delete('/inventario-equipos/eliminar/{id}', [RecepcionistaController::class, 'eliminarEquipo'])->name('inventario.eliminar');
+// RUTA PARA LA BAJA (H91)
+Route::patch('/inventario-equipos/baja/{id}', [RecepcionistaController::class, 'darBajaEquipo'])->name('inventario.baja');
+
+
 
 // --- H72: Alquiler de Equipo de Movilidad ---
 // Ruta para mostrar el formulario (GET)

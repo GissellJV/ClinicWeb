@@ -6,13 +6,27 @@
 
     <style>
         body { background: whitesmoke; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .main-container { padding-top: 100px; }
+        .main-container { padding-top: 20px; }
 
-        /* Tarjetas de Estadísticas */
+        /* Tarjetas de Estadisticas con Efecto de Movimiento */
         .stat-card {
-            border: none; border-radius: 15px; color: white; padding: 1.2rem;
-            text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.3s ease;
+            border: none;
+            border-radius: 15px;
+            color: white;
+            padding: 1.2rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
         }
+
+        /* Efecto al pasar el cursor (Hover) */
+        .stat-card:hover {
+            transform: translateY(-8px); /* Se eleva */
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15); /* Sombra mas profunda */
+            filter: brightness(1.1); /* Brilla un poco mas */
+        }
+
         .mint { background-color: #00bfa6; }
         .aqua { background-color: #4cd7c6; }
         .turq { background-color: #82e9de; }
@@ -23,9 +37,8 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.08); height: 100%;
         }
 
-        /* --- CORRECCIÓN DE COLOR DE ESTRELLAS --- */
         .bi-star-fill, .bi-star-half, .bi-star {
-            color: #ffc107 !important; /* Dorado estándar de alta visibilidad */
+            color: #ffc107 !important;
         }
 
         /* Tablas */
@@ -37,7 +50,7 @@
     </style>
 
     <div class="container main-container my-4">
-        <h2 class="text-info-emphasis mb-4" style="font-weight: bold;">Estadística de Calidad de Traslados</h2>
+        <h2 class="text-info-emphasis mb-4" style="font-weight: bold;">Estadistica de Calidad de Traslados</h2>
 
         <div class="row g-3 mb-4">
             <div class="col-md-3">
@@ -57,7 +70,7 @@
                 <div class="stat-card turq">
                     <i class="bi bi-award-fill fs-1"></i>
                     <h5>Mejor Unidad</h5>
-                    <h3 style="font-size: 1.1rem;">{{ $mejorAmbulancia->unidad_asignada ?? 'N/A' }}</h3>
+                    <h3>{{ $mejorAmbulancia->unidad_asignada ?? 'N/A' }}</h3>
                 </div>
             </div>
             <div class="col-md-3">
@@ -80,7 +93,7 @@
             </div>
             <div class="col-md-4">
                 <div class="chart-container">
-                    <h5 class="mb-4" style="color: #2c3e50; font-weight: 650;">Distribución de Satisfacción</h5>
+                    <h5 class="mb-4" style="color: #2c3e50; font-weight: 650;">Distribucion de Satisfaccion</h5>
                     <div style="height: 300px;">
                         <canvas id="calidadDoughnutChart"></canvas>
                     </div>
@@ -95,7 +108,7 @@
                 <tr>
                     <th>Paciente</th>
                     <th>Unidad</th>
-                    <th>Calificación</th>
+                    <th>Calificacion</th>
                     <th>Comentario</th>
                     <th>Fecha</th>
                 </tr>
@@ -128,10 +141,20 @@
         $(document).ready(function() {
             $('#calidadTable').DataTable({
                 responsive: true,
-                language: { url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json' }
+                language: {
+                    "search": "Buscar:",
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "zeroRecords": "No se encontraron resultados"
+                }
             });
 
-            // --- CORRECCIÓN DE GRÁFICA DE BARRAS ---
             new Chart(document.getElementById('calidadBarChart'), {
                 type: 'bar',
                 data: {
@@ -141,7 +164,7 @@
                         data: @json($datosGrafica->pluck('promedio')),
                         backgroundColor: '#00bfa6',
                         borderRadius: 10,
-                        maxBarThickness: 50 // Esto evita que la barra sea "fea" y ancha
+                        maxBarThickness: 50
                     }]
                 },
                 options: {
@@ -154,7 +177,6 @@
                 }
             });
 
-            // Gráfica Doughnut
             new Chart(document.getElementById('calidadDoughnutChart'), {
                 type: 'doughnut',
                 data: {
