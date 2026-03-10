@@ -388,3 +388,19 @@ Route::post('/traslado/calificar/guardar', [TrasladoController::class, 'guardarC
 
 // Ruta del Panel de Análisis de Calidad H86
 Route::get('/recepcionista/reporte-calidad', [ReporteTrasladoController::class, 'index'])->name('recepcionista.reporte.calidad');
+
+// visualizacion de turnos como doctor
+Route::get('/doctor/turnos-mensuales', [TurnoController::class, 'verTurnos'])->name('doctor.turnos');
+Route::get('/doctor/turnos-pdf', [TurnoController::class, 'exportPdf'])
+    ->name('doctor.turnos.pdf');
+
+//Guardar turno en calendario
+Route::get('/doctor/turnos/calendario', [TurnoController::class, 'exportarMesCalendario'])->name('doctor.turnos.calendario');
+Route::get('/enfermeria/exportar-calendario', [TurnoEnfermeroController::class, 'exportarMesCalendario'])
+    ->name('enfermeria.exportarCalendario');
+
+//visualizacion de turnos como enfermero
+Route::get('/enfermeria/mis-turnos', [TurnoEnfermeroController::class, 'verTurnosE'])
+    ->name('enfermeria.turnos');
+Route::get('/enfermeria/exportar-pdf', [TurnoEnfermeroController::class, 'exportPdf'])
+    ->name('enfermeria.turnos.pdf');
