@@ -422,6 +422,14 @@ class CitaController extends Controller
         $query = Cita::with(['paciente'])
             ->where('empleado_id', $empleado_id);
 
+        // Buscar por nombre del paciente
+        if ($request->filled('paciente')) {
+            $query->whereHas('paciente', function ($q) use ($request) {
+                $q->where('nombres', 'like', '%' . $request->paciente . '%')
+                    ->orWhere('apellidos', 'like', '%' . $request->paciente . '%');
+            });
+        }
+
         // Aplicar filtros
         if ($request->filled('fecha')) {
             $query->whereDate('fecha', $request->fecha);
@@ -442,7 +450,7 @@ class CitaController extends Controller
             $query->orderBy('fecha', 'asc')->orderBy('hora', 'asc');
         }
 
-        $citas = $query->paginate(10);
+        $citas = $query->paginate(10)->withQueryString();
 
         // Contar citas de hoy
         $citasHoy = Cita::where('empleado_id', $empleado_id)

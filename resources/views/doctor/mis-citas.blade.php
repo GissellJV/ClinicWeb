@@ -494,6 +494,15 @@
             <form method="GET" action="{{ route('doctor.citas') }}">
                 <div class="filters-row">
                     <div class="filter-group">
+                        <label><i class="fas fa-user"></i> Paciente</label>
+                        <input
+                            type="text"
+                            name="paciente"
+                            placeholder="Buscar paciente"
+                            value="{{ request('paciente') }}"
+                            onkeyup="this.form.submit()">
+                    </div>
+                    <div class="filter-group">
                         <label><i class="fas fa-calendar"></i> Fecha</label>
                         <input type="date" name="fecha" value="{{ request('fecha') }}">
                     </div>
