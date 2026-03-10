@@ -285,6 +285,12 @@
                             </a>
                         </li>
                         <li>
+                            <a class="dropdown-item dropdown-item-modern"
+                               href="{{ route('enfermeria.habitaciones.limpieza') }}">
+                                <i class="bi bi-exclamation-circle"></i> Estado de limpieza
+                            </a>
+                        </li>
+                        <li>
                             <a class="dropdown-item dropdown-item-modern" href="{{ route('enfermeria.turnos') }}">
                                 <i class="bi bi-clock-history"></i> Ver  Rol de Turnos
                             </a>

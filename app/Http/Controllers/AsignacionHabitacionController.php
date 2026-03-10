@@ -292,4 +292,40 @@ class AsignacionHabitacionController extends Controller
             return back()->with('error', 'Error al asignar habitación: ' . $e->getMessage());
         }
     }
+
+    public function limpiezaIndex()
+    {
+        if (!session('cargo') || session('cargo') != 'Enfermero') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Enfermero');
+        }
+
+        $habitaciones = Habitacion::orderBy('numero_habitacion')->get();
+
+        return view('enfermeria.habitaciones.limpieza', compact('habitaciones'));
+    }
+
+    public function actualizarLimpieza(Request $request, $id)
+    {
+        if (!session('cargo') || session('cargo') != 'Enfermero') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Enfermero');
+        }
+
+        $request->validate([
+            'estado_limpieza' => 'required|in:limpia,pendiente,en_limpieza',
+        ], [
+            'estado_limpieza.required' => 'Debe seleccionar un estado de limpieza',
+            'estado_limpieza.in' => 'El estado seleccionado no es válido',
+        ]);
+
+        $habitacion = Habitacion::findOrFail($id);
+
+        $habitacion->estado_limpieza = $request->estado_limpieza;
+        $habitacion->fecha_limpieza = now();
+        $habitacion->save();
+
+        return redirect()->route('enfermeria.habitaciones.limpieza')
+            ->with('success', 'Estado de limpieza actualizado correctamente');
+    }
 }

@@ -15,7 +15,13 @@ class Habitacion extends Model
         'numero_habitacion',
         'tipo',
         'estado',
-        'descripcion'
+        'descripcion',
+        'estado_limpieza',
+        'fecha_limpieza',
+    ];
+
+    protected $casts = [
+        'fecha_limpieza' => 'datetime',
     ];
 
     // Relación con asignaciones
