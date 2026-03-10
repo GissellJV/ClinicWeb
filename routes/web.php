@@ -179,6 +179,9 @@ Route::prefix('enfermeria')->name('enfermeria.')->group(function () {
     Route::get('/habitaciones/asignar', [AsignacionHabitacionController::class, 'create'])->name('habitaciones.asignar');
     Route::post('/habitaciones', [AsignacionHabitacionController::class, 'store'])->name('habitaciones.store');
     Route::put('/habitaciones/{id}/liberar', [AsignacionHabitacionController::class, 'liberar'])->name('habitaciones.liberar');
+
+    Route::get('/habitaciones/limpieza', [AsignacionHabitacionController::class, 'limpiezaIndex'])->name('habitaciones.limpieza');
+    Route::put('/habitaciones/{id}/limpieza', [AsignacionHabitacionController::class, 'actualizarLimpieza'])->name('habitaciones.actualizarLimpieza');
 });
 
 // Rutas para Recepcionista
