@@ -280,4 +280,26 @@ class RecepcionistaController extends Controller
 
         return back()->with('success', 'Equipo eliminado del inventario.');
     }
+
+    /**
+     * Retirar permanentemente un equipo del servicio (H108)
+     */
+    public function darBajaEquipo($id)
+    {
+        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+            return redirect()->route('inicioSesion');
+        }
+
+        $equipo = Equipo::findOrFail($id);
+
+        // Validar si tiene un alquiler activo antes de proceder
+        if ($equipo->estado == 'En Alquiler' || $equipo->estado == 'En Uso') {
+            return back()->with('error', 'Acción denegada: El equipo seleccionado posee un alquiler activo actualmente.');
+        }
+
+        // Cambiar estado a Retirado en lugar de eliminación física
+        $equipo->update(['estado' => 'Retirado']);
+
+        return back()->with('success', 'Equipo retirado del servicio correctamente.');
+    }
 }

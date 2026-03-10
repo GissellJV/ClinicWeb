@@ -87,7 +87,7 @@
     </style>
 
     <br><br>
-    <h1 class="text-center text-info-emphasis">Gestión de Traslados</h1>
+    <h1 class="text-center text-info-emphasis">Gestion de Traslados</h1>
 
     <div class="formulario">
         <div class="register-section">
@@ -97,7 +97,7 @@
                     <div class="custom-alert">
                         <i class="bi bi-check2-circle"></i>
                         <div class="msg-content">
-                            <span style="font-weight: bold; color: #2c3e50; display: block;">¡Operación Exitosa!</span>
+                            <span style="font-weight: bold; color: #2c3e50; display: block;">¡Operacion Exitosa!</span>
                             <span style="color: #7f8c8d; font-size: 0.95rem;">{{ session('success') }}</span>
                         </div>
                         <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
