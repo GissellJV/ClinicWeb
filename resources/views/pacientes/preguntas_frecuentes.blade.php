@@ -11,7 +11,10 @@
     $layout = 'layouts.plantillaDoctor';
     break;
     case 'Enfermero':
-    $layout = 'layouts.plantillaEnfermero';
+    $layout = 'layouts.plantillaEnfermeria';
+    break;
+    case 'Administrador':
+    $layout = 'layouts.plantillaAdmin';
     break;
     default:
     $layout = 'layouts.plantilla';

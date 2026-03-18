@@ -11,9 +11,11 @@ class VisualizacionHabitacionController extends Controller
     // Mostrar vista de búsqueda (H30)
     public function index()
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
 
         return view('recepcionista.habitaciones.buscarhabitacion');
@@ -22,9 +24,11 @@ class VisualizacionHabitacionController extends Controller
     // Buscar paciente y su habitación
     public function buscar(Request $request)
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
 
         $request->validate([
@@ -49,9 +53,11 @@ class VisualizacionHabitacionController extends Controller
     // Ver todas las habitaciones ocupadas
     public function listarOcupadas()
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
 
         $asignaciones = AsignacionHabitacion::with(['paciente', 'habitacion'])

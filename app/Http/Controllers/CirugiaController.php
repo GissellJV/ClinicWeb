@@ -129,9 +129,11 @@ class CirugiaController extends Controller
      */
     public function guardarCirugia(Request $request)
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista.');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
 
         $request->validate(Cirugia::rules());
@@ -179,9 +181,9 @@ class CirugiaController extends Controller
      */
     public function verCirugia($id)
     {
-        if (!session('cargo') || !in_array(session('cargo'), ['Recepcionista', 'Doctor'])) {
+        if (!session('cargo') || !in_array(session('cargo'), ['Recepcionista', 'Enfermero', 'Administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Acceso no autorizado.');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o enfermero');
         }
 
         $cirugia = Cirugia::with(['evaluacion', 'paciente', 'doctor'])->findOrFail($id);

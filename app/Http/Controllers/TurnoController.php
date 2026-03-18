@@ -130,9 +130,11 @@ class TurnoController extends Controller
     public function index(Request $request)
     {
 
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
 
         $query = Cita::with(['doctor', 'paciente']);
@@ -244,9 +246,11 @@ class TurnoController extends Controller
 
     public function store(Request $request)
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
         $data = $request->validate([
             'empleado_id' => ['required', 'integer'],
@@ -284,7 +288,7 @@ class TurnoController extends Controller
     public function exportPdf(Request $request)
     {
         // Permitir Recepcionista y Doctor
-        if (!session('cargo') || !in_array(session('cargo'), ['Recepcionista', 'Doctor'])) {
+        if (!session('cargo') || !in_array(session('cargo'), ['Recepcionista', 'Doctor', 'Administrador'])) {
             return redirect()->route('inicioSesion')
                 ->with('error', 'Debes iniciar sesión como Recepcionista o Doctor');
         }

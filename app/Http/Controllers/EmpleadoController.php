@@ -12,11 +12,13 @@ class EmpleadoController extends Controller
 {
     public function crear()
     {
-        if (!session('cargo') || strtolower(session('cargo')) != 'recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
-        $cargos = ['Recepcionista', 'Doctor', 'Enfermero', 'Gerente', 'Administrativo'];
+        $cargos = ['Recepcionista', 'Doctor', 'Enfermero', 'Gerente', 'Administrador'];
         $departamentos = ['Recepción', 'Medicina General', 'Pediatría', 'Cirugía', 'Administración'];
 
         return view('empleados.crear', compact('cargos', 'departamentos'));
@@ -112,9 +114,11 @@ class EmpleadoController extends Controller
     }
     public function edit($id)
     {
-        if (!session('cargo') || strtolower(session('cargo')) != 'recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
 
         $empleado = Empleado::findOrFail($id);
@@ -216,9 +220,11 @@ class EmpleadoController extends Controller
 
     public function lista()
     {
-        if (!session('cargo') || strtolower(session('cargo')) != 'recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
 
         $empleados = Empleado::orderBy('created_at', 'desc')->get();

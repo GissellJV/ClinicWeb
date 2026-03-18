@@ -259,6 +259,28 @@
                         <i class="bi bi-house-door-fill me-1"></i> Inicio
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-modern"
+                       href="{{ request()->routeIs('/') ? '#servicios' : url('/#servicios') }}">
+                        <i class="bi bi-info-circle-fill me-1"></i>Información</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link nav-link-modern"
+                       href="{{ request()->routeIs('/') ? '#doctors' : url('/#doctors') }}">
+                        <i class="bi bi-person-fill me-1"></i> Doctores</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link nav-link-modern"
+                       href="{{ request()->routeIs('/') ? '#comentarios' : url('/#comentarios') }}">
+                        <i class="bi bi-chat-right-text me-1"></i> Comentarios</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link nav-link-modern" href="{{ route('preguntas.publico') }}">
+                        <i class="bi bi-question-circle me-1"></i> Preguntas Frecuentes</a>
+                </li>
 
                 <!-- Enfermería -->
                 <li class="nav-item dropdown">
@@ -301,7 +323,7 @@
                 <!-- Perfil -->
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-link-glow dropdown-toggle profile-badge" data-bs-toggle="dropdown">
-                        <i class="bi bi-person-circle"></i> {{ session('empleado_nombre') }}
+                        <i class="bi bi-person-circle me-1"></i> {{ session('empleado_nombre') }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-modern dropdown-menu-end">
                         <li>

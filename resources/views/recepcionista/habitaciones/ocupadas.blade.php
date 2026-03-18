@@ -1,4 +1,21 @@
-@extends('layouts.plantillaRecepcion')
+@php
+    if (session('tipo_usuario') === 'empleado') {
+    switch (session('cargo')) {
+    case 'Recepcionista':
+    $layout = 'layouts.plantillaRecepcion';
+    break;
+    case 'Administrador':
+    $layout = 'layouts.plantillaAdmin';
+    break;
+    default:
+    $layout = 'layouts.plantilla';
+    }
+    } else {
+    $layout = 'layouts.plantilla';
+    }
+@endphp
+
+@extends($layout)
 
 @section('title', 'Habitaciones Ocupadas')
 
@@ -13,6 +30,7 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: whitesmoke;
@@ -66,14 +84,14 @@
             background: white;
             border-radius: 15px;
             padding: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             border-left: 5px solid;
             transition: all 0.3s;
         }
 
         .alert-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
         }
 
         .alert-card.emergencia {
@@ -126,7 +144,7 @@
         .administracion .inventory-card {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             overflow: visible;
             padding: 25px;
             margin: 0 -15px;
@@ -424,6 +442,7 @@
             border-top: 5px solid #4ecdc4;
             position: relative;
         }
+
         .modal-section-title {
             font-weight: 600;
             color: #2c3e50;
@@ -458,6 +477,7 @@
                 font-size: 13px;
             }
         }
+
         table.dataTable thead th {
             padding: 20px;
             text-align: left;
@@ -466,10 +486,11 @@
             letter-spacing: 0.5px;
             text-transform: uppercase;
             border-bottom: 2px solid #e0e0e0;
-            background:  #4ecdc4 !important;
+            background: #4ecdc4 !important;
             color: white;
             white-space: nowrap;
         }
+
         .text-info-emphasis {
 
             font-weight: bold;
@@ -594,7 +615,8 @@
                                     $badgeClass = 'badge-tipo tipo-' . strtolower($asignacion->habitacion->tipo);
                                 @endphp
 
-                                <tr class="{{ $tipoClass }}" data-tipo="{{ strtolower($asignacion->habitacion->tipo) }}">
+                                <tr class="{{ $tipoClass }}"
+                                    data-tipo="{{ strtolower($asignacion->habitacion->tipo) }}">
                                     <td>
                                             <span class="habitacion-badge">
                                                 {{ $asignacion->habitacion->numero_habitacion }}
@@ -626,7 +648,8 @@
                                     </td>
 
                                     <td>
-                                        <a href="{{ route('recepcionista.habitaciones.alta', $asignacion->id) }}" class="btn-sm btn-liberar" style="text-decoration-line: none">
+                                        <a href="{{ route('recepcionista.habitaciones.alta', $asignacion->id) }}"
+                                           class="btn-sm btn-liberar" style="text-decoration-line: none">
                                             <i class="fas fa-door-open"></i> Dar de Alta
                                         </a>
 
@@ -650,7 +673,7 @@
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Inicializar DataTable
             var table = $('#habitacionesTable').DataTable({
                 responsive: true,
@@ -697,7 +720,7 @@
                 let doble = 0;
                 let uci = 0;
 
-                table.rows({search: 'applied'}).every(function() {
+                table.rows({search: 'applied'}).every(function () {
                     const node = this.node();
                     const tipo = $(node).data('tipo');
 
@@ -719,7 +742,7 @@
             }
 
             // Actualizar contadores al buscar/filtrar
-            table.on('search.dt', function() {
+            table.on('search.dt', function () {
                 actualizarContadores();
             });
 

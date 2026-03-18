@@ -18,10 +18,11 @@ class DatabaseSeeder extends Seeder
 
 
         $this->call([
-            InventarioMedicamentosTableSeeder::class,
+            //InventarioMedicamentosTableSeeder::class,
             //HabitacionesSeeder::class,
-            CotizacionDetalleSeeder::class,
+           // CotizacionDetalleSeeder::class,
            // HabitacionesTableSeeder::class, // ← AGREGAR ESTA LÍNEA
+            EmpleadoSeeder::class,
         ]);
 
 

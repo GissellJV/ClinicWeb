@@ -1,10 +1,10 @@
+
 <!doctype html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Recepcion</title>
+    <title>@yield('titulo')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
@@ -14,19 +14,15 @@
             padding-top: 60px;
             background-color: #f5f7fa;
         }
-        .alert {
-            transition: all 0.5s ease;
+
+        .formulario small.text-danger {
+            font-size: 0.875rem;
+            display: block;
+            margin-top: 0.5rem;
         }
 
-        main.contenido {
-            flex: 1;
-            padding: 1rem;
-        }
-        .navbar-modern .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 0.35rem; /* espacio entre icono y texto */
-        }
+
+        /* NAVBAR MODERNO */
         .navbar-modern {
             background: linear-gradient(90deg, #00bfa6, #009e8e);
             padding: 0.75rem 0;
@@ -34,103 +30,37 @@
             overflow: visible !important;
         }
 
-        /* Contenedor navbar */
-        .navbar-modern .container-fluid {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        /* Navbar links */
-        .navbar-modern .navbar-nav {
-            display: flex;
-            align-items: center;
-            flex-wrap: nowrap;
-        }
-
-        .navbar-modern .navbar-nav.d-none.d-lg-flex {
-            gap: 0rem !important;
-            margin-right: 0rem !important;
-        }
-
-        .navbar-modern .navbar-nav.flex-row .nav-item {
-            margin-right: 0 !important;
-        }
-
-        .navbar-modern .navbar-nav.flex-row .nav-link {
-            padding-left: 0.25rem !important;
-            padding-right: 0.25rem !important;
-            margin-right: 0 !important;
-        }
-
-        .navbar-modern .navbar-nav .nav-item .nav-link {
-            padding-left: 0.55rem !important;
-            padding-right: 0.55rem !important;
-        }
-
-        /* ================== LOGO ================== */
-        .navbar-brand img {
-            height: 3rem;
-            width: auto;
-            transition: transform 0.3s ease;
-        }
-        .navbar-brand:hover img {
-            transform: scale(1.05);
-        }
-
-        /* ================== NAV-LINK GLOW ================== */
         .nav-link-glow {
             color: #e7fffc !important;
             font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            transition: 0.25s ease;
         }
 
-        .nav-link-glow::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.4s ease, height 0.4s ease;
+        .nav-link-modern {
+            color: #e7fffc !important;
+            font-weight: 500;
+            transition: 0.25s ease;
         }
 
-        .nav-link-glow:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .nav-link-glow:hover {
+        .nav-link-glow:hover, .nav-link-glow.active {
             color: #ffffff !important;
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5),
-            0 0 30px rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
+            text-shadow: 0 0 10px #00ffe0, 0 0 20px #00d3b8;
         }
 
-        .nav-link-glow.active {
-            background: rgba(255, 255, 255, 0.2);
-            color: #ffffff !important;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        /* ALINEACIÓN HORIZONTAL DEL NAVBAR */
+        .navbar-nav {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
         }
 
-        /* ================== DROPDOWN ================== */
-        .navbar-modern .d-none.d-lg-flex .nav-item.dropdown .dropdown-menu {
-            position: absolute !important;
-            top: 100% !important;
-            right: 0 !important;
-            margin-top: 8px !important;
-            transform: none !important;
-            z-index: 99999 !important;
+        .navbar-nav .nav-item {
+            display: flex;
+            align-items: center;
         }
 
+        /* Dropdown moderno */
         .dropdown-menu-modern {
             background-color: #00bfa6;
             border: none;
@@ -145,145 +75,16 @@
         .dropdown-item-modern:hover {
             color: #ffffff;
             text-shadow: 0 0 8px #00ffe0;
-            background-color: rgba(0,0,0,0.1);
+            background-color: rgba(0, 0, 0, 0.1);
         }
 
-        /* ================== BOTÓN HAMBURGUESA ================== */
-        .navbar-toggler-modern {
-            background: white;
-            border: 2px solid #4ecdc4;
-            border-radius: 10px;
-            width: 50px;
-            height: 50px;
+        /* Perfil badge */
+        .profile-badge {
             display: flex;
             align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
         }
 
-        .navbar-toggler-modern::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(78, 205, 196, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.4s ease, height 0.4s ease;
-        }
-
-        .navbar-toggler-modern:hover::before {
-            width: 200px;
-            height: 200px;
-        }
-
-        .navbar-toggler-modern:hover {
-            background: #4ecdc4;
-            box-shadow: 0 0 20px rgba(78, 205, 196, 0.6),
-            0 0 40px rgba(78, 205,196, 0.4),
-            0 4px 8px rgba(0, 0, 0, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .navbar-toggler-icon-modern {
-            background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%2334b5ad' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-            width: 24px;
-            height: 24px;
-            transition: transform 0.3s ease;
-        }
-
-        .navbar-toggler-modern:hover .navbar-toggler-icon-modern {
-            background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-            transform: rotate(90deg);
-        }
-
-        /* ================== OFFCANVAS ================== */
-        .offcanvas-modern {
-            background-color: #e7fffc;
-            width: 350px !important;
-            height: 100% !important;
-        }
-
-        .offcanvas-header-modern {
-            background: linear-gradient(90deg, #00bfa6, #009e8e);
-            color: white;
-            padding: 1.5rem;
-        }
-
-        .offcanvas-title-modern {
-            font-weight: 700;
-            font-size: 1.3rem;
-        }
-
-        .btn-close-modern {
-            filter: brightness(0) invert(1);
-        }
-
-        /* ================== OFFCANVAS LINKS ================== */
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(30px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .offcanvas-body .navbar-nav {
-            align-items: flex-start !important;
-            text-align: left !important;
-            width: 100%;
-        }
-
-        .offcanvas-nav-link {
-            color: #009e8e !important;
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            margin: 0.25rem 0;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            opacity: 0;
-            animation: slideInRight 0.4s ease forwards;
-            width: 100%;
-        }
-
-        .offcanvas-nav-link::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 0;
-            background: linear-gradient(90deg, #4ecdc4, #00bfa6);
-            transition: width 0.3s ease;
-            z-index: -1;
-        }
-
-        .offcanvas-nav-link:hover::before,
-        .offcanvas-nav-link.active::before {
-            width: 100%;
-        }
-
-        .offcanvas-nav-link:hover,
-        .offcanvas-nav-link.active {
-            color: white !important;
-            transform: translateX(10px);
-            box-shadow: 0 4px 12px rgba(78, 205, 196, 0.3);
-        }
-
-        .offcanvas-nav-link i {
-            margin-right: 12px !important;
-            transition: transform 0.3s ease;
-            font-size: 1.1rem;
-        }
-
-        .offcanvas-nav-link:hover i {
-            transform: scale(1.2) rotate(5deg);
-        }
-
-        /* ================== BOTÓN CERRAR SESIÓN ================== */
+        /* Botón cerrar sesión */
         .btn-logout {
             padding: 6px 12px !important;
             font-size: 14px !important;
@@ -301,18 +102,183 @@
             box-shadow: 0 0 9px #ff6b6b;
         }
 
-        /* ================== FOOTER ================== */
+        /* Logo SVG */
+        .navbar-brand svg {
+            height: 48px;
+            width: 48px;
+        }
+
+        /* Offcanvas */
+        .offcanvas-modern {
+            background: linear-gradient(180deg, #00bfa6, #009e8e);
+            color: #e7fffc;
+        }
+
+        .offcanvas-modern .nav-link {
+            color: #e7fffc;
+            transition: 0.3s;
+        }
+
+        .offcanvas-modern .nav-link:hover {
+            color: #fff;
+            text-shadow: 0 0 10px #00ffe0;
+        }
+
+        main.contenido {
+            flex: 1;
+            padding: 1rem;
+            margin-top: 80px;
+            padding: 1rem;
+        }
+
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        .nav-link-modern {
+            color: #e7fffc !important;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-link-modern:hover {
+            color: #ffffff !important;
+            text-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+        }
+
+        /* BOTÓN HAMBURGUESA MODERNO */
+        .navbar-toggler {
+            background: white;
+            border: 2px solid #4ecdc4;
+            border-radius: 10px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .navbar-toggler::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(78, 205, 196, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+
+        .navbar-toggler:hover::before {
+            width: 200px;
+            height: 200px;
+        }
+
+        .navbar-toggler:hover {
+            background: #4ecdc4;
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.6),
+            0 0 40px rgba(78, 205, 196, 0.4),
+            0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .navbar-toggler-icon-modern {
+            background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%2334b5ad' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-toggler:hover .navbar-toggler-icon-modern {
+            background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+            transform: rotate(90deg);
+        }
+
+        .navbar-toggler.collapsed .bar:nth-child(2) {
+            opacity: 1;
+        }
+
+        .navbar-toggler.collapsed .bar:nth-child(1) {
+            transform: rotate(0) translate(0, 0);
+        }
+
+        .navbar-toggler.collapsed .bar:nth-child(3) {
+            transform: rotate(0) translate(0, 0);
+        }
+
+        .navbar-toggler:not(.collapsed) .bar:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .navbar-toggler:not(.collapsed) .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .navbar-toggler:not(.collapsed) .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* OFFCANVAS ESTILIZADO */
+        .offcanvas-end {
+            width: 280px;
+            background: linear-gradient(180deg, #009e8e, #00bfa6);
+            color: white;
+            padding: 1rem;
+        }
+
+        .offcanvas-end .nav-link {
+            color: white;
+            padding: 0.6rem 0.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .offcanvas-end .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+
+        .offcanvas-header .btn-close {
+            filter: invert(1); /* botón blanco */
+        }
+
+        /* FOOTER MODERNO */
         .footer-modern {
             background: linear-gradient(180deg, #009e8e, #00bfa6);
             color: white;
             padding: 2rem 1rem;
         }
-        .footer-title { font-weight: 700; margin-bottom: 0.8rem; }
-        .footer-text { color: #eafffa; font-size: 0.95rem; margin-bottom: 0.4rem; }
-        .footer-divider { border-color: rgba(255,255,255,0.25); }
+
+        .footer-title {
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-text {
+            color: #eafffa;
+            font-size: 0.95rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .footer-divider {
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
         .social.modern {
-            width: 42px; height: 42px;
-            background: rgba(255,255,255,0.2);
+            width: 42px;
+            height: 42px;
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
@@ -321,61 +287,356 @@
             color: white;
             transition: 0.3s ease;
         }
-        .social.modern:hover { background: white; color: #009e8e; }
+
+        .social.modern:hover {
+            background: white;
+            color: #009e8e;
+        }
+
+        .edit-icon-overlay {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            background: #00bfa6;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .edit-icon-overlay i {
+            font-size: 10px;
+            color: white;
+        }
+
+        .edit-icon-overlay:hover {
+            background: #009e8e;
+            transform: scale(1.15);
+            box-shadow: 0 0 12px rgba(0, 217, 192, 0.8);
+        }
+
+        .profile-badge img {
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 217, 192, 0.3);
+        }
+
+        .profile-badge:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 217, 192, 0.5);
+        }
+
+        .edit-icon-overlay {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            background: #00bfa6;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .edit-icon-overlay i {
+            font-size: 10px;
+            color: white;
+        }
+
+        .edit-icon-overlay:hover {
+            background: #009e8e;
+            transform: scale(1.15);
+            box-shadow: 0 0 12px rgba(0, 217, 192, 0.8);
+        }
+
+        .profile-badge img {
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 217, 192, 0.3);
+        }
+
+        .profile-badge:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 217, 192, 0.5);
+        }
+
+        /* BOTONES */
+        .btn-register {
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+
+        .btn-cancel {
+            padding: 0.875rem 2rem;
+            background: white;
+            border: 2px solid #dc3545;
+            border-radius: 8px;
+            color: #dc3545;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancel:hover {
+            background: #dc3545;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+        }
+
+        .foto-preview-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #e0e0e0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .foto-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .foto-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .form-group-custom {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group-custom label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+            color: #333;
+        }
+
+        .form-group-custom .form-control {
+            border-radius: 8px;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        .form-group-custom .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(0, 217, 192, 0.25);
+        }
+
+        #nuevaFotoPreview .foto-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+        }
+        .badge {
+            background: red;
+            color: white;
+            font-size: 9px;
+            padding: 4px 7px;
+            border-radius: 20%;
+            position: absolute;
+            top: -5px;
+            right: -10px;
+        }
 
     </style>
-
 </head>
-
 <body>
-@if(session('ok'))
-    <div id="globalAlert" class="alert alert-success alert-dismissible fade show text-center mb-0" role="alert">
-        {{ session('ok') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-@endif
 
-@if(session('error'))
-    <div id="globalAlert" class="alert alert-danger alert-dismissible fade show text-center mb-0" role="alert">
-        {{ session('error') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-@endif
-
-<nav class="navbar navbar-modern fixed-top">
-    <div class="container-fluid d-flex align-items-center justify-content-between">
-
-        <!-- LOGO -->
+<nav class="navbar navbar-modern navbar-expand-lg fixed-top shadow-sm">
+    <div class="container-fluid">
+        <!-- Logo -->
         <a class="navbar-brand d-flex align-items-center fw-bold text-white" href="{{ route('/') }}">
             ClinicWeb
         </a>
 
-        <!-- LINKS VISIBLES SOLO EN PC -->
-        <ul class="navbar-nav flex-row ms-auto me-4 gap-3 d-none d-lg-flex nav-ul-tight">
+        <!-- Botón móvil -->
+        <button class="navbar-toggler collapsed" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarClinic"
+                aria-controls="navbarClinic" aria-expanded="false">
+            <span class="navbar-toggler-icon-modern"></span>
+        </button>
+
+
+        <!-- Desktop menu -->
+
+        <ul class="navbar-nav flex-row ms-auto me-3 gap-2 d-none d-lg-flex">
+            <!-- Inicio -->
             <li class="nav-item">
-                <a class="nav-link nav-link-glow active" href="{{ request()->routeIs('/') ? '#hero' : url('/#hero') }}">
+                <a class="nav-link nav-link-glow {{ request()->routeIs('/') ? 'active' : '' }}" href="{{ route('/') }}">
                     <i class="bi bi-house-door-fill me-1"></i> Inicio
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link nav-link-glow" href="{{ request()->routeIs('/') ? '#servicios' : url('/#servicios') }}">
-                    <i class="bi bi-info-circle-fill me-1"></i> Información
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link nav-link-glow" href="{{ request()->routeIs('/') ? '#doctors' : url('/#doctors') }}">
-                    <i class="bi bi-person-fill"></i> Doctores
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link nav-link-glow" href="{{ route('preguntas.publico') }}">
-                    <i class="bi bi-question-circle me-1"></i> Preguntas Frecuentes
-                </a>
+                <a class="nav-link nav-link-modern"
+                   href="{{ request()->routeIs('/') ? '#servicios' : url('/#servicios') }}">
+                    <i class="bi bi-info-circle-fill me-1"></i>Información</a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link nav-link-modern"
+                   href="{{ request()->routeIs('/') ? '#doctors' : url('/#doctors') }}">
+                    <i class="bi bi-person-fill me-1"></i> Doctores</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link nav-link-modern"
+                   href="{{ request()->routeIs('/') ? '#comentarios' : url('/#comentarios') }}">
+                    <i class="bi bi-chat-right-text me-1"></i> Comentarios</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link nav-link-modern" href="{{ route('preguntas.publico') }}">
+                    <i class="bi bi-question-circle me-1"></i> Preguntas Frecuentes</a>
+            </li>
+
+            <!-- Acciones -->
             <li class="nav-item dropdown">
-                <a class="nav-link nav-link-glow dropdown-toggle profile-badge" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-person-circle me-1"></i> {{ session('empleado_nombre') ?? 'Empleado' }}
+                <a class="nav-link nav-link-glow dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    <i class="bi bi-lightning-fill me-1"></i> Acciones
+                </a>
+                <ul class="dropdown-menu dropdown-menu-modern">
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('recepcionista.busquedaexpediente') }}">
+                            <i class="bi bi-search"></i> Búsqueda de Expediente
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('citas.agendar') }}">
+                            <i class="bi bi-calendar-plus"></i> Agendar Cita
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern"
+                           href="{{ route('recepcionista.reporte.calidad') }}">
+                            <i class="bi bi-patch-check-fill"></i> Calidad de Traslados
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('listadocitas') }}">
+                            <i class="bi bi-calendar-check"></i> Citas Programadas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('recepcionista.registroPaciente')}}">
+                            <i class="bi bi-clipboard-check"></i> Asistencia de Pacientes
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('recepcionista.habitaciones.ocupadas') }}">
+                            <i class="bi bi-door-closed"></i> Habitaciones Ocupadas
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('recepcionista.habitaciones.asignar') }}">
+                            <i class="bi bi-house-add"></i> Asignar Habitación
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('historial.diario') }}">
+                            <i class="bi bi-journal-text"></i> Historial Diario
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('preguntas.index') }}">
+                            <i class="bi bi-question-circle"></i> Administración de Preguntas
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('recepcionista.cirugias.index') }}">
+                            <i class="bi bi-scissors"></i> Cirugías Programadas
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('recepcionista.incidentes.index') }}">
+                            <i class="bi bi-exclamation-triangle"></i> Reportes de Incidentes
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('inventario.equipos.index') }}">
+                            <i class="bi bi-box-seam"></i> Inventario de Equipos
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('expedientes.archivados') }}">
+                            <i class="bi bi-folder-plus"></i> Expedientes Archivados
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('visitantes.index') }}">
+                            <i class="bi bi-person-check-fill"></i> Registro de Visitantes
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <!-- Perfil -->
+            <li class="nav-item dropdown">
+
+                <a class="nav-link nav-link-glow dropdown-toggle profile-badge" href="#" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    @php
+                        $empleadoId = session('empleado_id');
+                        $empleado = \App\Models\Empleado::find($empleadoId);
+                    @endphp
+
+                    <div style="position: relative; display: inline-block; margin-right: 8px;">
+                        @if($empleado && $empleado->foto)
+                            <img src="data:image/jpeg;base64,{{ base64_encode($empleado->foto) }}"
+                                 alt="Foto"
+                                 style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid #00ffe0;">
+                        @else
+                            <i class="bi bi-person-circle" style="font-size: 35px; color: #e7fffc;"></i>
+                        @endif
+
+
+                        <span class="edit-icon-overlay" data-bs-toggle="modal" data-bs-target="#modalFotoDoctor"
+                              onclick="event.stopPropagation();">
+            <i class="bi bi-camera-fill"></i>
+        </span>
+                    </div>
+
+                    {{ session('empleado_nombre') ?? 'Empleado' }}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-modern dropdown-menu-end">
                     <li>
@@ -389,183 +650,12 @@
                 </ul>
             </li>
         </ul>
-
-        <!-- BOTÓN HAMBURGUESA -->
-        <button class="navbar-toggler-modern" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasNavbar">
-            <span class="navbar-toggler-icon-modern"></span>
-        </button>
-
-        <div class="offcanvas offcanvas-end offcanvas-modern" tabindex="-1" id="offcanvasNavbar">
-            <div class="offcanvas-header offcanvas-header-modern">
-                <h5 class="offcanvas-title offcanvas-title-modern">
-                    <i class="bi bi-reception-4 me-2"></i> Menú administrativo
-                </h5>
-                <button type="button" class="btn-close btn-close-modern" data-bs-dismiss="offcanvas"></button>
-            </div>
-
-            <div class="offcanvas-body">
-
-                @if(session('empleado_nombre'))
-                    <div class="user-card p-3 mb-3 d-flex align-items-center rounded shadow-sm"
-                         style="background: linear-gradient(135deg, #4ecdc4, #00bfa6); color: white;">
-
-                        <div class="me-3 d-flex align-items-center justify-content-center"
-                             style="width: 55px; height: 55px; background:white; border-radius:50%;">
-                            <i class="bi bi-person-fill" style="font-size: 2rem; color:#00bfa6;"></i>
-                        </div>
-
-                        <div>
-                            <div class="fw-bold" style="font-size: 1.1rem;">
-                                {{ session('empleado_nombre') }}
-                            </div>
-                            <small>Recepcionista</small>
-                        </div>
-                    </div>
-                @endif
-
-
-                <!-- MENU -->
-                <ul class="navbar-nav flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.busquedaexpediente') }}">
-                            <i class="bi bi-search"></i> Búsqueda de Expediente
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('citas.agendar') }}">
-                            <i class="bi bi-calendar-plus"></i> Agendar Cita
-                        </a>
-                    </li>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.reporte.calidad') }}">
-                            <i class="bi bi-patch-check-fill"></i> Calidad de Traslados
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('empleados.crear') }}">
-                            <i class="bi bi-person-plus"></i> Registrar Empleado
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('empleados.lista') }}">
-                            <i class="bi bi-person"></i> Lista de Empleados
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('listadocitas') }}">
-                            <i class="bi bi-calendar-check"></i> Citas Programadas
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.registroPaciente') }}">
-                            <i class="bi bi-clipboard-check"></i> Asistencia de Pacientes
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.index') }}">
-                            <i class="bi bi-clock-history"></i> Turnos de Doctores
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.indexEnfer') }}">
-                            <i class="bi bi-calendar-week"></i> Turnos de enfermeros
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.habitaciones.ocupadas') }}">
-                            <i class="bi bi-door-closed"></i> Habitaciones Ocupadas
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.habitaciones.asignar') }}">
-                            <i class="bi bi-house-add"></i> Asignar Habitación
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('promociones') }}">
-                            <i class="bi bi-folder-plus"></i> Agregar Publicidad
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('publicidad') }}">
-                            <i class="bi bi-folder-plus"></i> Agregar Promociones
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('historial.diario') }}">
-                            <i class="bi bi-journal-text"></i> Historial Diario
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('preguntas.index') }}">
-                            <i class="bi bi-question-circle"></i> Administración de Preguntas
-                        </a>
-                    </li>
-                    <!-- H74: Cirugías Programadas -->
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.cirugias.index') }}">
-                            <i class="bi bi-scissors"></i> Cirugías Programadas
-                        </a>
-                    </li>
-                    <!-- Reportes de Incidentes -->
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.incidentes.index') }}">
-                            <i class="bi bi-exclamation-triangle"></i> Reportes de Incidentes
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('inventario.equipos.index') }}">
-                            <i class="bi bi-box-seam"></i> Inventario de Equipos
-                        </a>
-                    </li>
-                    <!-- EXPEDIENTES ARCHIVADOS (del primer código) -->
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('expedientes.archivados') }}">
-                            <i class="bi bi-folder-plus"></i> Expedientes Archivados
-                        </a>
-                    </li>
-                    <!-- REGISTRO DE VISITANTES (combinado de ambos) -->
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('visitantes.index') }}">
-                            <i class="bi bi-person-check-fill"></i> Registro de Visitantes
-                        </a>
-                    </li>
-                </ul>
-
-                <!-- BOTÓN CERRAR SESIÓN -->
-                @if(session('empleado_id'))
-                    <form action="{{ route('empleados.logout') }}" method="POST" class="mt-4">
-                        @csrf
-                        <button class="btn w-100 d-flex align-items-center justify-content-center"
-                                style="
-                        background: linear-gradient(90deg, #ff5f6d, #ff3d54);
-                        color: white;
-                        border: none;
-                        padding: 12px;
-                        border-radius: 10px;
-                        font-weight: 600;
-                        transition: all 0.3s ease;
-                    "
-                                onmouseover="this.style.transform='scale(1.03)'"
-                                onmouseout="this.style.transform='scale(1)'">
-                            <i class="bi bi-box-arrow-right me-2"></i>
-                            Cerrar Sesión
-                        </button>
-                    </form>
-                @endif
-
-            </div> <!-- FIN OFFCANVAS BODY -->
-
-        </div>
     </div>
-
 </nav>
 
-<div class="container-fluid p-0 mt-0 pt-0">
+<main class="contenido container-fluid p-0 mt-0 pt-0">
     @yield('contenido')
-</div>
+</main>
 
 <footer class="footer-modern mt-5">
     <div class="container py-5">
@@ -584,7 +674,10 @@
                 <h5 class="footer-title">Contacto</h5>
                 <p class="footer-text"><i class="bi bi-geo-alt-fill me-2"></i> Danlí, El Paraíso, Honduras</p>
                 <p class="footer-text"><i class="bi bi-telephone-fill me-2"></i> +504 2234-5678</p>
-                <p class="footer-text"><i class="bi bi-envelope-fill me-2"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="46252928322725322906252a2f282f25312324682e28">[email&#160;protected]</a></p>
+                <p class="footer-text"><i class="bi bi-envelope-fill me-2"></i> <a href="/cdn-cgi/l/email-protection"
+                                                                                   class="__cf_email__"
+                                                                                   data-cfemail="0a6965647e6b697e654a6966636463697d6f68246264">[email&#160;protected]</a>
+                </p>
             </div>
 
             <!-- Columna 3 -->
@@ -604,24 +697,191 @@
         <div class="text-center text-white-50 small mt-3">
             © {{ date('Y') }} ClinicWeb. Todos los derechos reservados.
         </div>
-
-    </div>
     </div>
 </footer>
 
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-@stack('scripts')
+
+
+<div class="modal fade" id="modalFotoDoctor" tabindex="-1" aria-labelledby="modalFotoDoctorLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalFotoDoctorLabel">
+                    <i class="bi bi-camera-fill me-2"></i>Actualizar Foto de Perfil
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form action="{{ route('doctor.subirFoto') }}" method="POST" enctype="multipart/form-data"
+                  id="formFotoDoctor">
+                @csrf
+                <div class="modal-body">
+
+                    <!-- Vista previa de la foto actual -->
+                    <div class="text-center mb-4">
+                        <div class="foto-preview-container">
+                            @php
+                                $empleadoId = session('empleado_id');
+                                $empleado = \App\Models\Empleado::find($empleadoId);
+                            @endphp
+
+                            @if($empleado && $empleado->foto)
+                                <img src="data:image/jpeg;base64,{{ base64_encode($empleado->foto) }}"
+                                     alt="Foto actual"
+                                     class="foto-preview"
+                                     id="fotoActual">
+                            @else
+                                <div class="foto-placeholder" id="fotoPlaceholder">
+                                    <i class="bi bi-person-circle"></i>
+                                </div>
+                            @endif
+                        </div>
+                        <small class="text-muted">Foto actual</small>
+                    </div>
+
+                    <!-- Input para nueva foto -->
+                    <div class="form-group-custom mb-3">
+                        <label for="foto" class="form-label">Seleccionar nueva foto *</label>
+                        <input type="file"
+                               class="form-control @error('foto') is-invalid @enderror"
+                               id="foto"
+                               name="foto"
+                               accept="image/jpeg,image/jpg,image/png"
+                               onchange="previewImage(event)"
+                        >
+
+                        @error('foto')
+                        <div class="invalid-feedback d-block">
+                            <i></i>{{ $message }}
+                        </div>
+                        @enderror
+
+                        <div class="invalid-feedback" id="errorFoto">
+                            <i></i>Por favor selecciona una imagen válida
+                        </div>
+
+                    </div>
+
+                    <!-- Vista previa de la nueva foto -->
+                    <div class="text-center mt-3" id="nuevaFotoPreview" style="display: none;">
+                        <p class="mb-2"><strong>Nueva foto:</strong></p>
+                        <img src="" alt="Vista previa" class="foto-preview" id="imagenPreview">
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" data-bs-dismiss="modal">
+                        <i class=""></i>Cancelar
+                    </button>
+                    <button type="submit" class="btn-register" id="btnSubirFoto">
+                        <i class="bi bi-upload me-1"></i>Subir Foto
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const alert = document.getElementById('globalAlert');
-        if (alert) {
-            setTimeout(function () {
-                const bsAlert = new bootstrap.Alert(alert);
-                bsAlert.close();
-            }, 3000); // 3 segundos
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('nuevaFotoPreview');
+        const img = document.getElementById('imagenPreview');
+        const fotoInput = document.getElementById('foto');
+
+        // Limpiar clases de error previas
+        fotoInput.classList.remove('is-invalid');
+
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const fileSize = file.size / 1024 / 1024; // MB
+            const fileType = file.type;
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+
+            // Validar tipo de archivo
+            if (!allowedTypes.includes(fileType)) {
+                fotoInput.classList.add('is-invalid');
+                document.getElementById('errorFoto').textContent = 'Solo se permiten archivos JPG, JPEG o PNG';
+                input.value = '';
+                preview.style.display = 'none';
+                return;
+            }
+
+            // Validar tamaño (máximo 2MB)
+            if (fileSize > 2) {
+                fotoInput.classList.add('is-invalid');
+                document.getElementById('errorFoto').textContent = 'La imagen no debe superar los 2MB';
+                input.value = '';
+                preview.style.display = 'none';
+                return;
+            }
+
+            // Si pasa las validaciones, mostrar preview
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                img.src = e.target.result;
+                preview.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Validar antes de enviar el formulario
+    document.getElementById('formFotoDoctor').addEventListener('submit', function (e) {
+        const fotoInput = document.getElementById('foto');
+        const btnSubmit = document.getElementById('btnSubirFoto');
+
+        // Validar si hay archivo seleccionado
+        if (!fotoInput.files || fotoInput.files.length === 0) {
+            e.preventDefault();
+            fotoInput.classList.add('is-invalid');
+            document.getElementById('errorFoto').textContent = 'Debes seleccionar una foto';
+            fotoInput.focus();
+            return false;
+        }
+
+        const file = fotoInput.files[0];
+        const fileSize = file.size / 1024 / 1024; // MB
+        const fileType = file.type;
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+
+        // Validar tipo
+        if (!allowedTypes.includes(fileType)) {
+            e.preventDefault();
+            fotoInput.classList.add('is-invalid');
+            document.getElementById('errorFoto').textContent = 'Solo se permiten archivos JPG, JPEG o PNG';
+            fotoInput.focus();
+            return false;
+        }
+
+        // Validar tamaño
+        if (fileSize > 2) {
+            e.preventDefault();
+            fotoInput.classList.add('is-invalid');
+            document.getElementById('errorFoto').textContent = 'La imagen no debe superar los 2MB';
+            fotoInput.focus();
+            return false;
+        }
+
+        // Si pasa todas las validaciones, deshabilitar botón y mostrar loading
+        fotoInput.classList.remove('is-invalid');
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Subiendo...';
+
+        return true;
+    });
+
+    // Limpiar validación al cambiar archivo
+    document.getElementById('foto').addEventListener('change', function () {
+        if (this.files.length > 0) {
+            this.classList.remove('is-invalid');
         }
     });
-</script>
-</body>
 
-</html>
+    // Mantener modal abierto si hay errores de validación del servidor
+    document.addEvent
+</script>

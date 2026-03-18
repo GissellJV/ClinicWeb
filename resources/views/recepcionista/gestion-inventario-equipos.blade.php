@@ -1,4 +1,21 @@
-@extends('layouts.plantillaRecepcion')
+@php
+    if (session('tipo_usuario') === 'empleado') {
+    switch (session('cargo')) {
+    case 'Recepcionista':
+    $layout = 'layouts.plantillaRecepcion';
+    break;
+    case 'Administrador':
+    $layout = 'layouts.plantillaAdmin';
+    break;
+    default:
+    $layout = 'layouts.plantilla';
+    }
+    } else {
+    $layout = 'layouts.plantilla';
+    }
+@endphp
+
+@extends($layout)
 @section('contenido')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">

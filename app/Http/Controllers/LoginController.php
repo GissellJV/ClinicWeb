@@ -24,7 +24,6 @@ class LoginController extends Controller
 
         public function login(Request $request)
         {
-
             $request->validate([
                 'telefono' => 'required|string',
                 'password' => 'required|string',
@@ -63,8 +62,10 @@ class LoginController extends Controller
                     return redirect()->route('recepcionista.busquedaexpediente')->with('mensaje', $mensaje);
                 } elseif ($cargo == 'enfermero') {
                     return redirect()->route('inventario.principal')->with('mensaje', $mensaje);
-                } else {
-                    return redirect()->route('empleado.dashboard')->with('mensaje', $mensaje);
+                } elseif ($cargo == 'administrador') {
+                return redirect()->route('empleados.lista')->with('mensaje', $mensaje);
+            } else {
+                    return redirect()->route('/')->with('mensaje', $mensaje);
                 }
             }
 

@@ -1,12 +1,41 @@
-@extends('layouts.plantillaRecepcion')
+@php
+    if (session('tipo_usuario') === 'empleado') {
+    switch (session('cargo')) {
+    case 'Recepcionista':
+    $layout = 'layouts.plantillaRecepcion';
+    break;
+    case 'Doctor':
+    $layout = 'layouts.plantillaDoctor';
+    break;
+    case 'Enfermero':
+    $layout = 'layouts.plantillaEnfermero';
+    break;
+    case 'Administrador':
+    $layout = 'layouts.plantillaAdmin';
+    break;
+    default:
+    $layout = 'layouts.plantilla';
+    }
+    } else {
+    $layout = 'layouts.plantilla';
+    }
+@endphp
+
+@extends($layout)
 
 @section('contenido')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
     <style>
-        body { background: whitesmoke; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .main-container { padding-top: 20px; }
+        body {
+            background: whitesmoke;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .main-container {
+            padding-top: 20px;
+        }
 
         /* Tarjetas de Estadisticas con Efecto de Movimiento */
         .stat-card {
@@ -15,7 +44,7 @@
             color: white;
             padding: 1.2rem;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             cursor: pointer;
         }
@@ -23,18 +52,33 @@
         /* Efecto al pasar el cursor (Hover) */
         .stat-card:hover {
             transform: translateY(-8px); /* Se eleva */
-            box-shadow: 0 12px 20px rgba(0,0,0,0.15); /* Sombra mas profunda */
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15); /* Sombra mas profunda */
             filter: brightness(1.1); /* Brilla un poco mas */
         }
 
-        .mint { background-color: #00bfa6; }
-        .aqua { background-color: #4cd7c6; }
-        .turq { background-color: #82e9de; }
-        .soft { background-color: #b2f5ea; color: #004b46; }
+        .mint {
+            background-color: #00bfa6;
+        }
+
+        .aqua {
+            background-color: #4cd7c6;
+        }
+
+        .turq {
+            background-color: #82e9de;
+        }
+
+        .soft {
+            background-color: #b2f5ea;
+            color: #004b46;
+        }
 
         .chart-container {
-            background: white; border-radius: 15px; padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08); height: 100%;
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            height: 100%;
         }
 
         .bi-star-fill, .bi-star-half, .bi-star {
@@ -43,10 +87,18 @@
 
         /* Tablas */
         table.dataTable thead th {
-            background: #4ecdc4 !important; color: white !important;
-            text-transform: uppercase; font-size: 13px; text-align: center; border: none;
+            background: #4ecdc4 !important;
+            color: white !important;
+            text-transform: uppercase;
+            font-size: 13px;
+            text-align: center;
+            border: none;
         }
-        table.dataTable tbody td { text-align: center; vertical-align: middle; }
+
+        table.dataTable tbody td {
+            text-align: center;
+            vertical-align: middle;
+        }
     </style>
 
     <div class="container main-container my-4">
@@ -117,7 +169,9 @@
                 @foreach ($calificaciones as $item)
                     <tr>
                         <td class="fw-bold">{{ $item->traslado->paciente->nombres ?? 'Usuario' }}</td>
-                        <td><span class="badge" style="background: #e6f9f7; color: #0d9488;">{{ $item->traslado->unidad_asignada }}</span></td>
+                        <td><span class="badge"
+                                  style="background: #e6f9f7; color: #0d9488;">{{ $item->traslado->unidad_asignada }}</span>
+                        </td>
                         <td>
                             @for($i=1; $i<=5; $i++)
                                 <i class="bi bi-star{{ $i <= $item->puntuacion ? '-fill' : '' }}"></i>
@@ -138,7 +192,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#calidadTable').DataTable({
                 responsive: true,
                 language: {
@@ -171,8 +225,8 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        y: { beginAtZero: true, max: 5 },
-                        x: { grid: { display: false } }
+                        y: {beginAtZero: true, max: 5},
+                        x: {grid: {display: false}}
                     }
                 }
             });
@@ -192,7 +246,7 @@
                         backgroundColor: ['#00bfa6', '#4cd7c6', '#82e9de', '#b2f5ea', '#e2e8f0']
                     }]
                 },
-                options: { cutout: '70%', responsive: true, maintainAspectRatio: false }
+                options: {cutout: '70%', responsive: true, maintainAspectRatio: false}
             });
         });
     </script>

@@ -1,4 +1,21 @@
-@extends('layouts.plantillaRecepcion')
+@php
+    if (session('tipo_usuario') === 'empleado') {
+    switch (session('cargo')) {
+    case 'Recepcionista':
+    $layout = 'layouts.plantillaRecepcion';
+    break;
+    case 'Administrador':
+    $layout = 'layouts.plantillaAdmin';
+    break;
+    default:
+    $layout = 'layouts.plantilla';
+    }
+    } else {
+    $layout = 'layouts.plantilla';
+    }
+@endphp
+
+@extends($layout)
 <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 
 @section('contenido')
@@ -12,7 +29,6 @@
             max-width: 1200px;
             margin: 0 auto;
         }
-
 
 
         .page-header h1 {
@@ -114,7 +130,6 @@
             height: 50px;
 
 
-
         }
 
         .btn-edit:hover {
@@ -133,7 +148,8 @@
             cursor: pointer;
             text-decoration: none;
             width: 110px;
-            height: 50px;       }
+            height: 50px;
+        }
 
         .btn-delete:hover {
             background: #dc3545;
@@ -278,6 +294,7 @@
             font-weight: 600;
             cursor: pointer;
         }
+
         .text-info-emphasis {
 
             font-weight: bold;
@@ -377,7 +394,7 @@
             document.getElementById('deleteModal').classList.remove('show');
         }
 
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const modal = document.getElementById('deleteModal');
             if (event.target == modal) {
                 cerrarModal();

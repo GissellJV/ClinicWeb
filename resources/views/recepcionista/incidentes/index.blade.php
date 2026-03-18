@@ -1,4 +1,21 @@
-@extends('layouts.plantillaRecepcion')
+@php
+    if (session('tipo_usuario') === 'empleado') {
+    switch (session('cargo')) {
+    case 'Recepcionista':
+    $layout = 'layouts.plantillaRecepcion';
+    break;
+    case 'Administrador':
+    $layout = 'layouts.plantillaAdmin';
+    break;
+    default:
+    $layout = 'layouts.plantilla';
+    }
+    } else {
+    $layout = 'layouts.plantilla';
+    }
+@endphp
+
+@extends($layout)
 @section('titulo', 'Reportes de Incidentes')
 @section('contenido')
 
