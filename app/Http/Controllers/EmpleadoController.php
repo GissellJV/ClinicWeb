@@ -268,13 +268,13 @@ class EmpleadoController extends Controller
                 $empleado->foto = $foto;
                 $empleado->save();
 
-                return redirect()->back()->with('success', 'Foto actualizada con exito');
+                return redirect()->back()->with('foto_success', 'Foto actualizada con éxito');
             }
 
-            return redirect()->back()->with('error', 'No se recibió ningún archivo');
+            return redirect()->back()->with('foto_error', 'No se recibió ningún archivo');
 
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
+            return redirect()->back()->with('foto_error', 'Ocurrió un error al subir la foto');
         }
     }
 

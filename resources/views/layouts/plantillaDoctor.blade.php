@@ -877,3 +877,87 @@
     // Mantener modal abierto si hay errores de validación del servidor
     document.addEvent
 </script>
+
+
+{{-- Modal de éxito para foto --}}
+@if(session('foto_success'))
+    <div class="modal fade" id="modalExito" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content border-0 shadow" style="border-radius: 14px; overflow: hidden;">
+
+                <div style="height: 6px; background: linear-gradient(90deg, #00bfa6, #009e8e);"></div>
+                <div class="modal-body text-center px-4 pt-4 pb-2">
+                    {{-- Ícono check --}}
+                    <div style="width: 60px; height: 60px; background: #e6faf7;
+                            border-radius: 50%; display: flex; align-items: center;
+                            justify-content: center; margin: 0 auto 1rem;
+                            border: 2px solid #00bfa6;">
+                        <i class="bi bi-check-lg" style="font-size: 1.8rem; color: #00bfa6;"></i>
+                    </div>
+
+                    <h6 class="fw-bold mb-1" style="color: #222;">¡Listo!</h6>
+                    <p class="text-muted mb-0" style="font-size: 0.9rem;">
+                        {{ session('foto_success') }}
+                    </p>
+                </div>
+
+                <div class="modal-footer border-0 justify-content-center pt-2 pb-4">
+                    <button type="button"
+                            data-bs-dismiss="modal"
+                            style="background: #00bfa6; color: white; border: none;
+                               padding: 0.5rem 2.5rem; border-radius: 8px;
+                               font-size: 0.95rem; font-weight: 500; cursor: pointer;
+                               transition: background 0.2s;">
+                        Aceptar
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new bootstrap.Modal(document.getElementById('modalExito')).show();
+        });
+    </script>
+@endif
+
+{{-- Modal error --}}
+@if(session('foto_error'))
+    <div class="modal fade" id="modalError" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content border-0 shadow" style="border-radius: 12px; overflow: hidden;">
+                <div style="height: 6px; background: linear-gradient(90deg, #dc3545, #b02a37);"></div>
+                <div class="modal-body text-center px-4 pt-4 pb-2">
+                    <div style="width: 60px; height: 60px; background: #fdecea;
+                            border-radius: 50%; display: flex; align-items: center;
+                            justify-content: center; margin: 0 auto 1rem;
+                            border: 2px solid #dc3545;">
+                        <i class="bi bi-x-lg" style="font-size: 1.8rem; color: #dc3545;"></i>
+                    </div>
+                    <h6 class="fw-bold mb-1" style="color: #222;">¡Error!</h6>
+                    <p class="text-muted mb-0" style="font-size: 0.9rem;">
+                        {{ session('foto_error') }}
+                    </p>
+                </div>
+                <div class="modal-footer border-0 justify-content-center pt-2 pb-4">
+                    <button type="button" data-bs-dismiss="modal"
+                            style="background: #dc3545; color: white; border: none;
+                               padding: 0.5rem 2.5rem; border-radius: 8px;
+                               font-size: 0.95rem; font-weight: 500; cursor: pointer;">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new bootstrap.Modal(document.getElementById('modalError')).show();
+        });
+    </script>
+@endif
+
+
+
