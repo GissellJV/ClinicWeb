@@ -161,7 +161,6 @@
             font-size: 48px;
             font-weight: bold;
             box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
-            flex-shrink: 0;
             overflow: hidden;
             position: relative;
         }
@@ -172,17 +171,25 @@
             object-fit: cover;
         }
 
+        .profile-photo-wrapper {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            flex-shrink: 0;
+            display: inline-block;
+        }
+
         /* Botón de editar foto */
         .edit-photo-btn {
             position: absolute;
-            bottom: 0;
-            right: 0;
+            bottom: 2px;
+            right: -2px;
             background: #4ecdc4;
             color: white;
             border: 3px solid white;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -528,12 +535,14 @@
 
                 <div class="profile-card">
                     <div class="profile-header">
+                      <div class="profile-photo-wrapper">
                         <div class="profile-photo">
                             @if($paciente->foto)
                                 <img src="{{ asset('storage/' . $paciente->foto) }}" alt="Foto de perfil" id="profileImage">
                             @else
                                 <span id="profileInitials">{{ strtoupper(substr($paciente->nombres, 0, 1) . substr($paciente->apellidos, 0, 1)) }}</span>
                             @endif
+                        </div>
 
                             <!-- Botón de editar foto que abre el modal -->
                             <button type="button" class="edit-photo-btn" data-bs-toggle="modal" data-bs-target="#modalFotoPaciente" title="Cambiar foto">
@@ -862,4 +871,76 @@
             });
         }, 5000);
     </script>
+
+    {{-- Modal éxito foto --}}
+    @if(session('foto_success'))
+        <div class="modal fade" id="modalFotoExito" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content border-0 shadow" style="border-radius: 12px; overflow: hidden;">
+                    <div style="height: 6px; background: linear-gradient(90deg, #00bfa6, #009e8e);"></div>
+                    <div class="modal-body text-center px-4 pt-4 pb-2">
+                        <div style="width: 60px; height: 60px; background: #e6faf7;
+                            border-radius: 50%; display: flex; align-items: center;
+                            justify-content: center; margin: 0 auto 1rem;
+                            border: 2px solid #00bfa6;">
+                            <i class="bi bi-check-lg" style="font-size: 1.8rem; color: #00bfa6;"></i>
+                        </div>
+                        <h6 class="fw-bold mb-1" style="color: #222;">¡Listo!</h6>
+                        <p class="text-muted mb-0" style="font-size: 0.9rem;">
+                            {{ session('foto_success') }}
+                        </p>
+                    </div>
+                    <div class="modal-footer border-0 justify-content-center pt-2 pb-4">
+                        <button type="button" data-bs-dismiss="modal"
+                                style="background: #00bfa6; color: white; border: none;
+                               padding: 0.5rem 2.5rem; border-radius: 8px;
+                               font-size: 0.95rem; font-weight: 500; cursor: pointer;">
+                            Aceptar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                new bootstrap.Modal(document.getElementById('modalFotoExito')).show();
+            });
+        </script>
+    @endif
+
+    {{-- Modal error foto --}}
+    @if(session('foto_error'))
+        <div class="modal fade" id="modalFotoError" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content border-0 shadow" style="border-radius: 12px; overflow: hidden;">
+                    <div style="height: 6px; background: linear-gradient(90deg, #dc3545, #b02a37);"></div>
+                    <div class="modal-body text-center px-4 pt-4 pb-2">
+                        <div style="width: 60px; height: 60px; background: #fdecea;
+                            border-radius: 50%; display: flex; align-items: center;
+                            justify-content: center; margin: 0 auto 1rem;
+                            border: 2px solid #dc3545;">
+                            <i class="bi bi-x-lg" style="font-size: 1.8rem; color: #dc3545;"></i>
+                        </div>
+                        <h6 class="fw-bold mb-1" style="color: #222;">¡Error!</h6>
+                        <p class="text-muted mb-0" style="font-size: 0.9rem;">
+                            {{ session('foto_error') }}
+                        </p>
+                    </div>
+                    <div class="modal-footer border-0 justify-content-center pt-2 pb-4">
+                        <button type="button" data-bs-dismiss="modal"
+                                style="background: #dc3545; color: white; border: none;
+                               padding: 0.5rem 2.5rem; border-radius: 8px;
+                               font-size: 0.95rem; font-weight: 500; cursor: pointer;">
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                new bootstrap.Modal(document.getElementById('modalFotoError')).show();
+            });
+        </script>
+    @endif
 @endsection

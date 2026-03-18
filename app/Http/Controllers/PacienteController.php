@@ -361,6 +361,7 @@ class PacienteController extends Controller
                 ->with('error', 'Debes iniciar sesión');
         }
 
+        //Si realmente esta en la BD
         $paciente = Paciente::find(session('paciente_id'));
 
         if (!$paciente) {
@@ -404,13 +405,19 @@ class PacienteController extends Controller
                 $mensajeActualizacion[] = 'foto';
             } catch (\Exception $e) {
                 return redirect()->route('perfil')
-                    ->with('error', 'Error al subir la foto, intenta de nuevo.');
+                    ->with('foto_error', 'Error al subir la foto, intenta de nuevo.');
             }
         }
 
         // Guardar cambios
         if (!empty($mensajeActualizacion)) {
             $paciente->save();
+        }
+
+        // Si actualizó foto → modal, si solo teléfono → alerta normal
+        if (in_array('foto', $mensajeActualizacion)) {
+            return redirect()->route('perfil')
+                ->with('foto_success', 'Foto actualizada con éxito');
         }
 
         return redirect()->route('perfil')

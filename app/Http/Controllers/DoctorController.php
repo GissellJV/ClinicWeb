@@ -10,6 +10,7 @@ use App\Models\EvaluacionPrequirurgica;
 use App\Models\Expediente;
 use App\Models\IncapacidadMedica;
 use App\Models\Paciente;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -334,6 +335,9 @@ class DoctorController extends Controller
             'cirugiasCanceladas'
         ));
     }
+
+
+
     // EMITIR INCAPACIDADES
     public function emitirIncapacidad(){
 
@@ -345,7 +349,7 @@ class DoctorController extends Controller
         $pacientes = Paciente::orderBy('nombres')->get();
         $empleado  = Empleado::find(session('empleado_id'));
 
-        return view('doctor.incapacidad', compact('empleado', 'pacientes'));
+        return view('doctor.incapacidades.incapacidad', compact('empleado', 'pacientes'));
     }
     public function guardarIncapacidad(Request $request){
         if (!session('cargo') || session('cargo') != 'Doctor') {
