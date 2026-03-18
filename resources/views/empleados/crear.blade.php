@@ -1,4 +1,4 @@
-@extends('layouts.plantilaAdmin')
+@extends('layouts.plantillaAdmin')
 <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 
 @section('titulo', 'Registrar Empleado')
@@ -157,6 +157,7 @@
             margin-bottom: 30px;
             font-size: 1.05rem;
         }
+
         .gender-options {
             display: flex;
             gap: 30px;
@@ -210,14 +211,15 @@
                 font-size: 1.4rem;
             }
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background:whitesmoke;
+            background: whitesmoke;
             padding-top: 100px;
 
         }
 
-        .text-info-emphasis{
+        .text-info-emphasis {
             font-weight: bold;
         }
 
@@ -236,9 +238,9 @@
     </style>
     <div class="formulario">
         <br>
-            <h1 class="text-center text-info-emphasis">Registrar Nuevo Empleado</h1>
+        <h1 class="text-center text-info-emphasis">Registrar Nuevo Empleado</h1>
         <br><br>
-    <div class="form-container" style="margin: 10px auto; max-width: 900px">
+        <div class="form-container" style="margin: 10px auto; max-width: 900px">
 
             <div class="card-body-empleado">
                 @if(session('success'))
@@ -272,27 +274,29 @@
                     </div>
 
 
-
                     <!-- Genero y Numero de identidad -->
                     <div class="form-row-custom">
 
-                            <div class="form-group-custom">
+                        <div class="form-group-custom">
 
-                                <label for="genero">Género *</label>
-                                <select class="form-control" name="genero" id="genero">
-                                    <option value="">Seleccione un género</option>
-                                    <option value="Femenino" {{ old('genero') == 'Femenino' ? 'selected' : '' }}>Femenino</option>
-                                    <option value="Masculino" {{ old('genero') == 'Masculino' ? 'selected' : '' }}>Masculino</option>
-                                </select>
+                            <label for="genero">Género *</label>
+                            <select class="form-control" name="genero" id="genero">
+                                <option value="">Seleccione un género</option>
+                                <option value="Femenino" {{ old('genero') == 'Femenino' ? 'selected' : '' }}>Femenino
+                                </option>
+                                <option value="Masculino" {{ old('genero') == 'Masculino' ? 'selected' : '' }}>
+                                    Masculino
+                                </option>
+                            </select>
 
-                                @error('genero')
+                            @error('genero')
 
-                                <small class="text-danger">{{ $message }}</small>
+                            <small class="text-danger">{{ $message }}</small>
 
-                                @enderror
+                            @enderror
 
 
-                    </div>
+                        </div>
 
                         <div class="form-group-custom">
                             <label for="numero_identidad">Número de Identidad *</label>
@@ -379,7 +383,6 @@
                     </div>
 
 
-
                     <!-- Foto y Contraseña -->
                     <div class="form-row-custom">
 
@@ -395,13 +398,12 @@
 
                         <div class="form-group-custom">
                             <label for="foto">Foto</label>
-                            <input type="file" class="form-control" id="foto" name="foto" accept="image/*" >
+                            <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
                             @error('foto')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
                     </div>
-
 
 
                     <!-- Botones -->
@@ -418,6 +420,6 @@
 
             </div>
 
-    </div>
+        </div>
     </div>
 @endsection

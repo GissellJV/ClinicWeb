@@ -1,4 +1,4 @@
-@extends('layouts.plantilaAdmin')
+@extends('layouts.plantillaAdmin')
 <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 
 @section('titulo', 'Editar Empleado')
@@ -180,6 +180,7 @@
         .btn-cancel:hover {
             background: #e9ecef;
         }
+
         .alert-success-custom {
             background: #d1ecf1;
             border: 1px solid #c3e6cb;
@@ -189,8 +190,9 @@
             margin-bottom: 30px;
             font-size: 1.05rem;
             position: relative;
-            border-left:solid #0c5460;
+            border-left: solid #0c5460;
         }
+
         .alert-success-custom .btn-close {
             position: absolute;
             top: 10px;
@@ -207,7 +209,7 @@
             font-size: 1.05rem;
             position: relative;
 
-            border-left:solid #0c5460;
+            border-left: solid #0c5460;
         }
 
         .alert-info-custom .btn-close {
@@ -306,43 +308,43 @@
             border-radius: 8px;
             border: 2px solid #e0e0e0;
         }
-</style>
+    </style>
     <div class="formulario">
         <br>
         <h1 class="text-center text-info-emphasis">Editar Empleado</h1>
         <br><br>
         <div class="form-container" style="margin: 10px auto; max-width: 900px">
 
-            <div class="card-body-empleado" >
+            <div class="card-body-empleado">
                 @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" id="alertSuc">
                         {{ session('success') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
 
-
                 @endif
 
 
                 <div class="alert alert-success-custom" id="alertInfo">
-                        <div>
-                           Solo puedes editar el nombre, apellido, teléfono, contraseña y foto.
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <div>
+                        Solo puedes editar el nombre, apellido, teléfono, contraseña y foto.
                     </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
 
-                    <script>
-                        setTimeout(function() {
-                            let alert = document.getElementById('alertInfo');
-                            if (alert) {
-                                alert.style.transition = "opacity 0.5s ease";
-                                alert.style.opacity = "0";
-                                setTimeout(() => alert.remove(), 500);
-                            }
-                        }, 5000);
-                    </script>
+                <script>
+                    setTimeout(function () {
+                        let alert = document.getElementById('alertInfo');
+                        if (alert) {
+                            alert.style.transition = "opacity 0.5s ease";
+                            alert.style.opacity = "0";
+                            setTimeout(() => alert.remove(), 500);
+                        }
+                    }, 5000);
+                </script>
 
-                    <form action="{{ route('empleados.update',['id'=>$empleado->id])}}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('empleados.update',['id'=>$empleado->id])}}" method="POST"
+                      enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -396,7 +398,8 @@
                             <div class="input-group-custom">
                                 <span class="input-group-text">+504</span>
                                 <input type="text" class="form-control" id="telefono" name="telefono"
-                                       value="{{ old('telefono', $empleado->loginEmpleado->telefono ?? '') }}" placeholder="00000000">
+                                       value="{{ old('telefono', $empleado->loginEmpleado->telefono ?? '') }}"
+                                       placeholder="00000000">
                             </div>
                             @error('telefono')
                             <small class="text-danger">{{ $message }}</small>
@@ -431,7 +434,8 @@
 
                             </label>
                             <select class="form-select-custom" id="departamento" name="departamento" disabled>
-                                <option value="{{ $empleado->departamento }}" selected>{{ $empleado->departamento }}</option>
+                                <option value="{{ $empleado->departamento }}"
+                                        selected>{{ $empleado->departamento }}</option>
                             </select>
                         </div>
                     </div>

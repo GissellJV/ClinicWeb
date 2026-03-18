@@ -1,4 +1,4 @@
-@extends('layouts.plantilaAdmin')
+@extends('layouts.plantillaAdmin')
 <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 <!-- DataTables CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
@@ -50,7 +50,7 @@
         .alert-info-custom {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             padding: 60px 40px;
             text-align: center;
         }
@@ -85,7 +85,7 @@
             background: white;
             border-radius: 15px;
             padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             border-left: 5px solid;
             transition: all 0.3s;
             text-align: left;
@@ -93,7 +93,7 @@
 
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
         }
 
         .stat-card.total {
@@ -169,7 +169,7 @@
         .table-container-card {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             overflow: visible;
             padding: 25px;
         }
@@ -410,6 +410,7 @@
                 padding: 80px 10px 20px;
             }
         }
+
         .alert-info-custom {
             background: #d1ecf1;
             border: 1px solid #bee5eb;
@@ -430,6 +431,7 @@
             top: 10px;
             right: 10px;
         }
+
         /* Botón + Nuevo Empleado */
         .btn-light {
             background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
@@ -527,7 +529,7 @@
                 Lista de Empleados
             </h1>
             <a href="{{ route('empleados.crear') }}" class="btn btn-light btn-sm">
-               + Nuevo Empleado
+                + Nuevo Empleado
             </a>
         </div>
 
@@ -539,7 +541,7 @@
         @endif
 
 
-    @if($empleados->isEmpty())
+        @if($empleados->isEmpty())
             <div class="alert-info-custom">
                 <i class="fas fa-users-slash"></i>
                 <h4>No hay empleados registrados</h4>
@@ -560,21 +562,24 @@
                 </div>
 
                 <div class="stat-card doctores">
-                    <div class="stat-number" id="doctoresCount">{{ $empleados->where('cargo', 'Doctor')->count() }}</div>
+                    <div class="stat-number"
+                         id="doctoresCount">{{ $empleados->where('cargo', 'Doctor')->count() }}</div>
                     <div class="stat-label">Doctores</div>
                     <small style="color: #666;"> Personal Especialista</small>
 
                 </div>
 
                 <div class="stat-card enfermeros">
-                    <div class="stat-number" id="enfermerosCount">{{ $empleados->where('cargo', 'Enfermero')->count() }}</div>
+                    <div class="stat-number"
+                         id="enfermerosCount">{{ $empleados->where('cargo', 'Enfermero')->count() }}</div>
                     <div class="stat-label">Enfermeros</div>
                     <small style="color: #666;">Personal de Enfermeria</small>
 
                 </div>
 
                 <div class="stat-card recepcionistas">
-                    <div class="stat-number" id="recepcionistasCount">{{ $empleados->where('cargo', 'Recepcionista')->count() }}</div>
+                    <div class="stat-number"
+                         id="recepcionistasCount">{{ $empleados->where('cargo', 'Recepcionista')->count() }}</div>
                     <div class="stat-label">Recepcionistas</div>
                     <small style="color: #666;">Personal Administrativo</small>
 
@@ -592,7 +597,7 @@
                             <th>Cargo</th>
                             <th>Departamento</th>
                             <th>Fecha Ingreso</th>
-                            <th >Acciones</th>
+                            <th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -624,7 +629,8 @@
                                 <td>{{ $empleado->fecha_ingreso->format('d/m/Y') }}</td>
                                 <td>
                                     <div class="action-buttons">
-                                        <a href="{{ route('empleados.editar', $empleado->id) }}" class="btn-sm btn-edit">
+                                        <a href="{{ route('empleados.editar', $empleado->id) }}"
+                                           class="btn-sm btn-edit">
                                             Editar
                                         </a>
                                         <button class="btn-sm btn-delete"
@@ -637,32 +643,39 @@
                             </tr>
 
                             <!-- Modal de Eliminar -->
-                            <div class="modal fade" id="deleteModal{{ $empleado->id }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal fade" id="deleteModal{{ $empleado->id }}" tabindex="-1"
+                                 aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content" style="border-radius: 15px; border: none; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+                                    <div class="modal-content"
+                                         style="border-radius: 15px; border: none; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
                                         <div class="modal-header" style="border-bottom: 2px solid #f0f0f0;">
                                             <h5 class="modal-title">
                                                 Confirmar Eliminación
                                             </h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body" style="padding: 30px;">
                                             <p style="font-size: 16px; color: #666;">
-                                                ¿Estás seguro de que deseas eliminar al empleado <strong>{{ $empleado->nombre }} {{ $empleado->apellido }}</strong>?
+                                                ¿Estás seguro de que deseas eliminar al empleado
+                                                <strong>{{ $empleado->nombre }} {{ $empleado->apellido }}</strong>?
                                             </p>
                                             <p style="font-size: 14px; color: #999;">
                                                 Esta acción no se puede deshacer.
                                             </p>
                                         </div>
                                         <div class="modal-footer" style="border-top: 2px solid #f0f0f0; gap: 10px;">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 8px; padding: 10px 20px;">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                    style="border-radius: 8px; padding: 10px 20px;">
                                                 Cancelar
                                             </button>
-                                            <form action="{{ route('empleados.eliminar', $empleado->id) }}" method="POST" style="margin: 0;">
+                                            <form action="{{ route('empleados.eliminar', $empleado->id) }}"
+                                                  method="POST" style="margin: 0;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger" style="border-radius: 8px; padding: 10px 20px; background: #e74c3c; border: none;">
-                                                   Eliminar
+                                                <button type="submit" class="btn btn-danger"
+                                                        style="border-radius: 8px; padding: 10px 20px; background: #e74c3c; border: none;">
+                                                    Eliminar
                                                 </button>
                                             </form>
                                         </div>
@@ -686,7 +699,7 @@
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Inicializar DataTable
             var table = $('#empleadosTable').DataTable({
                 responsive: true,
@@ -736,7 +749,7 @@
                 let enfermeros = 0;
                 let recepcionistas = 0;
 
-                table.rows({search: 'applied'}).every(function() {
+                table.rows({search: 'applied'}).every(function () {
                     const node = this.node();
                     const cargo = $(node).data('cargo');
 
@@ -761,7 +774,7 @@
             actualizarContadores();
 
             // Actualizar contadores cuando se filtra la tabla
-            table.on('search.dt', function() {
+            table.on('search.dt', function () {
                 actualizarContadores();
             });
         });

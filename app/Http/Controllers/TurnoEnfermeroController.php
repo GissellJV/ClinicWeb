@@ -12,9 +12,9 @@ class TurnoEnfermeroController extends Controller
 {
     public function verTurnosE(Request $request)
     {
-        if (!session('cargo') || session('cargo') != 'Enfermero') {
+        if (!session('cargo') || !in_array(session('cargo'), ['Recepcionista', 'Enfermero', 'Administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Enfermero');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o enfermero');
         }
 
         $mes = $request->mes ?? now()->month;
@@ -129,9 +129,10 @@ class TurnoEnfermeroController extends Controller
     }
     public function exportPdf(Request $request)
     {
-        if (!session('cargo') || session('cargo') != 'Enfermero') {
+
+        if (!session('cargo') || !in_array(session('cargo'), ['Recepcionista', 'Enfermero', 'Administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Enfermero');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o enfermero');
         }
 
         $mes = (int)($request->get('mes', now()->month));
@@ -205,11 +206,9 @@ class TurnoEnfermeroController extends Controller
     }
     public function indexEnfermero(Request $request)
     {
-        $cargo = strtolower(session('cargo') ?? '');
-
-        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
+        if (!session('cargo') || !in_array(session('cargo'), ['Recepcionista', 'Enfermero', 'Administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o enfermero');
         }
 
         $mes  = (int)($request->get('mes', now()->month));
@@ -301,9 +300,9 @@ class TurnoEnfermeroController extends Controller
 
     public function storeEnfermero(Request $request)
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        if (!session('cargo') || !in_array(session('cargo'), ['Recepcionista', 'Enfermero', 'Administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o enfermero');
         }
 
         $data = $request->validate([

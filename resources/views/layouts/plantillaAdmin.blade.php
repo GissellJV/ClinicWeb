@@ -443,16 +443,6 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('listadocitas') }}">
-                            <i class="bi bi-calendar-check"></i> Citas Programadas
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.registroPaciente') }}">
-                            <i class="bi bi-clipboard-check"></i> Asistencia de Pacientes
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.index') }}">
                             <i class="bi bi-clock-history"></i> Turnos de Doctores
                         </a>
@@ -465,11 +455,6 @@
                     <li class="nav-item">
                         <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.habitaciones.ocupadas') }}">
                             <i class="bi bi-door-closed"></i> Habitaciones Ocupadas
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('recepcionista.habitaciones.asignar') }}">
-                            <i class="bi bi-house-add"></i> Asignar Habitación
                         </a>
                     </li>
                     <li class="nav-item">
@@ -507,12 +492,6 @@
                     <li class="nav-item">
                         <a class="nav-link offcanvas-nav-link" href="{{ route('inventario.equipos.index') }}">
                             <i class="bi bi-box-seam"></i> Inventario de Equipos
-                        </a>
-                    </li>
-                    <!-- EXPEDIENTES ARCHIVADOS-->
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('expedientes.archivados') }}">
-                            <i class="bi bi-folder-plus"></i> Expedientes Archivados
                         </a>
                     </li>
                     <!-- REGISTRO DE VISITANTES-->

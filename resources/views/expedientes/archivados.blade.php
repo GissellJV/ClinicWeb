@@ -1,15 +1,4 @@
-@php
-    switch (session('cargo')) {
-            case 'Recepcionista':
-            $layout = 'layouts.plantillaRecepcion';
-            break;
-            case 'Administrador':
-            $layout = 'layouts.plantillaAdmin';
-            break;
-    }
-@endphp
-
-@extends($layout)
+@extends('layouts.plantillaRecepcion')
 @section('contenido')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">

@@ -1,15 +1,4 @@
-@php
-    $cargo = strtolower(trim(session('cargo')));
-    if ($cargo === 'Recepcionista') {
-        $layout = 'layouts.plantillaRecepcion';
-    } elseif ($cargo === 'Administrador') {
-        $layout = 'layouts.plantillaAdmin';
-    } else {
-        $layout = 'layouts.plantilla'; // fallback por si no hay cargo
-    }
-@endphp
-
-@extends($layout)
+@extends('layouts.plantillaRecepcion')
     <!DOCTYPE html>
 <html lang="es">
 <head>

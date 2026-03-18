@@ -1,4 +1,21 @@
-@extends('layouts.plantilaAdmin')
+@php
+    if (session('tipo_usuario') === 'empleado') {
+    switch (session('cargo')) {
+    case 'Recepcionista':
+    $layout = 'layouts.plantillaRecepcion';
+    break;
+    case 'Administrador':
+    $layout = 'layouts.plantillaAdmin';
+    break;
+    default:
+    $layout = 'layouts.plantilla';
+    }
+    } else {
+    $layout = 'layouts.plantilla';
+    }
+@endphp
+
+@extends($layout)
 <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 
 @section('titulo', isset($pregunta) ? 'Editar Pregunta Frecuente' : 'Nueva Pregunta Frecuente')
@@ -171,6 +188,7 @@
                 width: 100%;
             }
         }
+
         .text-info-emphasis {
 
             font-weight: bold;
@@ -239,7 +257,7 @@
                     </div>
 
                     {{-- Botones --}}
-                    <div class="form-buttons" >
+                    <div class="form-buttons">
                         <a href="{{ route('preguntas.index') }}" class="btn-cancel">
                             Cancelar
                         </a>
@@ -274,7 +292,7 @@
         const preguntaTextarea = document.getElementById('pregunta');
         const preguntaCount = document.getElementById('preguntaCount');
 
-        preguntaTextarea.addEventListener('input', function() {
+        preguntaTextarea.addEventListener('input', function () {
             updateCharCounter(this, preguntaCount);
         });
 
@@ -282,18 +300,18 @@
         const respuestaTextarea = document.getElementById('respuesta');
         const respuestaCount = document.getElementById('respuestaCount');
 
-        respuestaTextarea.addEventListener('input', function() {
+        respuestaTextarea.addEventListener('input', function () {
             updateCharCounter(this, respuestaCount);
         });
 
         // Inicializar contadores al cargar la página
-        window.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('DOMContentLoaded', function () {
             updateCharCounter(preguntaTextarea, preguntaCount);
             updateCharCounter(respuestaTextarea, respuestaCount);
         });
 
         // Validación antes de enviar el formulario
-        document.querySelector('form').addEventListener('submit', function(e) {
+        document.querySelector('form').addEventListener('submit', function (e) {
             const pregunta = preguntaTextarea.value.trim();
             const respuesta = respuestaTextarea.value.trim();
 

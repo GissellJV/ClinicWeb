@@ -1,11 +1,17 @@
 @php
-    $cargo = strtolower(trim(session('cargo')));
-    if ($cargo === 'recepcionista') {
-        $layout = 'layouts.plantillaRecepcion';
-    } elseif ($cargo === 'administrador') {
-        $layout = 'layouts.plantillaAdmin';
+    if (session('tipo_usuario') === 'empleado') {
+    switch (session('cargo')) {
+    case 'Recepcionista':
+    $layout = 'layouts.plantillaRecepcion';
+    break;
+    case 'Administrador':
+    $layout = 'layouts.plantillaAdmin';
+    break;
+    default:
+    $layout = 'layouts.plantilla';
+    }
     } else {
-        $layout = 'layouts.plantillaRecepcion'; // fallback por si no hay cargo
+    $layout = 'layouts.plantilla';
     }
 @endphp
 
