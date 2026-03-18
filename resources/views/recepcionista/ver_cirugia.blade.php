@@ -1,4 +1,15 @@
-@extends('layouts.plantillaRecepcion')
+@php
+    $cargo = strtolower(trim(session('cargo')));
+    if ($cargo === 'recepcionista') {
+        $layout = 'layouts.plantillaRecepcion';
+    } elseif ($cargo === 'administrador') {
+        $layout = 'layouts.plantillaAdmin';
+    } else {
+        $layout = 'layouts.plantillaRecepcion'; // fallback por si no hay cargo
+    }
+@endphp
+
+@extends($layout)
 @section('titulo', 'Cirugía Programada')
 
 @section('contenido')

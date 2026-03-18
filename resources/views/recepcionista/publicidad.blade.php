@@ -1,4 +1,4 @@
-@extends('layouts.plantillaRecepcion')
+@extends('layouts.plantillaAdmin')
 <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 
 @section('contenido')
@@ -10,7 +10,7 @@
         }
         .button-group {
             display: flex;
-            justify-content: flex-end; 
+            justify-content: flex-end;
             gap: 15px;
             margin-top: 20px;
         }

@@ -130,9 +130,11 @@ class TurnoController extends Controller
     public function index(Request $request)
     {
 
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
 
         $query = Cita::with(['doctor', 'paciente']);

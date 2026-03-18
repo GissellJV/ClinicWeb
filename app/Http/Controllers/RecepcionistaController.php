@@ -124,9 +124,11 @@ class RecepcionistaController extends Controller
 
     public function historialDiario()
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
         $historial = HistorialDiario::whereDate('fecha', now())->get();
         return view('recepcionista.historial', compact('historial'));
@@ -134,9 +136,11 @@ class RecepcionistaController extends Controller
 
     public function listaDoctores()
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
         $doctores = Empleado::where('cargo', 'Doctor')->paginate(6);
         return view('recepcionista.lista_doctores', compact('doctores'));
@@ -144,9 +148,11 @@ class RecepcionistaController extends Controller
 
     public function indexVisitantes()
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
         $pacientes = Paciente::orderBy('nombres')->get();
         return view('recepcionista.registro_visitantes', compact('pacientes'));
@@ -154,8 +160,11 @@ class RecepcionistaController extends Controller
 
     public function storeVisitante(Request $request)
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
-            return redirect()->route('inicioSesion');
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
 
         $request->validate([
@@ -193,9 +202,11 @@ class RecepcionistaController extends Controller
 
     public function incidentesIndex()
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
         $incidentes = Incidente::with(['paciente', 'empleado'])->orderBy('fecha_hora_incidente', 'desc')->paginate(10);
         $estadisticas = [
@@ -209,9 +220,11 @@ class RecepcionistaController extends Controller
 
     public function incidentesShow($id)
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
         $incidente = Incidente::with(['paciente', 'empleado'])->findOrFail($id);
         return view('recepcionista.incidentes.show', compact('incidente'));
@@ -236,9 +249,11 @@ class RecepcionistaController extends Controller
 
     public function inventarioEquipos()
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
 
         // He actualizado para que use el modelo Equipo que creamos
@@ -286,8 +301,11 @@ class RecepcionistaController extends Controller
      */
     public function darBajaEquipo($id)
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
-            return redirect()->route('inicioSesion');
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
 
         $equipo = Equipo::findOrFail($id);

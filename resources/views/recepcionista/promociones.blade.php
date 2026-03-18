@@ -1,4 +1,4 @@
-@extends('layouts.plantillaRecepcion')
+@extends('layouts.plantillaAdmin')
 <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 
 @section('contenido')

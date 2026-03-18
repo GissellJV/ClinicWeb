@@ -14,6 +14,9 @@
         case 'Enfermero':
         $layout = 'layouts.plantillaEnfermeria';
         break;
+        case 'Administrador':
+        $layout = 'layouts.plantillaAdmin';
+        break;
         default:
         $layout = 'layouts.plantilla'; // fallback
         }

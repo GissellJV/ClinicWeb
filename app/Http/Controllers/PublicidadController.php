@@ -9,9 +9,9 @@ class PublicidadController extends Controller
 {
     public function index()
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        if (!session('cargo') || session('cargo') != 'Administrador') {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Admin');
         }
 
         return view('recepcionista.publicidad');

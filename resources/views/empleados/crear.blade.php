@@ -1,4 +1,4 @@
-@extends('layouts.plantillaRecepcion')
+@extends('layouts.plantilaAdmin')
 <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 
 @section('titulo', 'Registrar Empleado')

@@ -1,4 +1,10 @@
-@extends('layouts.plantillaRecepcion')
+@if(strtolower(session('cargo')) === 'recepcionista')
+    @extends('layouts.plantillaRecepcion')
+@elseif(strtolower(session('cargo')) === 'administrador')
+    @extends('layouts.plantillaAdmin')
+@else
+    @extends('layouts.plantillaRecepcion')
+@endif
 <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 @section('contenido')
 

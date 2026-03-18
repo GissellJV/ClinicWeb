@@ -205,9 +205,11 @@ class TurnoEnfermeroController extends Controller
     }
     public function indexEnfermero(Request $request)
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista');
+                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
         }
 
         $mes  = (int)($request->get('mes', now()->month));

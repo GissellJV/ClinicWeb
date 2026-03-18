@@ -1,4 +1,15 @@
-@extends('layouts.plantillaRecepcion')
+@php
+    $cargo = strtolower(trim(session('cargo')));
+    if ($cargo === 'Recepcionista') {
+        $layout = 'layouts.plantillaRecepcion';
+    } elseif ($cargo === 'Administrador') {
+        $layout = 'layouts.plantillaAdmin';
+    } else {
+        $layout = 'layouts.plantilla'; // fallback por si no hay cargo
+    }
+@endphp
+
+@extends($layout)
 @section('contenido')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">

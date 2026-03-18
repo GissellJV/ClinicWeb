@@ -1,5 +1,15 @@
-@extends('layouts.plantillaRecepcion')
-@section('contenido')
+@php
+    $cargo = strtolower(trim(session('cargo')));
+    if ($cargo === 'Recepcionista') {
+        $layout = 'layouts.plantillaRecepcion';
+    } elseif ($cargo === 'Administrador') {
+        $layout = 'layouts.plantillaAdmin';
+    } else {
+        $layout = 'layouts.plantilla'; // fallback por si no hay cargo
+    }
+@endphp
+
+@extends($layout)
     <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,6 +22,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @section('contenido')
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
