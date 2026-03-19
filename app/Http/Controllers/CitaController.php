@@ -620,9 +620,19 @@ class CitaController extends Controller
 
     public function Citasarchivadas()
     {
-        $citas = Cita::where('paciente_id', session('paciente_id'))
-            ->where('estado','archivada')
-            ->paginate(6);
+
+        $query = Cita::where('paciente_id', session('paciente_id'))
+            ->where('estado','archivada');
+
+        if(request('especialidad')){
+            $query->where('especialidad', request('especialidad'));
+        }
+
+        if(request('fecha')){
+            $query->whereDate('fecha', request('fecha'));
+        }
+
+        $citas = $query->paginate(6);
 
         return view('citas.citasArchivadas', compact('citas'));
     }
