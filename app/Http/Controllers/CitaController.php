@@ -391,7 +391,7 @@ class CitaController extends Controller
     {
         $doctores = Empleado::where('cargo', 'Doctor')
             ->where('departamento', $departamento)
-            ->get(['id', 'nombre', 'departamento']);
+            ->get(['id', 'nombre','apellido', 'departamento']);
 
         return response()->json($doctores);
     }
