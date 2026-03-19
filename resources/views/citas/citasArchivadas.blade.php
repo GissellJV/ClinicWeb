@@ -156,6 +156,49 @@
             }
 
         }
+        .filters-card{
+            background:white;
+            border-radius:16px;
+            padding:25px;
+            margin-bottom:30px;
+            box-shadow:0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .filters-row{
+            display:flex;
+            gap:15px;
+            flex-wrap:wrap;
+            align-items:flex-end;
+        }
+
+        .filter-group{
+            display:flex;
+            flex-direction:column;
+            flex:1;
+            min-width:200px;
+        }
+
+        .filter-group label{
+            font-weight:600;
+            margin-bottom:8px;
+        }
+
+        .filter-group select,
+        .filter-group input{
+            padding:10px;
+            border:1px solid #ddd;
+            border-radius:8px;
+        }
+
+        .btn-filter{
+            padding:12px 30px;
+            background:linear-gradient(135deg,#4ECDC4 0%,#44A08D 100%);
+            color:white;
+            border:none;
+            border-radius:10px;
+            font-weight:600;
+            cursor:pointer;
+        }
 
     </style>
 
@@ -182,6 +225,39 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
+
+        <!-- Filtros -->
+        <div class="filters-card">
+            <form method="GET" action="{{ route('citas.citasArchivadas') }}">
+                <div class="filters-row">
+
+                    <div class="filter-group">
+                        <label><i class="fas fa-stethoscope"></i> Filtrar por Especialidad</label>
+                        <select name="especialidad">
+                            <option value="">Todas</option>
+                            <option value="Pediatría" {{ request('especialidad') == 'Pediatría' ? 'selected' : '' }}>Pediatría</option>
+                            <option value="Medicina General" {{ request('especialidad') == 'Medicina General' ? 'selected' : '' }}>Medicina General</option>
+                            <option value="Dermatología" {{ request('especialidad') == 'Dermatología' ? 'selected' : '' }}>Dermatología</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label><i class="fas fa-calendar"></i> Filtrar por Fecha</label>
+                        <input type="date"
+                               name="fecha"
+                               class="form-control"
+                               value="{{ request('fecha') }}">
+                    </div>
+
+                    <div class="filter-group">
+                        <button type="submit" class="btn-filter">
+                            <i class="fas fa-search"></i> Filtrar
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
 
 
 
@@ -288,14 +364,36 @@
                 @endforeach
 
             </div>
+            <div class="pagination d-flex justify-content-end mt-3">
 
+                <nav>
+                    <ul class="pagination">
 
+                        {{-- Botón anterior --}}
+                        <li class="page-item {{ $citas->onFirstPage() ? 'disabled' : '' }}">
+                            <a class="page-link" href="{{ $citas->previousPageUrl() ?? '#' }}">
+                                Anterior
+                            </a>
+                        </li>
 
-            <!-- Paginación -->
-            <div class="pagination">
-                {{ $citas->appends(request()->query())->links() }}
+                        {{-- Página actual --}}
+                        <li class="page-item active">
+                <span class="page-link">
+                    {{ $citas->currentPage() }}
+                </span>
+                        </li>
+
+                        {{-- Botón siguiente --}}
+                        <li class="page-item {{ !$citas->hasMorePages() ? 'disabled' : '' }}">
+                            <a class="page-link" href="{{ $citas->nextPageUrl() ?? '#' }}">
+                                Siguiente
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+
             </div>
-
 
         @else
 
