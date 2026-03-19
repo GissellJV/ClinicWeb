@@ -1,10 +1,14 @@
 @extends('layouts.plantillaRecepcion')
 <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 @section('contenido')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
+
     <style>
         body{
             padding-top: 100px;
         }
+
         .agendar-container {
             max-width: 800px;
             margin: 0 auto;
@@ -21,10 +25,6 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-
-
-
-
         .agendar-form {
             background: white;
             padding: 30px;
@@ -37,15 +37,12 @@
             margin-bottom: 20px;
         }
 
-
-
         .button-group {
             display: flex;
             gap: 15px;
             justify-content: flex-end;
             margin-top: 30px;
         }
-
 
         .btn-primary {
             padding: 0.875rem 2rem;
@@ -108,38 +105,17 @@
             color: #82e9de;
         }
 
-        .doctor-options {
-            margin-top: 10px;
-        }
-
-        .doctor-option {
-            padding: 8px 12px;
-            margin: 5px 0;
-            background: #f8f9fa;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .doctor-option:hover {
-            background: #e9ecef;
-        }
-
-        .doctor-option.selected {
-            background: #82e9de;
-            color: white;
-        }
-
         small.text-danger {
             font-size: 0.875em;
         }
-        .text-info-emphasis {
 
+        .text-info-emphasis {
             font-weight: bold;
         }
+
         /* =========================
-   MODALES SELECTOR CLINICWEB
-========================= */
+           MODALES SELECTOR CLINICWEB
+        ========================= */
 
         .modal-selector .modal-content.selector-content {
             background: #fff;
@@ -200,81 +176,117 @@
             background: #fff;
         }
 
-        .modal-selector .selector-input {
-            border: 2px solid #24f3e2;
-            border-radius: 14px;
-            background: white;
-            padding: 12px 14px;
-            font-size: 16px;
-            width: 100%;
-            box-shadow: 0 0 12px rgba(36, 243, 226, 0.25);
-            transition: 0.2s;
-        }
-
-        .modal-selector .selector-input:hover {
-            box-shadow: 0 0 18px rgba(36, 243, 226, 0.35);
-        }
-
-        .modal-selector .selector-input:focus {
-            border-color: #00f3ff;
-            box-shadow: 0 0 10px #00fff36b;
-            outline: none;
-        }
-
-        .modal-selector .selector-table-wrapper {
-            border-radius: 14px;
+        /* Interior tipo DataTable de expedientes */
+        .table-container-modal {
+            background-color: white;
+            border-radius: 12px;
             overflow: hidden;
-            border: 2px solid rgba(36, 243, 226, 0.35);
-            box-shadow: 0 0 12px rgba(36, 243, 226, 0.18);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            padding: 20px;
         }
 
-        .modal-selector .selector-table {
-            margin-bottom: 0;
-            background: white;
+        .modal-selector table.dataTable {
+            width: 100% !important;
+            border-collapse: collapse;
         }
 
-        .modal-selector .selector-table thead th {
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-            color: white;
+        .modal-selector table.dataTable thead th {
+            padding: 20px;
+            text-align: left;
             font-weight: 700;
-            border: none;
-            text-align: center;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #e0e0e0;
+            color: white !important;
+            background: #4ecdc4 !important;
+        }
+
+        .modal-selector table.dataTable tbody tr {
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.2s;
+        }
+
+        .modal-selector table.dataTable tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .modal-selector table.dataTable tbody td {
+            padding: 18px;
+            color: #666;
             vertical-align: middle;
-            padding: 14px 10px;
         }
 
-        .modal-selector .selector-table tbody td {
-            vertical-align: middle;
-            text-align: center;
-            padding: 12px 10px;
-            border-color: #e9fdfb;
+        .modal-selector .dataTables_wrapper .dataTables_length,
+        .modal-selector .dataTables_wrapper .dataTables_filter {
+            margin-bottom: 20px;
         }
 
-        .modal-selector .selector-table tbody tr {
-            transition: all 0.25s ease;
-        }
-
-        .modal-selector .selector-table tbody tr:hover {
-            background: #effffc;
-            transform: scale(1.003);
-        }
-
-        .selector-btn-select {
-            padding: 0.55rem 1.2rem;
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-            border: none;
+        .modal-selector .dataTables_wrapper .dataTables_filter input {
+            border: 2px solid #e0e0e0;
             border-radius: 8px;
-            color: white;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+            padding: 8px 15px;
+            margin-left: 10px;
         }
 
-        .selector-btn-select:hover {
+        .modal-selector .dataTables_wrapper .dataTables_filter input:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            box-shadow: 0 0 0 0.25rem rgba(78, 205, 196, 0.25);
+        }
+
+        .modal-selector .dataTables_wrapper .dataTables_length select {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 5px 10px;
+            margin: 0 10px;
+        }
+
+        .modal-selector .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 8px 12px !important;
+            border-radius: 8px !important;
+            transition: all 0.3s !important;
+            box-shadow: none !important;
+            font-weight: 600 !important;
+        }
+
+        .modal-selector .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            color: white !important;
+            box-shadow: none !important;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+
+        .modal-selector .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%) !important;
+            color: white !important;
+            border-color: #4ecdc4 !important;
+        }
+
+        .modal-selector .dataTables_wrapper .dataTables_info {
+            font-size: 14px;
+            padding-top: 15px;
+        }
+
+        .btn-modal-seleccionar {
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            min-width: 120px;
+            cursor: pointer;
+            white-space: nowrap;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44b8af 100%);
+            color: white;
+            border: none;
+        }
+
+        .btn-modal-seleccionar:hover {
+            background: linear-gradient(135deg, #44b8af 0%, #3aa39a 100%);
+            box-shadow: 0 3px 10px rgba(78, 205, 196, 0.25);
             color: white;
         }
 
@@ -296,26 +308,6 @@
             box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
         }
 
-        .btn-register {
-            padding: 0.875rem 2rem;
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-weight: 600;
-            font-size: 1.05rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
-        }
-
-        .btn-register:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-            color: white;
-        }
-
-        /* botón buscar del formulario */
         .btn-open-selector {
             padding: 0.875rem 1.5rem;
             background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
@@ -341,6 +333,7 @@
             transform: none;
             box-shadow: none;
         }
+
         #paciente_nombre,
         #doctor_nombre {
             border: 2px solid #24f3e2;
@@ -356,12 +349,21 @@
         #doctor_nombre:hover {
             box-shadow: 0 0 18px rgba(36, 243, 226, 0.30);
         }
+
+        @media (max-width: 768px) {
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-open-selector {
+                width: 100%;
+            }
+        }
     </style>
-<div class="formulario">
 
+    <div class="formulario">
         <div class="register-section">
-            <h1 class=" text-center text-info-emphasis"> Agendar Cita - Recepción</h1>
-
+            <h1 class="text-center text-info-emphasis">Agendar Cita - Recepción</h1>
         </div>
 
         @if(session('success'))
@@ -377,146 +379,132 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-    <div id="mensajeFormulario" class="alert alert-danger" style="display: none;"></div>
-    <div class="form-container">
-        <form class="" method="POST" action="{{ route('recepcionista.citas.guardar') }}" id="agendarForm" novalidate>
-            @csrf
 
-            <!-- Selección de Paciente -->
-            <div class="form-group">
-                <label class="form-label" for="paciente_nombre">Paciente</label>
+        <div id="mensajeFormulario" class="alert alert-danger" style="display: none;"></div>
 
-                <input type="hidden" id="paciente_id" name="paciente_id" required>
+        <div class="form-container">
+            <form method="POST" action="{{ route('recepcionista.citas.guardar') }}" id="agendarForm" novalidate>
+                @csrf
 
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <input
-                        type="text"
-                        id="paciente_nombre"
-                        class="form-control"
-                        placeholder="Seleccione un paciente"
-                        readonly
-                        required
-                    >
-
-                    <button type="button" class="btn btn-open-selector" data-bs-toggle="modal" data-bs-target="#modalPacientes">
-                        Buscar
-                    </button>
-                </div>
-            </div>
-
-            <!-- Especialidad -->
-            <div class="form-group">
-            <label for="especialidad" class="form-label">Especialidad</label>
-            <select id="especialidad" name="especialidad" class="form-control" required>
-                <option value="">Seleccionar especialidad</option>
-                @foreach($especialidades as $especialidad)
-                    <option value="{{ $especialidad }}">{{ $especialidad }}</option>
-                @endforeach
-            </select>
-            </div>
-
-            <!-- Doctor -->
-            <div class="form-group">
-                <label for="doctor_nombre" class="form-label">Doctor</label>
-
-                <input type="hidden" id="empleado_id" name="empleado_id" required>
-
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <input
-                        type="text"
-                        id="doctor_nombre"
-                        class="form-control"
-                        placeholder="Seleccione un doctor"
-                        readonly
-                        required
-                    >
-
-                    <button type="button" class="btn btn-open-selector" id="btnAbrirModalDoctor" disabled>
-                        Buscar
-                    </button>
-                </div>
-
-                <div id="loadingDoctores" class="loading" style="display:none;">Cargando doctores...</div>
-            </div>
-
-            <!-- Fecha de la Cita -->
                 <div class="form-group">
-            <div class="form-group">
-                <label class="form-label" for="fecha_cita"> Fecha de la Cita</label>
-                <input type="date" class="form-control" id="fecha" name="fecha" min="{{ date('Y-m-d') }}" required>
-            </div>
+                    <label class="form-label" for="paciente_nombre">Paciente</label>
+                    <input type="hidden" id="paciente_id" name="paciente_id" required>
+
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input
+                            type="text"
+                            id="paciente_nombre"
+                            class="form-control"
+                            placeholder="Seleccione un paciente"
+                            readonly
+                            required
+                        >
+
+                        <button type="button" class="btn btn-open-selector" data-bs-toggle="modal" data-bs-target="#modalPacientes">
+                            Buscar
+                        </button>
+                    </div>
                 </div>
 
-            <!-- Hora de la Cita -->
+                <div class="form-group">
+                    <label for="especialidad" class="form-label">Especialidad</label>
+                    <select id="especialidad" name="especialidad" class="form-control" required>
+                        <option value="">Seleccionar especialidad</option>
+                        @foreach($especialidades as $especialidad)
+                            <option value="{{ $especialidad }}">{{ $especialidad }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label class="form-label" for="hora_cita"> Hora de la Cita</label>
-                <select class="form-control" id="hora" name="hora" required>
-                    <option value="">Seleccionar hora</option>
-                    <option value="08:00">08:00 AM</option>
-                    <option value="09:00">09:00 AM</option>
-                    <option value="10:00">10:00 AM</option>
-                    <option value="11:00">11:00 AM</option>
-                    <option value="14:00">02:00 PM</option>
-                    <option value="15:00">03:00 PM</option>
-                    <option value="16:00">04:00 PM</option>
-                    <option value="17:00">05:00 PM</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="doctor_nombre" class="form-label">Doctor</label>
+                    <input type="hidden" id="empleado_id" name="empleado_id" required>
 
-            <!-- Tipo de Consulta -->
-            <div class="form-group">
-                <label class="form-label" for="tipo_consulta"> Tipo de Consulta</label>
-                <select class="form-control" id="tipo_consulta" name="tipo_consulta" required>
-                    <option value="">Seleccionar tipo</option>
-                    <option value="Primera vez">Primera vez</option>
-                    <option value="Control">Control</option>
-                    <option value="Emergencia">Emergencia</option>
-                    <option value="Examen">Examen</option>
-                </select>
-            </div>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input
+                            type="text"
+                            id="doctor_nombre"
+                            class="form-control"
+                            placeholder="Seleccione un doctor"
+                            readonly
+                            required
+                        >
 
-            <!-- Descripción -->
-            <div class="form-group">
-                <label class="form-label" for="descripcion"> Descripción (Opcional)</label>
-                <textarea class="form-control" id="motivo" name="motivo" rows="3" placeholder="motivo breve de la consulta"></textarea>
-            </div>
+                        <button type="button" class="btn btn-open-selector" id="btnAbrirModalDoctor" disabled>
+                            Buscar
+                        </button>
+                    </div>
 
-            <div class="button-group">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-calendar-check"></i> Agendar Cita
-                </button>
-                <a href="{{ route('listadocitas') }}" class="btn btn-secondary">
-                    <i class="fas fa-times"></i> Cancelar
-                </a>
-            </div>
-        </form>
+                    <div id="loadingDoctores" class="loading" style="display:none;">Cargando doctores...</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="fecha">Fecha de la Cita</label>
+                    <input type="date" class="form-control" id="fecha" name="fecha" min="{{ date('Y-m-d') }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="hora">Hora de la Cita</label>
+                    <select class="form-control" id="hora" name="hora" required>
+                        <option value="">Seleccionar hora</option>
+                        <option value="08:00">08:00 AM</option>
+                        <option value="09:00">09:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="14:00">02:00 PM</option>
+                        <option value="15:00">03:00 PM</option>
+                        <option value="16:00">04:00 PM</option>
+                        <option value="17:00">05:00 PM</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="tipo_consulta">Tipo de Consulta</label>
+                    <select class="form-control" id="tipo_consulta" name="tipo_consulta" required>
+                        <option value="">Seleccionar tipo</option>
+                        <option value="Primera vez">Primera vez</option>
+                        <option value="Control">Control</option>
+                        <option value="Emergencia">Emergencia</option>
+                        <option value="Examen">Examen</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="motivo">Descripción (Opcional)</label>
+                    <textarea class="form-control" id="motivo" name="motivo" rows="3" placeholder="motivo breve de la consulta"></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-calendar-check"></i> Agendar Cita
+                    </button>
+                    <a href="{{ route('listadocitas') }}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+
     <!-- Modal de Pacientes -->
     <div class="modal fade modal-selector" id="modalPacientes" tabindex="-1" aria-labelledby="modalPacientesLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content selector-content">
-
                 <div class="modal-header selector-header">
                     <h5 class="modal-title" id="modalPacientesLabel">Seleccionar Paciente</h5>
                     <button type="button" class="btn-close selector-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body selector-body">
-                    <div class="mb-3">
-                        <input type="text" id="buscarPaciente" class="form-control selector-input" placeholder="Buscar por nombre, apellido o identidad">
-                    </div>
-
-                    <div class="table-responsive selector-table-wrapper">
-                        <table class="table table-bordered table-hover selector-table" id="tablaPacientes">
+                    <div class="table-container-modal">
+                        <table id="tablaPacientesModal" class="table table-hover">
                             <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Identidad</th>
                                 <th>Nombres</th>
                                 <th>Apellidos</th>
-                                <th>Acción</th>
+                                <th>Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -529,10 +517,9 @@
                                     <td>
                                         <button
                                             type="button"
-                                            class="btn selector-btn-select seleccionar-paciente"
+                                            class="btn-modal-seleccionar seleccionar-paciente"
                                             data-id="{{ $paciente->id }}"
                                             data-nombre="{{ $paciente->nombres }} {{ $paciente->apellidos }}"
-                                            data-identidad="{{ $paciente->numero_identidad }}"
                                         >
                                             Seleccionar
                                         </button>
@@ -547,7 +534,6 @@
                 <div class="modal-footer selector-footer">
                     <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancelar</button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -556,32 +542,23 @@
     <div class="modal fade modal-selector" id="modalDoctores" tabindex="-1" aria-labelledby="modalDoctoresLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content selector-content">
-
                 <div class="modal-header selector-header">
                     <h5 class="modal-title" id="modalDoctoresLabel">Seleccionar Doctor</h5>
                     <button type="button" class="btn-close selector-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body selector-body">
-                    <div class="mb-3">
-                        <input type="text" id="buscarDoctor" class="form-control selector-input" placeholder="Buscar doctor">
-                    </div>
-
-                    <div class="table-responsive selector-table-wrapper">
-                        <table class="table table-bordered table-hover selector-table" id="tablaDoctores">
+                    <div class="table-container-modal">
+                        <table id="tablaDoctoresModal" class="table table-hover">
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nombre</th>
+                                <th>Nombre Completo</th>
                                 <th>Especialidad</th>
-                                <th>Acción</th>
+                                <th>Acciones</th>
                             </tr>
                             </thead>
-                            <tbody id="tbodyDoctores">
-                            <tr>
-                                <td colspan="4" class="text-center">Seleccione una especialidad para cargar doctores</td>
-                            </tr>
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                 </div>
@@ -589,232 +566,277 @@
                 <div class="modal-footer selector-footer">
                     <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancelar</button>
                 </div>
-
             </div>
         </div>
     </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+
     <script>
-        // Buscar paciente en la tabla del modal
-        document.getElementById('buscarPaciente').addEventListener('keyup', function () {
-            const filtro = this.value.toLowerCase();
-            const filas = document.querySelectorAll('#tablaPacientes tbody tr');
-
-            filas.forEach(fila => {
-                const textoFila = fila.textContent.toLowerCase();
-                fila.style.display = textoFila.includes(filtro) ? '' : 'none';
-            });
-        });
-
-        // Seleccionar paciente desde el modal
-        document.querySelectorAll('.seleccionar-paciente').forEach(boton => {
-            boton.addEventListener('click', function () {
-                const id = this.dataset.id;
-                const nombre = this.dataset.nombre;
-                const identidad = this.dataset.identidad;
-
-                document.getElementById('paciente_id').value = id;
-                document.getElementById('paciente_nombre').value = nombre;
-
-                const modalElement = document.getElementById('modalPacientes');
-                const modalInstance = bootstrap.Modal.getInstance(modalElement);
-                modalInstance.hide();
-            });
-        });
-
         const btnAbrirModalDoctor = document.getElementById('btnAbrirModalDoctor');
         const especialidadSelect = document.getElementById('especialidad');
         const loadingDoctores = document.getElementById('loadingDoctores');
-        const tbodyDoctores = document.getElementById('tbodyDoctores');
-        const buscarDoctorInput = document.getElementById('buscarDoctor');
         const mensajeFormulario = document.getElementById('mensajeFormulario');
 
         function mostrarMensajeFormulario(mensaje) {
-            mensajeFormulario.textContent = mensaje;
-            mensajeFormulario.style.display = 'block';
+            if (mensajeFormulario) {
+                mensajeFormulario.textContent = mensaje;
+                mensajeFormulario.style.display = 'block';
+            }
         }
 
         function limpiarMensajeFormulario() {
-            mensajeFormulario.textContent = '';
-            mensajeFormulario.style.display = 'none';
+            if (mensajeFormulario) {
+                mensajeFormulario.textContent = '';
+                mensajeFormulario.style.display = 'none';
+            }
         }
 
-        especialidadSelect.addEventListener('change', function () {
-            document.getElementById('empleado_id').value = '';
-            document.getElementById('doctor_nombre').value = '';
-            buscarDoctorInput.value = '';
+        function enlazarBotonesPaciente() {
+            document.querySelectorAll('.seleccionar-paciente').forEach(boton => {
+                boton.addEventListener('click', function () {
+                    const id = this.dataset.id;
+                    const nombre = this.dataset.nombre;
 
-            if (this.value) {
-                btnAbrirModalDoctor.disabled = false;
-                limpiarMensajeFormulario();
-            } else {
-                btnAbrirModalDoctor.disabled = true;
-            }
-        });
+                    document.getElementById('paciente_id').value = id;
+                    document.getElementById('paciente_nombre').value = nombre;
 
-        btnAbrirModalDoctor.addEventListener('click', function () {
-            const especialidad = especialidadSelect.value;
+                    const modalElement = document.getElementById('modalPacientes');
+                    const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
+                    modalInstance.hide();
 
-            if (!especialidad) {
-                mostrarMensajeFormulario('Debe seleccionar una especialidad antes de buscar un doctor.');
-                return;
-            }
+                    limpiarMensajeFormulario();
+                });
+            });
+        }
 
-            limpiarMensajeFormulario();
-            loadingDoctores.style.display = 'block';
-            tbodyDoctores.innerHTML = '<tr><td colspan="4" class="text-center">Cargando doctores...</td></tr>';
+        function enlazarBotonesDoctor() {
+            document.querySelectorAll('.seleccionar-doctor').forEach(boton => {
+                boton.addEventListener('click', function () {
+                    const id = this.dataset.id;
+                    const nombre = this.dataset.nombre;
 
-            fetch(`/recepcionista/doctores-especialidad/${encodeURIComponent(especialidad)}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.length === 0) {
-                        tbodyDoctores.innerHTML = '<tr><td colspan="4" class="text-center">No hay doctores disponibles para esta especialidad</td></tr>';
-                    } else {
-                        let html = '';
-
-                        data.forEach(doctor => {
-                            const nombreCompleto = `${doctor.nombre ?? ''} ${doctor.apellido ?? ''}`.trim();
-
-                            html += `
-                        <tr>
-                            <td>${doctor.id}</td>
-                            <td>${nombreCompleto}</td>
-                            <td>${doctor.departamento ?? ''}</td>
-                            <td>
-                                <button
-                                    type="button"
-                                    class="btn btn-sm btn-success seleccionar-doctor"
-                                    data-id="${doctor.id}"
-                                    data-nombre="${nombreCompleto}"
-                                    data-especialidad="${doctor.departamento ?? ''}"
-                                >
-                                    Seleccionar
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                        });
-
-                        tbodyDoctores.innerHTML = html;
-
-                        document.querySelectorAll('.seleccionar-doctor').forEach(boton => {
-                            boton.addEventListener('click', function () {
-                                const id = this.dataset.id;
-                                const nombre = this.dataset.nombre;
-                                const especialidad = this.dataset.especialidad;
-
-                                document.getElementById('empleado_id').value = id;
-                                document.getElementById('doctor_nombre').value = nombre;
-
-                                limpiarMensajeFormulario();
-
-                                const modalElement = document.getElementById('modalDoctores');
-                                const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
-                                modalInstance.hide();
-                            });
-                        });
-                    }
+                    document.getElementById('empleado_id').value = id;
+                    document.getElementById('doctor_nombre').value = nombre;
 
                     const modalElement = document.getElementById('modalDoctores');
                     const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
-                    modalInstance.show();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    tbodyDoctores.innerHTML = '<tr><td colspan="4" class="text-center text-danger">Error al cargar doctores</td></tr>';
-                    mostrarMensajeFormulario('Ocurrió un error al cargar los doctores.');
-                })
-                .finally(() => {
-                    loadingDoctores.style.display = 'none';
+                    modalInstance.hide();
+
+                    limpiarMensajeFormulario();
                 });
-        });
-
-        buscarDoctorInput.addEventListener('keyup', function () {
-            const filtro = this.value.toLowerCase();
-            const filas = document.querySelectorAll('#tablaDoctores tbody tr');
-
-            filas.forEach(fila => {
-                const textoFila = fila.textContent.toLowerCase();
-                fila.style.display = textoFila.includes(filtro) ? '' : 'none';
             });
-        });
+        }
 
-        // Filtro de búsqueda dentro del modal
-        buscarDoctorInput.addEventListener('keyup', function () {
-            const filtro = this.value.toLowerCase();
-            const filas = document.querySelectorAll('#tablaDoctores tbody tr');
-
-            filas.forEach(fila => {
-                const textoFila = fila.textContent.toLowerCase();
-                fila.style.display = textoFila.includes(filtro) ? '' : 'none';
+        $(document).ready(function() {
+            const tablaPacientes = $('#tablaPacientesModal').DataTable({
+                responsive: true,
+                autoWidth: false,
+                language: {
+                    processing: "Procesando...",
+                    search: "Buscar:",
+                    lengthMenu: "Mostrar _MENU_ registros",
+                    info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    infoEmpty: "Mostrando 0 a 0 de 0 registros",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    loadingRecords: "Cargando...",
+                    zeroRecords: "No se encontraron registros",
+                    emptyTable: "No hay pacientes disponibles",
+                    paginate: {
+                        first: "Primero",
+                        previous: "Anterior",
+                        next: "Siguiente",
+                        last: "Último"
+                    }
+                },
+                pageLength: 10,
+                lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+                columnDefs: [
+                    {
+                        targets: 4,
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
             });
-        });
 
-        // Limpiar doctor cuando cambie la especialidad
-        especialidadSelect.addEventListener('change', function () {
-            document.getElementById('empleado_id').value = '';
-            document.getElementById('doctor_nombre').value = '';
-        });
+            const tablaDoctores = $('#tablaDoctoresModal').DataTable({
+                responsive: true,
+                autoWidth: false,
+                language: {
+                    processing: "Procesando...",
+                    search: "Buscar:",
+                    lengthMenu: "Mostrar _MENU_ registros",
+                    info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    infoEmpty: "Mostrando 0 a 0 de 0 registros",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    loadingRecords: "Cargando...",
+                    zeroRecords: "No se encontraron registros",
+                    emptyTable: "No hay doctores disponibles",
+                    paginate: {
+                        first: "Primero",
+                        previous: "Anterior",
+                        next: "Siguiente",
+                        last: "Último"
+                    }
+                },
+                pageLength: 10,
+                lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+                columnDefs: [
+                    {
+                        targets: 3,
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
 
+            enlazarBotonesPaciente();
 
-        // Validación de fecha mínima (hoy)
-        document.getElementById('fecha').min = new Date().toISOString().split('T')[0];
+            $('#modalPacientes').on('shown.bs.modal', function () {
+                tablaPacientes.columns.adjust().responsive.recalc();
+            });
 
-        document.getElementById('agendarForm').addEventListener('submit', function(e) {
-            const fechaCita = document.getElementById('fecha').value;
-            const hoy = new Date().toISOString().split('T')[0];
-            const pacienteId = document.getElementById('paciente_id').value;
-            const doctorId = document.getElementById('empleado_id').value;
-            const especialidad = document.getElementById('especialidad').value;
-            const hora = document.getElementById('hora').value;
-            const motivo = document.getElementById('motivo').value.trim();
+            $('#modalDoctores').on('shown.bs.modal', function () {
+                tablaDoctores.columns.adjust().responsive.recalc();
+            });
 
-            limpiarMensajeFormulario();
+            especialidadSelect.addEventListener('change', function () {
+                document.getElementById('empleado_id').value = '';
+                document.getElementById('doctor_nombre').value = '';
 
-            if (!pacienteId) {
-                e.preventDefault();
-                mostrarMensajeFormulario('Debe seleccionar un paciente.');
-                return false;
-            }
+                tablaDoctores.clear().draw();
 
-            if (!especialidad) {
-                e.preventDefault();
-                mostrarMensajeFormulario('Debe seleccionar una especialidad.');
-                return false;
-            }
+                if (this.value) {
+                    btnAbrirModalDoctor.disabled = false;
+                    limpiarMensajeFormulario();
+                } else {
+                    btnAbrirModalDoctor.disabled = true;
+                }
+            });
 
-            if (!doctorId) {
-                e.preventDefault();
-                mostrarMensajeFormulario('Debe seleccionar un doctor.');
-                return false;
-            }
+            btnAbrirModalDoctor.addEventListener('click', function () {
+                const especialidad = especialidadSelect.value;
 
-            if (!fechaCita) {
-                e.preventDefault();
-                mostrarMensajeFormulario('Debe seleccionar una fecha para la cita.');
-                return false;
-            }
+                if (!especialidad) {
+                    mostrarMensajeFormulario('Debe seleccionar una especialidad antes de buscar un doctor.');
+                    return;
+                }
 
-            if (fechaCita < hoy) {
-                e.preventDefault();
-                mostrarMensajeFormulario('La fecha de la cita no puede ser anterior a hoy.');
-                return false;
-            }
+                limpiarMensajeFormulario();
+                loadingDoctores.style.display = 'block';
 
-            if (!hora) {
-                e.preventDefault();
-                mostrarMensajeFormulario('Debe seleccionar una hora para la cita.');
-                return false;
-            }
+                tablaDoctores.clear().draw();
 
-            if (!motivo) {
-                e.preventDefault();
-                mostrarMensajeFormulario('Debe ingresar el motivo de la consulta.');
-                return false;
-            }
+                fetch(`/recepcionista/doctores-especialidad/${encodeURIComponent(especialidad)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        tablaDoctores.clear();
 
-            const submitBtn = this.querySelector('button[type="submit"]');
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Agendando...';
-            submitBtn.disabled = true;
+                        if (data.length > 0) {
+                            data.forEach(doctor => {
+                                const nombreCompleto = `${doctor.nombre ?? ''} ${doctor.apellido ?? ''}`.trim();
+
+                                tablaDoctores.row.add([
+                                    doctor.id,
+                                    nombreCompleto,
+                                    doctor.departamento ?? '',
+                                    `<button
+                                        type="button"
+                                        class="btn-modal-seleccionar seleccionar-doctor"
+                                        data-id="${doctor.id}"
+                                        data-nombre="${nombreCompleto}"
+                                    >
+                                        Seleccionar
+                                    </button>`
+                                ]);
+                            });
+                        }
+
+                        tablaDoctores.draw();
+
+                        setTimeout(() => {
+                            enlazarBotonesDoctor();
+                        }, 100);
+
+                        const modalElement = document.getElementById('modalDoctores');
+                        const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
+                        modalInstance.show();
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        mostrarMensajeFormulario('Ocurrió un error al cargar los doctores.');
+                    })
+                    .finally(() => {
+                        loadingDoctores.style.display = 'none';
+                    });
+            });
+
+            document.getElementById('fecha').min = new Date().toISOString().split('T')[0];
+
+            document.getElementById('agendarForm').addEventListener('submit', function(e) {
+                const fechaCita = document.getElementById('fecha').value;
+                const hoy = new Date().toISOString().split('T')[0];
+                const pacienteId = document.getElementById('paciente_id').value;
+                const doctorId = document.getElementById('empleado_id').value;
+                const especialidad = document.getElementById('especialidad').value;
+                const hora = document.getElementById('hora').value;
+                const motivo = document.getElementById('motivo').value.trim();
+
+                limpiarMensajeFormulario();
+
+                if (!pacienteId) {
+                    e.preventDefault();
+                    mostrarMensajeFormulario('Debe seleccionar un paciente.');
+                    return false;
+                }
+
+                if (!especialidad) {
+                    e.preventDefault();
+                    mostrarMensajeFormulario('Debe seleccionar una especialidad.');
+                    return false;
+                }
+
+                if (!doctorId) {
+                    e.preventDefault();
+                    mostrarMensajeFormulario('Debe seleccionar un doctor.');
+                    return false;
+                }
+
+                if (!fechaCita) {
+                    e.preventDefault();
+                    mostrarMensajeFormulario('Debe seleccionar una fecha para la cita.');
+                    return false;
+                }
+
+                if (fechaCita < hoy) {
+                    e.preventDefault();
+                    mostrarMensajeFormulario('La fecha de la cita no puede ser anterior a hoy.');
+                    return false;
+                }
+
+                if (!hora) {
+                    e.preventDefault();
+                    mostrarMensajeFormulario('Debe seleccionar una hora para la cita.');
+                    return false;
+                }
+
+                if (!motivo) {
+                    e.preventDefault();
+                    mostrarMensajeFormulario('Debe ingresar el motivo de la consulta.');
+                    return false;
+                }
+
+                const submitBtn = this.querySelector('button[type="submit"]');
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Agendando...';
+                submitBtn.disabled = true;
+            });
         });
     </script>
 @endsection
