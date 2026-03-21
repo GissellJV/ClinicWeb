@@ -85,7 +85,47 @@ class TrasladoController extends Controller
             'comentario' => $request->comentario
         ]);
 
-        // Retorna a la misma ventana para mostrar el mensaje de éxito allí mismo
         return back()->with('success', 'El traslado ha sido calificado correctamente.');
+    }
+
+    /**
+     * Historial de traslados para recepcionista (H104)
+     */
+    public function historial(Request $request)
+    {
+        if (!session('empleado_id')) {
+            return redirect()->route('inicioSesion')->with('error', 'Debes iniciar sesión.');
+        }
+
+        $query = Traslado::with('paciente')->orderBy('fecha_traslado', 'desc');
+
+        // Filtro por nombre de paciente
+        if ($request->filled('busqueda')) {
+            $busqueda = $request->busqueda;
+            $query->whereHas('paciente', function ($q) use ($busqueda) {
+                $q->where('nombres', 'like', "%{$busqueda}%")
+                    ->orWhere('apellidos', 'like', "%{$busqueda}%");
+            });
+        }
+
+        // Filtro por fecha
+        if ($request->filled('fecha')) {
+            $query->whereDate('fecha_traslado', $request->fecha);
+        }
+
+        // Filtro por estado
+        if ($request->filled('estado')) {
+            $query->where('estado', $request->estado);
+        }
+
+        $traslados  = $query->paginate(10)->withQueryString();
+        $total      = Traslado::count();
+        $pendientes = Traslado::where('estado', 'Pendiente')->count();
+        $completados = Traslado::where('estado', 'Completado')->count();
+        $cancelados  = Traslado::where('estado', 'Cancelado')->count();
+
+        return view('recepcionista.historial_traslados', compact(
+            'traslados', 'total', 'pendientes', 'completados', 'cancelados'
+        ));
     }
 }
