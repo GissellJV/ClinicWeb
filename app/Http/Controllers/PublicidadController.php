@@ -23,7 +23,11 @@ class PublicidadController extends Controller
             'titulo' => 'required|string|max:255',
             'subtitulo' => 'required|string|max:255',
             'descripcion' => 'required|string',
-        ]);
+        ],[
+            'titulo.required' => 'Titulo obligatorio',
+            'subtitulo.required' => 'Subtitulo obligatorio',
+            'descripcion.required' => 'Descripcion obligatoria',
+            ]);
 
         Publicidad::create([
             'titulo' => $request->titulo,
