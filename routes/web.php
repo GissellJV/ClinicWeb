@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IncapacidadController;
 use App\Http\Controllers\ReporteTrasladoController;
 use App\Http\Controllers\CalificacionController;
 use App\Http\Controllers\ComentarioController;
@@ -386,8 +387,12 @@ Route::put('/citas/{id}/archivar',[CitaController::class, 'Citasarchivar'])->nam
 Route::get('/citas/archivadas',[CitaController::class, 'Citasarchivadas'])->name('citas.citasArchivadas');
 
 //Ruta para emitir incapacidad médica
-Route::get('/doctor/emitir-incapacidad', [DoctorController::class, 'emitirIncapacidad'])->name('doctor.emitir.incapacidad');
-Route::post('/doctor/emitir-incapacidad', [DoctorController::class, 'guardarIncapacidad'])->name('doctor.guardar-incapacidad');
+Route::get('/doctor/emitir-incapacidad', [IncapacidadController::class, 'emitirIncapacidad'])->name('doctor.emitir.incapacidad');
+Route::post('/doctor/emitir-incapacidad', [IncapacidadController::class, 'guardarIncapacidad'])->name('doctor.guardar-incapacidad');
+
+//lista de Incapacidades
+Route::get('/doctor/listaIncapacidades', [IncapacidadController::class, 'listaIncapacidades'])->name('doctor.listaIncapacidades');
+Route::get('/incapacidades/{id}', [IncapacidadController::class, 'verIncapacidad'])->name('doctor.ver-incapacidad');
 
 // Rutas Historia H83
 Route::get('/traslado/calificar/{id}', [TrasladoController::class, 'calificar'])->name('traslado.calificar.ver');

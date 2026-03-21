@@ -35,4 +35,22 @@ class IncapacidadMedica extends Model
     {
         return $this->belongsTo(Paciente::class, 'paciente_id');
     }
+
+    public function getEstadoCalculadoAttribute(): string
+    {
+        $hoy = now()->startOfDay();
+
+        if ($this->fecha_fin->copy()->startOfDay()->lt($hoy))    return 'Vencida';
+
+        return 'Vigente';
+    }
+
+    public function getEstadoClaseAttribute(): string
+    {
+        return match($this->estado_calculado) {
+            'Vigente' => 'badge-vigente',
+            'Vencida' => 'badge-vencida',
+            default   => 'badge-proxima',
+        };
+    }
 }
