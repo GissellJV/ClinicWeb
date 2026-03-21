@@ -329,6 +329,7 @@ Route::put('/expedientes/{id}/desarchivar', [ExpedienteController::class, 'desar
 // Rutas para la Historia H69/H80 - Emanuel Tercero
 Route::get('/traslado', [TrasladoController::class, 'create'])->name('ambulancia.create');
 Route::post('/traslado', [TrasladoController::class, 'store'])->name('ambulancia.store');
+Route::get('/recepcionista/traslados/historial', [TrasladoController::class, 'historial'])->name('recepcionista.traslados.historial');
 
 
 //Ruta descargar comprobante de cita

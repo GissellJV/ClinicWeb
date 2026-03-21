@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="es">
 <head>
@@ -6,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('titulo')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="http
+s://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -606,6 +606,11 @@
                             <i class="bi bi-person-check-fill"></i> Registro de Visitantes
                         </a>
                     </li>
+                    <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('recepcionista.traslados.historial') }}">
+                            <i class="bi bi-truck"></i> Historial de Traslados
+                        </a>
+                    </li>
 
                 </ul>
             </li>
@@ -966,3 +971,7 @@
         });
     </script>
 @endif
+
+
+
+
