@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('fecha_fin');
             $table->integer('cantidad_dias')->unsigned();
             $table->text('motivo');
+            $table->string('estado')->default('Vigente'); //Vencida
             $table->timestamps();
         });
     }
