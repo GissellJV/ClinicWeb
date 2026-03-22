@@ -417,3 +417,11 @@ Route::get('/enfermeria/mis-turnos', [TurnoEnfermeroController::class, 'verTurno
     ->name('enfermeria.turnos');
 Route::get('/enfermeria/exportar-pdf', [TurnoEnfermeroController::class, 'exportPdf'])
     ->name('enfermeria.turnos.pdf');
+
+//editar promociones
+Route::get('/promociones/editar/{id}', [PromocionController::class, 'mostrarFormularioEditar'])
+    ->name('promociones.editar');
+
+//actualizar promociones
+Route::put('/promociones/actualizar/{id}', [PromocionController::class, 'actualizarPromocion'])
+    ->name('promociones.actualizar');

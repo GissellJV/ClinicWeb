@@ -10,11 +10,10 @@ class PromocionController extends Controller
     // Mostrar vista promociones
     public function promociones()
     {
-        $cargo = strtolower(session('cargo') ?? '');
 
-        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
+        if (!session('cargo') || session('cargo') != 'Administrador') {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Recepcionista o Administrador');
+                ->with('error', 'Debes iniciar sesión como Admin');
         }
 
         $promociones = Promocion::all();
@@ -28,6 +27,9 @@ class PromocionController extends Controller
             'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'imagen' => 'nullable|image|max:2048',
+        ],[
+            'titulo.required' => 'Titulo obligatorio',
+            'descripcion.required' => 'Descripcion obligatoria',
         ]);
 
         $promocion = new Promocion();
@@ -54,5 +56,31 @@ class PromocionController extends Controller
 
         return response(null, 404);
     }
+
+    public function mostrarFormularioEditar($id)
+    {
+        $promocion = Promocion::findOrFail($id);
+
+        return view('recepcionista.promociones', [
+            'promocion' => $promocion
+        ]);
+    }
+
+    public function actualizarPromocion(Request $request, $id)
+    {
+        $promocion = Promocion::findOrFail($id);
+
+        $promocion->titulo = $request->titulo;
+        $promocion->descripcion = $request->descripcion;
+
+        if($request->hasFile('imagen')){
+            $promocion->imagen = file_get_contents($request->imagen);
+        }
+
+        $promocion->save();
+
+        return redirect('/')->with('success','Publicidad actualizada correctamente');
+    }
+
 
 }

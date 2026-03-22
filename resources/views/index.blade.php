@@ -2770,8 +2770,7 @@
     </section>
 
     <!-- BOOKING -->
-    <!-- BOOKING -->
-    <section class="booking">
+    <section id="publi" class="booking">
         <div id="promoCarousel" class="carousel slide promo-carousel" data-bs-ride="carousel">
 
             <div class="carousel-inner">
@@ -2793,6 +2792,12 @@
                                 <div class="promo-text">
                                     <h3>{{ $promocion->titulo }}</h3>
                                     <p>{{ $promocion->descripcion }}</p>
+                                    @if(session('cargo') === 'Administrador')
+                                        <a href="{{ route('promociones.editar', $promocion->id) }}"
+                                           class="btn btn-sm btn-primary mt-2">
+                                            Editar
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -2838,7 +2843,7 @@
             @else
                 @foreach ($especialidades as $e)
                     <div class="service-card">
-                        @if(session('cargo') === 'Recepcionista')
+                        @if(session('cargo') === 'Administrador')
                             <form action="{{ route('especialidades.destroy', $e->id) }}" method="POST" class="delete-form">
                                 @csrf
                                 @method('DELETE')
@@ -2858,7 +2863,7 @@
                 @endforeach
             @endif
         </div>
-        @if(session('cargo') === 'Recepcionista')
+        @if(session('cargo') === 'Administrador')
             <div class="especialidad-wrapper">
 
                 <button id="btnAgregarEspecialidad" class="btn-especialidad-open">
@@ -3407,7 +3412,7 @@
                 @foreach($publicidades as $pub)
                     <div class="swiper-slide">
                         <div class="promo">
-                            @if(session('cargo') === 'Recepcionista')
+                            @if(session('cargo') === 'Administrador')
                                 <form id="deleteForm{{ $pub->id }}"
                                       action="{{ route('publicidad.destroy', $pub->id) }}"
                                       method="POST"
@@ -3431,7 +3436,7 @@
 
                                 <div class="promo-footer">
                                     <span class="promo-brand">ClinicWeb</span>
-                                    @if(session('cargo') === 'Recepcionista')
+                                    @if(session('cargo') === 'Administrador')
                                         <a href="{{ route('publicidad.edit', $pub->id) }}"
                                            class="promo-brand"
                                            style=" font-weight:bold; cursor:pointer; text-decoration-line: none">
