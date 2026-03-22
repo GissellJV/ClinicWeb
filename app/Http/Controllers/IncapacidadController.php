@@ -111,5 +111,23 @@ class IncapacidadController extends Controller
             compact('incapacidades', 'stats', 'empleado'));
     }
 
+    public function descargarCertificado(int $id)
+    {
+        if (!session('cargo') || session('cargo') != 'Doctor') {
+            return redirect()->route('inicioSesion')
+                ->with('error', 'Debes iniciar sesi´pn como Doctor');
+        }
+
+        $inc = IncapacidadMedica::where('empleado_id', session('empleado_id'))
+            ->with('paciente', 'empleado', 'empleado.loginEmpleado')
+            ->findOrFail($id);
+
+        $pdf = Pdf::loadView('doctor.incapacidades.certificado', compact('inc'))
+            ->setPaper('carta');
+        $name=  $inc->paciente->nombres . ' ' . $inc->paciente->apellidos;
+
+        return $pdf->download("Incapacidad-$name.pdf");
+    }
+
 
 }
