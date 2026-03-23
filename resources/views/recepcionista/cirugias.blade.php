@@ -17,6 +17,8 @@
 
 @extends($layout)
 @section('contenido')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
 
     <style>
         .page-wrapper {
@@ -293,6 +295,57 @@
             background: linear-gradient(90deg, #9b59b618, transparent);
             border-radius: 2px;
         }
+
+        /* ── DataTables Controls igual que archivados ── */
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter {
+            margin-bottom: 20px;
+        }
+        .dataTables_wrapper .dataTables_filter input {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 8px 15px;
+            margin-left: 10px;
+        }
+        .dataTables_wrapper .dataTables_filter input:focus {
+            outline: none;
+            border-color: #4ecdc4;
+        }
+        .dataTables_wrapper .dataTables_length select {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 5px 10px;
+            margin: 0 10px;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 8px 12px !important;
+            border-radius: 8px !important;
+            transition: all 0.3s !important;
+            box-shadow: none !important;
+            font-weight: 600 !important;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            color: white !important;
+            box-shadow: none !important;
+            transform: translateY(-2px);
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%) !important;
+            color: white !important;
+            border-color: #4ecdc4 !important;
+        }
+        .dataTables_wrapper .dataTables_info {
+            font-size: 14px;
+            padding-top: 15px;
+            padding-left: 10px;
+        }
+        /* Espacio entre label de sección y controles DataTables */
+        .section-label {
+            margin-bottom: 20px !important;
+        }
+        .table-card {
+            padding-top: 20px !important;
+        }
     </style>
 
     <div class="page-wrapper">
@@ -353,7 +406,7 @@
 
             <div class="table-card">
                 @if($evaluaciones->count() > 0)
-                    <table>
+                    <table id="tablaPendientes" class="table table-hover">
                         <thead>
                         <tr>
                             <th>PACIENTE</th>
@@ -414,7 +467,7 @@
 
             <div class="table-card">
                 @if($cirugias->count() > 0)
-                    <table>
+                    <table id="tablaProgramadas" class="table table-hover">
                         <thead>
                         <tr>
                             <th>PACIENTE</th>
@@ -471,6 +524,13 @@
 
     </div>
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
     <script>
         function mostrarTab(tab, btn) {
             document.getElementById('tab-pendientes').style.display = 'none';
@@ -479,6 +539,58 @@
             document.getElementById('tab-' + tab).style.display = 'block';
             btn.classList.add('active');
         }
+
+        var langConfig = {
+            processing:     "Procesando...",
+            search:         "Buscar:",
+            lengthMenu:     "Mostrar _MENU_ registros",
+            info:           "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            infoEmpty:      "Mostrando 0 a 0 de 0 registros",
+            infoFiltered:   "(filtrado de _MAX_ registros totales)",
+            loadingRecords: "Cargando...",
+            zeroRecords:    "No se encontraron registros",
+            emptyTable:     "No hay datos disponibles",
+            paginate: {
+                first:    "Primero",
+                previous: "Anterior",
+                next:     "Siguiente",
+                last:     "Último"
+            }
+        };
+
+        $(document).ready(function() {
+
+            // Tabla Por Programar
+            if ($('#tablaPendientes').length) {
+                $('#tablaPendientes').DataTable({
+                    responsive: true,
+                    autoWidth: false,
+                    language: langConfig,
+                    pageLength: 10,
+                    lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+                    order: [[5, 'desc']],
+                    columnDefs: [
+                        { targets: 6, orderable: false, searchable: false }
+                    ]
+                });
+            }
+
+            // Tabla Programadas
+            if ($('#tablaProgramadas').length) {
+                $('#tablaProgramadas').DataTable({
+                    responsive: true,
+                    autoWidth: false,
+                    language: langConfig,
+                    pageLength: 10,
+                    lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+                    order: [[4, 'asc']],
+                    columnDefs: [
+                        { targets: 7, orderable: false, searchable: false }
+                    ]
+                });
+            }
+
+        });
     </script>
 
 @endsection
