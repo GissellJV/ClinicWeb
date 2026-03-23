@@ -901,9 +901,9 @@
             <div class="alert-custom alert-info-custom">
                 <h3>No tienes citas {{request('estado')}}s </h3>
                 <div class="filter-group">
-                <a href="{{ route('agendarcitas') }}" class="btn-filter" style="display: inline-flex; text-decoration: none;">
-                   Agendar Cita
-                </a>
+                    <a href="{{ route('agendarcitas') }}" class="btn-filter" style="display: inline-flex; text-decoration: none;">
+                        Agendar Cita
+                    </a>
                 </div>
             </div>
         @endif
@@ -965,6 +965,38 @@
         </div>
     </div>
 
+    {{-- Modal Cancelar Cita --}}
+    <div class="modal fade" id="modalCancelar" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header">
+                    <h5 class="modal-title" style="color:#e74c3c;">
+                        <i class="bi bi-x-circle me-2"></i>Cancelar Cita
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <div id="modalCancelarTexto" class="mb-3" style="font-size:0.95rem; color:#555;"></div>
+                    <label for="motivo_cancelacion" class="form-label fw-bold">
+                        Motivo de cancelación <span class="text-danger">*</span>
+                    </label>
+                    <textarea id="motivo_cancelacion" class="form-control" rows="3"
+                              placeholder="Escribe el motivo de cancelación..."></textarea>
+                    <div id="alertaMotivoCancelar" class="alert alert-danger mt-2 d-none">
+                        El motivo de cancelación es obligatorio.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-modal-cancel" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" id="btnConfirmarCancelar"
+                            style="padding:10px 24px; background:#e74c3c; color:white; border:none; border-radius:8px; font-weight:600; cursor:pointer;">
+                        Confirmar cancelación
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Reprogramar CORREGIDO -->
     <div class="modal fade" id="modalReprogramar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -983,7 +1015,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-modal-warning" id="btnConfirmarReprogramar">
-                         Guardar cambios
+                        Guardar cambios
                     </button>
                 </div>
             </div>
@@ -1019,7 +1051,7 @@
             new bootstrap.Modal(document.getElementById('modalCancelar')).show();
         }
 
-    function confirmarReprogramacion(id, doctor, fecha, hora) {
+        function confirmarReprogramacion(id, doctor, fecha, hora) {
             document.getElementById('modalReprogramarContenido').innerHTML = `
                 <p>Selecciona la nueva fecha y hora para tu cita</p>
 
@@ -1058,27 +1090,27 @@
             new bootstrap.Modal(document.getElementById('modalReprogramar')).show();
         }
 
-            let citaArchivar = null;
+        let citaArchivar = null;
 
-            function confirmarArchivar(id){
+        function confirmarArchivar(id){
             citaArchivar = id;
             let modal = new bootstrap.Modal(document.getElementById('modalArchivar'));
             modal.show();
         }
 
-            document.getElementById('btnConfirmarArchivar').onclick = function(){
+        document.getElementById('btnConfirmarArchivar').onclick = function(){
             document.getElementById('formArchivar'+citaArchivar).submit();
         };
 
-            let citaEliminar = null;
+        let citaEliminar = null;
 
-            function confirmarEliminar(id){
+        function confirmarEliminar(id){
             citaEliminar = id;
             let modal = new bootstrap.Modal(document.getElementById('modalEliminar'));
             modal.show();
         }
 
-            document.getElementById('btnConfirmarEliminar').onclick = function(){
+        document.getElementById('btnConfirmarEliminar').onclick = function(){
             document.getElementById('formEliminar'+citaEliminar).submit();
         };
 
