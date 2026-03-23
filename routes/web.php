@@ -29,7 +29,7 @@ use \App\Http\Controllers\EnviarDoctorController;
 use App\Http\Controllers\PromocionController;
 use App\Http\Controllers\PublicidadController;
 use App\Http\Controllers\TrasladoController;
-
+use App\Http\Controllers\IncidentesRutaController;
 
 Route::get('/', [RutasController::class, 'index'])->name('/');
 
@@ -427,3 +427,8 @@ Route::get('/promociones/editar/{id}', [PromocionController::class, 'mostrarForm
 //actualizar promociones
 Route::put('/promociones/actualizar/{id}', [PromocionController::class, 'actualizarPromocion'])
     ->name('promociones.actualizar');
+
+////////////////Indicidente ruta
+Route::get('/recepcionista/incidentes-ruta', [IncidentesRutaController::class, 'index'])->name('incidentes_ruta.index');
+Route::post('/recepcionista/incidentes-ruta/guardar', [IncidentesRutaController::class, 'store'])->name('incidentes_ruta.store');
+Route::patch('/recepcionista/incidentes-ruta/{id}/resolver', [IncidentesRutaController::class, 'resolver'])->name('incidentes_ruta.resolver');
