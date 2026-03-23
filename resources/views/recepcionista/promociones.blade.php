@@ -13,23 +13,13 @@
             font-weight: bold;
         }
 
-         .btn-guardar {
-            padding: 0.875rem 2rem;
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 20px;
         }
 
-        .btn-guardar:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-        }
 
     </style>
 
@@ -47,31 +37,60 @@
            @endif
 
            {{-- Formulario --}}
-               <form action="{{ route('promociones.store') }}" method="POST" enctype="multipart/form-data">
-                   @csrf
+           <form action="{{ isset($promocion) ? route('promociones.actualizar',$promocion->id) : route('promociones.store') }}"
+                 method="POST" enctype="multipart/form-data">
 
+               @csrf
+
+               @if(isset($promocion))
+                   @method('PUT')
+               @endif
+
+               <div>
                    <label>Título</label>
-                   <input type="text" name="titulo" class="form-control" required>
+                   <input type="text" name="titulo" class="form-control"
+                          value="{{ old('titulo', $promocion->titulo ?? '') }}">
 
+                   @error('titulo')
+                   <div class="text-danger mt-1">{{ $message }}</div>
+                   @enderror
+
+               </div>
+
+               <div>
                    <label class="mt-3">Descripción</label>
-                   <textarea name="descripcion" class="form-control" required></textarea>
+                   <textarea name="descripcion" class="form-control">{{ old('descripcion', $promocion->descripcion ?? '') }}</textarea>
 
-                   <div>
-                       <label class="mt-3">Imagen</label>
-                       <input type="file" name="imagen" class="form-control" accept="image/*">
-                       <small class="text-muted">Formatos: JPG, PNG (Máx. 2MB)</small>
-                   </div>
-
-                   <div style="margin-top: 20px">
-                       <button class="btn-guardar">Guardar</button>
-                   </div>
-
-               </form>
-           </div>
+                   @error('descripcion')
+                   <div class="text-danger mt-1">{{ $message }}</div>
+                   @enderror
+               </div>
 
 
+               <div>
+                   <label class="mt-3">Imagen</label>
+                   <input type="file" name="imagen" class="form-control" accept="image/*">
+                   <small class="text-muted">Formatos: JPG, PNG (Máx. 2MB)</small>
+                   @if(isset($promocion) && $promocion->imagen)
+                       <div style="margin-top:10px">
+                           <img src="data:image/jpeg;base64,{{ base64_encode($promocion->imagen) }}" width="120">
+                       </div>
+                   @endif
+               </div>
+
+               <div style="margin-top: 20px" class="button-group">
+                   <button class="btn-register">
+                       {{ isset($promocion) ? 'Actualizar' : 'Guardar' }}
+                   </button>
+
+                   <button type="button" class="btn-cancel"
+                           onclick="window.location.href='/#publi'">
+                       Cancelar
+                   </button>
+               </div>
+
+           </form>
        </div>
    </div>
-
 @endsection
 

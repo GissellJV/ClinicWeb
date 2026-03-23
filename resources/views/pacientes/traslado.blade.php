@@ -127,43 +127,37 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="detail-item mb-4">
-                                <div class="detail-label">Fecha programada</div>
-                                <div class="input-group has-validation">
-                                    <span class="input-group-text @error('fecha') border-danger text-danger @enderror">
-                                        <i class="bi bi-calendar-event"></i>
-                                    </span>
-                                    <input type="date" name="fecha"
-                                           class="form-control @error('fecha') is-invalid @enderror"
-                                           value="{{ old('fecha') }}" required>
-                                    @error('fecha')
-                                    <div class="invalid-feedback">
-                                        <i class="bi bi-exclamation-circle"></i> Seleccione una fecha válida.
-                                    </div>
-                                    @enderror
-                                </div>
+                    <div class="detail-item mb-4">
+                        <div class="detail-label">Fecha programada</div>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text @error('fecha') border-danger text-danger @enderror">
+                                <i class="bi bi-calendar-event"></i>
+                            </span>
+                            <input type="date" name="fecha"
+                                   class="form-control @error('fecha') is-invalid @enderror"
+                                   value="{{ old('fecha') }}" required>
+                            @error('fecha')
+                            <div class="invalid-feedback">
+                                <i class="bi bi-exclamation-circle"></i> Seleccione una fecha válida.
                             </div>
+                            @enderror
                         </div>
+                    </div>
 
-                        <div class="col-md-6">
-                            <div class="detail-item mb-4">
-                                <div class="detail-label">Hora programada</div>
-                                <div class="input-group has-validation">
-                                    <span class="input-group-text @error('hora') border-danger text-danger @enderror">
-                                        <i class="bi bi-clock"></i>
-                                    </span>
-                                    <input type="time" name="hora"
-                                           class="form-control @error('hora') is-invalid @enderror"
-                                           value="{{ old('hora') }}" required>
-                                    @error('hora')
-                                    <div class="invalid-feedback">
-                                        <i class="bi bi-exclamation-circle"></i> La hora es requerida.
-                                    </div>
-                                    @enderror
-                                </div>
+                    <div class="detail-item mb-4">
+                        <div class="detail-label">Hora programada</div>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text @error('hora') border-danger text-danger @enderror">
+                                <i class="bi bi-clock"></i>
+                            </span>
+                            <input type="time" name="hora"
+                                   class="form-control @error('hora') is-invalid @enderror"
+                                   value="{{ old('hora') }}" required>
+                            @error('hora')
+                            <div class="invalid-feedback">
+                                <i class="bi bi-exclamation-circle"></i> La hora es requerida.
                             </div>
+                            @enderror
                         </div>
                     </div>
 
@@ -229,3 +223,4 @@
         window.onload = actualizarCosto;
     </script>
 @endsection
+

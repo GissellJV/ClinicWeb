@@ -63,14 +63,34 @@
                     @method('PUT')
                 @endif
 
-                <label>Título</label>
-                <input type="text" name="titulo" class="form-control" value="{{ $publicidad->titulo ?? '' }}" required>
+                <div>
+                    <label>Título</label>
+                    <input type="text" name="titulo" class="form-control"
+                           value="{{ old('titulo', $publicidad->titulo ?? '') }}">
 
-                <label>Subtitulo</label>
-                <input type="text" name="subtitulo" class="form-control" value="{{ $publicidad->subtitulo ?? '' }}" required>
+                    @error('titulo')
+                    <div class="text-danger mt-1">{{ $message }}</div>
+                    @enderror
+                </div>
 
-                <label class="mt-3">Descripción</label>
-                <textarea name="descripcion" class="form-control" required>{{ $publicidad->descripcion ?? '' }}</textarea>
+                <br>
+                <div>
+                    <label>Subtitulo</label>
+                    <input type="text" name="subtitulo" class="form-control" value="{{old('subtitulo',$publicidad->subtitulo ?? '')}}" >
+
+                    @error('subtitulo')
+                    <div class="text-danger mt-1">{{ $message }}</div>
+                    @enderror
+                </div>
+
+               <div>
+                   <label class="mt-3">Descripción</label>
+                   <textarea name="descripcion" class="form-control"> {{ old('descripcion', $publicidad->descripcion ?? '') }}</textarea>
+
+                   @error('descripcion')
+                   <div class="text-danger mt-1">{{ $message }}</div>
+                   @enderror
+               </div>
 
                 <div style="margin-top: 20px" class="button-group">
                     <button class="btn-guardar">

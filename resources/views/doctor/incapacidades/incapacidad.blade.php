@@ -20,8 +20,13 @@
         }
 
         .formulario .btn-register {
-            align-items: flex-end;
-            margin-left: 300px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .formulario .btn-cancel {
+            flex: 1;
+            text-align: center;
         }
     </style>
 
@@ -137,6 +142,9 @@
 
                     {{-- Botones --}}
                     <div class="d-flex gap-3 mt-4">
+                        <a href="{{ route('doctor.listaIncapacidades') }}" class="btn-cancel" style="text-decoration-line: none">
+                            Cancelar
+                        </a>
                         <button type="submit" class="btn-register">
                             Emitir Incapacidad
                         </button>

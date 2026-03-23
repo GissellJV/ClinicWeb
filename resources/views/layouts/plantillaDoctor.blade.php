@@ -578,8 +578,8 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.emitir.incapacidad') }}">
-                            <i class="bi bi-person-badge-fill"></i> Emitir Incapacidad
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.listaIncapacidades') }}">
+                            <i class="bi bi-person-badge-fill"></i> Ver Incapacidades
                         </a>
                     </li>
                     <li>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IncapacidadController;
 use App\Http\Controllers\ReporteTrasladoController;
 use App\Http\Controllers\CalificacionController;
 use App\Http\Controllers\ComentarioController;
@@ -11,7 +12,6 @@ use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\PacienteCotizacionController;
 use App\Http\Controllers\PreguntaController;
-use App\Http\Controllers\PreguntaPacienteController;
 use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\TurnoEnfermeroController;
 use Illuminate\Support\Facades\Route;
@@ -328,6 +328,7 @@ Route::put('/expedientes/{id}/desarchivar', [ExpedienteController::class, 'desar
 // Rutas para la Historia H69/H80 - Emanuel Tercero
 Route::get('/traslado', [TrasladoController::class, 'create'])->name('ambulancia.create');
 Route::post('/traslado', [TrasladoController::class, 'store'])->name('ambulancia.store');
+Route::get('/recepcionista/traslados/historial', [TrasladoController::class, 'historial'])->name('recepcionista.traslados.historial');
 
 
 //Ruta descargar comprobante de cita
@@ -386,8 +387,15 @@ Route::put('/citas/{id}/archivar',[CitaController::class, 'Citasarchivar'])->nam
 Route::get('/citas/archivadas',[CitaController::class, 'Citasarchivadas'])->name('citas.citasArchivadas');
 
 //Ruta para emitir incapacidad médica
-Route::get('/doctor/emitir-incapacidad', [DoctorController::class, 'emitirIncapacidad'])->name('doctor.emitir.incapacidad');
-Route::post('/doctor/emitir-incapacidad', [DoctorController::class, 'guardarIncapacidad'])->name('doctor.guardar-incapacidad');
+Route::get('/doctor/emitir-incapacidad', [IncapacidadController::class, 'emitirIncapacidad'])->name('doctor.emitir.incapacidad');
+Route::post('/doctor/emitir-incapacidad', [IncapacidadController::class, 'guardarIncapacidad'])->name('doctor.guardar-incapacidad');
+
+//lista de Incapacidades
+Route::get('/doctor/listaIncapacidades', [IncapacidadController::class, 'listaIncapacidades'])->name('doctor.listaIncapacidades');
+Route::get('/incapacidades/{id}', [IncapacidadController::class, 'verIncapacidad'])->name('doctor.ver-incapacidad');
+
+//Descargar PDF de Incapacidades
+Route::get('/incapacidades/{id}/certificado', [IncapacidadController::class, 'descargarCertificado'])->name('doctor.certificado');
 
 // Rutas Historia H83
 Route::get('/traslado/calificar/{id}', [TrasladoController::class, 'calificar'])->name('traslado.calificar.ver');
@@ -411,3 +419,11 @@ Route::get('/enfermeria/mis-turnos', [TurnoEnfermeroController::class, 'verTurno
     ->name('enfermeria.turnos');
 Route::get('/enfermeria/exportar-pdf', [TurnoEnfermeroController::class, 'exportPdf'])
     ->name('enfermeria.turnos.pdf');
+
+//editar promociones
+Route::get('/promociones/editar/{id}', [PromocionController::class, 'mostrarFormularioEditar'])
+    ->name('promociones.editar');
+
+//actualizar promociones
+Route::put('/promociones/actualizar/{id}', [PromocionController::class, 'actualizarPromocion'])
+    ->name('promociones.actualizar');
