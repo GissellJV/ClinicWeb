@@ -84,10 +84,8 @@
 
     <div class="formulario">
         <div class="register-section">
-            {{-- El form-container es el cuadro blanco que envuelve todo --}}
             <div class="form-container" style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
 
-                {{-- LA NOTIFICACIÓN SE MUESTRA AQUÍ (DENTRO DEL FORMULARIO) --}}
                 @if(session('success'))
                     <div class="custom-alert-clinic alert alert-dismissible fade show" role="alert">
                         <div class="alert-icon-circle">
@@ -136,40 +134,34 @@
                         @enderror
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="detail-item mb-4">
-                                <div class="detail-label" style="font-weight: 600; color: #444; margin-bottom: 8px;">Fecha de inicio</div>
-                                <div class="input-group">
-                                    <span class="input-group-text @error('fecha_inicio') border-danger text-danger @enderror">
-                                        <i class="bi bi-calendar-check"></i>
-                                    </span>
-                                    <input type="date" name="fecha_inicio"
-                                           class="form-control @error('fecha_inicio') is-invalid @enderror"
-                                           value="{{ old('fecha_inicio') }}" required>
-                                </div>
-                                @error('fecha_inicio')
-                                <div class="invalid-feedback"><i class="bi bi-exclamation-circle"></i> {{ $message }}</div>
-                                @enderror
-                            </div>
+                    <div class="detail-item mb-4">
+                        <div class="detail-label" style="font-weight: 600; color: #444; margin-bottom: 8px;">Fecha de inicio</div>
+                        <div class="input-group">
+                            <span class="input-group-text @error('fecha_inicio') border-danger text-danger @enderror">
+                                <i class="bi bi-calendar-check"></i>
+                            </span>
+                            <input type="date" name="fecha_inicio"
+                                   class="form-control @error('fecha_inicio') is-invalid @enderror"
+                                   value="{{ old('fecha_inicio') }}" required>
                         </div>
+                        @error('fecha_inicio')
+                        <div class="invalid-feedback"><i class="bi bi-exclamation-circle"></i> {{ $message }}</div>
+                        @enderror
+                    </div>
 
-                        <div class="col-md-6">
-                            <div class="detail-item mb-4">
-                                <div class="detail-label" style="font-weight: 600; color: #444; margin-bottom: 8px;">Fecha de devolución</div>
-                                <div class="input-group">
-                                    <span class="input-group-text @error('fecha_fin') border-danger text-danger @enderror">
-                                        <i class="bi bi-calendar-x"></i>
-                                    </span>
-                                    <input type="date" name="fecha_fin"
-                                           class="form-control @error('fecha_fin') is-invalid @enderror"
-                                           value="{{ old('fecha_fin') }}" required>
-                                </div>
-                                @error('fecha_fin')
-                                <div class="invalid-feedback"><i class="bi bi-exclamation-circle"></i> {{ $message }}</div>
-                                @enderror
-                            </div>
+                    <div class="detail-item mb-4">
+                        <div class="detail-label" style="font-weight: 600; color: #444; margin-bottom: 8px;">Fecha de devolución</div>
+                        <div class="input-group">
+                            <span class="input-group-text @error('fecha_fin') border-danger text-danger @enderror">
+                                <i class="bi bi-calendar-x"></i>
+                            </span>
+                            <input type="date" name="fecha_fin"
+                                   class="form-control @error('fecha_fin') is-invalid @enderror"
+                                   value="{{ old('fecha_fin') }}" required>
                         </div>
+                        @error('fecha_fin')
+                        <div class="invalid-feedback"><i class="bi bi-exclamation-circle"></i> {{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="alert alert-success" style="background: #f0fdfa; border: 1px dashed #4ecdc4; padding: 15px; border-radius: 8px;">
