@@ -449,6 +449,7 @@
                                     <button class="btn-ver"
                                             data-bs-toggle="modal"
                                             data-bs-target="#modalIncapacidad"
+                                            data-id="{{ $inc->id }}"
                                             data-estado="{{ $inc->estado_calculado }}"
                                             data-estado-clase="{{ $inc->estado_clase }}"
                                             data-paciente="{{ $inc->paciente->nombres }} {{ $inc->paciente->apellidos }}"
@@ -520,7 +521,7 @@
 
                 <div class="modal-footer d-flex gap-3">
                     <button type="button" class="btn-cerrar-modal" data-bs-dismiss="modal">Cerrar</button>
-                    <a href="{{ route('doctor.certificado', $inc->id) }}" class="btn-pdf" style="text-decoration-line: none;">
+                    <a href="#" id="btnDescargarPdf" class="btn-pdf" style="text-decoration-line: none;">
                         <i class="bi bi-file-earmark-pdf"></i> Descargar PDF
                     </a>
                 </div>
@@ -571,6 +572,10 @@
 
             $('#modalIncapacidad').on('show.bs.modal', function (event) {
                 const btn    = event.relatedTarget;
+
+                const incId   = btn.getAttribute('data-id');
+                const baseUrl = "{{ route('doctor.certificado', ['id' => '__ID__']) }}";
+                $('#btnDescargarPdf').attr('href', baseUrl.replace('__ID__', incId));
                 const $modal = $(this);
 
                 const estado      = btn.getAttribute('data-estado');
