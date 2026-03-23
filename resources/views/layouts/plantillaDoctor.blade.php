@@ -481,6 +481,21 @@
             right: -10px;
         }
 
+        /* Badge de notificaciones — tamaño fijo en todas las vistas */
+        .nav-item .badge.bg-danger {
+            font-size: 10px !important;
+            padding: 3px 6px !important;
+            min-width: 18px !important;
+            height: 18px !important;
+            line-height: 12px !important;
+            border-radius: 50% !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-weight: 700 !important;
+        }
+
+
     </style>
 </head>
 <body>
@@ -958,6 +973,3 @@
         });
     </script>
 @endif
-
-
-

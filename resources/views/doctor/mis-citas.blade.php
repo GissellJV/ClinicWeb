@@ -227,124 +227,95 @@
         .cita-card {
             border: 2px solid #e8f4f3;
             border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
+            padding: 28px;
+            margin-bottom: 18px;
             transition: all 0.3s ease;
         }
-
         .cita-card:hover {
             border-color: #4ECDC4;
             box-shadow: 0 4px 15px rgba(78, 205, 196, 0.1);
         }
-
         .cita-header {
             display: flex;
             justify-content: space-between;
             align-items: start;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
-
         .paciente-info h4 {
             color: #2c3e50;
-            font-size: 1.2rem;
-            margin-bottom: 5px;
+            font-size: 1.5rem;
+            margin-bottom: 6px;
         }
-
         .paciente-info p {
             color: #7f8c8d;
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
-
         .badge {
-            padding: 8px 16px;
+            padding: 10px 20px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             font-weight: 600;
         }
-
-        .badge-programada {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .badge-pendiente {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .badge-completada {
-            background: #d1ecf1;
-            color: #0c5460;
-        }
-
-        .badge-cancelada {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
+        .badge-programada { background: #d4edda; color: #155724; }
+        .badge-pendiente  { background: #fff3cd; color: #856404; }
+        .badge-completada { background: #d1ecf1; color: #0c5460; }
+        .badge-cancelada  { background: #f8d7da; color: #721c24; }
         .cita-detalles {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            padding: 15px;
+            gap: 20px;
+            padding: 20px;
             background: #f8fffe;
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
-
         .detalle-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
-
         .detalle-item i {
             color: #4ECDC4;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
         }
-
         .detalle-text span {
             display: block;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             color: #7f8c8d;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
-
         .detalle-text strong {
             color: #2c3e50;
-            font-size: 0.95rem;
+            font-size: 1.1rem;
         }
-
         .motivo-consulta {
-            padding: 15px;
+            padding: 18px;
             background: #fff;
             border-left: 4px solid #4ECDC4;
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
-
         .motivo-consulta h5 {
             color: #2c3e50;
-            font-size: 0.9rem;
+            font-size: 1rem;
             margin-bottom: 8px;
         }
-
         .motivo-consulta p {
             color: #555;
             line-height: 1.6;
+            font-size: 1rem;
         }
-
         .cita-acciones {
             display: flex;
             gap: 10px;
             justify-content: flex-end;
         }
-
         .btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
             border-radius: 8px;
             font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
@@ -352,48 +323,14 @@
             gap: 8px;
             text-decoration: none;
         }
-
-        .btn-ver {
-            background: #4ECDC4;
-            color: white;
-        }
-
-        .btn-ver:hover {
-            background: #45b8b0;
-            color: white;
-        }
-
-        .btn-evaluar {
-            background: linear-gradient(135deg, #9b59b6, #8e44ad);
-            color: white;
-        }
-
-        .btn-evaluar:hover {
-            background: linear-gradient(135deg, #8e44ad, #7d3c98);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .btn-evaluado {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
-            color: white;
-        }
-
-        .btn-evaluado:hover {
-            background: linear-gradient(135deg, #229954, #27ae60);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .btn-completar {
-            background: #2ecc71;
-            color: white;
-        }
-
-        .btn-completar:hover {
-            background: #27ae60;
-        }
-
+        .btn-ver { background: #4ECDC4; color: white; }
+        .btn-ver:hover { background: #45b8b0; color: white; }
+        .btn-evaluar { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; }
+        .btn-evaluar:hover { background: linear-gradient(135deg, #8e44ad, #7d3c98); color: white; transform: translateY(-2px); }
+        .btn-evaluado { background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; }
+        .btn-evaluado:hover { background: linear-gradient(135deg, #229954, #27ae60); color: white; transform: translateY(-2px); }
+        .btn-completar { background: #2ecc71; color: white; }
+        .btn-completar:hover { background: #27ae60; }
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -537,10 +474,7 @@
 
         <!-- Lista de Citas -->
         <div class="citas-list">
-            <h3>
-                <i class="fas fa-list"></i>
-                Listado de Citas
-            </h3>
+            <h3><i class="fas fa-list"></i> Listado de Citas</h3>
 
             @if(session('success'))
                 <div class="alert-success">
@@ -549,98 +483,73 @@
             @endif
 
             @if($citas->count() > 0)
-                @foreach($citas as $cita)
-                    <div class="cita-card">
-                        <div class="cita-header">
-                            <div class="paciente-info">
-                                <h4>{{ $cita->paciente_nombre }}</h4>
-                                <p>Paciente ID: {{ $cita->paciente_id }}</p>
-                            </div>
-                            <span class="badge badge-{{ $cita->estado }}">
-                                {{ ucfirst($cita->estado) }}
-                            </span>
-                        </div>
-
-                        <div class="cita-detalles">
-                            <div class="detalle-item">
-                                <i class="fas fa-calendar"></i>
-                                <div class="detalle-text">
-                                    <span>Fecha</span>
-                                    <strong>{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}</strong>
-                                </div>
-                            </div>
-
-                            <div class="detalle-item">
-                                <i class="fas fa-clock"></i>
-                                <div class="detalle-text">
-                                    <span>Hora</span>
-                                    <strong>{{ $cita->hora }}</strong>
-                                </div>
-                            </div>
-
-                            <div class="detalle-item">
-                                <i class="fas fa-stethoscope"></i>
-                                <div class="detalle-text">
-                                    <span>Especialidad</span>
-                                    <strong>{{ $cita->especialidad }}</strong>
-                                </div>
-                            </div>
-
-                            @if($cita->paciente && $cita->paciente->telefono)
-                                <div class="detalle-item">
-                                    <i class="fas fa-phone"></i>
-                                    <div class="detalle-text">
-                                        <span>Teléfono</span>
-                                        <strong>{{ $cita->paciente->telefono }}</strong>
+                <div style="overflow-x:auto;">
+                    <table id="citasTable" class="table table-hover" style="width:100%;">
+                        <thead>
+                        <tr>
+                            <th>Paciente</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Especialidad</th>
+                            <th>Teléfono</th>
+                            <th>Acciones</th>
+                            <th>Cirugía</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($citas as $cita)
+                            <tr>
+                                <td>
+                                    <div style="display:flex; align-items:center; gap:9px;">
+                                        <div style="width:34px; height:34px; border-radius:50%; background:#e1f5ee; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:#0f6e56; flex-shrink:0;">
+                                            {{ strtoupper(substr($cita->paciente_nombre, 0, 1)) }}{{ strtoupper(substr(strrchr($cita->paciente_nombre, ' ') ?: $cita->paciente_nombre, 1, 1)) }}
+                                        </div>
+                                        <div>
+                                            <div style="font-weight:600; font-size:14px; color:#2c3e50;">{{ $cita->paciente_nombre }}</div>
+                                            <div style="font-size:11px; color:#7f8c8d;">ID: {{ $cita->paciente_id }}</div>
+                                        </div>
                                     </div>
-                                </div>
-                            @endif
-                        </div>
+                                </td>
+                                <td>{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}</td>
+                                <td>{{ $cita->hora }}</td>
+                                <td><span style="font-size:12px; padding:3px 9px; border-radius:4px; background:#f0f0f0; color:#555;">{{ $cita->especialidad }}</span></td>
+                                <td>{{ $cita->paciente->telefono ?? '—' }}</td>
+                                <td style="white-space:nowrap;">
+                                    <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
+                                        <a href="{{ route('expediente.ver', $cita->paciente_id) }}" class="btn btn-ver" style="padding:6px 12px; font-size:12px;">
+                                            <i class="fas fa-file-medical"></i> Expediente
+                                        </a>
 
-                        @if($cita->motivo)
-                            <div class="motivo-consulta">
-                                <h5><i class="fas fa-notes-medical"></i> Motivo de Consulta:</h5>
-                                <p>{{ $cita->motivo }}</p>
-                            </div>
-                        @endif
+                                        @if(in_array($cita->estado, ['programada', 'pendiente']))
+                                            @php
+                                                $evaluacionExiste = \App\Models\EvaluacionPrequirurgica::where('cita_id', $cita->id)->first();
+                                            @endphp
 
-                        <div class="cita-acciones">
-                            <a href="{{ route('expediente.ver', $cita->paciente_id) }}" class="btn btn-ver">
-                                <i class="fas fa-file-medical"></i>
-                                Ver Expediente
-                            </a>
+                                            @if(!$evaluacionExiste)
+                                                <a href="{{ route('doctor.evaluacion.crear', $cita->id) }}" class="btn btn-evaluar" style="padding:6px 12px; font-size:12px;">
+                                                    Evaluar
+                                                </a>
+                                            @else
+                                                <a href="{{ route('doctor.evaluacion.ver', $evaluacionExiste->id) }}" class="btn btn-evaluado" style="padding:6px 12px; font-size:12px;">
+                                                    Ver Eval.
+                                                </a>
+                                            @endif
 
-                            @if(in_array($cita->estado, ['programada', 'pendiente']))
-                                {{-- Botón evaluar para cirugía --}}
-                                @php
-                                    $evaluacionExiste = \App\Models\EvaluacionPrequirurgica::where('cita_id', $cita->id)->first();
-                                @endphp
-
-                                @if(!$evaluacionExiste)
-                                    <a href="{{ route('doctor.evaluacion.crear', $cita->id) }}" class="btn btn-evaluar">
-                                        Evaluar para Cirugía
-                                    </a>
-                                @else
-                                    <a href="{{ route('doctor.evaluacion.ver', $evaluacionExiste->id) }}" class="btn btn-evaluado">
-                                        Ver Evaluación
-                                    </a>
-                                @endif
-
-                                <form method="POST" action="{{ route('doctor.cita.completar', $cita->id) }}" style="margin: 0;">
-                                    @csrf
-                                    @method('PUT')
-                                    <button type="submit" class="btn btn-completar">
-                                        Marcar Completada
-                                    </button>
-                                </form>
-                            @endif
-                        </div>
-                    </div>
-                @endforeach
-
-                <!-- Paginación -->
-                <div style="margin-top: 30px;">
-                    {{ $citas->links() }}
+                                            <form method="POST" action="{{ route('doctor.cita.completar', $cita->id) }}" style="margin:0;">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-completar" style="padding:6px 12px; font-size:12px;">
+                                                    Completar
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             @else
                 <div class="empty-state">
@@ -651,5 +560,67 @@
             @endif
         </div>
     </div>
+
+    {{-- DataTables --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <style>
+        table.dataTable thead th {
+            background: #4ecdc4 !important;
+            color: white !important;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border-bottom: none !important;
+        }
+        table.dataTable tbody tr:hover { background: #f8fffe !important; }
+        table.dataTable tbody td { vertical-align: middle; color: #2c3e50; }
+        .dataTables_wrapper .dataTables_filter input {
+            border: 2px solid #e0e0e0; border-radius: 8px; padding: 6px 12px; margin-left: 8px;
+        }
+        .dataTables_wrapper .dataTables_filter input:focus { outline: none; border-color: #4ecdc4; }
+        .dataTables_wrapper .dataTables_length select {
+            border: 2px solid #e0e0e0; border-radius: 8px; padding: 4px 8px; margin: 0 8px;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 6px 10px !important; border-radius: 8px !important;
+            font-weight: 600 !important; box-shadow: none !important;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            color: white !important; box-shadow: none !important;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d) !important;
+            color: white !important; border-color: #4ecdc4 !important;
+        }
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter { margin-bottom: 16px; }
+        .dataTables_wrapper .dataTables_info { font-size: 13px; padding-top: 12px; }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('#citasTable').DataTable({
+                responsive: true,
+                autoWidth: false,
+                searching: false,
+                language: {
+                    lengthMenu: "Mostrar _MENU_ registros",
+                    info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    infoEmpty: "Mostrando 0 a 0 de 0 registros",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    zeroRecords: "No se encontraron citas",
+                    emptyTable: "No hay citas disponibles",
+                    paginate: { first:"Primero", previous:"Anterior", next:"Siguiente", last:"Último" }
+                },
+                pageLength: 10,
+                lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "Todos"]],
+                order: [[1, 'desc']],
+                columnDefs: [{ targets: 6, orderable: false, searchable: false }]
+            });
+        });
+    </script>
 
 @endsection
