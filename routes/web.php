@@ -12,7 +12,6 @@ use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\PacienteCotizacionController;
 use App\Http\Controllers\PreguntaController;
-use App\Http\Controllers\PreguntaPacienteController;
 use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\TurnoEnfermeroController;
 use Illuminate\Support\Facades\Route;
@@ -394,6 +393,9 @@ Route::post('/doctor/emitir-incapacidad', [IncapacidadController::class, 'guarda
 //lista de Incapacidades
 Route::get('/doctor/listaIncapacidades', [IncapacidadController::class, 'listaIncapacidades'])->name('doctor.listaIncapacidades');
 Route::get('/incapacidades/{id}', [IncapacidadController::class, 'verIncapacidad'])->name('doctor.ver-incapacidad');
+
+//Descargar PDF de Incapacidades
+Route::get('/incapacidades/{id}/certificado', [IncapacidadController::class, 'descargarCertificado'])->name('doctor.certificado');
 
 // Rutas Historia H83
 Route::get('/traslado/calificar/{id}', [TrasladoController::class, 'calificar'])->name('traslado.calificar.ver');
