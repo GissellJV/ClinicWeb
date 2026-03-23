@@ -438,7 +438,7 @@
                         @foreach($incapacidades as $index => $inc)
                             <tr>
                                 <td class="num-cell"></td>
-                                <td>{{ $inc->paciente->nombres }}</td>
+                                <td>{{ $inc->paciente->nombres }} {{ $inc->paciente->apellidos }}</td>
                                 <td>{{ $inc->fecha_inicio->isoFormat('D MMM YYYY') }}</td>
                                 <td>{{ $inc->fecha_fin->isoFormat('D MMM YYYY') }}</td>
                                 <td><strong style="color:#00bfa6;">{{ $inc->cantidad_dias }}</strong></td>
@@ -520,7 +520,7 @@
 
                 <div class="modal-footer d-flex gap-3">
                     <button type="button" class="btn-cerrar-modal" data-bs-dismiss="modal">Cerrar</button>
-                    <a href="" class="btn-pdf" style="text-decoration-line: none;">
+                    <a href="{{ route('doctor.certificado', $inc->id) }}" class="btn-pdf" style="text-decoration-line: none;">
                         <i class="bi bi-file-earmark-pdf"></i> Descargar PDF
                     </a>
                 </div>
