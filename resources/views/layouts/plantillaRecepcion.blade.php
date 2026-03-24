@@ -602,6 +602,11 @@ s://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="s
                         </a>
                     </li>
                     <li>
+                        <a class="dropdown-item dropdown-item-modern" href="{{ route('incidentes_ruta.index') }}">
+                            <i class="bi bi-geo-alt-fill"></i> Reportes de Incidentes en ruta
+                        </a>
+                    </li>
+                    <li>
                         <a class="dropdown-item dropdown-item-modern" href="{{ route('visitantes.index') }}">
                             <i class="bi bi-person-check-fill"></i> Registro de Visitantes
                         </a>
