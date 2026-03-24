@@ -317,6 +317,11 @@
                                 <i class="bi bi-clock-history"></i> Ver  Rol de Turnos
                             </a>
                         </li>
+                        <li>
+                            <a class="dropdown-item dropdown-item-modern" href="{{ route('enfermeria.informe') }}">
+                                <i class="bi bi-card-list"></i> Informe Mensual
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

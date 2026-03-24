@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EnfermeriaController extends Controller
 {
@@ -90,6 +91,55 @@ class EnfermeriaController extends Controller
             'anioAnterior',
             'anioSiguiente',
             'turnos'
+        ));
+    }
+
+    public function informe(){
+        Carbon::setLocale('es');
+        $year = now()->year;
+        $meses = [];
+
+        $totalPacientes = 0;
+        $totalIncidentes = 0;
+        $totalMedicamentos = 0;
+
+        // Recorremos solo los meses hasta el mes actual
+        for ($m = 1; $m <= now()->month; $m++) {
+            $inicio = Carbon::create($year, $m, 1)->startOfMonth();
+            $fin = Carbon::create($year, $m, 1)->endOfMonth();
+
+            // Pacientes atendidos en el mes
+            $pacientesMes = DB::table('aplicacion_medicamento')
+                ->whereBetween('fecha_aplicacion', [$inicio, $fin])
+                ->count();
+
+            // Incidentes reportados en el mes
+            $incidentesMes = DB::table('incidentes')
+                ->whereBetween('fecha_hora_incidente', [$inicio, $fin])
+                ->count();
+
+            // Medicamentos aplicados en el mes
+            $medicamentosMes = DB::table('aplicacion_medicamento')
+                ->whereBetween('fecha_aplicacion', [$inicio, $fin])
+                ->sum('cantidad');
+
+            $totalPacientes += $pacientesMes;
+            $totalIncidentes += $incidentesMes;
+            $totalMedicamentos += $medicamentosMes;
+
+            $meses[] = [
+                'mes' => $inicio->isoFormat('MMMM YYYY'),
+                'pacientes' => $pacientesMes,
+                'incidentes' => $incidentesMes,
+                'medicamentos' => $medicamentosMes,
+            ];
+        }
+
+        return view('enfermeria.informe', compact(
+            'meses',
+            'totalPacientes',
+            'totalIncidentes',
+            'totalMedicamentos'
         ));
     }
 }

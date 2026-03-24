@@ -432,3 +432,7 @@ Route::put('/promociones/actualizar/{id}', [PromocionController::class, 'actuali
 Route::get('/recepcionista/incidentes-ruta', [IncidentesRutaController::class, 'index'])->name('incidentes_ruta.index');
 Route::post('/recepcionista/incidentes-ruta/guardar', [IncidentesRutaController::class, 'store'])->name('incidentes_ruta.store');
 Route::patch('/recepcionista/incidentes-ruta/{id}/resolver', [IncidentesRutaController::class, 'resolver'])->name('incidentes_ruta.resolver');
+
+//Informe de enfermeria
+Route::get('/informe-enfermeria', [EnfermeriaController::class, 'informe'])
+    ->name('enfermeria.informe');
