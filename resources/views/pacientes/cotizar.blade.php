@@ -332,6 +332,152 @@
             color: white;
             white-space: nowrap;
         }
+
+        /* ================= DARK MODE - COTIZACIÓN DE MEDICAMENTOS ================= */
+
+        .dark-mode body {
+            background: #121212 !important;
+            color: #e4e4e4 !important;
+        }
+
+        /* TÍTULO */
+        .dark-mode h3.text-center {
+            color: #4ecdc4 !important;
+        }
+
+        /* BUSCADOR */
+        .dark-mode #buscar,
+        .dark-mode .form-control {
+            background: #2a2a2a !important;
+            color: #fff !important;
+            border: 1px solid #444 !important;
+        }
+
+        .dark-mode #buscar:focus,
+        .dark-mode .form-control:focus {
+            border-color: #4ecdc4 !important;
+            box-shadow: 0 0 0 3px rgba(78,205,196,0.2) !important;
+        }
+
+        .dark-mode #buscar::placeholder,
+        .dark-mode .form-control::placeholder {
+            color: #888 !important;
+        }
+
+        /* TABLA */
+        .dark-mode table,
+        .dark-mode .table {
+            background: #1e1e1e !important;
+            color: #e4e4e4 !important;
+        }
+
+        /* ENCABEZADO */
+        .dark-mode table thead th,
+        .dark-mode .table thead th {
+            background: #2c5364 !important;
+            color: #fff !important;
+            border-color: #333 !important;
+        }
+
+        /* FILAS */
+        .dark-mode table tbody tr,
+        .dark-mode .table tbody tr {
+            background: #1e1e1e !important;
+            border-color: #333 !important;
+        }
+
+        .dark-mode table tbody tr:hover,
+        .dark-mode .table tbody tr:hover {
+            background: #2a2a2a !important;
+        }
+
+        /* CELDAS */
+        .dark-mode table tbody td,
+        .dark-mode .table tbody td {
+            color: #ddd !important;
+            border-color: #333 !important;
+        }
+
+        /* INPUT CANTIDAD */
+        .dark-mode .cantidad {
+            background: #2a2a2a !important;
+            color: #fff !important;
+            border: 1px solid #444 !important;
+        }
+
+        .dark-mode .cantidad:focus {
+            border-color: #4ecdc4 !important;
+            box-shadow: 0 0 0 2px rgba(78,205,196,0.2) !important;
+        }
+
+        /* PRECIOS Y TOTAL */
+        .dark-mode .precio,
+        .dark-mode .total {
+            color: #e5e7eb !important;
+            font-weight: 600;
+        }
+
+        /* ALERTA WARNING */
+        .dark-mode .alert-warning {
+            background: #3f3218 !important;
+            color: #fbbf24 !important;
+            border: 1px solid #5a4720 !important;
+        }
+
+        /* PAGINACIÓN */
+        .dark-mode .pagination {
+            --bs-pagination-bg: #1f2937;
+            --bs-pagination-border-color: #374151;
+            --bs-pagination-color: #d1d5db;
+            --bs-pagination-hover-bg: #374151;
+            --bs-pagination-hover-border-color: #4b5563;
+            --bs-pagination-hover-color: #fff;
+            --bs-pagination-active-bg: #4ecdc4;
+            --bs-pagination-active-border-color: #4ecdc4;
+            --bs-pagination-active-color: #111827;
+            --bs-pagination-disabled-bg: #111827;
+            --bs-pagination-disabled-color: #6b7280;
+        }
+
+        .dark-mode .page-link {
+            background: #1f2937 !important;
+            color: #d1d5db !important;
+            border: 1px solid #374151 !important;
+        }
+
+        .dark-mode .page-link:hover {
+            background: #374151 !important;
+            color: #fff !important;
+        }
+
+        .dark-mode .page-item.active .page-link {
+            background: #4ecdc4 !important;
+            border-color: #4ecdc4 !important;
+            color: #111827 !important;
+        }
+
+        .dark-mode .page-item.disabled .page-link {
+            background: #111827 !important;
+            color: #6b7280 !important;
+            border-color: #374151 !important;
+        }
+        /* Quitar los rectángulos blancos de la tabla */
+        .dark-mode table tbody tr,
+        .dark-mode .table tbody tr,
+        .dark-mode table tbody td,
+        .dark-mode .table tbody td {
+            background: #1e1e1e !important;
+            color: #ddd !important;
+            border-color: #333 !important;
+        }
+
+        /* Hover un poco más claro */
+        .dark-mode table tbody tr:hover,
+        .dark-mode .table tbody tr:hover,
+        .dark-mode table tbody tr:hover td,
+        .dark-mode .table tbody tr:hover td {
+            background: #2a2a2a !important;
+        }
     </style>
     <div class="container mt-5">
         <h3 class="mb-3 text-center">Consulta y Cotización de Medicamentos</h3>

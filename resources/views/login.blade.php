@@ -190,6 +190,68 @@
         }
 
 
+        /* ================= DARK MODE - LOGIN ================= */
+        .dark-mode body {
+            background: #121212 !important;
+            color: #e4e4e4;
+        }
+
+        .dark-mode .login-container {
+            background: #1e1e1e !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            border-top: 5px solid #4ecdc4;
+        }
+
+        .dark-mode .login-title {
+            color: #4ecdc4 !important;
+        }
+
+        .dark-mode .form-control {
+            background-color: #2a2a2a !important;
+            color: #fff !important;
+            border: 1px solid #444 !important;
+        }
+
+        .dark-mode .form-control::placeholder {
+            color: #888 !important;
+        }
+
+        .dark-mode .input-icon {
+            background: #333;
+            border: 1px solid #555;
+        }
+
+        .dark-mode .alert-danger {
+            background: #3a1e1e !important;
+            color: #ff6b6b !important;
+            border-color: #5f2f2f !important;
+        }
+
+        .dark-mode .text-danger {
+            color: #ff6b6b !important;
+        }
+
+        .dark-mode .btn-login {
+            background: linear-gradient(135deg, #2c5364, #203a43) !important;
+            color: #e4e4e4 !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .dark-mode .btn-login:hover {
+            background: linear-gradient(135deg, #4ecdc4, #00ffe7) !important;
+            color: #000 !important;
+            box-shadow: 0 0 15px #00ffe7, 0 0 25px rgba(0,255,231,0.4);
+        }
+
+        .dark-mode .footer-links p,
+        .dark-mode .footer-links a {
+            color: #ccc !important;
+        }
+
+        .dark-mode .footer-links a:hover {
+            color: #4ecdc4 !important;
+        }
+        /* ================= DARK MODE - LOGIN ================= */
     </style>
     <div class="login-wrapper" style=" margin-top: -3%">
         <div class="login-container">

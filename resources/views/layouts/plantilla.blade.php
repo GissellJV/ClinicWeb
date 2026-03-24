@@ -193,9 +193,121 @@
             display: flex;
             align-items: center;
         }
+
+        /* ================= DARK MODE ================= */
+
+        .dark-mode {
+            background-color: #121212 !important;
+            color: #e4e4e4 !important;
+        }
+
+        /* NAVBAR */
+        .dark-mode .nav-modern {
+            background: linear-gradient(90deg, #0f2027, #203a43, #2c5364) !important;
+        }
+
+        /* LINKS NAV */
+        .dark-mode .nav-link-modern {
+            color: #ddd !important;
+        }
+
+        .dark-mode .nav-link-modern:hover {
+            color: #4ecdc4 !important;
+        }
+
+        /* BOTÓN REGISTRARSE */
+        .dark-mode .btn-register {
+            background: #1e1e1e;
+            color: #4ecdc4;
+        }
+
+        .dark-mode .btn-register:hover {
+            background: #333;
+        }
+
+        /* FOOTER */
+        .dark-mode .footer-modern {
+            background: linear-gradient(180deg, #0f2027, #203a43);
+        }
+
+        /* CARDS / CONTENEDORES */
+        .dark-mode .card,
+        .dark-mode .hero-full {
+            background: #1e1e1e !important;
+            color: #e4e4e4;
+            border-color: #333;
+        }
+
+        /* INPUTS */
+        .dark-mode input,
+        .dark-mode select,
+        .dark-mode textarea {
+            background: #2a2a2a !important;
+            color: #fff !important;
+            border-color: #444 !important;
+        }
+
+        /* TABLAS */
+        .dark-mode table {
+            color: #e4e4e4;
+        }
+
+        .dark-mode td,
+        .dark-mode th {
+            border-color: #333 !important;
+        }
+
+        /* BOTONES */
+        .dark-mode .btn {
+            opacity: 0.9;
+        }
+
+        /* MODALES */
+        .dark-mode .modal-content {
+            background: #1e1e1e;
+            color: #fff;
+        }
+
+        /* DROPDOWN */
+        .dark-mode .dropdown-menu {
+            background: #1e1e1e;
+            border: 1px solid #333;
+        }
+
+        .dark-mode .dropdown-item {
+            color: #ddd;
+        }
+
+        .dark-mode .dropdown-item:hover {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+        }
+
+        /* TEXTO */
+        .dark-mode .text-muted {
+            color: #aaa !important;
+        }
+
+        /* ICONOS SOCIALES */
+        .dark-mode .social.modern {
+            background: rgba(255,255,255,0.08);
+        }
+
+        .dark-mode .social.modern:hover {
+            background: #4ecdc4;
+            color: #121212;
+        }
+
+        /* AVATAR */
+        .dark-mode .user-initials {
+            background: linear-gradient(135deg, #333, #1e1e1e);
+            border: 2px solid #4ecdc4;
+        }
+
+        /* ================= DARK MODE ================= */
     </style>
 </head>
-<body>
+<body >
 <header>
     <nav class="navbar navbar-expand-lg fixed-top shadow-sm nav-modern">
         <div class="container-fluid px-4">
@@ -235,6 +347,12 @@
                     <li class="nav-item">
                         <a class="nav-link nav-link-modern" href="{{ route('preguntas.publico') }}">
                             <i class="bi bi-question-circle me-1"></i> Preguntas Frecuentes</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <div class="form-check form-switch text-white">
+                            <input class="form-check-input" type="checkbox" id="darkModeToggle">
+                        </div>
                     </li>
 
                     @if(!session('paciente_id'))
@@ -358,6 +476,26 @@
     </div>
 </footer>
 
+<script>
+    const toggle = document.getElementById('darkModeToggle');
+
+    // Cargar preferencia
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        toggle.checked = true;
+    }
+
+    // Cambiar modo
+    toggle.addEventListener('change', function () {
+        if (this.checked) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('darkMode', 'true');
+        } else {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('darkMode', 'false');
+        }
+    });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

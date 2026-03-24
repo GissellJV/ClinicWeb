@@ -511,6 +511,244 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ================= DARK MODE PERFIL Y FORMULARIO ================= */
+        .dark-mode body {
+            background: #121212 !important;
+            color: #e4e4e4;
+        }
+
+        .dark-mode .formulario .form-container {
+            background: #1e1e1e !important;
+            color: #e4e4e4;
+            border-top: 5px solid #4ecdc4;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .dark-mode .formulario .form-title {
+            color: #4ecdc4;
+        }
+
+        .dark-mode .formulario .form-label {
+            color: #ccc !important;
+        }
+
+        .dark-mode .formulario .form-control {
+            background: #2a2a2a !important;
+            color: #fff !important;
+            border: 2px solid #444 !important;
+        }
+
+        .dark-mode .formulario .form-control:focus {
+            border-color: #4ecdc4;
+            box-shadow: 0 0 0 3px rgba(78,205,196,0.25);
+            background: #1e1e1e;
+            color: #fff;
+        }
+
+        .dark-mode .formulario .form-control::placeholder {
+            color: #888 !important;
+        }
+
+        .dark-mode .formulario .input-group-text {
+            background: #1e1e1e !important;
+            color: #4ecdc4 !important;
+            border: 2px solid #444;
+        }
+
+        .dark-mode .formulario .input-group:focus-within .input-group-text,
+        .dark-mode .formulario .input-group:focus-within .form-control {
+            border-color: #4ecdc4 !important;
+        }
+
+        .dark-mode .btn-register {
+            background: linear-gradient(135deg, #2c5364, #203a43);
+            color: #e4e4e4;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode .btn-register:hover {
+            background: linear-gradient(135deg, #4ecdc4, #00ffe7);
+            color: #111827;
+            box-shadow: 0 0 15px #00ffe7, 0 0 25px rgba(0,255,231,0.4);
+            transform: translateY(-2px);
+        }
+
+        .dark-mode .btn-cancel {
+            background: #2a2a2a;
+            color: #dc3545;
+            border: 2px solid #dc3545;
+        }
+
+        .dark-mode .btn-cancel:hover {
+            background: #dc3545;
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(220,53,69,0.5);
+        }
+
+        /* ALERTAS */
+        .dark-mode .alert-success {
+            background: #1e3a2f;
+            color: #4ade80;
+            border-left: 4px solid #28a745;
+        }
+
+        .dark-mode .alert-danger {
+            background: #3a1e1e;
+            color: #ff6b6b;
+            border-left: 4px solid #dc3545;
+        }
+
+        /* PERFIL */
+        .dark-mode .profile-card {
+            background: #1e1e1e;
+            color: #e4e4e4;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .dark-mode .profile-header {
+            border-bottom: 2px solid #333;
+        }
+
+        .dark-mode .profile-name h2,
+        .dark-mode .profile-name p {
+            color: #fff;
+        }
+
+        .dark-mode .patient-badge {
+            background: #064e3b;
+            color: #d1fae5;
+        }
+
+        /* FOTO */
+        .dark-mode .profile-photo {
+            background: linear-gradient(135deg, #2c5364, #203a43);
+            color: #e4e4e4;
+        }
+
+        .dark-mode .edit-photo-btn {
+            background: #4ecdc4;
+        }
+
+        .dark-mode .edit-photo-btn:hover {
+            background: #00ffe7;
+        }
+
+        /* DETAIL ITEMS */
+        .dark-mode .detail-value {
+            background: #2a2a2a;
+            color: #e4e4e4;
+            border: 1px solid #444;
+        }
+
+        .dark-mode .phone-edit-container {
+            background: #1e1e1e;
+            border: 2px solid #4ecdc4;
+        }
+
+        .dark-mode .save-phone-btn {
+            background: linear-gradient(135deg, #2c5364, #203a43);
+            color: #e4e4e4;
+        }
+
+        .dark-mode .save-phone-btn:hover {
+            background: linear-gradient(135deg, #4ecdc4, #00ffe7);
+            color: #111827;
+        }
+
+        .dark-mode .cancel-phone-btn {
+            background: #2a2a2a;
+            color: #dc3545;
+            border: 2px solid #dc3545;
+        }
+
+        .dark-mode .cancel-phone-btn:hover {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        /* MODAL FOTO */
+        .dark-mode .modal-content {
+            background: #1e1e1e !important;
+            color: #e4e4e4;
+            border: 1px solid #333;
+        }
+
+        .dark-mode .modal-header,
+        .dark-mode .modal-footer {
+            background: #1e1e1e !important;
+            color: #e4e4e4;
+            border-color: #333;
+        }
+
+        .dark-mode .foto-preview-container {
+            border: 3px solid #4ecdc4;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .dark-mode .foto-placeholder {
+            background: linear-gradient(135deg, #2c5364, #203a43);
+            color: #e4e4e4;
+        }
+
+        /* INPUTS INVALIDOS */
+        .dark-mode .form-control.is-invalid,
+        .dark-mode .phone-input.is-invalid {
+            border-color: #dc3545;
+            background-color: #3a1e1e;
+            color: #ff6b6b;
+        }
+
+        .dark-mode .invalid-feedback {
+            color: #ff6b6b;
+        }
+
+        /* MEDIA QUERIES */
+        @media (max-width: 768px) {
+            .dark-mode .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .dark-mode .profile-photo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .dark-mode .profile-name h2 {
+                font-size: 1.5rem;
+            }
+        }
+        /* ================= DARK MODE AJUSTES ================= */
+
+        /* TITULO PERFIL */
+        .dark-mode h1.text-center {
+            color: #4ecdc4 !important; /* mismo color que el título del formulario */
+        }
+
+        /* ELIMINAR BORDES INTERNOS DEL FORMULARIO */
+        .dark-mode .profile-header,
+        .dark-mode .profile-details,
+        .dark-mode .detail-item {
+            border: none !important;
+        }
+
+        /* LABELS MÁS VISIBLES */
+        .dark-mode .formulario .form-label,
+        .dark-mode .detail-label {
+            color: #e0e0e0 !important; /* color más brillante para destacar sobre fondo oscuro */
+            font-weight: 600;
+        }
+
+        /* Quitar cuadro interno dentro del formulario */
+        .dark-mode .profile-card {
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+            border-radius: 0 !important;
+        }
     </style>
     <br><br>
     <h1 class="text-center text-info-emphasis" >Mi Perfil</h1>

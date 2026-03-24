@@ -359,6 +359,261 @@
                 width: 100%;
             }
         }
+        /* ================= DARK MODE FIX ================= */
+
+        .dark-mode .header-section {
+            background: linear-gradient(135deg, #1f4037, #2c5364);
+            color: #fff;
+        }
+
+        .dark-mode .agendar-form {
+            background: #1e1e1e;
+            border-color: #333;
+            color: #fff;
+        }
+
+        .dark-mode .form-control {
+            background: #2a2a2a !important;
+            color: #fff !important;
+            border-color: #444 !important;
+        }
+
+        .dark-mode .form-control::placeholder {
+            color: #aaa;
+        }
+
+        /* ALERTAS */
+        .dark-mode .alert-success {
+            background: #1e3a2f;
+            color: #4ade80;
+            border-color: #2f5f4a;
+        }
+
+        .dark-mode .alert-danger {
+            background: #3a1e1e;
+            color: #ff6b6b;
+            border-color: #5f2f2f;
+        }
+
+        /* MODALES */
+        .dark-mode .modal-selector .modal-content {
+            background: #1e1e1e;
+            color: #fff;
+            border-color: #333;
+        }
+
+        .dark-mode .modal-selector .selector-body {
+            background: #1e1e1e;
+        }
+
+        .dark-mode .table-container-modal {
+            background: #1e1e1e;
+        }
+
+        /* TABLA */
+        .dark-mode .modal-selector table.dataTable tbody tr {
+            background: #1e1e1e;
+        }
+
+        .dark-mode .modal-selector table.dataTable tbody tr:hover {
+            background: #2a2a2a;
+        }
+
+        .dark-mode .modal-selector table.dataTable tbody td {
+            color: #ddd;
+        }
+
+        /* BOTONES */
+        .dark-mode .btn-secondary {
+            background: #2a2a2a;
+            color: #fff;
+            border-color: #555;
+        }
+
+        .dark-mode .btn-cancel {
+            background: #2a2a2a;
+            color: #fff;
+            border-color: #555;
+        }
+        /* ===== FIX FUERTE FORMULARIO ===== */
+
+        .dark-mode .formulario,
+        .dark-mode .form-container,
+        .dark-mode .agendar-container {
+            background: #121212 !important;
+        }
+
+        /* FORMULARIO PRINCIPAL */
+        .dark-mode .agendar-form {
+            background: #1e1e1e !important;
+            color: #e4e4e4 !important;
+            border: 1px solid #333 !important;
+        }
+
+        /* LABELS */
+        .dark-mode label {
+            color: #ccc !important;
+        }
+
+        /* INPUTS (esto es CLAVE) */
+        .dark-mode .form-control,
+        .dark-mode input,
+        .dark-mode select,
+        .dark-mode textarea {
+            background-color: #2a2a2a !important;
+            color: #fff !important;
+            border: 1px solid #444 !important;
+        }
+
+        /* PLACEHOLDER */
+        .dark-mode .form-control::placeholder {
+            color: #888 !important;
+        }
+        /* ===== BOTONES DARK PRO ===== */
+
+        .dark-mode .btn-primary,
+        .dark-mode .btn-open-selector {
+            background: linear-gradient(135deg, #2c5364, #203a43);
+            color: #e4e4e4;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        /* HOVER EFECTO LUZ */
+        .dark-mode .btn-primary:hover,
+        .dark-mode .btn-open-selector:hover {
+            background: linear-gradient(135deg, #4ecdc4, #00ffe7);
+            color: #000;
+            box-shadow: 0 0 15px #00ffe7, 0 0 25px rgba(0,255,231,0.4);
+            transform: translateY(-2px);
+        }
+
+        /* BOTÓN SECUNDARIO */
+        .dark-mode .btn-secondary,
+        .dark-mode .btn-cancel {
+            background: #2a2a2a;
+            color: #ccc;
+            border: 1px solid #555;
+        }
+
+        .dark-mode .btn-secondary:hover,
+        .dark-mode .btn-cancel:hover {
+            background: #dc3545;
+            color: white;
+            box-shadow: 0 0 10px rgba(220,53,69,0.5);
+        }
+        .dark-mode .header-section {
+            background: linear-gradient(135deg, #1c1c1c, #2c5364);
+        }
+        /* ===== MODALES OSCUROS COMPLETOS ===== */
+
+        .dark-mode .modal-content {
+            background: #1e1e1e !important;
+            color: #e4e4e4;
+            border: 1px solid #333;
+        }
+
+        /* HEADER DEL MODAL */
+        .dark-mode .modal-header,
+        .dark-mode .selector-header {
+            background: linear-gradient(135deg, #203a43, #2c5364);
+            color: #fff;
+            border-bottom: 1px solid #333;
+        }
+
+        /* BODY */
+        .dark-mode .modal-body,
+        .dark-mode .selector-body {
+            background: #1e1e1e !important;
+        }
+
+        /* FOOTER */
+        .dark-mode .modal-footer,
+        .dark-mode .selector-footer {
+            background: #1e1e1e;
+            border-top: 1px solid #333;
+        }
+
+        /* TABLA DENTRO DEL MODAL */
+        .dark-mode .table-container-modal {
+            background: #1e1e1e !important;
+        }
+
+        /* FILAS */
+        .dark-mode table tbody tr {
+            background: #1e1e1e;
+        }
+
+        .dark-mode table tbody tr:hover {
+            background: #2a2a2a;
+        }
+
+        /* TEXTO */
+        .dark-mode table td {
+            color: #ddd;
+        }
+        .dark-mode .btn-modal-seleccionar {
+            background: linear-gradient(135deg, #2c5364, #203a43);
+            color: #ddd;
+        }
+
+        .dark-mode .btn-modal-seleccionar:hover {
+            background: linear-gradient(135deg, #4ecdc4, #00ffe7);
+            color: #000;
+            box-shadow: 0 0 10px #00ffe7;
+        }
+        /* ===== MODO OSCURO - TABLA MODAL ===== */
+
+        body.dark-mode .modal-selector .modal-content {
+            background: #1e1e2f;
+            color: #e0e0e0;
+        }
+
+        /* encabezado */
+        body.dark-mode .modal-selector table.dataTable thead th {
+            background: #111827 !important;
+            color: #e5e7eb !important;
+        }
+
+        /* filas */
+        body.dark-mode .modal-selector table.dataTable tbody tr {
+            background: #1f2937;
+        }
+
+        /* hover */
+        body.dark-mode .modal-selector table.dataTable tbody tr:hover {
+            background: #374151;
+        }
+
+        /* texto */
+        body.dark-mode .modal-selector table.dataTable tbody td {
+            color: #d1d5db;
+        }
+        /* ===== PAGINACIÓN DARK MODE ===== */
+
+        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button {
+            background: #1f2937 !important;
+            color: #d1d5db !important;
+            border: none !important;
+        }
+
+        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: #374151 !important;
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: #4ecdc4 !important;
+            color: #111827 !important;
+        }
+
+        /* info (Mostrando X registros) */
+        body.dark-mode .dataTables_wrapper .dataTables_info {
+            color: #9ca3af;
+        }
+
+        /* ================= DARK MODE ================= */
     </style>
 
     <div class="formulario">
