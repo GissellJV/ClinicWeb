@@ -200,6 +200,170 @@
             cursor:pointer;
         }
 
+        /* ================= DARK MODE - CITAS ARCHIVADAS ================= */
+
+        .dark-mode body {
+            background: #121212 !important;
+            color: #e4e4e4 !important;
+        }
+
+        .dark-mode .citas-container {
+            background: transparent;
+        }
+
+        /* HEADER */
+        .dark-mode .header h1 {
+            color: #4ecdc4 !important;
+        }
+
+        /* ALERTAS */
+        .dark-mode .alert-success {
+            background: #1e3a2f !important;
+            color: #4ade80 !important;
+            border-color: #2f5f4a !important;
+        }
+
+        .dark-mode .alert-danger {
+            background: #3a1e1e !important;
+            color: #ff6b6b !important;
+            border-color: #5f2f2f !important;
+        }
+
+        .dark-mode .alert-info-custom {
+            background: #1e1e1e !important;
+            color: #d1d5db !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.45);
+        }
+
+        .dark-mode .alert-info-custom h5 {
+            color: #e5e7eb !important;
+        }
+
+        .dark-mode .alert-info-custom i {
+            color: #4ecdc4 !important;
+        }
+
+        /* FILTROS */
+        .dark-mode .filters-card {
+            background: #1e1e1e !important;
+            color: #e4e4e4 !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.45);
+        }
+
+        .dark-mode .filter-group label {
+            color: #ccc !important;
+        }
+
+        .dark-mode .filter-group select,
+        .dark-mode .filter-group input,
+        .dark-mode .form-control {
+            background: #2a2a2a !important;
+            color: #fff !important;
+            border: 1px solid #444 !important;
+        }
+
+        .dark-mode .filter-group select:focus,
+        .dark-mode .filter-group input:focus,
+        .dark-mode .form-control:focus {
+            border-color: #4ecdc4 !important;
+            box-shadow: 0 0 0 3px rgba(78,205,196,0.2) !important;
+        }
+
+        .dark-mode .filter-group select option {
+            background: #2a2a2a;
+            color: #fff;
+        }
+
+        .dark-mode .btn-filter {
+            background: linear-gradient(135deg, #2c5364, #203a43) !important;
+            color: #e4e4e4 !important;
+            border: none !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode .btn-filter:hover {
+            background: linear-gradient(135deg, #4ecdc4, #00ffe7) !important;
+            color: #000 !important;
+            box-shadow: 0 0 15px #00ffe7, 0 0 25px rgba(0,255,231,0.4);
+            transform: translateY(-2px);
+        }
+
+        /* TARJETAS */
+        .dark-mode .cita-card {
+            background: #1e1e1e !important;
+            color: #e4e4e4 !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.45);
+            border-left-color: #4ecdc4 !important;
+        }
+
+        .dark-mode .cita-card:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+        }
+
+        .dark-mode .cita-header-card {
+            background: linear-gradient(135deg, #203a43 0%, #2c5364 100%) !important;
+            color: #fff !important;
+        }
+
+        .dark-mode .doctor-name {
+            color: #fff !important;
+        }
+
+        .dark-mode .especialidad-badge {
+            background: rgba(255,255,255,0.15) !important;
+            color: #fff !important;
+        }
+
+        .dark-mode .cita-body {
+            background: #1e1e1e !important;
+        }
+
+        .dark-mode .estado-badge {
+            background: #1e3140 !important;
+            color: #4ecdc4 !important;
+        }
+
+        .dark-mode .cita-info-item i {
+            color: #4ecdc4 !important;
+        }
+
+        .dark-mode .info-label {
+            color: #9ca3af !important;
+        }
+
+        .dark-mode .info-value {
+            color: #e5e7eb !important;
+        }
+
+        /* PAGINACIÓN */
+        .dark-mode .page-link {
+            background: #1f2937 !important;
+            color: #d1d5db !important;
+            border: 1px solid #374151 !important;
+        }
+
+        .dark-mode .page-link:hover {
+            background: #374151 !important;
+            color: #ffffff !important;
+        }
+
+        .dark-mode .page-item.active .page-link {
+            background: #4ecdc4 !important;
+            border-color: #4ecdc4 !important;
+            color: #111827 !important;
+        }
+
+        .dark-mode .page-item.disabled .page-link {
+            background: #111827 !important;
+            color: #6b7280 !important;
+            border-color: #374151 !important;
+        }
+
+        /* BOTÓN CERRAR ALERTA */
+        .dark-mode .btn-close {
+            filter: invert(1) grayscale(100%);
+        }
     </style>
 
     <div class="citas-container">

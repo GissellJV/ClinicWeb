@@ -427,6 +427,176 @@
                 min-width: auto;
             }
         }
+
+        /* ================= DARK MODE CALENDARIO ================= */
+
+        .dark-mode body,
+        .dark-mode .calendar-wrapper {
+            background: #121212 !important;
+            color: #e4e4e4;
+        }
+
+        .dark-mode h1 {
+            color: #4ecdc4;
+        }
+
+        /* CONTROLES PANEL */
+        .dark-mode .controls {
+            background: #1e1e1e;
+            border: 1px solid #333;
+            color: #e4e4e4;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .dark-mode .controls .form-label {
+            color: #ccc !important;
+        }
+
+        .dark-mode select {
+            background: #2a2a2a !important;
+            color: #fff !important;
+            border: 1px solid #444 !important;
+        }
+
+        .dark-mode select:focus {
+            border-color: #4ecdc4;
+            box-shadow: 0 0 0 3px rgba(78,205,196,0.3);
+        }
+
+        .dark-mode .nombre-paciente {
+            background: #1e1e1e;
+            border: 1px solid #4ecdc4;
+            color: #4ecdc4;
+        }
+
+        /* CALENDARIO */
+        .dark-mode .month-calendar {
+            background: #1e1e1e !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .dark-mode .month-header {
+            background: linear-gradient(135deg, #1c1c1c, #2c5364);
+            color: #fff;
+        }
+
+        .dark-mode .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .dark-mode .days-header {
+            background: #1f2937;
+        }
+
+        .dark-mode .day-name {
+            color: #9ca3af;
+        }
+
+        .dark-mode .days-grid .day {
+            background: #1e1e1e;
+            color: #e4e4e4;
+        }
+
+        .dark-mode .days-grid .day:hover {
+            background: #064e3b;
+            color: #d1fae5;
+        }
+
+        .dark-mode .days-grid .day.today {
+            background: #4ecdc4;
+            color: #111827;
+        }
+
+        .dark-mode .days-grid .day.selected {
+            background: #0d9488;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(13,148,136,0.5);
+        }
+
+        .dark-mode .days-grid .day.no-disponible {
+            background: #374151;
+            color: #9ca3af;
+        }
+
+        /* MODAL HORARIOS */
+        .dark-mode .modal-content {
+            background: #1e1e1e !important;
+            color: #e4e4e4;
+            border: 1px solid #333;
+        }
+
+        .dark-mode .doctor-card {
+            background: #1e1e1e;
+            border: 1px solid #333;
+        }
+
+        .dark-mode .doctor-card:hover {
+            border-color: #4ecdc4;
+            background: #064e3b;
+        }
+
+        .dark-mode .hora.disponible {
+            background: #064e3b;
+            color: #d1fae5;
+            border: 1px solid #4ecdc4;
+        }
+
+        .dark-mode .hora.disponible:hover {
+            background: #4ecdc4;
+            color: #111827;
+        }
+
+        .dark-mode .hora.ocupada {
+            background: #7f1d1d;
+            color: #fee2e2;
+            border: 1px solid #fca5a5;
+        }
+
+        .dark-mode .hora.seleccionada {
+            background: #0d9488;
+            color: #fff;
+            border: 2px solid #4ecdc4;
+        }
+
+        /* BOTONES */
+        .dark-mode .btn-agendar,
+        .dark-mode .btn-citas,
+        .dark-mode .btn-cerrar {
+            background: #2a2a2a;
+            color: #e4e4e4;
+            border: 1px solid #555;
+        }
+
+        .dark-mode .btn-agendar:hover,
+        .dark-mode .btn-citas:hover {
+            background: linear-gradient(135deg, #4ecdc4, #00ffe7);
+            color: #111827;
+            box-shadow: 0 0 15px #00ffe7, 0 0 25px rgba(0,255,231,0.4);
+            transform: translateY(-2px);
+        }
+
+        .dark-mode .btn-cerrar:hover {
+            background: #374151;
+        }
+
+        /* ALERTAS */
+        .dark-mode .alert-success {
+            background: #1e3a2f;
+            color: #4ade80;
+            border-color: #2f5f4a;
+        }
+
+        .dark-mode .alert-danger {
+            background: #3a1e1e;
+            color: #ff6b6b;
+            border-color: #5f2f2f;
+        }
+        .dark-mode .fecha-seleccionada {
+            background: #1e1e1e !important;
+            border: 1px solid #4ecdc4 !important;
+            color: #4ecdc4 !important;
+        }
     </style>
 
     <div class="calendar-wrapper">

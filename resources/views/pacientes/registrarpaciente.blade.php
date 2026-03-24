@@ -14,8 +14,102 @@
 
         }
 
+        /* ================= MODIFICACIÓN MODO OSCURO ================= */
+        .dark-mode body {
+            background: #121212 !important; /* fondo general */
+            color: #e4e4e4 !important;
+            display: flex;
+        }
+
+        .dark-mode .formulario {
+            background: #1e1e1e !important; /* fondo del contenedor principal */
+
+        }
+
+        .dark-mode .form-container {
+            background: #1e1e1e !important; /* fondo del formulario */
+            border: 1px solid #333;
+        }
+
+        /* TÍTULO */
+        .dark-mode .register-section h1 {
+            color: #4ecdc4 !important; /* mismo color que login */
+        }
+
+        /* LABELS */
+        .dark-mode label {
+            color: #ccc !important;
+        }
+
+        /* INPUTS */
+        .dark-mode .form-control,
+        .dark-mode input,
+        .dark-mode select,
+        .dark-mode textarea {
+            background-color: #2a2a2a !important;
+            color: #fff !important;
+            border: 1px solid #444 !important;
+        }
+
+        .dark-mode .form-control::placeholder {
+            color: #888 !important;
+        }
+
+        /* ALERTAS / ERRORES */
+        .dark-mode .text-danger,
+        .dark-mode small.text-danger {
+            color: #ff6b6b !important;
+        }
+
+        /* BOTONES */
+        .dark-mode .btn-register {
+            background: linear-gradient(135deg, #2c5364, #203a43);
+            color: #e4e4e4;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode .btn-register:hover {
+            background: linear-gradient(135deg, #4ecdc4, #00ffe7);
+            color: #000;
+            box-shadow: 0 0 10px #00ffe7;
+            transform: translateY(-2px);
+        }
+
+        .dark-mode .btn-cancel {
+            background: #2a2a2a;
+            color: #ccc;
+            border: 1px solid #555;
+        }
+
+        .dark-mode .btn-cancel:hover {
+            background: #dc3545;
+            color: white;
+            box-shadow: 0 0 10px rgba(220,53,69,0.5);
+        }
+
+        /* RADIO BUTTONS */
+        .dark-mode .form-check-label {
+            color: #ccc !important;
+        }
+
+        .dark-mode .form-check-input {
+            background-color: #2a2a2a !important;
+            border-color: #444 !important;
+        }
+
+        /* ENLACES */
+        .dark-mode .formulario a {
+            color: #4ecdc4 !important;
+        }
+
+        .dark-mode .formulario a:hover {
+            color: #00ffe7 !important;
+        }
+        .dark-mode .form-container {
+            border-top: 5px solid #4ecdc4 !important;
+        }
     </style>
-    <br><br><br>
     <div class="formulario">
       <div class="register-section">
           <h1 class="text-center text-info-emphasis" >Regístrate para Agendar tu Cita</h1>

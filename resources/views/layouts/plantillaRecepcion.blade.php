@@ -499,6 +499,85 @@
             border: 3px solid var(--primary);
         }
 
+        /* ================= DARK MODE ================= */
+
+        .dark-mode {
+            background-color: #121212 !important;
+            color: #e4e4e4 !important;
+        }
+
+        /* NAVBAR */
+        .dark-mode .navbar-modern {
+            background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
+        }
+
+        /* FOOTER */
+        .dark-mode .footer-modern {
+            background: linear-gradient(180deg, #0f2027, #203a43);
+        }
+
+        /* CARDS / CONTENEDORES */
+        .dark-mode .card,
+        .dark-mode .calendar-container,
+        .dark-mode .filter-bar,
+        .dark-mode .legend-container {
+            background: #1e1e1e !important;
+            color: #e4e4e4;
+            border-color: #333;
+        }
+
+        /* INPUTS */
+        .dark-mode input,
+        .dark-mode select,
+        .dark-mode textarea {
+            background: #2a2a2a !important;
+            color: #fff !important;
+            border-color: #444 !important;
+        }
+
+        /* TABLAS */
+        .dark-mode table {
+            color: #e4e4e4;
+        }
+
+        .dark-mode td,
+        .dark-mode th {
+            border-color: #333 !important;
+        }
+
+        /* BOTONES */
+        .dark-mode .btn {
+            opacity: 0.9;
+        }
+
+        /* MODALES */
+        .dark-mode .modal-content {
+            background: #1e1e1e;
+            color: #fff;
+        }
+
+        /* TEXTO */
+        .dark-mode .text-muted {
+            color: #aaa !important;
+        }/* ===== DROPDOWN NAVBAR DARK ===== */
+
+        .dark-mode .dropdown-menu-modern {
+            background: linear-gradient(180deg, #203a43, #2c5364);
+            border: 1px solid #333;
+        }
+
+        /* ITEMS */
+        .dark-mode .dropdown-item-modern {
+            color: #ddd;
+        }
+
+        /* HOVER */
+        .dark-mode .dropdown-item-modern:hover {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            text-shadow: none;
+        }
+        /* ================= DARK MODE ================= */
     </style>
 
 </head>
@@ -706,6 +785,16 @@
                         </a>
                     </li>
                 </ul>
+            </li>
+
+            <li class="nav-item">
+                <div class="form-check form-switch text-white">
+                    <input class="form-check-input" type="checkbox" id="darkModeToggle">
+                </div>
+            </li>
+
+            <!-- Perfil -->
+            <li class="nav-item dropdown">
 
                 <!-- BOTÓN CERRAR SESIÓN -->
                 @if(session('empleado_id'))
@@ -1062,6 +1151,28 @@
     </script>
 @endif
 </body>
+
+<script>
+    const toggle = document.getElementById('darkModeToggle');
+
+    // Cargar preferencia
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        toggle.checked = true;
+    }
+
+    // Cambiar modo
+    toggle.addEventListener('change', function () {
+        if (this.checked) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('darkMode', 'true');
+        } else {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('darkMode', 'false');
+        }
+    });
+</script>
+
 
 </html>
 
