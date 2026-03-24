@@ -427,3 +427,7 @@ Route::get('/promociones/editar/{id}', [PromocionController::class, 'mostrarForm
 //actualizar promociones
 Route::put('/promociones/actualizar/{id}', [PromocionController::class, 'actualizarPromocion'])
     ->name('promociones.actualizar');
+
+//Informe de enfermeria
+Route::get('/informe-enfermeria', [EnfermeriaController::class, 'informe'])
+    ->name('enfermeria.informe');
