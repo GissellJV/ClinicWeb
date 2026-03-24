@@ -84,6 +84,149 @@
             background: #3ebfb6;
             box-shadow: 0 4px 10px rgba(78, 205, 196, 0.3);
         }
+
+        /* ================= DARK MODE - GESTIÓN DE TRASLADOS ================= */
+
+        .dark-mode body {
+            background: #121212 !important;
+            color: #e4e4e4 !important;
+        }
+
+        /* TÍTULO */
+        .dark-mode h1.text-center {
+            color: #4ecdc4 !important;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .dark-mode .formulario,
+        .dark-mode .register-section {
+            background: transparent !important;
+        }
+
+        .dark-mode .formulario .form-container {
+            background: #1e1e1e !important;
+            color: #e4e4e4 !important;
+            border-top: 5px solid #4ecdc4;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        /* LABELS */
+        .dark-mode .detail-label {
+            color: #e0e0e0 !important;
+            font-weight: 600;
+        }
+
+        /* INPUTS Y SELECT */
+        .dark-mode .form-control,
+        .dark-mode input,
+        .dark-mode select,
+        .dark-mode textarea {
+            background: #2a2a2a !important;
+            color: #fff !important;
+            border: 1px solid #444 !important;
+        }
+
+        .dark-mode .form-control:focus,
+        .dark-mode input:focus,
+        .dark-mode select:focus,
+        .dark-mode textarea:focus {
+            border-color: #4ecdc4 !important;
+            box-shadow: 0 0 0 3px rgba(78,205,196,0.2) !important;
+        }
+
+        .dark-mode .form-control::placeholder,
+        .dark-mode input::placeholder,
+        .dark-mode textarea::placeholder {
+            color: #888 !important;
+        }
+
+        .dark-mode select option {
+            background: #2a2a2a;
+            color: #fff;
+        }
+
+        /* INPUT GROUP */
+        .dark-mode .input-group-text {
+            background: #1e1e1e !important;
+            color: #4ecdc4 !important;
+            border: 1px solid #444 !important;
+        }
+
+        .dark-mode .input-group .form-control {
+            border-left: none !important;
+        }
+
+        .dark-mode .input-group:focus-within .input-group-text,
+        .dark-mode .input-group:focus-within .form-control {
+            border-color: #4ecdc4 !important;
+        }
+
+        /* MENSAJES DE ERROR */
+        .dark-mode .invalid-feedback {
+            color: #ff6b6b !important;
+        }
+
+        /* ALERTA PERSONALIZADA DE ÉXITO */
+        .dark-mode .custom-alert {
+            background: #1e1e1e !important;
+            border-left: 5px solid #4ecdc4 !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.45);
+        }
+
+        .dark-mode .custom-alert i {
+            color: #4ecdc4 !important;
+        }
+
+        .dark-mode .custom-alert .msg-content span:first-child {
+            color: #e5e7eb !important;
+        }
+
+        .dark-mode .custom-alert .msg-content span:last-child {
+            color: #9ca3af !important;
+        }
+
+        /* ALERTA DE COSTO */
+        .dark-mode .alert.alert-success {
+            background: #1e1e1e !important;
+            color: #d1d5db !important;
+            border: 1px dashed #4ecdc4 !important;
+        }
+
+        .dark-mode #display-costo {
+            color: #4ecdc4 !important;
+        }
+
+        /* BOTONES */
+        .dark-mode .btn-custom-cancel {
+            background: #2a2a2a !important;
+            color: #dc3545 !important;
+            border: 2px solid #dc3545 !important;
+        }
+
+        .dark-mode .btn-custom-cancel:hover {
+            background: #dc3545 !important;
+            color: #fff !important;
+            box-shadow: 0 4px 10px rgba(220,53,69,0.5);
+        }
+
+        .dark-mode .btn-custom-confirm {
+            background: linear-gradient(135deg, #2c5364, #203a43) !important;
+            color: #e4e4e4 !important;
+            border: none !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .dark-mode .btn-custom-confirm:hover {
+            background: linear-gradient(135deg, #4ecdc4, #00ffe7) !important;
+            color: #000 !important;
+            box-shadow: 0 0 15px #00ffe7, 0 0 25px rgba(0,255,231,0.4);
+            transform: translateY(-2px);
+        }
+
+        /* BOTÓN CERRAR ALERTA */
+        .dark-mode .btn-close {
+            filter: invert(1) grayscale(100%);
+        }
     </style>
 
     <br><br>

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('citas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('paciente_id')->constrained()->onDelete('cascade');
-            $table->foreignId('doctor_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('empleado_id')->constrained('users')->onDelete('cascade');
             $table->string('especialidad');
             $table->dateTime('fecha_cita');
             $table->string('estado')->default('programada'); // programada, cancelada, completada

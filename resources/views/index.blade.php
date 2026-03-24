@@ -2726,6 +2726,395 @@
             background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
         }
 
+
+        /* ================= DARK MODE PARA ESTE DISEÑO ================= */
+
+        .dark-mode {
+            --white: #0f172a;
+            --light: #020617;
+            --dark: #020617;
+
+            --text-dark: #e2e8f0;
+            --text-light: #94a3b8;
+
+            --primary: #4ecdc4;
+            --primary-light: #22d3ee;
+            --primary-dark: #0891b2;
+        }
+
+        /* BODY */
+        .dark-mode body {
+            background: var(--dark);
+            color: var(--text-dark);
+        }
+
+        /* SECCIONES */
+        .dark-mode .services,
+        .dark-mode .doctors,
+        .dark-mode .promos {
+            background: #020617 !important;
+        }
+
+        /* CARDS */
+        .dark-mode .service-card,
+        .dark-mode .doctor-card,
+        .dark-mode .promo,
+        .dark-mode .testimonial {
+            background: #1e293b;
+            color: var(--text-dark);
+            border-color: #334155;
+        }
+
+        /* TEXTOS */
+        .dark-mode .section-title,
+        .dark-mode .service-title,
+        .dark-mode .doctor-name,
+        .dark-mode .promo-title,
+        .dark-mode .feature h3,
+        .dark-mode .author h4 {
+            color: var(--text-dark);
+        }
+
+        .dark-mode .section-description,
+        .dark-mode .service-description,
+        .dark-mode .feature p,
+        .dark-mode .author p,
+        .dark-mode .promo-desc {
+            color: var(--text-light);
+        }
+
+        /* INPUTS */
+        .dark-mode .input-group input,
+        .dark-mode .input-group select {
+            background: #1e293b;
+            color: #fff;
+            border: 1px solid #334155;
+        }
+
+        /* MODALES */
+        .dark-mode .modal-content {
+            background: #1e293b;
+            color: #fff;
+        }
+
+        .dark-mode .modal-footer {
+            border-top: 1px solid #334155;
+        }
+
+        /* ESTRELLAS */
+        .dark-mode .star-rating-input .star-btn {
+            color: #555;
+        }
+
+        .dark-mode .star-rating-input .star-btn.active,
+        .dark-mode .star-rating-input .star-btn.hover {
+            color: #ffc107;
+        }
+
+        /* FEEDBACK */
+        .dark-mode .rating-feedback {
+            color: #cbd5e1;
+        }
+
+        /* PROMO TEXTO */
+        .dark-mode .promo-text {
+            background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.6), transparent);
+        }
+
+        /* BOTONES */
+        .dark-mode .btn-primary {
+            color: #020617;
+        }
+
+        .dark-mode .btn-secondary {
+            border-color: #cbd5e1;
+            color: #cbd5e1;
+        }
+
+        .dark-mode .btn-secondary:hover {
+            background: #cbd5e1;
+            color: #020617;
+        }
+
+        /* ================= DARK MODE (AJUSTADO A TU DISEÑO) ================= */
+
+        .dark-mode {
+            background: #0f172a !important;
+            color: #e2e8f0 !important;
+        }
+
+        /* HERO */
+        .dark-mode .hero-overlay {
+            background: linear-gradient(135deg,
+            rgba(2,6,23,0.9),
+            rgba(15,23,42,0.85),
+            rgba(30,41,59,0.8));
+        }
+
+        /* SECCIONES */
+        .dark-mode section,
+        .dark-mode .services,
+        .dark-mode .doctors,
+        .dark-mode .promos {
+            background: #0f172a !important;
+        }
+
+        /* TITULOS */
+        .dark-mode .section-title,
+        .dark-mode .doctor-name,
+        .dark-mode .service-title {
+            color: #e2e8f0;
+        }
+
+        .dark-mode .section-description,
+        .dark-mode .service-description,
+        .dark-mode .doctor-stat,
+        .dark-mode .rating-num {
+            color: #94a3b8;
+        }
+
+        /* CARDS */
+        .dark-mode .service-card,
+        .dark-mode .doctor-card,
+        .dark-mode .promo,
+        .dark-mode .testimonial {
+            background: #1e293b !important;
+            color: #e2e8f0;
+            border: 1px solid #334155;
+        }
+
+        /* HOVER CARDS */
+        .dark-mode .service-card:hover,
+        .dark-mode .doctor-card:hover,
+        .dark-mode .promo:hover {
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+
+        /* BOTONES */
+        .dark-mode .btn-primary,
+        .dark-mode .btn-book,
+        .dark-mode .open-comentario-btn,
+        .dark-mode .send-comentario-btn {
+            background: #334155;
+            color: #4ecdc4;
+        }
+
+        .dark-mode .btn-primary:hover,
+        .dark-mode .btn-book:hover {
+            background: #4ecdc4;
+            color: #0f172a;
+        }
+
+        /* INPUTS */
+        .dark-mode input,
+        .dark-mode select,
+        .dark-mode textarea {
+            background: #1e293b !important;
+            color: #e2e8f0 !important;
+            border: 1px solid #334155 !important;
+        }
+
+        /* MODALES */
+        .dark-mode .modal-content,
+        .dark-mode .modal-especialidad-content {
+            background: #1e293b !important;
+            color: #e2e8f0;
+            border: 1px solid #334155;
+        }
+
+        /* HEADER MODAL */
+        .dark-mode .modal-header,
+        .dark-mode .modal-especialidad-header {
+            background: linear-gradient(90deg, #0f2027, #203a43);
+        }
+
+        /* TEXTAREA */
+        .dark-mode textarea {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        /* BOTONES MODAL */
+        .dark-mode .cancel-btn {
+            background: #334155;
+            color: #e2e8f0;
+        }
+
+        .dark-mode .cancel-btn:hover {
+            background: #475569;
+        }
+
+        /* TESTIMONIOS */
+        .dark-mode .testimonial-text {
+            color: #cbd5e1;
+        }
+
+        /* PROMO FOOTER */
+        .dark-mode .promo-footer {
+            border-top: 1px solid #334155;
+        }
+
+        /* ICONOS */
+        .dark-mode .service-icon,
+        .dark-mode .doctor-stat i {
+            color: #4ecdc4;
+        }
+
+        /* SCROLL / FONDO GENERAL */
+        .dark-mode .booking {
+            background: #020617;
+        }
+        /* ================= DARK MODE - COMENTARIOS Y MODALES ================= */
+        .dark-mode .comentario-area {
+            color: #e2e8f0;
+        }
+
+        .dark-mode .open-comentario-btn {
+            background: #334155;
+            color: #4ecdc4;
+        }
+
+        .dark-mode .modal-content,
+        .dark-mode .modal-especialidad-content,
+        .dark-mode #noCitaModal .modal-content,
+        div[id^="calificarModal"] .modal-content,
+        div[id^="editarCalificacionModal"] .modal-content {
+            background: #1e293b !important;
+            color: #e2e8f0;
+            border: 2px solid #4ecdc4;
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+        }
+
+        .dark-mode .modal-content form,
+        .dark-mode .modal-especialidad-content form {
+            padding: 20px;
+        }
+
+        .dark-mode textarea,
+        .dark-mode .modal-content textarea,
+        .dark-mode .modal-especialidad-content textarea,
+        div[id^="calificarModal"] textarea.form-control,
+        div[id^="editarCalificacionModal"] textarea.form-control {
+            background: #0f172a !important;
+            color: #e2e8f0 !important;
+            border: 2px solid #22d3ee;
+            box-shadow: 0 0 12px rgba(34, 211, 238, 0.25);
+        }
+
+        .dark-mode textarea:hover,
+        .dark-mode .modal-content textarea:hover,
+        .dark-mode .modal-especialidad-content textarea:hover,
+        div[id^="calificarModal"] textarea.form-control:hover,
+        div[id^="editarCalificacionModal"] textarea.form-control:hover {
+            box-shadow: 0 0 18px rgba(34, 211, 238, 0.35);
+        }
+
+        .dark-mode .modal-content input,
+        .dark-mode .modal-especialidad-content input,
+        div[id^="calificarModal"] input,
+        div[id^="editarCalificacionModal"] input {
+            background: #0f172a !important;
+            color: #e2e8f0;
+            border: 2px solid #22d3ee;
+            box-shadow: 0 0 12px rgba(34, 211, 238, 0.25);
+        }
+
+        .dark-mode .modal-content input[type="file"],
+        .dark-mode .modal-especialidad-content input[type="file"] {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        .dark-mode .cancel-btn,
+        .dark-mode .especialidad-cancel-btn,
+        .dark-mode #noCitaModal .btn-secondary,
+        div[id^="calificarModal"] .btn-secondary,
+        div[id^="editarCalificacionModal"] .btn-secondary,
+        .dark-mode .btn-cancel {
+            background: #334155;
+            color: #e2e8f0;
+            border: 1px solid #475569;
+        }
+
+        .dark-mode .cancel-btn:hover,
+        .dark-mode .especialidad-cancel-btn:hover,
+        .dark-mode #noCitaModal .btn-secondary:hover,
+        div[id^="calificarModal"] .btn-secondary:hover,
+        div[id^="editarCalificacionModal"] .btn-secondary:hover,
+        .dark-mode .btn-cancel:hover {
+            background: #4b5563;
+            color: #e2e8f0;
+        }
+
+        .dark-mode .send-comentario-btn,
+        .dark-mode .especialidad-save-btn,
+        div[id^="calificarModal"] .btn-primary,
+        div[id^="editarCalificacionModal"] .btn-primary,
+        .dark-mode .btn-register {
+            background: linear-gradient(135deg, #4ecdc4, #22d3ee);
+            color: #0f172a;
+        }
+
+        .dark-mode .send-comentario-btn:hover,
+        .dark-mode .especialidad-save-btn:hover,
+        div[id^="calificarModal"] .btn-primary:hover,
+        div[id^="editarCalificacionModal"] .btn-primary:hover,
+        .dark-mode .btn-register:hover {
+            opacity: 0.85;
+            box-shadow: 0 0 15px rgba(78, 205, 196, 0.5);
+        }
+
+        .dark-mode .modal-especialidad-header,
+        .dark-mode #noCitaModal .modal-header,
+        div[id^="calificarModal"] .modal-title,
+        div[id^="editarCalificacionModal"] .modal-title {
+            background: linear-gradient(90deg, #4ecdc4, #22d3ee);
+            color: #0f172a;
+        }
+
+        .dark-mode .close-especialidad-btn,
+        .dark-mode .btn-close,
+        div[id^="calificarModal"] .btn-close-calificar,
+        div[id^="editarCalificacionModal"] .btn-close-calificar {
+            color: #e2e8f0;
+        }
+
+        .dark-mode .delete-btn {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+        .dark-mode .delete-btn:hover {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .dark-mode .btn-cancel {
+            background: #1e293b;
+            color: #e2e8f0;
+            border: 1px solid #334155;
+        }
+
+        .dark-mode .btn-cancel:hover {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .dark-mode .btn-especialidad-open {
+            background: #22d3ee;
+            color: #0f172a;
+        }
+
+        .dark-mode .btn-especialidad-open:hover {
+            box-shadow: 0 0 15px #22d3ee;
+        }
+        /* ================= DARK MODE - HERO TEXT ================= */
+        .dark-mode #hero .hero-content p {
+            color: #cbd5e1; /* color claro para que contraste con el overlay oscuro */
+        }
+        /* ================= END DARK MODE ================= */
+
+        /* ================= FIN DARK MODE ================= */
     </style>
 
     <!-- HERO -->
