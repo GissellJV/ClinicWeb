@@ -257,7 +257,7 @@
         <div class="login-container">
             <div class="d-flex justify-content-center">
                 <!--LOGO DE LA CLINICA-->
-                <img src="/imagenes/login-icon.png" alt="login-icono" style="height: 8rem">
+                <img src="/imagenes/login-icon-sinFondo.png" alt="login-icono" style="height: 6rem">
             </div>
                 <div class="error-container">
                     @if(session('error'))

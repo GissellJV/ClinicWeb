@@ -16,29 +16,36 @@
 
         /* ================= MODIFICACIÓN MODO OSCURO ================= */
         .dark-mode body {
-            background: #121212 !important; /* fondo general */
+            background: #121212 !important;
             color: #e4e4e4 !important;
             display: flex;
         }
 
+        /* CONTENEDOR GENERAL */
         .dark-mode .formulario {
-            background: #1e1e1e !important; /* fondo del contenedor principal */
+            background: #121212 !important; /* mismo negro del fondo general */
+        }
 
+        .dark-mode .register-section {
+            background: transparent !important;
         }
 
         .dark-mode .form-container {
-            background: #1e1e1e !important; /* fondo del formulario */
-            border: 1px solid #333;
+            background: #1e1e1e !important; /* solo el formulario queda un poco más claro */
+            border: 1px solid #333 !important;
+            border-top: 5px solid #4ecdc4 !important;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
 
         /* TÍTULO */
         .dark-mode .register-section h1 {
-            color: #4ecdc4 !important; /* mismo color que login */
+            color: #4ecdc4 !important;
         }
 
         /* LABELS */
-        .dark-mode label {
-            color: #ccc !important;
+        .dark-mode label,
+        .dark-mode .form-label {
+            color: #e0e0e0 !important;
         }
 
         /* INPUTS */
@@ -51,51 +58,87 @@
             border: 1px solid #444 !important;
         }
 
-        .dark-mode .form-control::placeholder {
+        .dark-mode .form-control:focus,
+        .dark-mode input:focus,
+        .dark-mode select:focus,
+        .dark-mode textarea:focus {
+            background-color: #2a2a2a !important;
+            color: #fff !important;
+            border-color: #4ecdc4 !important;
+            box-shadow: 0 0 0 3px rgba(78,205,196,0.2) !important;
+        }
+
+        /* PLACEHOLDER */
+        .dark-mode .form-control::placeholder,
+        .dark-mode input::placeholder,
+        .dark-mode textarea::placeholder {
             color: #888 !important;
         }
 
-        /* ALERTAS / ERRORES */
+        /* INPUT GROUP +504 */
+        .dark-mode .input-group-text {
+            background: #2a2a2a !important;
+            color: #4ecdc4 !important;
+            border: 1px solid #444 !important;
+            border-right: none !important;
+        }
+
+        .dark-mode .input-group .form-control {
+            border-left: none !important;
+        }
+
+        .dark-mode .input-group:focus-within .input-group-text,
+        .dark-mode .input-group:focus-within .form-control {
+            border-color: #4ecdc4 !important;
+        }
+
+        /* ERRORES */
         .dark-mode .text-danger,
-        .dark-mode small.text-danger {
+        .dark-mode small.text-danger,
+        .dark-mode .invalid-feedback {
             color: #ff6b6b !important;
         }
 
         /* BOTONES */
         .dark-mode .btn-register {
-            background: linear-gradient(135deg, #2c5364, #203a43);
-            color: #e4e4e4;
-            border: none;
+            background: linear-gradient(135deg, #2c5364, #203a43) !important;
+            color: #e4e4e4 !important;
+            border: none !important;
             transition: all 0.3s ease;
         }
 
         .dark-mode .btn-register:hover {
-            background: linear-gradient(135deg, #4ecdc4, #00ffe7);
-            color: #000;
+            background: linear-gradient(135deg, #4ecdc4, #00ffe7) !important;
+            color: #000 !important;
             box-shadow: 0 0 10px #00ffe7;
             transform: translateY(-2px);
         }
 
         .dark-mode .btn-cancel {
-            background: #2a2a2a;
-            color: #ccc;
-            border: 1px solid #555;
+            background: #2a2a2a !important;
+            color: #ccc !important;
+            border: 1px solid #555 !important;
         }
 
         .dark-mode .btn-cancel:hover {
-            background: #dc3545;
-            color: white;
+            background: #dc3545 !important;
+            color: white !important;
             box-shadow: 0 0 10px rgba(220,53,69,0.5);
         }
 
         /* RADIO BUTTONS */
         .dark-mode .form-check-label {
-            color: #ccc !important;
+            color: #ddd !important;
         }
 
         .dark-mode .form-check-input {
             background-color: #2a2a2a !important;
             border-color: #444 !important;
+        }
+
+        .dark-mode .form-check-input:checked {
+            background-color: #4ecdc4 !important;
+            border-color: #4ecdc4 !important;
         }
 
         /* ENLACES */
@@ -106,8 +149,25 @@
         .dark-mode .formulario a:hover {
             color: #00ffe7 !important;
         }
-        .dark-mode .form-container {
-            border-top: 5px solid #4ecdc4 !important;
+
+        /* TEXTO DE ABAJO */
+        .dark-mode .text-center p {
+            color: #aaa !important;
+        }
+        /* Botón / switch modo oscuro */
+        .dark-mode .theme-toggle,
+        .dark-mode .dark-mode-toggle,
+        .dark-mode .form-check-input {
+            background: #2a2a2a !important;
+            border-color: #555 !important;
+            box-shadow: none !important;
+        }
+
+        .dark-mode .theme-toggle:checked,
+        .dark-mode .dark-mode-toggle:checked,
+        .dark-mode .form-check-input:checked {
+            background: #2a2a2a !important;
+            border-color: #555 !important;
         }
     </style>
     <div class="formulario">
