@@ -36,6 +36,93 @@
         small.text-danger {
             font-size: 0.875em;
         }
+
+        /* ================= DARK MODE - RECUPERAR CONTRASEÑA ================= */
+
+        .dark-mode body {
+            background: #121212 !important;
+            color: #e4e4e4 !important;
+        }
+
+        /* CONTENEDOR GENERAL */
+        .dark-mode #recuperar-password-page,
+        .dark-mode #recuperar-password-page .container {
+            background: transparent !important;
+        }
+
+        /* TARJETA */
+        .dark-mode .card {
+            background: #1e1e1e !important;
+            color: #e4e4e4 !important;
+
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+        }
+
+        /* TÍTULO */
+        .dark-mode h3.text-center {
+            color: #4ecdc4 !important;
+        }
+
+        /* TEXTO SECUNDARIO */
+        .dark-mode .text-muted {
+            color: #9ca3af !important;
+        }
+
+        /* LABEL */
+        .dark-mode .form-label {
+            color: #e0e0e0 !important;
+        }
+
+        /* INPUT */
+        .dark-mode .form-control,
+        .dark-mode input {
+            background: #2a2a2a !important;
+            color: #fff !important;
+            border: 1px solid #444 !important;
+        }
+
+        .dark-mode .form-control:focus,
+        .dark-mode input:focus {
+            background: #2a2a2a !important;
+            color: #fff !important;
+            border-color: #4ecdc4 !important;
+            box-shadow: 0 0 0 3px rgba(78,205,196,0.2) !important;
+        }
+
+        .dark-mode .form-control::placeholder,
+        .dark-mode input::placeholder {
+            color: #888 !important;
+        }
+
+        /* BOTÓN */
+        .dark-mode .btn-enviar {
+            background: linear-gradient(135deg, #2c5364, #203a43) !important;
+            color: #e4e4e4 !important;
+            border: none !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;
+        }
+
+        .dark-mode .btn-enviar:hover {
+            background: linear-gradient(135deg, #4ecdc4, #00ffe7) !important;
+            color: #000 !important;
+            box-shadow: 0 0 10px #00ffe7 !important;
+            transform: translateY(-2px);
+        }
+
+        /* LINK */
+        .dark-mode .mt-3 a {
+            color: #4ecdc4 !important;
+        }
+
+        .dark-mode .mt-3 a:hover {
+            color: #00ffe7 !important;
+        }
+
+        /* ERRORES */
+        .dark-mode .text-danger,
+        .dark-mode small.text-danger {
+            color: #ff6b6b !important;
+        }
     </style>
 
 

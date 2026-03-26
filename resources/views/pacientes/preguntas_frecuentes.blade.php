@@ -252,7 +252,141 @@
             background: #5a6268;
         }
 
+        /* ================= DARK MODE - PREGUNTAS FRECUENTES ================= */
 
+        .dark-mode body {
+            background: #121212 !important;
+            color: #e4e4e4 !important;
+        }
+
+        /* CONTENEDOR */
+        .dark-mode .faq-public-container {
+            background: transparent !important;
+        }
+
+        /* HEADER */
+        .dark-mode .faq-public-header h1 {
+            color: #4ecdc4 !important;
+        }
+
+        .dark-mode .faq-public-header p {
+            color: #9ca3af !important;
+        }
+
+        /* BOTÓN AGREGAR */
+        .dark-mode .btn-add {
+            background: linear-gradient(135deg, #2c5364, #203a43) !important;
+            color: #e4e4e4 !important;
+            border: none !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .dark-mode .btn-add:hover {
+            background: linear-gradient(135deg, #4ecdc4, #00ffe7) !important;
+            color: #000 !important;
+            box-shadow: 0 0 15px #00ffe7, 0 0 25px rgba(0,255,231,0.4);
+            transform: translateY(-2px);
+        }
+
+        /* ACORDEÓN */
+        .dark-mode .faq-accordion {
+            background: #1e1e1e !important;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.45);
+        }
+
+        .dark-mode .faq-accordion-item {
+            border: 2px solid #333 !important;
+            background: #1e1e1e !important;
+        }
+
+        .dark-mode .faq-accordion-item:hover {
+            border-color: #4ecdc4 !important;
+        }
+
+        /* CABECERA DE PREGUNTA */
+        .dark-mode .faq-accordion-header {
+            background: #2a2a2a !important;
+            color: #e4e4e4 !important;
+        }
+
+        .dark-mode .faq-accordion-header:hover {
+            background: #333 !important;
+        }
+
+        .dark-mode .faq-accordion-header.active {
+            background: linear-gradient(135deg, #2c5364, #203a43) !important;
+            color: #fff !important;
+        }
+
+        /* TEXTO E ÍCONO */
+        .dark-mode .faq-question-text {
+            color: inherit !important;
+        }
+
+        .dark-mode .faq-icon {
+            color: #4ecdc4 !important;
+        }
+
+        .dark-mode .faq-accordion-header.active .faq-icon {
+            color: #fff !important;
+        }
+
+        /* RESPUESTA */
+        .dark-mode .faq-answer-content {
+            background: #1e1e1e !important;
+            color: #d1d5db !important;
+            border-top: 1px solid #333;
+        }
+
+        /* BOTONES DE ACCIÓN SI LUEGO LOS USAS */
+        .dark-mode .btn-edit {
+            background: linear-gradient(135deg, #2c5364, #203a43) !important;
+            color: #e4e4e4 !important;
+            border: none !important;
+        }
+
+        .dark-mode .btn-edit:hover {
+            background: linear-gradient(135deg, #4ecdc4, #00ffe7) !important;
+            color: #000 !important;
+        }
+
+        .dark-mode .btn-delete {
+            background: #2a2a2a !important;
+            color: #dc3545 !important;
+            border: 2px solid #dc3545 !important;
+        }
+
+        .dark-mode .btn-delete:hover {
+            background: #dc3545 !important;
+            color: #fff !important;
+        }
+
+        /* VACÍO */
+        .dark-mode .empty-faq {
+            color: #9ca3af !important;
+        }
+
+        .dark-mode .empty-faq i {
+            color: #4b5563 !important;
+        }
+
+        .dark-mode .empty-faq h3 {
+            color: #d1d5db !important;
+        }
+
+        /* BOTÓN SECUNDARIO */
+        .dark-mode .btn-secondary {
+            background: #2a2a2a !important;
+            color: #ccc !important;
+            border: 1px solid #555 !important;
+        }
+
+        .dark-mode .btn-secondary:hover {
+            background: #dc3545 !important;
+            color: #fff !important;
+            box-shadow: 0 0 10px rgba(220,53,69,0.5);
+        }
     </style>
 
     <div class="faq-public-container">
