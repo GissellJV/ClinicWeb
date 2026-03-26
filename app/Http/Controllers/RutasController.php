@@ -68,8 +68,8 @@ class RutasController extends Controller
 
             // Doctores con los que el paciente SÍ ha tenido cita
             $doctoresConCita = Cita::where('paciente_id', $pacienteId)
-                ->whereIn('estado', ['Completada', 'Reprogramada', 'Finalizada']) // o el estado que uses
-                ->pluck('doctor_id')
+                ->where('estado', ['Completada', 'Reprogramada', 'Finalizada']) // o el estado que uses
+                ->pluck('empleado_id')
                 ->toArray();
 
             // Agregar información al array de doctores
