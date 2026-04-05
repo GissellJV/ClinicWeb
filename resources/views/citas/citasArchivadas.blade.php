@@ -156,50 +156,123 @@
             }
 
         }
-        .filters-card{
-            background:white;
-            border-radius:16px;
-            padding:25px;
-            margin-bottom:30px;
-            box-shadow:0 4px 15px rgba(0,0,0,0.08);
+        /* Filtros */
+        .filters-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
-        .filters-row{
-            display:flex;
-            gap:15px;
-            flex-wrap:wrap;
-            align-items:flex-end;
+        .filters-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            align-items: end;
         }
 
-        .filter-group{
-            display:flex;
-            flex-direction:column;
-            flex:1;
-            min-width:200px;
+        .filter-group label {
+            display: block;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
         }
 
-        .filter-group label{
-            font-weight:600;
-            margin-bottom:8px;
+        .filter-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e8f4f3;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: #f8fffe;
         }
 
-        .filter-group select,
-        .filter-group input{
-            padding:10px;
-            border:1px solid #ddd;
-            border-radius:8px;
+        .filter-group select:focus {
+            outline: none;
+            border-color: #4ECDC4;
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
         }
 
-        .btn-filter{
-            padding:12px 30px;
-            background:linear-gradient(135deg,#4ECDC4 0%,#44A08D 100%);
-            color:white;
-            border:none;
-            border-radius:10px;
-            font-weight:600;
-            cursor:pointer;
+        .filter-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e8f4f3;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: #f8fffe;
         }
 
+        .filter-group input:focus {
+            outline: none;
+            border-color: #4ECDC4;
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
+        }
+
+
+        .filters-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group:last-child {
+            flex: 0;
+            min-width:12%;
+            margin-left: auto;
+        }
+
+        .filter-group label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .filter-group input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .filter-group select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .btn-filter {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-filter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+        }
+
+        .btn-filter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+        }
         /* ================= DARK MODE - CITAS ARCHIVADAS ================= */
 
         .dark-mode body {
@@ -369,23 +442,51 @@
     <div class="citas-container">
 
         <div class="header">
-            <h1>Citas Archivadas</h1>
+            <h1>Mis Citas Archivadas</h1>
         </div>
 
 
         {{-- ALERTAS BOOTSTRAP --}}
         @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fas fa-check-circle"></i>
-                {{ session('success') }}
+            <div class="alert alert-dismissible fade show" role="alert" style="
+        border-radius: 8px;
+        border: none;
+        border-left: 4px solid #17a2b8;
+        background: #d1ecf1;
+        color: #0c5460;
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+    ">
+                <div style="flex: 1;">
+                    <p style="margin: 5px 0 0 0; font-size: 17px;">
+                        {{ session('success') }}
+                    </p>
+                </div>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
 
         @if(session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="fas fa-exclamation-circle"></i>
-                {{ session('error') }}
+            <div class="alert alert-dismissible fade show" role="alert" style="
+        border-radius: 8px;
+        border: none;
+        border-left: 4px solid #dc3545;
+        background: #f8d7da;
+        color: #721c24;
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+    ">
+                <div style="flex: 1;">
+                    <p style="margin: 5px 0 0 0; font-size: 17px;">
+                        {{ session('error') }}
+                    </p>
+                </div>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
@@ -396,7 +497,7 @@
                 <div class="filters-row">
 
                     <div class="filter-group">
-                        <label><i class="fas fa-stethoscope"></i> Filtrar por Especialidad</label>
+                        <label><i class="fas fa-filter"></i> Filtrar por Especialidad</label>
                         <select name="especialidad">
                             <option value="">Todas</option>
                             <option value="Pediatría" {{ request('especialidad') == 'Pediatría' ? 'selected' : '' }}>Pediatría</option>
@@ -409,7 +510,6 @@
                         <label><i class="fas fa-calendar"></i> Filtrar por Fecha</label>
                         <input type="date"
                                name="fecha"
-                               class="form-control"
                                value="{{ request('fecha') }}">
                     </div>
 
@@ -536,7 +636,7 @@
                         {{-- Botón anterior --}}
                         <li class="page-item {{ $citas->onFirstPage() ? 'disabled' : '' }}">
                             <a class="page-link" href="{{ $citas->previousPageUrl() ?? '#' }}">
-                                Anterior
+                               <
                             </a>
                         </li>
 
@@ -550,7 +650,7 @@
                         {{-- Botón siguiente --}}
                         <li class="page-item {{ !$citas->hasMorePages() ? 'disabled' : '' }}">
                             <a class="page-link" href="{{ $citas->nextPageUrl() ?? '#' }}">
-                                Siguiente
+                                >
                             </a>
                         </li>
 
@@ -571,5 +671,7 @@
         @endif
 
     </div>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 @endsection
