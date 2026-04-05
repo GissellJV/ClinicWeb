@@ -15,9 +15,20 @@
 
         .button-group {
             display: flex;
-            justify-content: flex-end;
-            gap: 15px;
+            width: 100%;
             margin-top: 20px;
+        }
+
+        .button-group button {
+            width: 50%;
+        }
+
+        .btn-register {
+            margin-right: 5px;
+        }
+
+        .btn-cancel {
+            margin-left: 5px;
         }
 
 
@@ -31,7 +42,7 @@
 
            {{-- Mensaje de éxito --}}
            @if(session('success'))
-               <div style="background:#d4edda; padding:10px; border-radius:5px; margin-bottom:15px;">
+               <div class="alert alert-success" style="background:#d4edda; padding:10px; border-radius:5px; margin-bottom:15px;">
                    {{ session('success') }}
                </div>
            @endif
@@ -92,5 +103,15 @@
            </form>
        </div>
    </div>
+
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.style.transition = "opacity 0.5s";
+                alert.style.opacity = "0";
+                setTimeout(()=> alert.remove(), 1000);
+            });
+        }, 300000);
+    </script>
 @endsection
 

@@ -200,11 +200,18 @@
             color: white;
             white-space: nowrap;
         }
+
+        .num-cell{
+            font-weight:700;
+            color:#7f8c8d;
+            font-size:.73rem;
+            text-align:center;
+        }
     </style>
 
     <div class="main-container">
         <br><br>
-        <h2 class="text-info-emphasis">Historial Diario de Pacientes</h2>
+        <h1 class="text-info-emphasis">Historial Diario de Pacientes</h1>
         <br>
         <div class="table-container-card">
             <div class="table-container">
@@ -212,7 +219,7 @@
                     <thead>
 
                     <tr>
-
+                        <th style="width:45px;">#</th>
                         <th>Nombre del Paciente</th>
                         <th>Doctor que lo atendió</th>
 
@@ -225,6 +232,7 @@
                     @forelse($historial as $item)
 
                         <tr>
+                            <td class="num-cell"></td>
                             <td>
                                 <span class="patient-name">{{ $item->nombre_paciente }}</span>
                             </td>
@@ -273,16 +281,27 @@
                     zeroRecords: "No hay pacientes atendidos hoy",
                     emptyTable: "No hay pacientes atendidos hoy",
                     paginate: {
-                        first: "Primero",
-                        previous: "Anterior",
-                        next: "Siguiente",
-                        last: "Último"
+                        previous: '<i class="bi bi-chevron-left"></i>',
+                        next: '<i class="bi bi-chevron-right"></i>'
                     }
                 },
+                columnDefs: [
+                    { targets: 0, orderable: false, searchable: false },
+                    { targets: 2, orderable: false, searchable: false },
+                ],
                 pageLength: 10,
                 lengthMenu: [[5, 10, 25, 50], [5, 10, 25, 50]],
                 order: [[0, 'asc']], // Ordenar por nombre de paciente
-                dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip'
+                dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
+                drawCallback: function () {
+                    const info = this.api().page.info();
+                    this.api()
+                        .column(0, { search: 'applied', order: 'applied', page: 'current' })
+                        .nodes()
+                        .each(function (cell, i) {
+                            cell.innerHTML = '<span class="num-cell">' + (info.start + i + 1) + '</span>';
+                        });
+                }
             });
         });
     </script>

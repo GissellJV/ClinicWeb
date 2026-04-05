@@ -23,10 +23,19 @@
             color: #1c6b6b;
         }
 
+        .botones-container{
+            display: flex;
+            gap: 10px;
+        }
+
+        .botones-container button{
+            flex: 1;
+        }
+
     </style>
 
     <br> <br> <br>
-    <h1 class="text-center text-info-emphasis">Programar cita de seguimiento</h1>
+    <h1 class="text-center text-info-emphasis">Programar Cita de Seguimiento</h1>
 
     <br> <br>
     <div class="formulario">
@@ -104,9 +113,17 @@
 
                     <br>
 
-                    <button class="btn-register"style="margin-left: 200px;">
-                        Guardar cita de seguimiento
-                    </button>
+                    <div class="botones-container">
+                        <button class="btn-register">
+                            Guardar cita
+                        </button>
+
+                        <button type="reset" class="btn-cancel">
+                            Cancelar
+                        </button>
+                    </div>
+
+
                 </form>
 
         </div>
@@ -117,8 +134,8 @@
             document.querySelectorAll('.alert').forEach(alert => {
                 alert.style.transition = "opacity 0.5s";
                 alert.style.opacity = "0";
-                setTimeout(()=> alert.remove(), 500);
+                setTimeout(()=> alert.remove(), 1000);
             });
-        }, 2500);
+        }, 300000);
     </script>
 @endsection
