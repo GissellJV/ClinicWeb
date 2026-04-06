@@ -119,40 +119,46 @@
         }
 
         .btn-register {
-            padding: 0.875rem 2.5rem;
+            padding: 0.875rem 2rem;
             background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
             border: none;
             border-radius: 8px;
             color: white;
             font-weight: 600;
             font-size: 1.1rem;
+            cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
-            cursor: pointer;
+            flex: 1;
+            text-align: center;
         }
 
         .btn-register:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
         }
 
         .btn-cancel {
-            padding: 0.875rem 2.5rem;
+            padding: 0.875rem 2rem;
             background: white;
-            border: 2px solid #6c757d;
+            border: 2px solid #dc3545;
             border-radius: 8px;
-            color: #6c757d;
+            color: #dc3545;
             font-weight: 600;
             font-size: 1.1rem;
-            text-decoration: none;
-            display: inline-block;
+            cursor: pointer;
             transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+            text-decoration-line: none;
         }
 
         .btn-cancel:hover {
-            background: #6c757d;
+            background: #dc3545;
             color: white;
             transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
         }
 
         .text-danger {
@@ -257,13 +263,15 @@
                     </div>
 
                     {{-- Botones --}}
-                    <div class="form-buttons">
+                        <div class="d-flex gap-3 mt-4">
+                            <button type="submit" class="btn-register">
+                                {{ isset($pregunta) ? 'Actualizar' : 'Guardar' }}
+                            </button>
+
                         <a href="{{ route('preguntas.index') }}" class="btn-cancel">
                             Cancelar
                         </a>
-                        <button type="submit" class="btn-register">
-                            {{ isset($pregunta) ? 'Actualizar' : 'Guardar' }}
-                        </button>
+
                     </div>
                 </form>
             </div>

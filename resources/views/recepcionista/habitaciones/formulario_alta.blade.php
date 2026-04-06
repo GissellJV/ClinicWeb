@@ -1,13 +1,26 @@
-@extends('layouts.plantillaRecepcion')
+@php
+    if (session('tipo_usuario') === 'empleado') {
+    switch (session('cargo')) {
+    case 'Recepcionista':
+    $layout = 'layouts.plantillaRecepcion';
+    break;
+    case 'Administrador':
+    $layout = 'layouts.plantillaAdmin';
+    break;
+    default:
+    $layout = 'layouts.plantilla';
+    }
+    } else {
+    $layout = 'layouts.plantilla';
+    }
+@endphp
+
+@extends($layout)
 
 @section('contenido')
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: whitesmoke;
@@ -27,6 +40,8 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+            flex: 1;
+            text-align: center;
         }
 
         .btn-register:hover {
@@ -45,6 +60,8 @@
             font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
         }
 
         .btn-cancel:hover {
@@ -56,14 +73,14 @@
 
 
 
-        /* Estilos para los campos de formulario */
+        /* campos de formulario */
         .form-label {
             font-weight: 600;
             color: #333;
             margin-bottom: 8px;
         }
 
-        .form-control, .form-select {
+        .form-control, .form-select{
             width: 100%;
             background: rgba(248, 250, 255, 0.6);
             color: #555;
@@ -80,6 +97,7 @@
             border-color: #4ecdc4;
             box-shadow: 0 0 0 0.2rem rgba(78, 205, 196, 0.25);
             outline: none;
+
         }
 
         .modal-content {
@@ -185,14 +203,16 @@
                             </div>
                         </div>
 
-                        <div class="modal-footer" style=" gap: 1rem;">
+                        <div class="d-flex gap-3 mt-4">
+                            <button type="submit" class="btn-register">
+                                Confirmar Alta
+                            </button>
+
                             <a href="{{ route('recepcionista.habitaciones.ocupadas') }}" class="btn-cancel" style="text-decoration-line: none">
                                 <i class="fas fa-times"></i> Cancelar
                             </a>
 
-                            <button type="submit" class="btn-register">
-                                Confirmar Alta
-                            </button>
+
                         </div>
 
                     </form>

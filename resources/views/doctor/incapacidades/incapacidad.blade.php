@@ -28,6 +28,19 @@
             flex: 1;
             text-align: center;
         }
+
+        .alert-info-custom {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 15px 45px 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+            position: relative;
+            text-align: left;
+            border-left: solid #0c5460;
+        }
     </style>
 
     <div class="formulario">
@@ -39,7 +52,7 @@
 
                 {{-- Mensaje de exito --}}
                 @if(session('success'))
-                    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                    <div class="alert alert-info-custom alert-dismissible fade show mb-4" role="alert">
                         {{ session('success') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
                     </div>
@@ -142,16 +155,27 @@
 
                     {{-- Botones --}}
                     <div class="d-flex gap-3 mt-4">
-                        <a href="{{ route('doctor.listaIncapacidades') }}" class="btn-cancel" style="text-decoration-line: none">
-                            Cancelar
-                        </a>
                         <button type="submit" class="btn-register">
                             Emitir Incapacidad
                         </button>
+
+                        <a href="{{ route('doctor.listaIncapacidades') }}" class="btn-cancel" style="text-decoration-line: none">
+                            Cancelar
+                        </a>
+
                     </div>
 
                 </form>
             </div>
         </section>
     </div>
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.style.transition = "opacity 0.5s";
+                alert.style.opacity = "0";
+                setTimeout(()=> alert.remove(), 500);
+            });
+        }, 2500);
+    </script>
 @endsection

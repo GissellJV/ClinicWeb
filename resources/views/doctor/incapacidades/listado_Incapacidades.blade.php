@@ -2,7 +2,7 @@
 @section('contenido')
 
     <style>
-        /* ── ESTADÍSTICAS ── */
+        /* ESTADÍSTICAS  */
         .stock-alerts{
             display:grid;
             grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
@@ -68,11 +68,17 @@
             padding:25px;
         }
 
-        /* ── TABLA ── */
+        /* TABLA*/
 
-        .dt-wrap{
-            overflow-x:visible;
-            width:100%;
+        .dt-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        @media (min-width: 992px) {
+            .dt-wrap {
+                overflow-x: visible;
+            }
         }
 
         table.dataTable{
@@ -239,7 +245,7 @@
             color:#fff;
             border:none;
             font-family:inherit;
-            font-size:.71rem;
+            font-size:.80rem;
             font-weight:500;
             padding:.2rem .6rem;
             border-radius:6px;
@@ -258,7 +264,7 @@
             color:#fff;
             border:none;
             font-family:inherit;
-            font-size:.78rem;
+            font-size:.85rem;
             font-weight:500;
             padding:.4rem .9rem;
             border-radius:6px;
@@ -269,7 +275,7 @@
             text-decoration:none;
             transition:all .15s;
             box-shadow:0 4px 12px rgba(0,191,166,.3);
-            min-height: 40px;
+            min-height: 43px;
             min-width: 80px;
             text-align: center;
         }
@@ -278,16 +284,7 @@
             color:#fff;
             transform:translateY(-1px);
         }
-        .modal-inc .modal-content{
-            border-radius:20px;
-        }
-        .modal-inc .modal-body{
-            border-radius:20px;
-            padding:2.5rem;
-            border-top:5px solid #4ecdc4;
-            max-width:600px;
-            position:relative;
-        }
+
         .inc-estado{
             display:flex;
             justify-content:start;
@@ -328,25 +325,21 @@
             line-height:1.55;
             font-style:italic;
         }
-        .modal-inc .modal-footer{
-            border:none;
-            padding:.75rem 1.4rem 1.2rem;
-            gap:.5rem;
-        }
+
         .btn-cerrar-modal{
             background: white;
             color: #dc3545;
             border: 2px solid #dc3545;
             font-family:inherit;
-            font-size:.8rem;
             font-weight:600;
-            padding:.45rem 1.1rem;
             border-radius:8px;
             cursor:pointer;
-            transition:background .15s;
-            flex: 1;
             text-align: center;
             min-height: 40px;
+            padding: 0.875rem 2rem;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            flex: 1px;
         }
         .btn-cerrar-modal:hover{
             background: #dc3545;
@@ -355,34 +348,82 @@
             box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
         }
         .btn-pdf{
-            background:linear-gradient(135deg,#00bfa6,#009e8e);
-            color:#fff;
-            border:none;
-            font-family:inherit;
-            font-size:.8rem;
-            font-weight:600;
-            padding:.45rem 1.1rem;
-            border-radius:8px;
-            cursor:pointer;
-            display:inline-flex;
-            align-items:center;
-            gap:.4rem;
-            transition:all .15s;
-            box-shadow:0 4px 12px rgba(0,191,166,.25);
-            flex: 1;
-            text-align: center;
-            justify-content: center;
-            min-height: 40px;
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
         }
         .btn-pdf:hover{
-            background:linear-gradient(135deg,#009e8e,#007a6e);
-            transform:translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
         }
         .text-info-emphasis {
 
             font-weight: bold;
 
         }
+        @media (max-width: 768px) {
+            .inventory-card {
+                padding: 15px;
+            }
+
+            .dt-wrap {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .dataTables_wrapper {
+                min-width: 550px;
+            }
+        }
+
+        /* Modal Incapacidad */
+        #modalIncapacidad .modal-content {
+            border-radius: 18px;
+            border: 3px solid #24f3e2;
+            box-shadow: 0 0 20px rgba(36, 243, 226, 0.4);
+            overflow: hidden;
+            padding: 0;
+        }
+
+        #modalIncapacidad .modal-body {
+            padding: 2.5rem;
+            border-top: none;
+        }
+
+        #modalIncapacidad .modal-body::before {
+            content: 'Detalle de Incapacidad';
+            display: block;
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 18px 24px;
+            margin: -2.5rem -2.5rem 1.5rem -2.5rem;
+        }
+
+
+        #modalIncapacidad .modal-footer {
+            border-top: 1px solid #e9ecef;
+            padding: 0.75rem 1.4rem 1.2rem;
+            gap: 0.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        #modalIncapacidad .btn-close {
+            filter: brightness(0) invert(1);
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 10;
+        }
+
 
 
     </style>
@@ -391,9 +432,9 @@
         <div class="container mt-4">
 
             <div class="page-header mb-4 d-flex align-items-center justify-content-between" style="margin-top:100px;">
-                    <h2 class="text-info-emphasis mb-0">
+                    <h1 class="text-info-emphasis">
                         Incapacidades Emitidas
-                    </h2>
+                    </h1>
                     <a href="{{ route('doctor.emitir.incapacidad') }}" class="btn-nueva">
                         <i class="bi bi-plus-lg"></i> Nueva Incapacidad
                     </a>
@@ -522,7 +563,7 @@
                 <div class="modal-footer d-flex gap-3">
                     <button type="button" class="btn-cerrar-modal" data-bs-dismiss="modal">Cerrar</button>
                     <a href="#" id="btnDescargarPdf" class="btn-pdf" style="text-decoration-line: none;">
-                        <i class="bi bi-file-earmark-pdf"></i> Descargar PDF
+                         Descargar PDF
                     </a>
                 </div>
 
@@ -540,6 +581,8 @@
 
             // ── DataTable ──
             $('#tablaInc').DataTable({
+                responsive: false,
+                autoWidth: false,
                 language: {
                     search: 'Buscar:',
                     lengthMenu: 'Mostrar _MENU_ registros',

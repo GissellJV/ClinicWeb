@@ -13,6 +13,16 @@
             display: flex;
 
         }
+        .formulario .btn-register {
+            flex: 1;
+            text-align: center;
+        }
+
+        .formulario .btn-cancel {
+            flex: 1;
+            text-align: center;
+        }
+
 
         /* ================= MODIFICACIÓN MODO OSCURO ================= */
         .dark-mode body {
@@ -169,10 +179,15 @@
             background: #2a2a2a !important;
             border-color: #555 !important;
         }
+        h1{
+            text-align: center;
+            margin-bottom: 35px;
+            font-weight: 700;
+        }
     </style>
     <div class="formulario">
       <div class="register-section">
-          <h1 class="text-center text-info-emphasis" >Regístrate para Agendar tu Cita</h1>
+          <h1 class="text-info-emphasis">Regístrate para Agendar tu Cita</h1>
          <div class="form-container">
 
           <form method="post" action="{{route('pacientes.store')}}">
@@ -239,6 +254,7 @@
                 @enderror
                 <div class="invalid-feedback">Ingresa un número de identidad válido (13 dígitos)
                 </div>
+            </div>
 
                 <!--Numero de Telefono con codigo de pais-->
                 <div data-mdb-input-init class="mb-3" >
@@ -251,6 +267,7 @@
                     <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
+
                 <!-- CORREO -->
                 <div class="mb-3">
                     <label class="form-label">Correo electrónico</label>
@@ -276,9 +293,11 @@
                     <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
+                <div class="d-flex gap-3 mt-4">
                 <button type="submit" class="btn btn-register">Registrar</button>
                 <a class="btn btn-cancel" href="{{route('/')}}">Cancelar</a>
-            </div>
+                </div>
+
               <div class="text-center mt-3">
               <p style="margin-bottom: 0.5rem; color: #666;">¿Tienes una cuenta?
                   <a style="color: #4ecdc4; text-decoration: none; font-weight: 500;" href="{{route('login.sesion')}}">Iniciar Sesión</a>
