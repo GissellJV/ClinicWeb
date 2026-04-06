@@ -32,14 +32,31 @@
             text-decoration: none;
         }
 
-        .administracion .btn-primary {
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-            color: white;
+        .administracion .btn-add {
+            background:linear-gradient(135deg,#00bfa6,#009e8e);
+            color:#fff;
+            border:none;
+            font-family:inherit;
+            font-size:.85rem;
+            font-weight:500;
+            padding:.4rem .9rem;
+            border-radius:6px;
+            cursor:pointer;
+            display:inline-flex;
+            align-items:center;
+            gap:.35rem;
+            text-decoration:none;
+            transition:all .15s;
+            box-shadow:0 4px 12px rgba(0,191,166,.3);
+            min-height: 43px;
+            min-width: 80px;
+            text-align: center;
         }
 
-        .administracion .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(78, 205, 196, 0.3);
+        .administracion .btn-add:hover {
+            background:linear-gradient(135deg,#009e8e,#007a6e);
+            color:#fff;
+            transform:translateY(-1px);
         }
 
         /* Alertas de Stock */
@@ -111,9 +128,15 @@
         }
 
         .administracion .table-container {
-            overflow-x: visible;
             width: 100%;
             margin: 0 auto;
+            overflow-x: auto;
+        }
+
+        @media (min-width: 992px) {
+            .administracion .table-container {
+                overflow-x: visible;
+            }
         }
 
         table.dataTable {
@@ -222,13 +245,14 @@
         }
 
         .btn-edit {
-            background: #4ecdc4;
+            background:linear-gradient(135deg,#00bfa6,#009e8e);
             color: white;
         }
 
         .btn-edit:hover {
-            background: #44a08d;
-            transform: translateY(-2px);
+            background:linear-gradient(135deg,#009e8e,#007a6e);
+            color:#fff;
+            transform:translateY(-1px);
         }
 
         .btn-delete {
@@ -311,11 +335,109 @@
 
             font-weight: bold;
         }
+
+        .num-cell{
+            font-weight:700;
+            color:#7f8c8d;
+            font-size:.85rem;
+        }
+
+        /* === CONTENEDOR DEL MODAL === */
+
+        .modal-content {
+            border-radius: 18px;
+            border: 3px solid #24f3e2;
+            box-shadow: 0 0 20px rgba(36, 243, 226, 0.4);
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .modal-header {
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            border-bottom: none;
+            padding: 20px 30px;
+        }
+
+        .modal-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .modal-body {
+            padding: 30px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .modal-footer {
+            border-top: none;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        .btn-delModal {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 0 1 160px;
+            text-align: center;
+        }
+
+        .btn-delModal:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+
+        .btn-canModal {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid #dc3545;
+            border-radius: 8px;
+            color: #dc3545;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 0 1 160px;
+            text-align: center;
+        }
+
+        .btn-canModal:hover {
+            background: #dc3545;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+        }
     </style>
 
     <div class="administracion">
         <br>
         <div class="container mt-5 pt-5">
+
+
+            <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h1 class="text-info-emphasis" style="margin: 0;">Inventario de Medicamentos</h1>
+
+                <a type="button" class="btn btn-add" href="{{route('inventario.create')}}">
+                    <span>+</span>
+                    <span>Registrar Medicamento / Inyección</span>
+                </a>
+            </div>
+
             @if(session('success'))
                 <div class="alert alert-dismissible fade show" role="alert" style="
                     border-radius: 8px;
@@ -335,15 +457,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-
-            <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <h2 class="text-info-emphasis" style="margin: 0;">Inventario de Medicamentos</h2>
-
-                <a type="button" class="btn btn-primary" href="{{route('inventario.create')}}">
-                    <span>+</span>
-                    <span>Registrar Medicamento / Inyección</span>
-                </a>
-            </div>
 
             <div class="stock-alerts">
                 <div class="alert-card critical">
@@ -376,6 +489,7 @@
                     <table id="inventarioTable" class="table table-hover">
                         <thead>
                         <tr>
+                            <th>#</th>
                             <th>Código</th>
                             <th>Nombre</th>
                             <th>Cantidad</th>
@@ -401,6 +515,7 @@
                             @endphp
 
                             <tr class="{{ $stockClass }}" data-stock-status="{{ $inventario->estado }}">
+                                <td class="num-cell"></td>
                                 <td>{{$inventario->codigo}}</td>
                                 <td class="medication-name">{{$inventario->nombre}}</td>
                                 <td>
@@ -433,31 +548,31 @@
                                 </td>
                             </tr>
 
-                            <!-- Modal de WNoUsadas -->
+                            <!-- Modal-->
                             <div class="modal fade" id="deleteModal{{$inventario->id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content" style="border-radius: 15px; border: none; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
-                                        <div class="modal-header" style="border-bottom: 2px solid #f0f0f0;">
+                                    <div class="modal-content">
+                                        <div class="modal-header" >
                                             <h5 class="modal-title">
                                                 <i class="fas fa-exclamation-triangle" style="color: #e74c3c;"></i>
                                                 Confirmar Eliminación
                                             </h5>
-                                            <button type="button"  data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>                                        </div>
                                         <div class="modal-body" style="padding: 30px;">
                                             <p style="font-size: 16px; color: #666;">
-                                                ¿Estás seguro de que deseas eliminar el medicamento <strong>{{$inventario->nombre}}</strong>?
+                                                ¿Desea eliminar el medicamento <strong>{{$inventario->nombre}}</strong>?
                                             </p>
                                         </div>
-                                        <div class="modal-footer" style="border-top: 2px solid #f0f0f0; gap: 10px;">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 8px; padding: 10px 20px;">
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn-canModal" data-bs-dismiss="modal"  style="border-radius: 8px; padding: 10px 20px;">
                                                 Cancelar
                                             </button>
                                             <form action="{{route('inventario.destroy', ['id'=>$inventario->id])}}" method="POST" style="margin: 0;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger" style="border-radius: 8px; padding: 10px 20px; background: #e74c3c; border: none;">
-                                                    <i class="fas fa-trash"></i> Eliminar
+                                                <button type="submit" class=" btn-delModal">
+                                                    <i class="fas fa-trash"></i> Sí, eliminar
                                                 </button>
                                             </form>
                                         </div>
@@ -486,7 +601,7 @@
         $(document).ready(function() {
             // Inicializar DataTable
             var table = $('#inventarioTable').DataTable({
-                responsive: true,
+                responsive: false,
                 autoWidth: false,
                 language: {
                     processing: "Procesando...",
@@ -505,7 +620,7 @@
                         last: "Último"
                     }
                 },
-                pageLength: 10,
+                pageLength: 5,
                 lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
                 order: [[2, 'asc']],
                 columnDefs: [
@@ -514,7 +629,16 @@
                         orderable: false,
                         searchable: false
                     }
-                ]
+                ],
+                drawCallback: function () {
+                    const info = this.api().page.info();
+                    this.api()
+                        .column(0, { search: 'applied', order: 'applied', page: 'current' })
+                        .nodes()
+                        .each(function (cell, i) {
+                            cell.innerHTML = '<span class="num-cell">' + (info.start + i + 1) + '</span>';
+                        });
+                }
             });
 
 
@@ -543,6 +667,15 @@
 
             actualizarContadores();
         });
+    </script>
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.style.transition = "opacity 0.5s";
+                alert.style.opacity = "0";
+                setTimeout(()=> alert.remove(), 500);
+            });
+        }, 2500);
     </script>
 
 @endsection

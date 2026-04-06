@@ -18,8 +18,11 @@
             color: white;
             font-weight: 600;
             font-size: 1.1rem;
+            cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+            flex: 1;
+            text-align: center;
         }
 
         .formulario .btn-guardar:hover {
@@ -36,7 +39,10 @@
             color: #dc3545;
             font-weight: 600;
             font-size: 1.1rem;
+            cursor: pointer;
             transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
         }
 
         .formulario .btn-cancel:hover {
@@ -55,8 +61,8 @@
     </style>
 
     <div class="formulario">
-        <div class="register-section" style="margin-top: 120px">
-            <h2 class="text-center text-info-emphasis">
+        <div class="register-section" style="margin-top: 50px;">
+            <h2 class="text-center text-info-emphasis" style="margin-bottom: 30px;">
                 @isset($inventario)
                     Editar
                 @else
@@ -113,8 +119,10 @@
                     </div>
 
                     <br>
+                        <div class="d-flex gap-3 mt-4">
                     <button type="submit" class="btn-guardar">Guardar</button>
                     <a class="btn-cancel" href="{{ route('inventario.principal') }}" style="text-decoration-line: none">Cancelar</a>
+                        </div>
                 </form>
             </div>
         </div>

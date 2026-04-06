@@ -217,6 +217,7 @@
             border-radius: 8px;
             font-weight: 600;
             transition: all 0.3s;
+            text-decoration-line: none;
         }
 
         .btn-light:hover {
@@ -235,7 +236,18 @@
                 padding: 15px 10px;
             }
         }
+        .num-cell{
+            font-weight:700;
+            color:#7f8c8d;
+            font-size:.85rem;
+        }
 
+
+        .table-container {
+            overflow-x: visible !important;
+            width: 100%;
+            margin: 0 auto;
+        }
 
     </style>
     <div class="container mt-5 pt-5">
@@ -257,8 +269,8 @@
             }, 10000);
         </script>
             <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="text-info-emphasis">Búsqueda de Expedientes</h2>
-            <a href="{{ route('expedientes.crear') }}" class="btn btn-light btn-sm">
+        <h1 class="text-info-emphasis">Búsqueda de Expedientes</h1>
+            <a href="{{ route('expedientes.crear') }}" class=" btn-light btn-sm">
                 + Nuevo Expediente
             </a>
             </div>
@@ -273,6 +285,7 @@
                 <table id="expedientesTable" class="table table-hover">
                     <thead>
                     <tr>
+                        <th>#</th>
                         <th>N° Expediente</th>
                         <th>Nombre Completo</th>
                         <th>Teléfono</th>
@@ -283,6 +296,7 @@
                     <tbody class="table-group-divider">
                     @foreach($expedientes as $paciente)
                         <tr>
+                            <td class="num-cell"></td>
                             <td >{{ $paciente->expediente->numero_expediente  ?? 'Sin expediente' }}</td>
                             <td>{{ $paciente->nombres}} {{ $paciente->apellidos }}</td>
                             <td>{{$paciente->telefono}}</td>
@@ -341,7 +355,7 @@
                         last: "Último"
                     }
                 },
-                pageLength: 10,
+                pageLength: 5,
                 lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
                 order: [[0, 'desc']], // Ordenar por N° Expediente descendente
                 columnDefs: [
@@ -350,7 +364,16 @@
                         orderable: false,
                         searchable: false
                     }
-                ]
+                ],
+                drawCallback: function () {
+                    const info = this.api().page.info();
+                    this.api()
+                        .column(0, { search: 'applied', order: 'applied', page: 'current' })
+                        .nodes()
+                        .each(function (cell, i) {
+                            cell.innerHTML = '<span class="num-cell">' + (info.start + i + 1) + '</span>';
+                        });
+                }
             });
         });
     </script>

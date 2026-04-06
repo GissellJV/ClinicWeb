@@ -27,12 +27,11 @@
         .text-info-emphasis {
             color: #2c3e50;
             font-weight: 700;
-            font-size: 1.8rem;
             margin-bottom: 30px;
-            text-align: center;
+            text-align: left;
         }
 
-        /* ── Alert Cards ── */
+        /* Alert Cards */
         .stock-alerts {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -100,9 +99,17 @@
             margin-bottom: 4px;
         }
 
-        .alert-card.emergencia .alert-number { color: #e74c3c; }
-        .alert-card.individual  .alert-number { color: #4ecdc4; }
-        .alert-card.doble       .alert-number { color: #f39c12; }
+        .alert-card.emergencia .alert-number {
+            color: #e74c3c;
+        }
+
+        .alert-card.individual  .alert-number {
+            color: #4ecdc4;
+        }
+
+        .alert-card.doble .alert-number {
+            color: #f39c12;
+        }
 
         .alert-label {
             font-size: 14px;
@@ -122,6 +129,13 @@
             border-radius: 15px;
             padding: 25px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        @media (min-width: 992px) {
+            .table-container {
+                overflow-x: visible;
+            }
         }
 
         table.dataTable {
@@ -131,7 +145,7 @@
 
         table.dataTable thead th {
             padding: 18px 15px;
-            text-align: left;
+            text-align: center;
             font-weight: 700;
             font-size: 0.85rem;
             letter-spacing: 0.5px;
@@ -154,53 +168,33 @@
             vertical-align: middle;
         }
 
+        table.dataTable thead th:nth-child(6),
+        table.dataTable tbody td:nth-child(6) {
+            text-align: center;
+            vertical-align: middle;
+        }
         .patient-name {
             font-weight: 600;
             color: #0e0d0d;
             font-size: 1rem;
+            min-width: 150px;
         }
 
-        .date-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        .date-badge.ingreso { background: #e3f2fd; color: #1976d2; }
-        .date-badge.alta    { background: #e8f5e9; color: #388e3c; }
 
         .dias-badge {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            padding: 8px 16px;
+            padding: 6px 10px;
             border-radius: 20px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 12px;
             background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
             color: white;
+            margin: 0 auto;
         }
 
-        .motivo-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .observaciones-text {
-            max-width: 300px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
 
         /* DataTables personalizado */
         .dataTables_wrapper .dataTables_length,
@@ -253,18 +247,30 @@
         }
 
         @media (max-width: 768px) {
-            .main-container { padding: 80px 15px 40px; }
-            .table-container { padding: 15px; }
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .dataTables_wrapper {
+                overflow-x: auto;
+            }
+        }
+        .num-cell{
+            font-weight:700;
+            color:#7f8c8d;
+            font-size:.90rem;
+            text-align:center;
         }
     </style>
 
     <div class="main-container">
 
-        <h2 class="text-info-emphasis">
+        <h1 class="text-info-emphasis">
             Historial de Altas
-        </h2>
+        </h1>
 
-        {{-- ── Alert Cards ── --}}
+        {{--Alert Cards--}}
 
 
         <div class="stock-alerts">
@@ -311,12 +317,13 @@
             </div>
 
         </div>
-        {{-- ── Fin Alert Cards ── --}}
+
 
         <div class="table-container">
-            <table id="expedientesTable" class="table table-hover">
+            <table id="expedientesTable" class="table table-hover nowrap w-100">
                 <thead>
                 <tr>
+                    <th style=" text-align: center ">#</th>
                     <th>Paciente</th>
                     <th>Identidad</th>
                     <th>Fecha Ingreso</th>
@@ -329,6 +336,7 @@
                 <tbody class="table-group-divider">
                 @forelse($pacientes as $asignacion)
                     <tr>
+                        <td class="num-cell"></td>
                         <td class="patient-name">
                             {{ $asignacion->paciente->nombres }} {{ $asignacion->paciente->apellidos }}
                         </td>
@@ -378,7 +386,7 @@
     <script>
         $(document).ready(function() {
             $('#expedientesTable').DataTable({
-                responsive: true,
+                responsive: false,
                 autoWidth: false,
                 language: {
                     processing:     "Procesando...",
@@ -397,17 +405,28 @@
                         last:     "Último"
                     }
                 },
-                pageLength: 10,
+                pageLength: 5,
                 lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'Todos']],
                 order: [[3, 'desc']],
                 columnDefs: [
-                    { targets: 0, width: '220px' },
-                    { targets: 2, width: '220px' },
-                    { targets: 3, width: '220px' },
-                    { targets: 4, width: '220px' },
-                    { targets: 5, width: '220px' },
-                    { targets: 6, orderable: false, width: '200px' }
-                ]
+                    { targets: 0, width: '40px',  className: 'text-center' },
+                    { targets: 1, width: '160px' },
+                    { targets: 2, width: '130px' },
+                    { targets: 3, width: '100px' },
+                    { targets: 4, width: '100px' },
+                    { targets: 5, width: '90px',  className: 'text-center' },
+                    { targets: 6, width: '120px', orderable: false },
+                    { targets: 7, width: '160px', orderable: false }
+                ],
+                drawCallback: function () {
+                    const info = this.api().page.info();
+                    this.api()
+                        .column(0, { search: 'applied', order: 'applied', page: 'current' })
+                        .nodes()
+                        .each(function (cell, i) {
+                            cell.innerHTML = '<span class="num-cell">' + (info.start + i + 1) + '</span>';
+                        });
+                }
             });
 
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));

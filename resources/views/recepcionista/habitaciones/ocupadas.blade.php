@@ -151,9 +151,15 @@
         }
 
         .administracion .table-container {
-            overflow-x: visible !important;
             width: 100%;
             margin: 0 auto;
+            overflow-x: auto;
+        }
+
+        @media (min-width: 992px) {
+            .administracion .table-container {
+                overflow-x: visible;
+            }
         }
 
         .container {
@@ -366,18 +372,24 @@
             border-radius: 8px;
             padding: 8px 15px;
             margin-left: 10px;
+            background-color: #ffffff !important;
         }
 
         .dataTables_wrapper .dataTables_filter input:focus {
             outline: none;
-            border-color: #4ecdc4;
+            border-color: #4ECDC4;
         }
 
         .dataTables_wrapper .dataTables_length select {
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 5px 10px;
-            margin: 0 10px;
+                border: 2px solid #e0e0e0 !important;
+                border-radius: 8px !important;
+                padding: 5px 10px !important;
+                margin: 0 10px !important;
+                color: #333333 !important;
+                background-color: #ffffff !important;
+                -webkit-appearance: auto !important;
+                appearance: auto !important;
+
         }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -423,6 +435,7 @@
             transition: all 0.3s ease;
             background: #f8f9fa;
 
+
         }
 
         .form-control:focus, .form-select:focus {
@@ -452,7 +465,7 @@
         }
 
 
-        @media (max-width: 1200px) {
+        @media (max-width: 768px) {
             .administracion .inventory-card {
                 padding: 15px;
                 margin: 0;
@@ -495,10 +508,22 @@
 
             font-weight: bold;
         }
+        .num-cell{
+            font-weight:700;
+            color:#7f8c8d;
+        }
     </style>
 
     <div class="administracion">
         <div class="container mt-5 pt-5">
+
+            <div class="page-header d-flex justify-content-between align-items-center mb-4">
+                <h1 class="text-info-emphasis">
+                    <i class="fas fa-bed me-2"></i>Habitaciones Ocupadas
+                </h1>
+
+
+            </div>
             @if(session('success'))
                 <div class="alert alert-dismissible fade show" role="alert" style="
                     border-radius: 8px;
@@ -519,13 +544,6 @@
                 </div>
             @endif
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="text-info-emphasis">
-                    <i class="fas fa-bed me-2"></i>Habitaciones Ocupadas
-                </h2>
-
-
-            </div>
 
             @if($asignaciones->isEmpty())
                 <div class="inventory-card text-center py-5">
@@ -598,6 +616,7 @@
                         <table id="habitacionesTable" class="table table-hover">
                             <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Habitación</th>
                                 <th>Tipo</th>
                                 <th>Paciente</th>
@@ -609,6 +628,7 @@
                             </tr>
                             </thead>
                             <tbody>
+
                             @foreach($asignaciones as $asignacion)
                                 @php
                                     $tipoClass = 'tipo-' . strtolower($asignacion->habitacion->tipo);
@@ -617,6 +637,7 @@
 
                                 <tr class="{{ $tipoClass }}"
                                     data-tipo="{{ strtolower($asignacion->habitacion->tipo) }}">
+                                    <td class="num-cell"></td>
                                     <td>
                                             <span class="habitacion-badge">
                                                 {{ $asignacion->habitacion->numero_habitacion }}
@@ -664,20 +685,20 @@
         </div>
     </div>
 
-    <!-- jQuery (necesario para DataTables) -->
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <!-- DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
-
     <script>
         $(document).ready(function () {
-            // Inicializar DataTable
+
             var table = $('#habitacionesTable').DataTable({
-                responsive: true,
+                responsive: false,
                 autoWidth: false,
+                paging: true,
+                lengthChange: true,
+                searching: true,
+                ordering: true,
+                info: true,
                 language: {
                     processing: "Procesando...",
                     search: "Buscar:",
@@ -695,22 +716,28 @@
                         last: "Último"
                     }
                 },
-                pageLength: 10,
-                lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'Todos']],
-                order: [[5, 'desc']], // Ordenar por fecha de ingreso descendente
+                order: [[6, 'desc']], // Ordenar por fecha de ingreso descendente
+                pageLength: 5,
+                lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
                 scrollX: false,
                 columnDefs: [
                     {
-                        targets: 7, // Columna de acciones
+                        targets: 8, // Columna de acciones
                         orderable: false,
                         searchable: false,
                         width: '120px'
-                    },
-                    {
-                        targets: 6, // Columna de observaciones
-                        width: '200px'
                     }
-                ]
+                ],
+
+                drawCallback: function () {
+                    const info = this.api().page.info();
+                    this.api()
+                        .column(0, { search: 'applied', order: 'applied', page: 'current' })
+                        .nodes()
+                        .each(function (cell, i) {
+                            cell.innerHTML = '<span class="num-cell">' + (info.start + i + 1) + '</span>';
+                        });
+                }
             });
 
             // Actualizar contadores cuando se filtra la tabla
@@ -750,5 +777,17 @@
             actualizarContadores();
         });
     </script>
+
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.style.transition = "opacity 0.5s";
+                alert.style.opacity = "0";
+                setTimeout(()=> alert.remove(), 500);
+            });
+        }, 2500);
+    </script>
+
+
 
 @endsection
