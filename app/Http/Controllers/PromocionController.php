@@ -82,5 +82,13 @@ class PromocionController extends Controller
         return redirect('/')->with('success','Publicidad actualizada correctamente');
     }
 
+    public function destroy($id)
+    {
+        $pro = Promocion::findOrFail($id);
+        $pro->delete();
+
+        return redirect()->back()->with('success', 'Promoción eliminada');
+    }
+
 
 }
