@@ -304,6 +304,67 @@
             border: 2px solid #4ecdc4;
         }
 
+
+        /* BOTÓN DE TEMA */
+        .theme-toggle-btn {
+            width: 42px;
+            height: 42px;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+            backdrop-filter: blur(4px);
+        }
+
+        .theme-toggle-btn:hover {
+            transform: translateY(-1px);
+            border-color: #4ecdc4;
+            box-shadow: 0 0 12px rgba(78, 205, 196, 0.25);
+            color: #4ecdc4;
+        }
+
+        .theme-toggle-btn i {
+            position: absolute;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        /* modo claro: se ve luna */
+        .theme-toggle-btn .icon-moon {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+
+        .theme-toggle-btn .icon-sun {
+            opacity: 0;
+            transform: rotate(90deg) scale(0.6);
+        }
+
+        /* dark mode */
+        .dark-mode .theme-toggle-btn {
+            background: #1e1e1e;
+            border-color: #444;
+            color: #4ecdc4;
+        }
+
+        .dark-mode .theme-toggle-btn .icon-moon {
+            opacity: 0;
+            transform: rotate(-90deg) scale(0.6);
+        }
+
+        .dark-mode .theme-toggle-btn .icon-sun {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+
         /* ================= DARK MODE ================= */
     </style>
 </head>
@@ -350,9 +411,10 @@
                     </li>
 
                     <li class="nav-item">
-                        <div class="form-check form-switch text-white">
-                            <input class="form-check-input" type="checkbox" id="darkModeToggle">
-                        </div>
+                        <button class="theme-toggle-btn" id="darkModeToggle" type="button" aria-label="Cambiar tema">
+                            <i class="bi bi-moon-stars-fill icon-moon"></i>
+                            <i class="bi bi-brightness-high-fill icon-sun"></i>
+                        </button>
                     </li>
 
                     @if(!session('paciente_id'))
@@ -482,16 +544,15 @@
     // Cargar preferencia
     if (localStorage.getItem('darkMode') === 'true') {
         document.body.classList.add('dark-mode');
-        toggle.checked = true;
     }
 
     // Cambiar modo
-    toggle.addEventListener('change', function () {
-        if (this.checked) {
-            document.body.classList.add('dark-mode');
+    toggle.addEventListener('click', function () {
+        document.body.classList.toggle('dark-mode');
+
+        if (document.body.classList.contains('dark-mode')) {
             localStorage.setItem('darkMode', 'true');
         } else {
-            document.body.classList.remove('dark-mode');
             localStorage.setItem('darkMode', 'false');
         }
     });
