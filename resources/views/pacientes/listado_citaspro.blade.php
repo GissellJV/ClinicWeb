@@ -469,6 +469,13 @@ $layout = 'layouts.plantilla';
             .text-info-emphasis {
             font-weight: bold;
         }
+
+        .num-cell{
+            font-weight:700;
+            color:#7f8c8d;
+            font-size:.73rem;
+            text-align:center;
+        }
     </style>
 
     <div class="main-container">
@@ -551,6 +558,7 @@ $layout = 'layouts.plantilla';
             <table id="citasTable" class="table table-hover display nowrap" style="width:100%">
                 <thead>
                 <tr>
+                    <th style="width:45px;">#</th>
                     <th class="text-center">PACIENTE</th>
                     <th class="text-center">DOCTOR</th>
                     <th class="text-center">FECHA</th>
@@ -565,6 +573,8 @@ $layout = 'layouts.plantilla';
                 <tbody>
                 @forelse($citas as $cita)
                     <tr data-estado="{{ $cita->estado }}">
+
+                        <td class="num-cell"></td>
                         <td>
                             <span class="patient-name">
                                 @if($cita->paciente)
@@ -678,27 +688,27 @@ $layout = 'layouts.plantilla';
                     zeroRecords: "No se encontraron citas",
                     emptyTable: "No hay citas programadas",
                     paginate: {
-                        first: "Primero",
-                        previous: "Anterior",
-                        next: "Siguiente",
-                        last: "Último"
+                        previous: '<i class="bi bi-chevron-left"></i>',
+                        next: '<i class="bi bi-chevron-right"></i>'
                     }
                 },
+                columnDefs: [
+                    { targets: 0, orderable: false, searchable: false },
+                    { targets: 9, orderable: false, searchable: false },
+                ],
                 pageLength: 10,
                 lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'Todos']],
                 order: [[2, 'desc']],
-                columnDefs: [
-                    {
-                        targets: [6, 7],
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        targets: '_all',
-                        className: 'text-center'
-                    }
-                ],
-                dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>'
+                dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+                drawCallback: function () {
+                    const info = this.api().page.info();
+                    this.api()
+                        .column(0, { search: 'applied', order: 'applied', page: 'current' })
+                        .nodes()
+                        .each(function (cell, i) {
+                            cell.innerHTML = '<span class="num-cell">' + (info.start + i + 1) + '</span>';
+                        });
+                }
             });
 
             function actualizarContadores() {
@@ -741,6 +751,16 @@ $layout = 'layouts.plantilla';
                 return false;
             });
         });
+    </script>
+
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.style.transition = "opacity 0.5s";
+                alert.style.opacity = "0";
+                setTimeout(()=> alert.remove(), 1000);
+            });
+        }, 5000); // 5 segundos
     </script>
 
 @endsection

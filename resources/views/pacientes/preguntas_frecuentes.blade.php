@@ -40,17 +40,16 @@
             background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 8px 16px;
             border-radius: 8px;
             font-weight: 600;
             transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
+            text-decoration-line: none;
         }
 
         .btn-add:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
             color: white;
         }
 
@@ -392,9 +391,9 @@
     <div class="faq-public-container">
         <div class="faq-public-header">
             <h1 class="text-info-emphasis">Preguntas Frecuentes</h1>
-            @if(session('cargo') === 'Recepcionista')
+            @if(session('cargo') === 'Administrador'|| session('cargo') === 'Recepcionista')
                 <a href="{{ route('preguntas.create') }}" class="btn-add">
-                   Agregar Pregunta
+                  + Agregar Pregunta
                 </a>
             @endif
         </div>

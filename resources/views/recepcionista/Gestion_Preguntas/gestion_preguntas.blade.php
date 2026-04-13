@@ -51,13 +51,13 @@
             border-radius: 8px;
             font-weight: 600;
             transition: all 0.3s;
-            text-decoration: none;
+            text-decoration-line: none;
 
         }
 
         .btn-add:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
             color: white;
         }
 
@@ -238,7 +238,8 @@
         }
 
         /* Modal de confirmación */
-        .modal {
+        /* Modal de confirmación */
+        #deleteModal {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -249,51 +250,95 @@
             background-color: rgba(0, 0, 0, 0.5);
         }
 
-        .modal.show {
+        #deleteModal.show {
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .modal-content {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 15px;
+        #deleteModal .modal-content {
+            border-radius: 18px;
+            border: 3px solid #24f3e2;
+            box-shadow: 0 0 20px rgba(36, 243, 226, 0.4);
+            overflow: hidden;
+            padding: 0;
+            width: 100%;
             max-width: 500px;
-            width: 90%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+
         }
 
-        .modal-header {
-            margin-bottom: 1rem;
+        #deleteModal .modal-header {
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            border-bottom: none;
+            padding: 20px 30px;
         }
 
-        .modal-header h3 {
-            color: #333;
-            font-size: 1.5rem;
+        #deleteModal .modal-title {
             font-weight: 700;
+            font-size: 1.3rem;
         }
 
-        .modal-body {
-            color: #666;
-            margin-bottom: 1.5rem;
+        #deleteModal .modal-body {
+            padding: 30px;
+            border-bottom: 1px solid #e9ecef;
         }
 
-        .modal-footer {
+        #deleteModal .modal-footer {
+            border-top: none;
+            padding: 20px 30px;
             display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
+            justify-content: center;
+            gap: 12px;
         }
 
-        .btn-modal-confirm {
-            padding: 0.50rem 1.3rem;
-            background: #dc3545;
+
+        .btn-delModal {
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
             border: none;
             border-radius: 8px;
             color: white;
             font-weight: 600;
+            font-size: 1.1rem;
             cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+            flex: 0 1 160px;
+            text-align: center;
         }
+
+        .btn-delModal:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+
+        .btn-canModal {
+            padding: 0.875rem 2rem;
+            background: white;
+            border: 2px solid #dc3545;
+            border-radius: 8px;
+            color: #dc3545;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 0 1 160px;
+            text-align: center;
+        }
+
+        .btn-canModal:hover {
+            background: #dc3545;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+        }
+        #deleteModal .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
 
         .text-info-emphasis {
 
@@ -308,8 +353,8 @@
                 <div>
                     <h1 class="text-center text-info-emphasis">Administración de Preguntas Frecuentes</h1>
                 </div>
-                <a href="{{ route('preguntas.create') }}" class="btn-add  btn-sm">
-                    Agregar Pregunta
+                <a href="{{ route('preguntas.create') }}" class="btn-add btn-sm ">
+                   + Agregar Pregunta
                 </a>
             </div>
         </div>
@@ -365,19 +410,23 @@
     {{-- Modal de confirmación --}}
     <div id="deleteModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3> Confirmar Eliminación</h3>
+            <div class="modal-header" style="border-bottom: 2px solid #f0f0f0;">
+                <h5 class="modal-title">
+                    Confirmar Eliminación
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>¿Estás seguro de que deseas eliminar esta pregunta?</p>
+                <p>¿Desea eliminar esta pregunta? </p>
                 <p id="preguntaTexto" style="font-weight: bold;"></p>
             </div>
             <div class="modal-footer">
-                <button onclick="cerrarModal()" class="btn btn-secondary">Cancelar</button>
+                <button onclick="cerrarModal()" class="btn-canModal">Cancelar</button>
                 <form id="deleteForm" method="POST" style="display: inline;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn-modal-confirm">Eliminar</button>
+                    <button type="submit" class="btn-delModal">Sí, eliminar</button>
                 </form>
             </div>
         </div>
@@ -400,5 +449,15 @@
                 cerrarModal();
             }
         }
+    </script>
+
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.style.transition = "opacity 0.5s";
+                alert.style.opacity = "0";
+                setTimeout(()=> alert.remove(), 500);
+            });
+        }, 2500);
     </script>
 @endsection

@@ -999,6 +999,206 @@
         .dark-mode textarea::placeholder {
             color: #888 !important;
         }
+
+        /* ===== MODALES - ESTILO INDEX ===== */
+        .modal-content {
+            border-radius: 18px;
+            border: 3px solid #24f3e2;
+            box-shadow: 0 0 20px rgba(36, 243, 226, 0.4);
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .modal-header {
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            padding: 15px 20px;
+            border-bottom: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 0;
+        }
+
+        .modal-title {
+            color: #fff;
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        .modal-body {
+            padding: 25px 30px;
+            background: #fff;
+        }
+
+        .modal-body p {
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .modal-footer {
+            background: #fff;
+            border-top: 1px solid #e5e5e5;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        /* Botón cerrar X */
+        .btn-close {
+            filter: brightness(0) invert(1);
+            transition: transform 0.35s ease;
+        }
+        .btn-close:hover {
+            transform: rotate(180deg);
+            filter: brightness(0) invert(1);
+        }
+
+        /* Caja info dentro del modal reprogramar */
+        .cita-info-box {
+            background: #f8fffe;
+            border-left: 4px solid #24f3e2;
+            border-radius: 10px;
+            padding: 15px 18px;
+            margin: 15px 0;
+            text-align: left;
+            font-size: 0.95rem;
+            color: #333;
+        }
+        .cita-info-box strong {
+            display: inline-block;
+            width: 110px;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        /* Inputs dentro de modales */
+        .form-control-modal {
+            border: 2px solid #24f3e2;
+            border-radius: 12px;
+            background: #fff;
+            padding: 10px 14px;
+            font-size: 1rem;
+            width: 100%;
+            box-shadow: 0 0 12px rgba(36, 243, 226, 0.2);
+            transition: 0.2s;
+            outline: none;
+        }
+        .form-control-modal:hover {
+            box-shadow: 0 0 18px rgba(36, 243, 226, 0.35);
+        }
+        .form-control-modal:focus {
+            border-color: #00f3ff;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.42);
+        }
+
+        .form-label {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            text-align: left;
+            display: block;
+        }
+
+        /* Botón Cancelar (modales) */
+        .btn-modal-cancel,
+        .modal .btn-secondary {
+            padding: 0.875rem 2rem;
+            background: white;
+            border: 2px solid #dc3545;
+            border-radius: 8px;
+            color: #dc3545;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .btn-modal-cancel:hover,
+        .modal .btn-secondary:hover {
+            background: #dc3545;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+        }
+
+        /* Botón Confirmar peligro (Cancelar cita / Eliminar) */
+        .btn-modal-danger,
+        .modal .btn-danger {
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+            cursor: pointer;
+        }
+        .btn-modal-danger:hover,
+        .modal .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+
+        /* Botón Confirmar (Reprogramar / Archivar) */
+        .btn-modal-warning,
+        .btn-accion.btn-archivar {
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+            cursor: pointer;
+        }
+        .btn-modal-warning:hover,
+        .btn-accion.btn-archivar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+
+        /* DARK MODE - botones modal */
+        .dark-mode .btn-modal-cancel,
+        .dark-mode .modal .btn-secondary {
+            background: #1e293b !important;
+            border: 2px solid #dc3545 !important;
+            color: #dc3545 !important;
+        }
+        .dark-mode .btn-modal-cancel:hover,
+        .dark-mode .modal .btn-secondary:hover {
+            background: #dc3545 !important;
+            color: white !important;
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3) !important;
+        }
+
+        .dark-mode .btn-modal-danger,
+        .dark-mode .modal .btn-danger {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%) !important;
+            color: white !important;
+            border: none !important;
+        }
+        .dark-mode .btn-modal-danger:hover,
+        .dark-mode .modal .btn-danger:hover {
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4) !important;
+        }
+
+        .dark-mode .btn-modal-warning,
+        .dark-mode .btn-accion.btn-archivar {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%) !important;
+            color: white !important;
+            border: none !important;
+        }
+        .dark-mode .btn-modal-warning:hover,
+        .dark-mode .btn-accion.btn-archivar:hover {
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4) !important;
+        }
     </style>
 
     <div class="citas-container">
@@ -1010,14 +1210,12 @@
         <!-- Alertas -->
         @if(session('success'))
             <div class="alert-custom alert-success-custom">
-                <i class="fas fa-check-circle" style="font-size: 1.5rem;"></i>
                 <span>{{ session('success') }}</span>
             </div>
         @endif
 
         @if(session('error'))
             <div class="alert-custom alert-danger-custom">
-                <i class="fas fa-exclamation-circle" style="font-size: 1.5rem;"></i>
                 <span>{{ session('error') }}</span>
             </div>
         @endif
@@ -1267,86 +1465,72 @@
     </div>
 
 
+    <!-- Modal Archivar -->
     <div class="modal fade" id="modalArchivar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-
                 <div class="modal-header">
                     <h5 class="modal-title">Archivar cita</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-
-                <div class="modal-body">
-                    ¿Estás seguro de que deseas archivar esta cita?
+                <div class="modal-body" style="text-align:center;">
+                    <p>¿Estás seguro de que deseas archivar esta cita?</p>
                 </div>
-
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">
-                        Cancelar
-                    </button>
-
+                    <button class="btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
                     <button class="btn-accion btn-archivar" id="btnConfirmarArchivar">
                         Sí, archivar
                     </button>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <!-- Modal Cancelar -->
+    <!-- Modal Eliminar -->
     <div class="modal fade" id="modalEliminar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-
                 <div class="modal-header">
                     <h5 class="modal-title">Eliminar cita</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-
-                <div class="modal-body">
-                    ¿Estás seguro de que deseas eliminar esta cita?
+                <div class="modal-body" style="text-align:center;">
+                    <p>¿Estás seguro de que deseas eliminar esta cita?</p>
                 </div>
-
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">
-                        Cancelar
-                    </button>
-
-                    <button class="btn btn-danger" id="btnConfirmarEliminar">
+                    <button class="btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn-modal-danger" id="btnConfirmarEliminar">
                         Sí, eliminar
                     </button>
                 </div>
-
             </div>
         </div>
     </div>
 
-    {{-- Modal Cancelar Cita --}}
+    <!-- Modal Cancelar Cita -->
     <div class="modal fade" id="modalCancelar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="modal-header">
-                    <h5 class="modal-title" style="color:#e74c3c;">
-                        <i class="bi bi-x-circle me-2"></i>Cancelar Cita
-                    </h5>
+                    <h5 class="modal-title">Cancelar Cita</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div id="modalCancelarTexto" class="mb-3" style="font-size:0.95rem; color:#555;"></div>
-                    <label for="motivo_cancelacion" class="form-label fw-bold">
-                        Motivo de cancelación <span class="text-danger">*</span>
+                    <div id="modalCancelarTexto" class="cita-info-box mb-3"></div>
+                    <label for="motivo_cancelacion" class="form-label">
+                        Motivo de cancelación <span style="color:#e74c3c;">*</span>
                     </label>
-                    <textarea id="motivo_cancelacion" class="form-control" rows="3"
+                    <textarea id="motivo_cancelacion"
+                              class="form-control-modal"
+                              rows="3"
                               placeholder="Escribe el motivo de cancelación..."></textarea>
                     <div id="alertaMotivoCancelar" class="alert alert-danger mt-2 d-none">
                         El motivo de cancelación es obligatorio.
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-modal-cancel" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" id="btnConfirmarCancelar"
-                            style="padding:10px 24px; background:#e74c3c; color:white; border:none; border-radius:8px; font-weight:600; cursor:pointer;">
+                    <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" id="btnConfirmarCancelar" class="btn-modal-danger">
                         Confirmar cancelación
                     </button>
                 </div>
@@ -1354,30 +1538,29 @@
         </div>
     </div>
 
-    <!-- Modal Reprogramar CORREGIDO -->
+    <!-- Modal Reprogramar -->
     <div class="modal fade" id="modalReprogramar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="modal-header">
-                    <div class="modal-icon modal-icon-warning">
-                    </div>
                     <h5 class="modal-title">Reprogramar Cita</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-
                 <div class="modal-body" id="modalReprogramarContenido">
-                    <!-- El contenido se llenará dinámicamente con JavaScript -->
+                    <!-- Se llena dinámicamente por JS -->
                 </div>
-
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-modal-warning" id="btnConfirmarReprogramar">
+                    <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn-modal-warning" id="btnConfirmarReprogramar">
                         Guardar cambios
                     </button>
                 </div>
             </div>
         </div>
     </div>
+
+
+
 
     <script>
         function confirmarCancelacion(id, doctor, fecha, hora) {

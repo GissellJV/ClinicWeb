@@ -365,15 +365,6 @@
             box-shadow: 0 0 12px rgba(0, 217, 192, 0.8);
         }
 
-        .profile-badge img {
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 217, 192, 0.3);
-        }
-
-        .profile-badge:hover img {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 217, 192, 0.5);
-        }
 
         /* BOTONES */
         .btn-register {
@@ -403,6 +394,7 @@
             font-weight: 600;
             font-size: 1.1rem;
             transition: all 0.3s ease;
+            flex: 0.6;
         }
 
         .btn-cancel:hover {
@@ -452,15 +444,20 @@
         }
 
         .form-group-custom .form-control {
-            border-radius: 8px;
-            padding: 10px;
-            border: 2px solid #e0e0e0;
-            transition: all 0.3s;
+            border: 2px solid #24f3e2;
+            border-radius: 12px;
+            background: #fff;
+            padding: 10px 14px;
+            font-size: 1rem;
+            width: 100%;
+            box-shadow: 0 0 12px rgba(36, 243, 226, 0.2);
+            transition: 0.2s;
+            outline: none;
         }
 
         .form-group-custom .form-control:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 0.2rem rgba(0, 217, 192, 0.25);
+            border-color: #00f3ff;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.42);
         }
 
         #nuevaFotoPreview .foto-preview {
@@ -493,6 +490,42 @@
             align-items: center !important;
             justify-content: center !important;
             font-weight: 700 !important;
+        }
+        #modalFotoDoctor .modal-content {
+            border-radius: 18px;
+            border: 3px solid #24f3e2;
+            box-shadow: 0 0 20px rgba(36, 243, 226, 0.4);
+            overflow: hidden;
+            padding: 0;
+        }
+
+        #modalFotoDoctor .modal-header {
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            border-bottom: none;
+            padding: 20px 30px;
+        }
+
+        #modalFotoDoctor .modal-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        #modalFotoDoctor .modal-body {
+            padding: 30px;
+        }
+
+        #modalFotoDoctor .modal-footer {
+            border-top: none;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        #modalFotoDoctor .btn-close {
+            filter: brightness(0) invert(1);
         }
 
 
@@ -617,11 +650,8 @@
                 </a>
             </li>
 
-            <!-- Perfil -->
-            <li class="nav-item dropdown">
 
-                <a class="nav-link nav-link-glow dropdown-toggle profile-badge" href="#" role="button"
-                   data-bs-toggle="dropdown" aria-expanded="false">
+
                     @php
                         $empleadoId = session('empleado_id');
                         $empleado = \App\Models\Empleado::find($empleadoId);
@@ -639,12 +669,17 @@
 
                         <span class="edit-icon-overlay" data-bs-toggle="modal" data-bs-target="#modalFotoDoctor"
                               onclick="event.stopPropagation();">
-            <i class="bi bi-camera-fill"></i>
-        </span>
+                         <i class="bi bi-camera-fill"></i>
+                         </span>
                     </div>
+
+            <!-- Perfil -->
+            <a class="nav-link nav-link-glow dropdown-toggle profile-badge" href="#" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
 
                     {{ session('empleado_nombre') ?? 'Empleado' }}
                 </a>
+
                 <ul class="dropdown-menu dropdown-menu-modern dropdown-menu-end">
                     <li>
                         <form action="{{ route('empleados.logout') }}" method="POST" class="px-3 py-1">
@@ -655,7 +690,6 @@
                         </form>
                     </li>
                 </ul>
-            </li>
         </ul>
     </div>
 </nav>
@@ -781,7 +815,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn-cancel" data-bs-dismiss="modal">
-                        <i class=""></i>Cancelar
+                        Cancelar
                     </button>
                     <button type="submit" class="btn-register" id="btnSubirFoto">
                         <i class="bi bi-upload me-1"></i>Subir Foto
@@ -897,29 +931,37 @@
 {{-- Modal de éxito para foto --}}
 @if(session('foto_success'))
     <div class="modal fade" id="modalExito" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content border-0 shadow" style="border-radius: 14px; overflow: hidden;">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 380px;">
+            <div class="modal-content" style="border-radius: 18px; border: 3px solid #24f3e2; box-shadow: 0 0 20px rgba(36, 243, 226, 0.4); overflow: hidden; padding: 0;">
 
-                <div style="height: 6px; background: linear-gradient(90deg, #00bfa6, #009e8e);"></div>
-                <div class="modal-body text-center px-4 pt-4 pb-2">
-                    {{-- Ícono check --}}
+                {{-- Header --}}
+                <div class="modal-header" style="background: linear-gradient(90deg, #00e1ff, #00ffc8); color: white; border-radius: 16px 16px 0 0; border-bottom: none; padding: 20px 30px;">
+                    <h5 class="modal-title fw-bold" style="font-size: 1.3rem;">
+
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            style="filter: brightness(0) invert(1);" aria-label="Close"></button>
+                </div>
+
+                {{-- Body --}}
+                <div class="modal-body text-center px-4 pt-4 pb-2" style="padding: 30px;">
                     <div style="width: 60px; height: 60px; background: #e6faf7;
                             border-radius: 50%; display: flex; align-items: center;
                             justify-content: center; margin: 0 auto 1rem;
                             border: 2px solid #00bfa6;">
                         <i class="bi bi-check-lg" style="font-size: 1.8rem; color: #00bfa6;"></i>
                     </div>
-
                     <h6 class="fw-bold mb-1" style="color: #222;">¡Listo!</h6>
                     <p class="text-muted mb-0" style="font-size: 0.9rem;">
                         {{ session('foto_success') }}
                     </p>
                 </div>
 
-                <div class="modal-footer border-0 justify-content-center pt-2 pb-4">
+                {{-- Footer --}}
+                <div class="modal-footer" style="border-top: none; padding: 20px 30px; display: flex; justify-content: center; gap: 12px;">
                     <button type="button"
                             data-bs-dismiss="modal"
-                            style="background: #00bfa6; color: white; border: none;
+                            style="background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%); color: white; border: none;
                                padding: 0.5rem 2.5rem; border-radius: 8px;
                                font-size: 0.95rem; font-weight: 500; cursor: pointer;
                                transition: background 0.2s;">

@@ -2693,12 +2693,44 @@
             color:white;
             transform: scale(1.1);
         }
+
+
+        /* contenedor */
+        .delete-btnpub-form{
+            position: absolute;
+            top: 12px;   /* lo sube sobre el header */
+            right: 100px;  /* lado izquierdo */
+            z-index: 10;
+        }
+
+        /* boton */
+        .delete-btnpub{
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 2px solid #c82432;
+            background: transparent;
+            color: #dc3545;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .delete-btnpub:hover{
+            background:#dc3545;
+            color:white;
+            transform: scale(1.1);
+        }
+
         .btn-cancel {
             padding: 0.875rem 2rem;
             background: white;
-            border: 2px solid #131212;
+            border: 2px solid #dc3545;
             border-radius: 8px;
-            color: #221414;
+            color: #dc3545;
             font-weight: 600;
             font-size: 1.1rem;
             transition: all 0.3s ease;
@@ -3115,6 +3147,17 @@
         /* ================= END DARK MODE ================= */
 
         /* ================= FIN DARK MODE ================= */
+
+        .promo-card .delete-btn-form {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;  /* ← clave, debe superar al carrusel */
+        }
+
+        .promo-card .delete-btn-form .delete-btn {
+            pointer-events: all; /* forzar que reciba clics */
+        }
     </style>
 
     <!-- HERO -->
@@ -3160,13 +3203,27 @@
 
     <!-- BOOKING -->
     <section id="publi" class="booking">
-        <div id="promoCarousel" class="carousel slide promo-carousel" data-bs-ride="carousel">
-
+        <div id="promoCarousel" class="carousel slide promo-carousel" data-bs-ride="carousel" data-bs-touch="false">
             <div class="carousel-inner">
                 @if(isset($promociones) && count($promociones) > 0)
                     @foreach($promociones as $index => $promocion)
                         <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                             <div class="promo-card glow-target">
+                                @if(session('cargo') === 'Administrador')
+                                    <form id="deletePromoForm{{ $promocion->id }}"
+                                          action="{{ route('promociones.destroy', $promocion->id) }}"
+                                          method="POST"
+                                          class="delete-btnpub-form">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button"
+                                                class="delete-btnpub openDeletePromoModal"
+                                                data-id="{{ $promocion->id }}"
+                                                onclick="event.stopPropagation(); event.preventDefault();">
+                                            <i class="bi bi-dash"></i>
+                                        </button>
+                                    </form>
+                                @endif
 
                                 @if($promocion->imagen)
                                     <img src="data:image/jpeg;base64,{{ base64_encode($promocion->imagen) }}"
@@ -3214,7 +3271,31 @@
                 <span class="carousel-control-next-icon"></span>
             </button>
         </div>
+
+        <div class="modal fade" id="deletePromoCarouselModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmar eliminación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Desea eliminar esta publicidad?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class=" btn-cancel" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="button" class="btn-register" id="confirmDeletePromo">
+                            Sí, eliminar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </section>
+
 
     <!-- SERVICES -->
     <section id="servicios" class="services">
@@ -3233,11 +3314,16 @@
                 @foreach ($especialidades as $e)
                     <div class="service-card">
                         @if(session('cargo') === 'Administrador')
-                            <form action="{{ route('especialidades.destroy', $e->id) }}" method="POST" class="delete-form">
+                            <form action="{{ route('especialidades.destroy', $e->id) }}"
+                                  method="POST"
+                                  class="delete-form"
+                                  id="form-delete-especialidad-{{ $e->id }}">
                                 @csrf
                                 @method('DELETE')
 
-                                <button type="submit" class="btn-delete">
+                                <button type="button"
+                                        class="btn-delete openDeleteEspecialidadModal"
+                                        data-id="{{ $e->id }}">
                                     <i class="bi bi-dash-circle"></i>
                                 </button>
                             </form>
@@ -3296,6 +3382,33 @@
 
             </div>
         @endif
+
+        <div class="modal fade" id="deleteEspecialidadModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmar eliminación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        ¿Deseas eliminar esta especialidad?
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn-cancel" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                        <button type="button" class="btn-register" id="confirmDeleteEspecialidad">
+                            Si, eliminar
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- FEATURES -->
@@ -3865,7 +3978,7 @@
                             Cancelar
                         </button>
 
-                        <button type="button" class="btn btn-register"
+                        <button type="button" class="btn-register"
                                 id="confirmDelete">
                             Sí, eliminar
                         </button>
@@ -3906,6 +4019,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 
     <script>
         new Swiper(".myPromosSwiper", {
@@ -4234,4 +4348,61 @@
             }, 5000);
         }
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let formToDeletePromo = null;
+
+            const deletePromoModal = new bootstrap.Modal(
+                document.getElementById('deletePromoCarouselModal'),
+                { backdrop: 'static', keyboard: false }
+            );
+
+            document.querySelectorAll('.openDeletePromoModal').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const id = this.dataset.id;
+                    formToDeletePromo = document.getElementById('deletePromoForm' + id);
+                    deletePromoModal.show();
+                });
+            });
+
+            document.getElementById('confirmDeletePromo').addEventListener('click', function () {
+                if (formToDeletePromo) {
+                    formToDeletePromo.submit();
+                }
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            let formToDelete = null;
+
+            const deleteModal = new bootstrap.Modal(
+                document.getElementById('deleteEspecialidadModal')
+            );
+
+            document.querySelectorAll('.openDeleteEspecialidadModal').forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+
+                    const id = this.dataset.id;
+                    formToDelete = document.getElementById('form-delete-especialidad-' + id);
+
+                    deleteModal.show();
+                });
+            });
+
+            document.getElementById('confirmDeleteEspecialidad')
+                .addEventListener('click', function () {
+                    if (formToDelete) {
+                        formToDelete.submit();
+                    }
+                });
+
+        });
+    </script>
+
+
 @endsection
