@@ -142,9 +142,8 @@
 
     <div class="traslados-container">
 
-        <div class="page-header">
-            <h2><i class="bi bi-truck me-2" style="color:#4ECDC4;"></i>Historial de Traslados</h2>
-            <p>Registro completo de traslados en ambulancia solicitados por los pacientes</p>
+        <div class="page-header" style="text-align:left;">
+            <h2>Historial de Traslados</h2>
         </div>
 
         @if(session('success'))
@@ -158,25 +157,25 @@
         <div class="stats-grid">
             <div class="stat-card total">
                 <div class="stat-number">{{ $total }}</div>
-                <div class="stat-label"><i class="bi bi-list-ul me-1"></i>Total Traslados</div>
+                <div class="stat-label">Total Traslados</div>
             </div>
             <div class="stat-card pendiente">
                 <div class="stat-number">{{ $pendientes }}</div>
-                <div class="stat-label"><i class="bi bi-hourglass-split me-1"></i>Pendientes</div>
+                <div class="stat-label">Pendientes</div>
             </div>
             <div class="stat-card completado">
                 <div class="stat-number">{{ $completados }}</div>
-                <div class="stat-label"><i class="bi bi-check-circle me-1"></i>Finalizados</div>
+                <div class="stat-label">Finalizados</div>
             </div>
             <div class="stat-card cancelado">
                 <div class="stat-number">{{ $cancelados }}</div>
-                <div class="stat-label"><i class="bi bi-x-circle me-1"></i>Cancelados</div>
+                <div class="stat-label">Cancelados</div>
             </div>
         </div>
 
         {{-- Tabla --}}
         <div class="table-container">
-            <h4><i class="bi bi-clock-history"></i>Registros de Traslados</h4>
+            <h4>Registros de Traslados</h4>
 
             <table id="trasladosTable" class="table table-hover">
                 <thead>
@@ -199,16 +198,14 @@
                                 </span>
                         </td>
                         <td>
-                            <i class="bi bi-geo-alt-fill me-1" style="color:#4ECDC4;"></i>
                             {{ $traslado->direccion_destino }}
                         </td>
                         <td>
                                 <span class="unit-name">
-                                    <i class="bi bi-truck me-1"></i>{{ $traslado->unidad_asignada }}
+                                    {{ $traslado->unidad_asignada }}
                                 </span>
                         </td>
                         <td>
-                            <i class="bi bi-calendar-event me-1" style="color:#888;"></i>
                             {{ \Carbon\Carbon::parse($traslado->fecha_traslado)->format('d/m/Y H:i') }}
                         </td>
                         <td>
