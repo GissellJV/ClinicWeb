@@ -211,6 +211,13 @@
             color: #155724;
         }
 
+        .bg-info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .num-cell { font-weight: 600; color: #4ecdc4; text-align: center; width: 40px; }
+
         .btn-sm.btn-edit {
             padding: 8px 16px;
             font-size: 14px;
@@ -339,9 +346,7 @@
     </style>
 
     <div class="main-container">
-        <h2 class="text-info-emphasis">
-           Expedientes Recibidos
-        </h2>
+        <h2 class="text-info-emphasis" style="text-align:left;">Expedientes Recibidos</h2>
 
         <!-- Estadísticas de Expedientes -->
         <div class="stats-grid">
@@ -374,6 +379,7 @@
                     <table id="expedientesTable" class="table table-hover">
                         <thead>
                         <tr>
+                            <th>#</th>
                             <th>Paciente</th>
                             <th>Especialidad</th>
                             <th>Estado</th>
@@ -383,6 +389,7 @@
                         <tbody>
                         @foreach($expedientes as $exp)
                             <tr class="estado-{{ $exp->estado }}" data-estado="{{ $exp->estado }}">
+                                <td class="num-cell"></td>
                                 <td>
                                     <span class="patient-name">
                                         {{ $exp->paciente->nombres }} {{ $exp->paciente->apellidos }}
@@ -404,7 +411,7 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('expediente.ver', $exp->paciente_id) }}" class="btn-sm btn-edit">
-                                       Ver expediente
+                                        Ver expediente
                                     </a>
                                 </td>
                             </tr>
@@ -464,13 +471,17 @@
                 lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
                 order: [[0, 'asc']], // Ordenar por nombre de paciente
                 columnDefs: [
-                    {
-                        targets: 3, // Columna de acciones
-                        orderable: false,
-                        searchable: false
-                    }
+                    { targets: 0, orderable: false, searchable: false },
+                    { targets: 4, orderable: false, searchable: false }
                 ],
-                dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip'
+                dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
+                drawCallback: function() {
+                    const info = this.api().page.info();
+                    this.api().column(0, { search: 'applied', order: 'applied', page: 'current' })
+                        .nodes().each(function(cell, i) {
+                        cell.innerHTML = '<span style="font-weight:600; color:#4ecdc4;">' + (info.start + i + 1) + '</span>';
+                    });
+                }
             });
 
             // Función para actualizar contadores

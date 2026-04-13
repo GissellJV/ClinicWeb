@@ -148,6 +148,52 @@
             background: #e9ecef;
         }
 
+        /* Botones Cancelar y Registrar — mismo tamaño */
+        .btn-cancel,
+        .btn-register {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            height: 56px;
+            flex: 0 0 220px;
+            white-space: nowrap;
+            box-sizing: border-box;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-cancel {
+            background: white;
+            color: #e74c3c;
+            border: 2px solid #e74c3c;
+        }
+
+        .btn-cancel:hover {
+            background: #e74c3c;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-register {
+            background: linear-gradient(135deg, #4ECDC4, #44a08d);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .btn-register:hover {
+            background: linear-gradient(135deg, #45b8b0, #3d9080);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+        }
+
         .alert-success-custom {
             background: #d4edda;
             border: 1px solid #c3e6cb;

@@ -352,34 +352,34 @@
 
         {{-- HEADER --}}
         <div class="page-header">
-            <h1><i class="bi bi-scissors me-2" style="color:#4ecdc4;"></i>Gestión de <span>Cirugías</span></h1>
+            <h1>Gestión de Cirugías</h1>
         </div>
 
         {{-- STATS --}}
         <div class="stats-grid">
             <div class="stat-card pendientes">
-                <div class="stat-icon"><i class="bi bi-clock-history"></i></div>
+
                 <div class="stat-info">
                     <h3>{{ $evaluacionesPendientes }}</h3>
                     <p>Pendientes de programar</p>
                 </div>
             </div>
             <div class="stat-card programadas">
-                <div class="stat-icon"><i class="bi bi-calendar-check"></i></div>
+
                 <div class="stat-info">
                     <h3>{{ $cirugiasProgramadas }}</h3>
                     <p>Cirugías programadas</p>
                 </div>
             </div>
             <div class="stat-card completadas">
-                <div class="stat-icon"><i class="bi bi-check-circle"></i></div>
+
                 <div class="stat-info">
                     <h3>{{ $cirugiasCompletadas }}</h3>
                     <p>Completadas</p>
                 </div>
             </div>
             <div class="stat-card canceladas">
-                <div class="stat-icon"><i class="bi bi-x-circle"></i></div>
+
                 <div class="stat-info">
                     <h3>{{ $cirugiasCanceladas }}</h3>
                     <p>Canceladas</p>
@@ -390,19 +390,19 @@
         {{-- TABS --}}
         <div class="tabs-container">
             <button class="tab-btn active" onclick="mostrarTab('pendientes', this)">
-                <i class="bi bi-hourglass-split me-1"></i> Por Programar
+                Por Programar
                 @if($evaluacionesPendientes > 0)
                     <span style="background:#f39c12; color:white; border-radius:50%; width:20px; height:20px; display:inline-flex; align-items:center; justify-content:center; font-size:11px; margin-left:4px;">{{ $evaluacionesPendientes }}</span>
                 @endif
             </button>
             <button class="tab-btn" onclick="mostrarTab('programadas', this)">
-                <i class="bi bi-calendar2-check me-1"></i> Programadas
+                Programadas
             </button>
         </div>
 
         {{-- TAB: POR PROGRAMAR --}}
         <div id="tab-pendientes">
-            <p class="section-label"><i class="bi bi-scissors"></i> Evaluaciones aprobadas por el doctor — pendientes de asignar quirófano</p>
+            <p class="section-label">Evaluaciones aprobadas por el doctor — pendientes de asignar quirófano</p>
 
             <div class="table-card">
                 @if($evaluaciones->count() > 0)
@@ -444,7 +444,7 @@
                                 <td>{{ \Carbon\Carbon::parse($eval->created_at)->format('d/m/Y') }}</td>
                                 <td>
                                     <a href="{{ route('recepcionista.cirugia.programar', $eval->id) }}" class="btn-agendar">
-                                        <i class="bi bi-calendar-plus"></i> Agendar Cirugía
+                                        Agendar Cirugía
                                     </a>
                                 </td>
                             </tr>
@@ -463,7 +463,7 @@
 
         {{-- TAB: PROGRAMADAS --}}
         <div id="tab-programadas" style="display:none;">
-            <p class="section-label"><i class="bi bi-calendar-check"></i> Cirugías ya asignadas a quirófano</p>
+            <p class="section-label">Cirugías ya asignadas a quirófano</p>
 
             <div class="table-card">
                 @if($cirugias->count() > 0)
@@ -505,7 +505,7 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('recepcionista.cirugia.ver', $cirugia->id) }}" class="btn-ver">
-                                        <i class="bi bi-eye"></i> Ver detalle
+                                        Ver detalle
                                     </a>
                                 </td>
                             </tr>

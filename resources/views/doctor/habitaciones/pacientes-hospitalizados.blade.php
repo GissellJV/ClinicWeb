@@ -348,7 +348,7 @@
 
             <div class="page-header" style=" align-items: center; margin-bottom: 30px;">
                 <h1 class=" text-info-emphasis" style="margin: 0;">
-                    <i class="fas fa-user-md me-2"></i>Pacientes Hospitalizados
+                    Pacientes Hospitalizados
                 </h1>
 
             </div>
@@ -366,7 +366,7 @@
                         <div>
                             <div class="alert-number" id="uciCount" style="color: #2c3e50;">{{ $asignaciones->where('habitacion.tipo', 'uci')->count() }}</div>
                             <div class="alert-label">
-                                <i class="fas fa-hospital-user me-1"></i>UCI
+                                UCI
                             </div>
                         </div>
                         <small style="color: #666;">Unidad de Cuidados Intensivos</small>
@@ -376,7 +376,7 @@
                         <div>
                             <div class="alert-number" id="emergenciaCount">{{ $asignaciones->where('habitacion.tipo', 'emergencia')->count() }}</div>
                             <div class="alert-label">
-                                <i class="fas fa-ambulance me-1"></i>Emergencia
+                                Emergencia
                             </div>
                         </div>
                         <small style="color: #666;">Atención Inmediata</small>
@@ -386,7 +386,7 @@
                         <div>
                             <div class="alert-number" id="individualCount">{{ $asignaciones->where('habitacion.tipo', 'individual')->count() }}</div>
                             <div class="alert-label">
-                                <i class="fas fa-user me-1"></i>Individual
+                                Individual
                             </div>
                         </div>
                         <small style="color: #666;">Hospitalización Estándar</small>
@@ -396,7 +396,7 @@
                         <div>
                             <div class="alert-number" id="dobleCount">{{ $asignaciones->where('habitacion.tipo', 'doble')->count() }}</div>
                             <div class="alert-label">
-                                <i class="fas fa-users me-1"></i>Doble
+                                Doble
                             </div>
                         </div>
                         <small style="color: #666;">Hospitalización Compartida</small>
@@ -433,11 +433,11 @@
                                     <td>
                                             <span class="{{ $badgeClass }}">
                                                 @if($asignacion->habitacion->tipo == 'emergencia')
-                                                    <i class="fas fa-ambulance"></i>
+
                                                 @elseif($asignacion->habitacion->tipo == 'individual')
-                                                    <i class="fas fa-user"></i>
+
                                                 @else
-                                                    <i class="fas fa-users"></i>
+
                                                 @endif
                                                 {{ ucfirst($asignacion->habitacion->tipo) }}
                                             </span>
@@ -448,7 +448,7 @@
                                     <td>{{ $asignacion->fecha_asignacion->format('d/m/Y') }}</td>
                                     <td>
                                             <span class="dias-badge">
-                                                <i class="fas fa-calendar-alt"></i>
+
                                                 {{ $asignacion->fecha_asignacion->startOfDay()->diffInDays(now()->startOfDay()) + 1 }} días
                                             </span>
 

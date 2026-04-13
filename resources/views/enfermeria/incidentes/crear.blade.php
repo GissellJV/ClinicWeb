@@ -134,17 +134,30 @@
         /* Botones */
         .button-group { display: flex; gap: 15px; margin-top: 2rem; justify-content: flex-end; }
 
+        .btn-register,
+        .btn-cancel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            height: 56px;
+            flex: 0 0 220px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
         .btn-register {
-            padding: 0.875rem 2rem;
             background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
             border: none;
-            border-radius: 8px;
             color: white;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(78,205,196,0.3);
-            cursor: pointer;
         }
 
         .btn-register:hover {
@@ -154,17 +167,9 @@
         }
 
         .btn-cancel {
-            padding: 0.875rem 2rem;
             background: white;
             border: 2px solid #dc3545;
-            border-radius: 8px;
             color: #dc3545;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
         }
 
         .btn-cancel:hover {

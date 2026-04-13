@@ -325,12 +325,12 @@
         }
         .btn-ver { background: #4ECDC4; color: white; }
         .btn-ver:hover { background: #45b8b0; color: white; }
-        .btn-evaluar { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; }
-        .btn-evaluar:hover { background: linear-gradient(135deg, #8e44ad, #7d3c98); color: white; transform: translateY(-2px); }
-        .btn-evaluado { background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; }
-        .btn-evaluado:hover { background: linear-gradient(135deg, #229954, #27ae60); color: white; transform: translateY(-2px); }
-        .btn-completar { background: #2ecc71; color: white; }
-        .btn-completar:hover { background: #27ae60; }
+        .btn-evaluar { background: linear-gradient(135deg, #f39c12, #e67e22); color: white; }
+        .btn-evaluar:hover { background: linear-gradient(135deg, #e67e22, #d35400); color: white; transform: translateY(-2px); }
+        .btn-evaluado { background: linear-gradient(135deg, #f39c12, #e67e22); color: white; }
+        .btn-evaluado:hover { background: linear-gradient(135deg, #e67e22, #d35400); color: white; transform: translateY(-2px); }
+        .btn-completar { background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; border: none; }
+        .btn-completar:hover { background: linear-gradient(135deg, #229954, #27ae60); transform: translateY(-2px); }
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -386,7 +386,7 @@
         <!-- Header -->
         <br><br>
         <div class="header">
-            <h2 class="text-center text-info-emphasis">
+            <h2 class="text-info-emphasis" style="text-align:left;">
                 Mis Citas Programadas
             </h2>
         </div>
@@ -474,7 +474,7 @@
 
         <!-- Lista de Citas -->
         <div class="citas-list">
-            <h3><i class="fas fa-list"></i> Listado de Citas</h3>
+            <h3>Listado de Citas</h3>
 
             @if(session('success'))
                 <div class="alert-success">
@@ -483,22 +483,23 @@
             @endif
 
             @if($citas->count() > 0)
-                <div style="overflow-x:auto;">
+                <div style="overflow-x:hidden;">
                     <table id="citasTable" class="table table-hover" style="width:100%;">
                         <thead>
                         <tr>
+                            <th>#</th>
                             <th>Paciente</th>
                             <th>Fecha</th>
                             <th>Hora</th>
-                            <th>Especialidad</th>
                             <th>Teléfono</th>
-                            <th>Acciones</th>
+                            <th>Expediente</th>
                             <th>Cirugía</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($citas as $cita)
                             <tr>
+                                <td class="num-cell"></td>
                                 <td>
                                     <div style="display:flex; align-items:center; gap:9px;">
                                         <div style="width:34px; height:34px; border-radius:50%; background:#e1f5ee; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; color:#0f6e56; flex-shrink:0;">
@@ -512,40 +513,39 @@
                                 </td>
                                 <td>{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}</td>
                                 <td>{{ $cita->hora }}</td>
-                                <td><span style="font-size:12px; padding:3px 9px; border-radius:4px; background:#f0f0f0; color:#555;">{{ $cita->especialidad }}</span></td>
                                 <td>{{ $cita->paciente->telefono ?? '—' }}</td>
-                                <td style="white-space:nowrap;">
-                                    <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
-                                        <a href="{{ route('expediente.ver', $cita->paciente_id) }}" class="btn btn-ver" style="padding:6px 12px; font-size:12px;">
-                                            <i class="fas fa-file-medical"></i> Expediente
-                                        </a>
-
+                                <td>
+                                    <a href="{{ route('expediente.ver', $cita->paciente_id) }}" class="btn btn-ver" style="padding:6px 12px; font-size:12px;">
+                                        Expediente
+                                    </a>
+                                </td>
+                                <td>
+                                    <div style="display:flex; flex-direction:column; gap:4px; min-width:120px;">
                                         @if(in_array($cita->estado, ['programada', 'pendiente']))
                                             @php
                                                 $evaluacionExiste = \App\Models\EvaluacionPrequirurgica::where('cita_id', $cita->id)->first();
                                             @endphp
 
                                             @if(!$evaluacionExiste)
-                                                <a href="{{ route('doctor.evaluacion.crear', $cita->id) }}" class="btn btn-evaluar" style="padding:6px 12px; font-size:12px;">
+                                                <a href="{{ route('doctor.evaluacion.crear', $cita->id) }}" class="btn btn-evaluar" style="padding:5px 10px; font-size:11px; text-align:center; justify-content:center;">
                                                     Evaluar
                                                 </a>
                                             @else
-                                                <a href="{{ route('doctor.evaluacion.ver', $evaluacionExiste->id) }}" class="btn btn-evaluado" style="padding:6px 12px; font-size:12px;">
-                                                    Ver Eval.
+                                                <a href="{{ route('doctor.evaluacion.ver', $evaluacionExiste->id) }}" class="btn btn-evaluado" style="padding:5px 10px; font-size:11px; text-align:center; justify-content:center;">
+                                                    Ver Evaluación
                                                 </a>
                                             @endif
 
                                             <form method="POST" action="{{ route('doctor.cita.completar', $cita->id) }}" style="margin:0;">
                                                 @csrf
                                                 @method('PUT')
-                                                <button type="submit" class="btn btn-completar" style="padding:6px 12px; font-size:12px;">
+                                                <button type="submit" class="btn btn-completar" style="padding:5px 10px; font-size:11px; width:100%; justify-content:center;">
                                                     Completar
                                                 </button>
                                             </form>
                                         @endif
                                     </div>
                                 </td>
-                                <td></td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -599,12 +599,14 @@
         .dataTables_wrapper .dataTables_length,
         .dataTables_wrapper .dataTables_filter { margin-bottom: 16px; }
         .dataTables_wrapper .dataTables_info { font-size: 13px; padding-top: 12px; }
+        .num-cell { font-weight: 600; color: #4ecdc4; text-align: center; width: 40px; }
     </style>
     <script>
         $(document).ready(function() {
             $('#citasTable').DataTable({
                 responsive: true,
                 autoWidth: false,
+                scrollX: false,
                 searching: false,
                 language: {
                     lengthMenu: "Mostrar _MENU_ registros",
@@ -617,8 +619,19 @@
                 },
                 pageLength: 10,
                 lengthMenu: [[5, 10, 25, -1], [5, 10, 25, "Todos"]],
-                order: [[1, 'desc']],
-                columnDefs: [{ targets: 6, orderable: false, searchable: false }]
+                order: [[2, 'desc']],
+                columnDefs: [
+                    { targets: 0, orderable: false, searchable: false },
+                    { targets: 5, orderable: false, searchable: false },
+                    { targets: 6, orderable: false, searchable: false }
+                ],
+                drawCallback: function() {
+                    const info = this.api().page.info();
+                    this.api().column(0, { search: 'applied', order: 'applied', page: 'current' })
+                        .nodes().each(function(cell, i) {
+                        cell.innerHTML = '<span style="font-weight:600; color:#4ecdc4;">' + (info.start + i + 1) + '</span>';
+                    });
+                }
             });
         });
     </script>

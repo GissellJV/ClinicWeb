@@ -633,6 +633,38 @@
             border-color: #00f3ff;
             box-shadow: 0 0 10px rgba(0, 243, 255, 0.42);
         }
+
+        /* ════ ESTILOS GLOBALES ════ */
+
+        /* #7 Selects — verde transparente con borde */
+        select.form-control,
+        select.form-select,
+        select.form-select-custom {
+            border: 2px solid #4ecdc4 !important;
+            background-color: rgba(78, 205, 196, 0.05) !important;
+            color: #2c3e50 !important;
+            border-radius: 8px !important;
+        }
+        select.form-control:focus,
+        select.form-select:focus,
+        select.form-select-custom:focus {
+            border-color: #44a08d !important;
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.15) !important;
+            background-color: white !important;
+        }
+
+        /* #2 Orden botones: Registrar primero, Cancelar después */
+        .btn-group-custom,
+        .button-group,
+        .btn-group-form {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+        .btn-register { order: 1; }
+        .btn-cancel   { order: 2; }
+        /* ══════════════════════════ */
     </style>
 
 </head>
@@ -687,44 +719,44 @@
             <li>
 
 
-                    @php
-                        $empleadoId = session('empleado_id');
-                        $empleado = \App\Models\Empleado::find($empleadoId);
-                    @endphp
+                @php
+                    $empleadoId = session('empleado_id');
+                    $empleado = \App\Models\Empleado::find($empleadoId);
+                @endphp
 
-                    <div style="position: relative; display: inline-block; margin-right: 8px;">
-                        @if($empleado && $empleado->foto)
-                            <img src="data:image/jpeg;base64,{{ base64_encode($empleado->foto) }}"
-                                 alt="Foto"
-                                 style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid #00ffe0;">
-                        @else
-                            <i class="bi bi-person-circle" style="font-size: 35px; color: #e7fffc;"></i>
-                        @endif
+                <div style="position: relative; display: inline-block; margin-right: 8px;">
+                    @if($empleado && $empleado->foto)
+                        <img src="data:image/jpeg;base64,{{ base64_encode($empleado->foto) }}"
+                             alt="Foto"
+                             style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid #00ffe0;">
+                    @else
+                        <i class="bi bi-person-circle" style="font-size: 35px; color: #e7fffc;"></i>
+                    @endif
 
 
-                        <span class="edit-icon-overlay" data-bs-toggle="modal" data-bs-target="#modalFotoRecepcion"
-                              onclick="event.stopPropagation();">
+                    <span class="edit-icon-overlay" data-bs-toggle="modal" data-bs-target="#modalFotoRecepcion"
+                          onclick="event.stopPropagation();">
             <i class="bi bi-camera-fill"></i>
         </span>
-                    </div>
+                </div>
 
 
             </li>
         </ul>
-            <a class="nav-link nav-link-glow dropdown-toggle profile-badge" href="#" role="button"
-               data-bs-toggle="dropdown" aria-expanded="false">
+        <a class="nav-link nav-link-glow dropdown-toggle profile-badge" href="#" role="button"
+           data-bs-toggle="dropdown" aria-expanded="false">
             {{ session('empleado_nombre') ?? 'Empleado' }}
-            </a>
-                <ul class="dropdown-menu dropdown-menu-modern dropdown-menu-end">
-                    <li class="nav-item dropdown">
-                        <form action="{{ route('empleados.logout') }}" method="POST" class="px-3 py-1">
-                            @csrf
-                            <button type="submit" class="btn btn-logout w-100">
-                                Cerrar Sesión
-                            </button>
-                        </form>
-                    </li>
-                </ul>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-modern dropdown-menu-end">
+            <li class="nav-item dropdown">
+                <form action="{{ route('empleados.logout') }}" method="POST" class="px-3 py-1">
+                    @csrf
+                    <button type="submit" class="btn btn-logout w-100">
+                        Cerrar Sesión
+                    </button>
+                </form>
+            </li>
+        </ul>
 
 
 
@@ -860,21 +892,21 @@
                 </ul>
 
 
-            <li class="nav-item">
-                <div class="form-check form-switch text-white">
-                    <input class="form-check-input" type="checkbox" id="darkModeToggle">
-                </div>
-            </li>
+                <li class="nav-item">
+                    <div class="form-check form-switch text-white">
+                        <input class="form-check-input" type="checkbox" id="darkModeToggle">
+                    </div>
+                </li>
 
-            <!-- Perfil -->
-            <li class="nav-item dropdown">
+                <!-- Perfil -->
+                <li class="nav-item dropdown">
 
-                <!-- BOTÓN CERRAR SESIÓN -->
-                @if(session('empleado_id'))
-                    <form action="{{ route('empleados.logout') }}" method="POST" class="mt-4">
-                        @csrf
-                        <button class="btn w-100 d-flex align-items-center justify-content-center"
-                                style="
+                    <!-- BOTÓN CERRAR SESIÓN -->
+                    @if(session('empleado_id'))
+                        <form action="{{ route('empleados.logout') }}" method="POST" class="mt-4">
+                            @csrf
+                            <button class="btn w-100 d-flex align-items-center justify-content-center"
+                                    style="
                         background: linear-gradient(90deg, #ff5f6d, #ff3d54);
                         color: white;
                         border: none;
@@ -883,14 +915,14 @@
                         font-weight: 600;
                         transition: all 0.3s ease;
                     "
-                                onmouseover="this.style.transform='scale(1.03)'"
-                                onmouseout="this.style.transform='scale(1)'">
-                            <i class="bi bi-box-arrow-right me-2"></i>
-                            Cerrar Sesión
-                        </button>
-                    </form>
-                @endif
-            </li>
+                                    onmouseover="this.style.transform='scale(1.03)'"
+                                    onmouseout="this.style.transform='scale(1)'">
+                                <i class="bi bi-box-arrow-right me-2"></i>
+                                Cerrar Sesión
+                            </button>
+                        </form>
+                    @endif
+                </li>
             </div> <!-- FIN OFFCANVAS BODY -->
 
         </div>
@@ -1230,6 +1262,22 @@
         });
     </script>
 @endif
+
+<!-- #10 Temporizador alertas — desaparecen en 5 segundos -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const alertas = document.querySelectorAll(".alert");
+        alertas.forEach(function (alerta) {
+            setTimeout(function () {
+                alerta.style.transition = "opacity 0.8s ease";
+                alerta.style.opacity = "0";
+                setTimeout(function () {
+                    alerta.style.display = "none";
+                }, 800);
+            }, 5000);
+        });
+    });
+</script>
 </body>
 
 <script>
@@ -1255,4 +1303,3 @@
 
 
 </html>
-
