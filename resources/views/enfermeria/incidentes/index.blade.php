@@ -155,6 +155,13 @@
 
         .btn-ver:hover { background: #2980b9; color: white; transform: translateY(-2px); }
 
+        .num-cell-incidente {
+            font-weight: 700;
+            color: #7f8c8d;
+            font-size: 0.73rem;
+            text-align: center;
+        }
+
         @media (max-width: 768px) {
             .header-section { flex-direction: column; align-items: flex-start; }
             .stats-grid { grid-template-columns: 1fr; }
@@ -167,10 +174,10 @@
 
         <div class="header-section">
             <h1>
-                <i class="bi bi-clipboard2-pulse" style="color:#4ecdc4;"></i> Reportes de Incidentes
+                Reportes de Incidentes
             </h1>
             <a href="{{ route('incidentes.crear') }}" class="btn-nuevo">
-                <i class="bi bi-plus-circle"></i> Nuevo Incidente
+                Nuevo Incidente
             </a>
         </div>
 
@@ -183,28 +190,24 @@
 
         <div class="stats-grid">
             <div class="stat-card total">
-                <div class="stat-icon"><i class="bi bi-folder2-open"></i></div>
                 <div>
                     <div class="stat-number">{{ $incidentes->total() }}</div>
                     <div class="stat-label">Total de Incidentes</div>
                 </div>
             </div>
             <div class="stat-card pendientes">
-                <div class="stat-icon"><i class="bi bi-hourglass-split"></i></div>
                 <div>
                     <div class="stat-number">{{ $incidentes->where('estado', 'Pendiente')->count() }}</div>
                     <div class="stat-label">Pendientes</div>
                 </div>
             </div>
             <div class="stat-card criticos">
-                <div class="stat-icon"><i class="bi bi-exclamation-octagon"></i></div>
                 <div>
                     <div class="stat-number">{{ $incidentes->where('gravedad', 'Crítico')->count() }}</div>
                     <div class="stat-label">Críticos</div>
                 </div>
             </div>
             <div class="stat-card mes">
-                <div class="stat-icon"><i class="bi bi-calendar2-check"></i></div>
                 <div>
                     <div class="stat-number">{{ $incidentes->where('created_at', '>=', now()->startOfMonth())->count() }}</div>
                     <div class="stat-label">Este Mes</div>
@@ -216,6 +219,7 @@
             <table id="incidentesTable" class="table table-hover">
                 <thead>
                 <tr>
+                    <th style="width:40px;">#</th>
                     <th>ID</th>
                     <th>Fecha Incidente</th>
                     <th>Fecha Registro</th>
@@ -230,6 +234,7 @@
                 <tbody>
                 @foreach($incidentes as $incidente)
                     <tr>
+                        <td class="num-cell-incidente"></td>
                         <td><strong>#{{ str_pad($incidente->id, 4, '0', STR_PAD_LEFT) }}</strong></td>
                         <td>{{ \Carbon\Carbon::parse($incidente->fecha_hora_incidente)->format('d/m/Y H:i') }}</td>
                         <td>{{ $incidente->created_at->format('d/m/Y H:i') }}</td>
@@ -248,7 +253,7 @@
                         <td>{{ $incidente->empleado_nombre }}</td>
                         <td>
                             <a href="{{ route('incidentes.show', $incidente->id) }}" class="btn-ver">
-                                <i class="bi bi-eye"></i> Ver
+                                Ver
                             </a>
                         </td>
                     </tr>
@@ -274,7 +279,18 @@
                     paginate: { first:"Primero", previous:"Anterior", next:"Siguiente", last:"Último" }
                 },
                 pageLength: 10,
-                order: [[1, 'desc']]
+                order: [[2, 'desc']],
+                columnDefs: [
+                    { targets: 0, orderable: false, searchable: false },
+                    { targets: 9, orderable: false, searchable: false }
+                ],
+                drawCallback: function() {
+                    const info = this.api().page.info();
+                    this.api().column(0, { search: 'applied', order: 'applied', page: 'current' })
+                        .nodes().each(function(cell, i) {
+                        cell.innerHTML = '<span class="num-cell-incidente">' + (info.start + i + 1) + '</span>';
+                    });
+                }
             });
         });
     </script>
