@@ -479,21 +479,13 @@
             background: #2a2a2a !important;
         }
     </style>
-    <div class="container mt-5">
-        <h3 class="mb-3 text-center">Consulta y Cotización de Medicamentos</h3>
+    <div class="administracion">
+        <div class="container mt-5 pt-5">
+        <h1 class="mb-3">Consulta y Cotización de Medicamentos</h1>
 
-        <!-- Buscador -->
-        <input
-            type="text"
-            id="buscar"
-            class="form-control mb-3"
-            placeholder="Buscar medicamento"
-        >
-
-        <!-- Resultados -->
-        <div id="resultados">
-            @if($medicamentos->count() > 0)
-                <table class="table dataTables_wrapper">
+            <div class="inventory-card mt-4">
+                <div class="table-container">
+                    <table id="historialTable" class="table table-hover">
                     <thead>
                     <tr>
                         <th>Medicamento</th>
@@ -528,18 +520,41 @@
                     @endforeach
                     </tbody>
                 </table>
-
-                <!-- Paginación -->
-                <div class="d-flex justify-content-center mt-3">
-                    {{ $medicamentos->withQueryString()->links() }}
-                </div>
-            @elseif(request('buscar'))
-                <div class="alert alert-warning">
-                    No se encontraron medicamentos disponibles
-                </div>
-            @endif
+            </div>
         </div>
     </div>
+
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $('#historialTable').DataTable({
+                    responsive: true,
+                    autoWidth: false,
+                    language: {
+                        search: "Buscar:",
+                        lengthMenu: "Mostrar _MENU_ registros",
+                        info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                        infoEmpty: "Mostrando 0 a 0 de 0 registros",
+                        zeroRecords: "No se encontraron registros",
+                        emptyTable: "No hay historial disponible",
+                        paginate: {
+                            first: "Primero",
+                            previous: "Anterior",
+                            next: "Siguiente",
+                            last: "Último"
+                        }
+                    },
+                    pageLength: 10,
+                    lengthMenu: [[5,10,25,50,-1],[5,10,25,50,"Todos"]],
+                    order: [[0,'desc']]
+                });
+            });
+        </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
