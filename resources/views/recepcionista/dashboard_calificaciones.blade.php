@@ -1,33 +1,35 @@
 @php
+    /* --- LÓGICA DE SELECCIÓN DE LAYOUT SEGÚN EL ROL DEL USUARIO --- */
     if (session('tipo_usuario') === 'empleado') {
-    switch (session('cargo')) {
-    case 'Recepcionista':
-    $layout = 'layouts.plantillaRecepcion';
-    break;
-    case 'Doctor':
-    $layout = 'layouts.plantillaDoctor';
-    break;
-    case 'Enfermero':
-    $layout = 'layouts.plantillaEnfermero';
-    break;
-    case 'Administrador':
-    $layout = 'layouts.plantillaAdmin';
-    break;
-    default:
-    $layout = 'layouts.plantilla';
-    }
+        switch (session('cargo')) {
+            case 'Recepcionista':
+                $layout = 'layouts.plantillaRecepcion';
+                break;
+            case 'Doctor':
+                $layout = 'layouts.plantillaDoctor';
+                break;
+            case 'Enfermero':
+                $layout = 'layouts.plantillaEnfermero';
+                break;
+            case 'Administrador':
+                $layout = 'layouts.plantillaAdmin';
+                break;
+            default:
+                $layout = 'layouts.plantilla';
+        }
     } else {
-    $layout = 'layouts.plantilla';
+        $layout = 'layouts.plantilla';
     }
 @endphp
 
 @extends($layout)
 
 @section('contenido')
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    {{-- Estilos de DataTables --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
     <style>
+        /* --- ESTILOS GENERALES Y PERSONALIZACIÓN DE LA INTERFAZ --- */
         body {
             background: whitesmoke;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -37,41 +39,29 @@
             padding-top: 20px;
         }
 
-        /* Tarjetas de Estadisticas con Efecto de Movimiento */
+        /* Diseño de las tarjetas estadísticas superiores */
         .stat-card {
             border: none;
             border-radius: 15px;
             color: white;
-            padding: 1.2rem;
+            padding: 1.5rem 1.2rem;
             text-align: center;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             cursor: pointer;
         }
 
-        /* Efecto al pasar el cursor (Hover) */
         .stat-card:hover {
-            transform: translateY(-8px); /* Se eleva */
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15); /* Sombra mas profunda */
-            filter: brightness(1.1); /* Brilla un poco mas */
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+            filter: brightness(1.1);
         }
 
-        .mint {
-            background-color: #00bfa6;
-        }
-
-        .aqua {
-            background-color: #4cd7c6;
-        }
-
-        .turq {
-            background-color: #82e9de;
-        }
-
-        .soft {
-            background-color: #b2f5ea;
-            color: #004b46;
-        }
+        /* Variaciones de colores para las tarjetas */
+        .mint { background-color: #00bfa6; }
+        .aqua { background-color: #4cd7c6; }
+        .turq { background-color: #82e9de; }
+        .soft { background-color: #b2f5ea; color: #004b46; }
 
         .chart-container {
             background: white;
@@ -81,11 +71,7 @@
             height: 100%;
         }
 
-        .bi-star-fill, .bi-star-half, .bi-star {
-            color: #ffc107 !important;
-        }
-
-        /* Tablas */
+        /* Estilos personalizados para el encabezado de la tabla */
         table.dataTable thead th {
             background: #4ecdc4 !important;
             color: white !important;
@@ -104,36 +90,35 @@
     <div class="container main-container my-4">
         <h2 class="text-info-emphasis mb-4" style="font-weight: bold;">Estadistica de Calidad de Traslados</h2>
 
+        {{-- --- SECCIÓN DE TARJETAS DE RESUMEN (KPIs) SIN ICONOS --- --}}
         <div class="row g-3 mb-4">
             <div class="col-md-3">
                 <div class="stat-card mint">
-                    <i class="bi bi-star-fill fs-1 text-white"></i> <h5>Promedio</h5>
+                    <h5>Promedio</h5>
                     <h3>{{ number_format($promedioGeneral, 1) }}</h3>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-card aqua">
-                    <i class="bi bi-chat-right-text-fill fs-1"></i>
                     <h5>Opiniones</h5>
                     <h3>{{ $totalCalificaciones }}</h3>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-card turq">
-                    <i class="bi bi-award-fill fs-1"></i>
                     <h5>Mejor Unidad</h5>
                     <h3>{{ $mejorAmbulancia->unidad_asignada ?? 'N/A' }}</h3>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-card soft">
-                    <i class="bi bi-calendar3 fs-1"></i>
                     <h5>Reporte</h5>
                     <h3>{{ now()->format('M Y') }}</h3>
                 </div>
             </div>
         </div>
 
+        {{-- --- SECCIÓN DE GRÁFICAS --- --}}
         <div class="row g-4 mb-4">
             <div class="col-md-8">
                 <div class="chart-container">
@@ -153,11 +138,13 @@
             </div>
         </div>
 
+        {{-- --- TABLA DE REGISTROS DETALLADOS --- --}}
         <div class="chart-container">
             <h5 class="mb-4" style="color: #2c3e50; font-weight: 650;">Registro Detallado</h5>
             <table id="calidadTable" class="table table-hover w-100">
                 <thead>
                 <tr>
+                    <th>#</th>
                     <th>Paciente</th>
                     <th>Unidad</th>
                     <th>Calificacion</th>
@@ -166,16 +153,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach ($calificaciones as $item)
+                @foreach ($calificaciones as $index => $item)
                     <tr>
+                        <td class="text-muted fw-bold">{{ $index + 1 }}</td>
                         <td class="fw-bold">{{ $item->traslado->paciente->nombres ?? 'Usuario' }}</td>
-                        <td><span class="badge"
-                                  style="background: #e6f9f7; color: #0d9488;">{{ $item->traslado->unidad_asignada }}</span>
-                        </td>
                         <td>
-                            @for($i=1; $i<=5; $i++)
-                                <i class="bi bi-star{{ $i <= $item->puntuacion ? '-fill' : '' }}"></i>
-                            @endfor
+                            <span class="badge" style="background: #e6f9f7; color: #0d9488;">
+                                {{ $item->traslado->unidad_asignada }}
+                            </span>
+                        </td>
+                        <td class="fw-bold text-warning">
+                            {{ $item->puntuacion }} / 5
                         </td>
                         <td class="text-muted small italic">"{{ $item->comentario }}"</td>
                         <td>{{ $item->created_at->format('d/m/Y') }}</td>
@@ -186,6 +174,7 @@
         </div>
     </div>
 
+    {{-- SCRIPTS --}}
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
