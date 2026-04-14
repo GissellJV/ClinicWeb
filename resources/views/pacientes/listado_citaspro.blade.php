@@ -1,18 +1,18 @@
 @php
-if (session('tipo_usuario') === 'empleado') {
-switch (session('cargo')) {
-case 'Recepcionista':
-$layout = 'layouts.plantillaRecepcion';
-break;
-case 'Administrador':
-$layout = 'layouts.plantillaAdmin';
-break;
-default:
-$layout = 'layouts.plantilla';
-}
-} else {
-$layout = 'layouts.plantilla';
-}
+    if (session('tipo_usuario') === 'empleado') {
+    switch (session('cargo')) {
+    case 'Recepcionista':
+    $layout = 'layouts.plantillaRecepcion';
+    break;
+    case 'Administrador':
+    $layout = 'layouts.plantillaAdmin';
+    break;
+    default:
+    $layout = 'layouts.plantilla';
+    }
+    } else {
+    $layout = 'layouts.plantilla';
+    }
 @endphp
 
 @extends($layout)
@@ -21,21 +21,10 @@ $layout = 'layouts.plantilla';
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         .main-container {
-            max-width: 1400px;
-            margin: 0 auto;
+            width: 100%;
             padding: 20px 15px;
-        }
-        @media (min-width: 1400px) {
-            .main-container {
-                max-width: 1320px;
-            }
+            box-sizing: border-box;
         }
 
         h1 {
@@ -65,7 +54,7 @@ $layout = 'layouts.plantilla';
         .stat-card {
             background: white;
             border-radius: 15px;
-            padding: 20px;
+            padding: 10px 8px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             border-left: 5px solid;
             transition: all 0.3s;
@@ -140,32 +129,49 @@ $layout = 'layouts.plantilla';
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             padding: 25px;
+            overflow: hidden;
+            width: 100%;
+            box-sizing: border-box;
         }
         .table-container {
-            overflow-x: visible;
             width: 100%;
             margin: 0 auto;
+        }
+        .dataTables_wrapper {
+            width: 100%;
+            overflow: hidden;
         }
 
         table.dataTable {
             width: 100% !important;
             border-collapse: collapse;
-            table-layout: auto;
-            white-space: nowrap;
+            table-layout: fixed;
         }
+
+        /* Anchos fijos por columna */
+        table.dataTable thead th:nth-child(1) { width: 35px; }   /* # */
+        table.dataTable thead th:nth-child(2) { width: 15%; }    /* Paciente */
+        table.dataTable thead th:nth-child(3) { width: 15%; }    /* Doctor */
+        table.dataTable thead th:nth-child(4) { width: 88px; }   /* Fecha */
+        table.dataTable thead th:nth-child(5) { width: 70px; }   /* Hora */
+        table.dataTable thead th:nth-child(6) { width: 10%; }    /* Especialidad */
+        table.dataTable thead th:nth-child(7) { width: 100px; }  /* Estado badge */
+        table.dataTable thead th:nth-child(8) { width: 95px; }   /* Acción texto */
+        table.dataTable thead th:nth-child(9) { width: 120px; }  /* Botón habitación */
 
         /* ENCABEZADOS UNIFORMES - TODOS VERDES */
         table.dataTable thead th {
-            padding: 20px;
-            text-align: left;
+            padding: 10px 8px;
+            text-align: center;
             font-weight: 700;
-            font-size: 13px;
-            letter-spacing: 0.5px;
+            font-size: 11px;
+            letter-spacing: 0.3px;
             text-transform: uppercase;
             border-bottom: 2px solid #e0e0e0;
             background: #4ecdc4 !important;
             color: white;
             white-space: nowrap;
+            overflow: hidden;
         }
 
 
@@ -179,54 +185,87 @@ $layout = 'layouts.plantilla';
 
         table.dataTable tbody tr:hover {
             background: #f0fdfa;
-            transform: scale(1.01);
         }
 
         table.dataTable tbody td {
-            padding: 16px 12px;
+            padding: 10px 8px;
             color: #666;
-            text-align: left;
+            text-align: center;
             border: none;
-            font-size: 14px;
+            font-size: 12px;
+            word-wrap: break-word;
+            overflow: hidden;
+        }
+
+        /* Paciente y Doctor alineados a la izquierda con wrap */
+        table.dataTable tbody td:nth-child(2),
+        table.dataTable tbody td:nth-child(3) {
+            text-align: left;
+            white-space: normal;
+        }
+
+        /* Fecha, Hora, Especialidad centradas sin wrap */
+        table.dataTable tbody td:nth-child(4),
+        table.dataTable tbody td:nth-child(5) {
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        /* Especialidad permite wrap */
+        table.dataTable tbody td:nth-child(6) {
+            white-space: normal;
+            text-align: left;
+        }
+
+        /* Celda del botón habitación sin padding lateral extra */
+        table.dataTable tbody td:nth-child(9) {
+            text-align: center;
+            white-space: nowrap;
+            padding: 10px 4px;
+        }
+
+        /* Estado y Acción centrados */
+        table.dataTable tbody td:nth-child(7),
+        table.dataTable tbody td:nth-child(8) {
+            text-align: center;
+            white-space: nowrap;
         }
 
         /* Nombres de pacientes centrados y no clickeables */
         .patient-name {
             font-weight: 600;
             color: #333;
-            font-size: 14px;
+            font-size: 12px;
             display: block;
             text-align: left;
         }
 
         .doctor-name {
             color: #555;
-            font-size: 14px;
+            font-size: 12px;
             text-align: left;
         }
 
         /* ESTADOS - COLORES UNIFORMES */
         .badge {
-            padding: 8px 16px;
+            padding: 5px 8px;
             border-radius: 20px;
             font-weight: 600;
-            font-size: 13px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            min-width: 120px;
-            margin: 0 auto;
+            font-size: 10px;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+            max-width: 95px;
         }
         .badge-pill {
-            padding: 8px 16px;
+            padding: 5px 8px;
             border-radius: 20px;
             font-weight: 600;
-            font-size: 13px;
-            min-width: 120px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 10px;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+            max-width: 95px;
         }
         .bg-warning {
             background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%) !important;
@@ -266,9 +305,9 @@ $layout = 'layouts.plantilla';
             align-items: center;
             justify-content: center;
             gap: 6px;
-            padding: 8px 12px;
+            padding: 5px 8px;
             border-radius: 20px;
-            min-width: 130px;
+            min-width: 100px;
             margin: 0 auto;
         }
         .action-buttons {
@@ -280,19 +319,19 @@ $layout = 'layouts.plantilla';
         }
 
         .btn-sm {
-            padding: 10px 20px;
-            font-size: 14px;
+            padding: 6px 4px;
+            font-size: 11px;
             border-radius: 8px;
             border: none;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            white-space: nowrap;
-            min-width: 110px;
-            justify-content: center;
+            display: block;
+            white-space: normal;
+            text-align: center;
+            width: 100%;
+            line-height: 1.3;
+            box-sizing: border-box;
         }
         .btn-success {
             background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
@@ -327,8 +366,8 @@ $layout = 'layouts.plantilla';
             align-items: center;
             justify-content: center;
             gap: 6px;
-            padding: 8px 12px;
-            min-width: 130px;
+            padding: 5px 8px;
+            min-width: 100px;
             margin: 0 auto;
         }
         .text-muted{
@@ -336,8 +375,8 @@ $layout = 'layouts.plantilla';
             align-items: center;
             justify-content: center;
             gap: 6px;
-            padding: 8px 12px;
-            min-width: 130px;
+            padding: 5px 8px;
+            min-width: 100px;
             margin: 0 auto;
         }
 
@@ -347,20 +386,20 @@ $layout = 'layouts.plantilla';
         .btn-habitacion {
             background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
             color: white !important;
-            padding: 10px 20px;
-            font-size: 14px;
+            padding: 6px 4px;
+            font-size: 11px;
             border-radius: 8px;
             border: none;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            white-space: nowrap;
-            min-width: 110px;
-            justify-content: center;
-            text-decoration-line: none;
+            display: block;
+            white-space: normal;
+            text-align: center;
+            width: 100%;
+            line-height: 1.3;
+            text-decoration: none;
+            box-sizing: border-box;
         }
 
         .btn-habitacion:hover {
@@ -375,7 +414,7 @@ $layout = 'layouts.plantilla';
         .btn-confirmar {
             background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
             color: white;
-            padding: 8px 16px;
+            padding: 5px 10px;
             border-radius: 20px;
             border: none;
             cursor: pointer;
@@ -386,7 +425,7 @@ $layout = 'layouts.plantilla';
             justify-content: center;
             gap: 6px;
             font-size: 13px;
-            min-width: 130px;
+            min-width: 100px;
             margin: 0 auto;
             box-shadow: 0 2px 8px rgba(78, 205, 196, 0.2);
         }
@@ -466,7 +505,7 @@ $layout = 'layouts.plantilla';
             }
 
         }
-            .text-info-emphasis {
+        .text-info-emphasis {
             font-weight: bold;
         }
 
@@ -565,9 +604,8 @@ $layout = 'layouts.plantilla';
                     <th class="text-center">HORA</th>
                     <th class="text-center">ESPECIALIDAD</th>
                     <th class="text-center">ESTADO</th>
-                    <th colspan="2" class="text-center">ACCIÓN</th>
-                    <th class="text-center">MOTIVO</th>
-
+                    <th class="text-center">ACCIÓN</th>
+                    <th class="text-center"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -631,19 +669,12 @@ $layout = 'layouts.plantilla';
                             @if($cita->paciente && in_array($cita->estado, ['programada', 'pendiente', 'reprogramada']))
                                 <a href="{{ route('recepcionista.habitaciones.asignar', ['paciente_id' => $cita->paciente->id]) }}"
                                    class="btn-habitacion fw-bold">
-                                   Asignar Habitación
+                                    Asignar Habitación
                                 </a>
                             @else
                                 <span class="action-buttons text-muted-action fw-bold">
                                   No disponible
                                 </span>
-                            @endif
-                        </td>
-                        <td>
-                            @if($cita->estado == 'cancelada')
-                                {{ $cita->motivo_cancelacion ?? 'Sin motivo' }}
-                            @else
-                                 —
                             @endif
                         </td>
                     </tr>
@@ -668,6 +699,8 @@ $layout = 'layouts.plantilla';
 
     <script>
         $(document).ready(function() {
+            $.fn.dataTable.ext.errMode = 'none'; // Suprimir alertas de DataTables
+
             var table = $('#citasTable').DataTable({
                 responsive: false,
                 autoWidth: false,
@@ -694,11 +727,11 @@ $layout = 'layouts.plantilla';
                 },
                 columnDefs: [
                     { targets: 0, orderable: false, searchable: false },
-                    { targets: 9, orderable: false, searchable: false },
+                    { targets: [7, 8], orderable: false, searchable: false },
                 ],
                 pageLength: 10,
                 lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'Todos']],
-                order: [[2, 'desc']],
+                order: [[3, 'desc']],
                 dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
                 drawCallback: function () {
                     const info = this.api().page.info();
