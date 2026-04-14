@@ -180,6 +180,7 @@
             <table id="trasladosTable" class="table table-hover">
                 <thead>
                 <tr>
+                    <th>#</th>
                     <th>PACIENTE</th>
                     <th>DESTINO</th>
                     <th>AMBULANCIA</th>
@@ -191,6 +192,7 @@
                 <tbody class="table-group-divider">
                 @foreach($traslados as $traslado)
                     <tr>
+                        <td class="num-cell"></td>
                         <td>
                                 <span class="patient-name">
                                     {{ $traslado->paciente->nombres ?? 'N/A' }}
@@ -259,10 +261,19 @@
                 lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
                 order: [[3, 'desc']],
                 columnDefs: [
-                    { targets: 5, orderable: false, searchable: false }
-                ]
+                    { targets: 0, orderable: false, searchable: false, width: '40px' },
+                    { targets: 6, orderable: false, searchable: false }
+                ],
+                drawCallback: function() {
+                    const info = this.api().page.info();
+                    this.api().column(0, { search: 'applied', order: 'applied', page: 'current' })
+                        .nodes().each(function(cell, i) {
+                        cell.innerHTML = '<span style="font-weight:600; color:#4ecdc4;">' + (info.start + i + 1) + '</span>';
+                    });
+                }
             });
         });
     </script>
 
 @endsection
+

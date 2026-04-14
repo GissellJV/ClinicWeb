@@ -181,6 +181,13 @@
             font-size: 13px;
         }
 
+        .num-cell-cirugia {
+            font-weight: 700;
+            color: #7f8c8d;
+            font-size: 0.73rem;
+            text-align: center;
+        }
+
         /* Badges estado */
         .badge-estado {
             padding: 5px 14px;
@@ -409,6 +416,7 @@
                     <table id="tablaPendientes" class="table table-hover">
                         <thead>
                         <tr>
+                            <th style="width:40px;">#</th>
                             <th>PACIENTE</th>
                             <th>DOCTOR</th>
                             <th>TIPO DE CIRUGÍA</th>
@@ -421,6 +429,7 @@
                         <tbody>
                         @foreach($evaluaciones as $eval)
                             <tr>
+                                <td class="num-cell-cirugia"></td>
                                 <td>
                                     <span class="patient-name">
                                         {{ $eval->paciente->nombres ?? '' }} {{ $eval->paciente->apellidos ?? '' }}
@@ -470,6 +479,7 @@
                     <table id="tablaProgramadas" class="table table-hover">
                         <thead>
                         <tr>
+                            <th style="width:40px;">#</th>
                             <th>PACIENTE</th>
                             <th>DOCTOR</th>
                             <th>TIPO DE CIRUGÍA</th>
@@ -483,6 +493,7 @@
                         <tbody>
                         @foreach($cirugias as $cirugia)
                             <tr>
+                                <td class="num-cell-cirugia"></td>
                                 <td>
                                     <span class="patient-name">
                                         {{ $cirugia->paciente->nombres ?? '' }} {{ $cirugia->paciente->apellidos ?? '' }}
@@ -568,10 +579,18 @@
                     language: langConfig,
                     pageLength: 10,
                     lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
-                    order: [[5, 'desc']],
+                    order: [[6, 'desc']],
                     columnDefs: [
-                        { targets: 6, orderable: false, searchable: false }
-                    ]
+                        { targets: 0, orderable: false, searchable: false },
+                        { targets: 7, orderable: false, searchable: false }
+                    ],
+                    drawCallback: function() {
+                        const info = this.api().page.info();
+                        this.api().column(0, { search: 'applied', order: 'applied', page: 'current' })
+                            .nodes().each(function(cell, i) {
+                            cell.innerHTML = '<span class="num-cell-cirugia">' + (info.start + i + 1) + '</span>';
+                        });
+                    }
                 });
             }
 
@@ -583,10 +602,18 @@
                     language: langConfig,
                     pageLength: 10,
                     lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
-                    order: [[4, 'asc']],
+                    order: [[5, 'asc']],
                     columnDefs: [
-                        { targets: 7, orderable: false, searchable: false }
-                    ]
+                        { targets: 0, orderable: false, searchable: false },
+                        { targets: 8, orderable: false, searchable: false }
+                    ],
+                    drawCallback: function() {
+                        const info = this.api().page.info();
+                        this.api().column(0, { search: 'applied', order: 'applied', page: 'current' })
+                            .nodes().each(function(cell, i) {
+                            cell.innerHTML = '<span class="num-cell-cirugia">' + (info.start + i + 1) + '</span>';
+                        });
+                    }
                 });
             }
 

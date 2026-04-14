@@ -70,7 +70,6 @@
             border-left: 5px solid;
             display: flex;
             align-items: center;
-            gap: 15px;
             transition: all 0.3s ease;
         }
 
@@ -81,11 +80,6 @@
         .tarjeta-estadistica.criticos  { border-left-color: #ff9800; }
         .tarjeta-estadistica.mes       { border-left-color: #4caf50; }
 
-        .stat-icon { font-size: 2rem; }
-        .tarjeta-estadistica.total      .stat-icon { color: #2196f3; }
-        .tarjeta-estadistica.pendientes .stat-icon { color: #f44336; }
-        .tarjeta-estadistica.criticos   .stat-icon { color: #ff9800; }
-        .tarjeta-estadistica.mes        .stat-icon { color: #4caf50; }
 
         .numero-estadistica { font-size: 2rem; font-weight: 700; line-height: 1; margin-bottom: 4px; }
         .tarjeta-estadistica.total      .numero-estadistica { color: #2196f3; }
@@ -201,7 +195,7 @@
 
         <div class="cabecera-seccion">
             <h1 class="titulo-principal">
-                <i class="bi bi-clipboard2-pulse"></i> Reportes de Incidentes
+                Reportes de Incidentes
             </h1>
         </div>
 
@@ -214,28 +208,24 @@
 
         <div class="grid-estadisticas">
             <div class="tarjeta-estadistica total">
-                <div class="stat-icon"><i class="bi bi-folder2-open"></i></div>
                 <div>
                     <div class="numero-estadistica">{{ $estadisticas['total'] }}</div>
                     <div class="etiqueta-estadistica">Total de Incidentes</div>
                 </div>
             </div>
             <div class="tarjeta-estadistica pendientes">
-                <div class="stat-icon"><i class="bi bi-hourglass-split"></i></div>
                 <div>
                     <div class="numero-estadistica">{{ $estadisticas['pendientes'] }}</div>
                     <div class="etiqueta-estadistica">Pendientes</div>
                 </div>
             </div>
             <div class="tarjeta-estadistica criticos">
-                <div class="stat-icon"><i class="bi bi-exclamation-octagon"></i></div>
                 <div>
                     <div class="numero-estadistica">{{ $estadisticas['criticos'] }}</div>
                     <div class="etiqueta-estadistica">Críticos</div>
                 </div>
             </div>
             <div class="tarjeta-estadistica mes">
-                <div class="stat-icon"><i class="bi bi-calendar2-check"></i></div>
                 <div>
                     <div class="numero-estadistica">{{ $estadisticas['este_mes'] }}</div>
                     <div class="etiqueta-estadistica">Este Mes</div>
@@ -246,20 +236,21 @@
         <div class="tarjeta-tabla">
             <div class="mostrar-selector">
                 <span>Mostrar</span>
-                <select class="form-select" id="mostrarRegistros" style="width:auto; display:inline-block; padding:5px 10px; border-radius:4px; border:1px solid #ddd;">
-                    <option value="10">10 registros</option>
-                    <option value="25">25 registros</option>
-                    <option value="50">50 registros</option>
-                    <option value="100">100 registros</option>
+                <select class="form-select" id="mostrarRegistros" style="width:90px; display:inline-block; padding:5px 10px; border-radius:4px; border:1px solid #ddd;">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
                 </select>
+                <span>registros</span>
             </div>
 
             <table class="tabla-custom">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th><i class="bi bi-calendar-event me-1"></i> Fecha Incidente</th>
-                    <th><i class="bi bi-clock me-1"></i> Fecha Registro</th>
+                    <th>#</th>
+                    <th>Fecha Incidente</th>
+                    <th>Fecha Registro</th>
                     <th>Paciente</th>
                     <th>Tipo</th>
                     <th>Gravedad</th>
@@ -271,7 +262,7 @@
                 <tbody>
                 @forelse($incidentes as $incidente)
                     <tr>
-                        <td><strong>#{{ str_pad($incidente->id, 4, '0', STR_PAD_LEFT) }}</strong></td>
+                        <td><strong style="color:#4ecdc4;">{{ $loop->iteration + ($incidentes->currentPage() - 1) * $incidentes->perPage() }}</strong></td>
                         <td>{{ \Carbon\Carbon::parse($incidente->fecha_hora_incidente)->format('d/m/Y H:i') }}</td>
                         <td>{{ \Carbon\Carbon::parse($incidente->created_at)->format('d/m/Y H:i') }}</td>
                         <td>{{ $incidente->paciente->nombres ?? 'N/A' }} {{ $incidente->paciente->apellidos ?? '' }}</td>
@@ -297,7 +288,7 @@
                         <td>{{ $incidente->empleado_nombre }}</td>
                         <td>
                             <a href="{{ route('recepcionista.incidentes.show', $incidente->id) }}" class="boton-ver">
-                                <i class="bi bi-eye"></i> Ver
+                                Ver
                             </a>
                         </td>
                     </tr>
