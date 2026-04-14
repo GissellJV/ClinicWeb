@@ -1,6 +1,6 @@
 @extends('layouts.plantillaDoctor')
 @section('titulo', 'Mis Citas Quirúrgicas')
-
+<link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 @section('contenido')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -8,6 +8,12 @@
             max-width: 1200px;
             margin: 100px auto 40px auto;
             padding: 0 20px;
+        }
+        h1{
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f4544;
+            margin-bottom: 2rem;
         }
         .page-header { text-align: center; margin-bottom: 35px; }
         .page-header h2 { color: #2c3e50; font-size: 2rem; margin-bottom: 8px; }
@@ -116,7 +122,7 @@
 
     <div class="cirugias-container">
         <div class="page-header">
-            <h2><i class="bi bi-scissors me-2"></i>Mis Citas Quirúrgicas</h2>
+            <h1></i>Mis Citas Quirúrgicas</h1>
             <p>Cirugías programadas asignadas a tu servicio</p>
         </div>
 

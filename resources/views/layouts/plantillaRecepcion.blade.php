@@ -893,12 +893,6 @@
                 </li>
 
 
-                <li class="nav-item">
-                    <div class="form-check form-switch text-white">
-                        <input class="form-check-input" type="checkbox" id="darkModeToggle">
-                    </div>
-                </li>
-
                 <!-- Perfil -->
                 <li class="nav-item dropdown">
 
