@@ -923,16 +923,6 @@
                             <textarea class="form-control" id="observaciones" name="observaciones" rows="3" placeholder="Observaciones adicionales"></textarea>
                         </div>
                     </div>
-
-                    <div class="button-group">
-                        <a href="{{ route('recepcionista.busquedaexpediente') }}" class="btn-cancel" style="text-decoration-line: none">
-                            Cancelar
-                        </a>
-                        <button type="submit" class="btn-register">
-                            Guardar Expediente
-                        </button>
-                    </div>
-
                     <!-- BOTONES MEJORADOS -->
                     <div class="button-group">
                         <a href="{{ route('recepcionista.busquedaexpediente') }}" class="btn-cancel">
@@ -942,8 +932,6 @@
                             Guardar Expediente
                         </button>
                     </div>
-
-    </div>
                 </form>
             </div>
         </div>
