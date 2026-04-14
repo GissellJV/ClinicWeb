@@ -890,6 +890,12 @@
                         </a>
                     </li>
                 </ul>
+                    <!-- INCIDENTE EN RUTA-->
+                    <li class="nav-item">
+                        <a class="nav-link offcanvas-nav-link" href="{{ route('incidentes_ruta.index') }}">
+                            <i class="bi bi-exclamation-triangle-fill"></i> Incidentes en Ruta
+                        </a>
+                    </li>
 
 
                 <li class="nav-item">

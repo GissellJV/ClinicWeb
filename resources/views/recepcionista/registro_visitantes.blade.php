@@ -34,38 +34,50 @@
             font-weight: 600;
         }
 
-        /* Notificación Personalizada Premium */
-        .custom-alert {
-            background: #ffffff;
-            border: none;
-            border-radius: 8px;
-            padding: 15px 20px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            animation: slideIn 0.5s ease-out;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        /* Bloqueo de alertas externas */
+        body > .alert, .main-content > .alert, header + .alert, .container > .alert {
+            display: none !important;
         }
 
-        .alert-premium-success { border-left: 5px solid #4ecdc4; }
-        .alert-premium-error { border-left: 5px solid #dc3545; }
+        /* Estilo de Alerta Bootstrap (segunda captura) */
+        .custom-alert {
+            box-shadow: none !important;
+            border-left: none !important;
+            padding: 1rem 1.25rem !important;
+            border-radius: 0.375rem !important;
+            position: relative;
+            border: 1px solid transparent;
+            margin-bottom: 1rem;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .alert-premium-success {
+            color: #0f5132 !important;
+            background-color: #d1e7dd !important;
+            border-color: #badbcc !important;
+        }
+
+        .alert-premium-error {
+            color: #842029 !important;
+            background-color: #f8d7da !important;
+            border-color: #f5c2c7 !important;
+        }
 
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Botones alineados a la izquierda y del mismo tamaño */
+        /* === CORRECCIÓN DE BOTONES: 50/50 Y HOVER === */
         .btn-container-left {
             display: flex;
             gap: 15px;
-            justify-content: flex-start;
-            margin-left: -5px;
+            justify-content: center; /* Centrados para ocupar el 50% cada uno */
             margin-top: 35px;
         }
 
         .btn-custom {
-            width: 180px;
+            width: 50%; /* Tamaño 50/50 */
             height: 46px;
             border-radius: 8px;
             font-weight: bold;
@@ -76,18 +88,32 @@
             text-decoration: none;
             font-size: 1rem;
             border: none;
+            cursor: pointer;
         }
 
+        /* Estilo y Hover: Crear Registro */
+        .btn-custom-confirm {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        .btn-custom-confirm:hover {
+            background: #3dbbb2; /* Color más oscuro al pasar el cursor */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(78, 205, 196, 0.3);
+        }
+
+        /* Estilo y Hover: Cancelar */
         .btn-custom-cancel {
             background: white;
             border: 2px solid #dc3545;
             color: #dc3545;
         }
 
-        .btn-custom-confirm {
-            background: #4ecdc4;
+        .btn-custom-cancel:hover {
+            background: #dc3545; /* Fondo rojo al pasar el cursor */
             color: white;
-            cursor: pointer;
+            transform: translateY(-2px);
         }
 
         .form-label {
@@ -353,23 +379,21 @@
             <h1 class="text-center text-info-emphasis">Registro de Visitantes</h1>
 
             <div class="form-container shadow-sm">
-                @if(session('success'))
-                    <div class="custom-alert alert-premium-success">
-                        <div class="msg-content">
-                            <span style="font-weight: bold; color: #2c3e50; display: block;">Operación Exitosa</span>
-                            <span style="color: #7f8c8d; font-size: 0.95rem;">{{ session('success') }}</span>
-                        </div>
-                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
 
-                @if(session('error'))
-                    <div class="custom-alert alert-premium-error">
+                {{-- Notificación de ÉXITO (Ahora dentro del contenedor y con el mismo estilo del error) --}}
+                @if(session('success'))
+                    <div class="custom-alert alert-premium-success alert alert-dismissible fade show" role="alert">
                         <div class="msg-content">
-                            <span style="font-weight: bold; color: #2c3e50; display: block;">Error de Proceso</span>
-                            <span style="color: #7f8c8d; font-size: 0.95rem;">{{ session('error') }}</span>
+                            <strong>¡Éxito!</strong> <span>{{ session('success') }}</span>
                         </div>
-                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @elseif(session('error') || session('error_habitacion'))
+                    <div class="custom-alert alert-premium-error alert alert-dismissible fade show" role="alert">
+                        <div class="msg-content">
+                            <strong>Atención:</strong> <span>{{ session('error') ?? session('error_habitacion') }}</span>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
 
@@ -422,6 +446,8 @@
                     </div>
 
                     <div class="btn-container-left">
+                        {{-- Orden corregido: Confirmar primero, Cancelar después --}}
+                        <button type="submit" class="btn-custom btn-custom-confirm">Crear Registro</button>
                         <a href="{{ url('/') }}" class="btn-custom btn-custom-cancel">Cancelar</a>
                         <button type="submit" class="btn-custom btn-custom-confirm">Crear Registro</button>
                     </div>
