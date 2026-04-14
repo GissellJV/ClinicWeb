@@ -197,9 +197,11 @@ class EmpleadoController extends Controller
 
     public function destroy($id)
     {
-        if (!session('cargo') || session('cargo') != 'Recepcionista') {
+        $cargo = strtolower(session('cargo') ?? '');
+
+        if (!in_array($cargo, ['recepcionista', 'administrador'])) {
             return redirect()->route('inicioSesion')
-                ->with('error', 'Debes iniciar sesión como Enfermero');
+                ->with('error', 'Debes iniciar sesión como Administrador');
         }
 
         $empleado = Empleado::findOrFail($id);
@@ -209,7 +211,7 @@ class EmpleadoController extends Controller
             $empleado->loginEmpleado->delete();
         }
 
-        // Ahora sí, eliminar el empleado
+
         $empleado->delete();
 
         return redirect()->route('empleados.lista')

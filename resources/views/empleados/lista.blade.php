@@ -29,9 +29,7 @@
         .text-info-emphasis {
             color: #2c3e50;
             font-weight: 700;
-            font-size: 1.8rem;
-            margin-bottom: 30px;
-            text-align: center;
+
         }
 
         .alert-success-custom {
@@ -351,10 +349,12 @@
         }
 
         .dataTables_wrapper .dataTables_length select {
+            width: 65px !important;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
-            padding: 5px 10px;
-            margin: 0 10px;
+            padding: 5px 8px;
+            margin: 0 !important;
+            font-family: inherit;
         }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -450,81 +450,91 @@
         }
 
         /* === CONTENEDOR DEL MODAL === */
+
         .modal-content {
-            background: #ffffff !important;
-            border-radius: 22px !important;
-            border: none !important;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+            border-radius: 18px;
+            border: 3px solid #24f3e2;
+            box-shadow: 0 0 20px rgba(36, 243, 226, 0.4);
             overflow: hidden;
+            padding: 0;
         }
 
-        /* --- HEADER DEL MODAL --- */
+
         .modal-header {
-            padding: 15px 20px !important;
-            border-bottom: none !important;
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            border-bottom: none;
+            padding: 20px 30px;
         }
 
         .modal-title {
-            color: #fff !important;
-            margin: 0 !important;
-            font-size: 26px !important;
-            font-weight: 800 !important;
+            font-weight: 700;
+            font-size: 1.3rem;
         }
 
-        /* --- BOTÓN CERRAR --- */
-        .btn-close {
-            transition: transform .35s ease !important;
-        }
-
-        .btn-close:hover {
-            transform: rotate(180deg) !important;
-        }
-
-        /* --- FOOTER DEL MODAL --- */
-        .modal-footer {
-            border-top: none !important;
-            padding: 16px 24px !important;
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-
-        /* --- BOTONES --- */
-        .modal-footer .btn-danger {
-            border-radius: 10px !important;
-            padding: 10px 20px !important;
-            font-weight: 600 !important;
-            transition: all 0.3s ease;
-            border: none !important;
-            cursor: pointer;
-            color: white !important;
-        }
-
-        .modal-footer .btn-danger:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5) !important;
-        }
-
-        /* --- BODY DEL MODAL --- */
         .modal-body {
-            padding: 30px !important;
+            padding: 30px;
+            border-bottom: 1px solid #e9ecef;
         }
 
-        /* --- PARÁGRAFOS DEL BODY --- */
-        .modal-body p {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 0.5rem;
+        .modal-footer {
+            border-top: none;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
         }
 
-        .modal-body p small {
-            font-size: 14px;
-            color: #999;
+        .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+         .btn-delModal {
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+             flex: 0 1 160px;
+            text-align: center;
+        }
+
+        .btn-delModal:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+
+        .btn-canModal {
+            padding: 0.875rem 2rem;
+            background: white;
+            border: 2px solid #dc3545;
+            border-radius: 8px;
+            color: #dc3545;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 0 1 160px;
+            text-align: center;
+        }
+
+        .btn-canModal:hover {
+            background: #dc3545;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
         }
     </style>
 
     <div class="empleados-container">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="page-header mb-4 d-flex justify-content-between align-items-center " style="margin-top:10px;">
             <h1 class="text-info-emphasis">
                 Lista de Empleados
             </h1>
@@ -592,6 +602,7 @@
                     <table id="empleadosTable" class="table table-hover">
                         <thead>
                         <tr>
+                            <th>#</th>
                             <th>Nombre Completo</th>
                             <th>Identidad</th>
                             <th>Cargo</th>
@@ -603,7 +614,7 @@
                         <tbody>
                         @foreach($empleados as $empleado)
                             <tr data-cargo="{{ $empleado->cargo }}">
-
+                                <td class="num-cell"></td>
                                 <td>
                                     <span class="nombre-empleado">
                                         {{ $empleado->nombre }} {{ $empleado->apellido }}
@@ -647,7 +658,7 @@
                                  aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content"
-                                         style="border-radius: 15px; border: none; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+                                         >
                                         <div class="modal-header" style="border-bottom: 2px solid #f0f0f0;">
                                             <h5 class="modal-title">
                                                 Confirmar Eliminación
@@ -657,15 +668,13 @@
                                         </div>
                                         <div class="modal-body" style="padding: 30px;">
                                             <p style="font-size: 16px; color: #666;">
-                                                ¿Estás seguro de que deseas eliminar al empleado
+                                                ¿Desea eliminar al empleado
                                                 <strong>{{ $empleado->nombre }} {{ $empleado->apellido }}</strong>?
                                             </p>
-                                            <p style="font-size: 14px; color: #999;">
-                                                Esta acción no se puede deshacer.
-                                            </p>
+
                                         </div>
                                         <div class="modal-footer" style="border-top: 2px solid #f0f0f0; gap: 10px;">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                            <button type="button" class="btn-canModal" data-bs-dismiss="modal"
                                                     style="border-radius: 8px; padding: 10px 20px;">
                                                 Cancelar
                                             </button>
@@ -673,9 +682,9 @@
                                                   method="POST" style="margin: 0;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger"
-                                                        style="border-radius: 8px; padding: 10px 20px; background: #e74c3c; border: none;">
-                                                    Eliminar
+                                                <button type="submit" class="btn btn-delModal"
+                                                        style="border-radius: 8px; padding: 10px 20px;  border: none;">
+                                                    Sí, eliminar
                                                 </button>
                                             </form>
                                         </div>
@@ -726,7 +735,7 @@
                         last: "Último"
                     }
                 },
-                pageLength: 10,
+                pageLength: 5,
                 lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
                 order: [[0, 'asc']], // Ordenar por número
                 columnDefs: [
@@ -740,7 +749,16 @@
                         searchable: false
                     }
                 ],
-                dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip'
+                dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
+                drawCallback: function () {
+                    const info = this.api().page.info();
+                    this.api()
+                        .column(0, { search: 'applied', order: 'applied', page: 'current' })
+                        .nodes()
+                        .each(function (cell, i) {
+                            cell.innerHTML = '<span class="num-cell">' + (info.start + i + 1) + '</span>';
+                        });
+                }
             });
 
             // Función para actualizar contadores
@@ -780,4 +798,13 @@
         });
     </script>
 
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.style.transition = "opacity 0.5s";
+                alert.style.opacity = "0";
+                setTimeout(()=> alert.remove(), 500);
+            });
+        }, 2500);
+    </script>
 @endsection

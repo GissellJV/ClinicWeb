@@ -3,23 +3,17 @@
 @section('contenido')
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background:whitesmoke;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+
         }
 
         .login-wrapper {
-            min-height: 90vh;
+            min-height: calc(100vh - 80px);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 50px;
-            margin-top:-75px;
-            width: 800px;
+            width: 100%;
+            margin-top: 0;
         }
 
         .login-container {
@@ -28,11 +22,12 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 460px;
-            height: 670px;
+            height: 650px;
             padding: 2rem 1.5rem;
             border-top: 5px solid #4ecdc4;
             position: relative;
             overflow: hidden;
+            margin-top: 45px;
         }
 
         .logo-text span {
@@ -122,6 +117,20 @@
             padding: 1rem;
             border-radius: 8px;
             font-size: 0.9rem;
+            margin-top: 25px;
+            border-left: solid #dc3545;
+
+        }
+
+
+        .alert-info-custom {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-top: 25px;
+            border-left: solid #0c5460;
         }
 
         .text-danger {
@@ -259,16 +268,23 @@
                 <!--LOGO DE LA CLINICA-->
                 <img src="/imagenes/login-icon-sinFondo.png" alt="login-icono" style="height: 6rem">
             </div>
-                <div class="error-container">
-                    @if(session('error'))
-                        <div class="alert alert-danger">
-                            {{session('error')}}
-                        </div>
-                    @endif
-                </div>
+            <div class="error-container">
+                @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+                @if(session('success'))
+                    <div class="alert alert-info-custom" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
+            </div>
 
 
-                <h2 class="login-title" >Iniciar Sesión</h2>
+
+                <h1 class="login-title" >Iniciar Sesión</h1>
             <form action="{{route('login.sesion')}}" method="POST">
                 @csrf
                 <input type="hidden" name="redirect_to" value="{{ request('redirect_to') }}">
@@ -295,7 +311,7 @@
                         <input class="form-control" type="password" name="password"
                                placeholder="Contraseña" >
                     </div>
-                </div>
+
 
 
                 @error('password')
@@ -306,6 +322,7 @@
 
                 <br>
                 <button type="submit" class="btn-login">Iniciar Sesión</button>
+                </div>
             </form>
             <div class="footer-links">
 
@@ -316,6 +333,15 @@
         </div>
 
         </div>
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.style.transition = "opacity 0.5s";
+                alert.style.opacity = "0";
+                setTimeout(()=> alert.remove(), 500);
+            });
+        }, 2500);
+    </script>
 
 @endsection
 

@@ -126,6 +126,7 @@
             font-weight: 600;
             font-size: 1.1rem;
             transition: all 0.3s ease;
+            flex: 0.6;
         }
 
         .btn-cancel:hover {
@@ -335,7 +336,7 @@
             box-shadow: none;
         }
 
-        /* Contenedor del formulario de teléfono - Mismo tamaño que detail-value */
+
         .phone-edit-container {
             display: flex;
             align-items: center;
@@ -356,7 +357,7 @@
             flex-shrink: 0;
         }
 
-        /* Botones más compactos y del mismo tamaño */
+
         .save-phone-btn, .cancel-phone-btn {
             padding: 0;
             border: none;
@@ -749,6 +750,60 @@
             border: none !important;
             border-radius: 0 !important;
         }
+
+        #modalFotoPaciente .modal-content {
+            border-radius: 18px;
+            border: 3px solid #24f3e2;
+            box-shadow: 0 0 20px rgba(36, 243, 226, 0.4);
+            overflow: hidden;
+            padding: 0;
+        }
+
+        #modalFotoPaciente .modal-header {
+            background: linear-gradient(90deg, #00e1ff, #00ffc8);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            border-bottom: none;
+            padding: 20px 30px;
+        }
+
+        #modalFotoPaciente .modal-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        #modalFotoPaciente .modal-body {
+            padding: 30px;
+        }
+
+        #modalFotoPaciente .modal-footer {
+            border-top: none;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        #modalFotoPaciente .btn-close {
+            filter: brightness(0) invert(1);
+        }
+        #modalFotoPaciente .form-control {
+            border: 2px solid #24f3e2;
+            border-radius: 12px;
+            background: #fff;
+            padding: 10px 14px;
+            font-size: 1rem;
+            width: 100%;
+            box-shadow: 0 0 12px rgba(36, 243, 226, 0.2);
+            transition: 0.2s;
+            outline: none;
+        }
+
+        #modalFotoPaciente .form-control:focus {
+            border-color: #00f3ff;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.42);
+        }
+
     </style>
     <br><br>
     <h1 class="text-center text-info-emphasis" >Mi Perfil</h1>
@@ -946,8 +1001,9 @@
                         <div class="text-center mt-3" id="nuevaFotoPreviewPaciente" style="display: none;">
                             <p class="mb-2"><strong>Nueva foto:</strong></p>
                             <div class="foto-preview-container">
-                                < img src=""  class="foto-preview" id="imagenPreviewPaciente">
+                                <img src="" alt="Vista previa" class="foto-preview" id="imagenPreviewPaciente">
                             </div>
+                            <small class="text-muted mt-1 d-block">Vista previa</small>
                         </div>
 
                         <input type="hidden" name="telefono" value="{{ $paciente->telefono }}">
@@ -956,7 +1012,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn-cancel" data-bs-dismiss="modal">
-                            <i class="bi bi-x-circle me-1"></i>Cancelar
+                            Cancelar
                         </button>
                         <button type="submit" class="btn-register" id="btnSubirFotoPaciente">
                             <i class="bi bi-upload me-1"></i>Subir Foto
@@ -1113,14 +1169,21 @@
     {{-- Modal éxito foto --}}
     @if(session('foto_success'))
         <div class="modal fade" id="modalFotoExito" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-sm">
-                <div class="modal-content border-0 shadow" style="border-radius: 12px; overflow: hidden;">
-                    <div style="height: 6px; background: linear-gradient(90deg, #00bfa6, #009e8e);"></div>
+            <div class="modal-dialog modal-dialog-centered" style="max-width: 380px;">
+                <div class="modal-content" style="border-radius: 18px; border: 3px solid #24f3e2; box-shadow: 0 0 20px rgba(36, 243, 226, 0.4); overflow: hidden; padding: 0;">
+
+                    <div class="modal-header" style="background: linear-gradient(90deg, #00e1ff, #00ffc8); border-bottom: none; padding: 20px 30px;">
+                        <h5 class="modal-title fw-bold text-white" style="font-size: 1.1rem;">
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                style="filter: brightness(0) invert(1);"></button>
+                    </div>
+
                     <div class="modal-body text-center px-4 pt-4 pb-2">
                         <div style="width: 60px; height: 60px; background: #e6faf7;
-                            border-radius: 50%; display: flex; align-items: center;
-                            justify-content: center; margin: 0 auto 1rem;
-                            border: 2px solid #00bfa6;">
+                        border-radius: 50%; display: flex; align-items: center;
+                        justify-content: center; margin: 0 auto 1rem;
+                        border: 2px solid #00bfa6;">
                             <i class="bi bi-check-lg" style="font-size: 1.8rem; color: #00bfa6;"></i>
                         </div>
                         <h6 class="fw-bold mb-1" style="color: #222;">¡Listo!</h6>
@@ -1128,14 +1191,16 @@
                             {{ session('foto_success') }}
                         </p>
                     </div>
+
                     <div class="modal-footer border-0 justify-content-center pt-2 pb-4">
                         <button type="button" data-bs-dismiss="modal"
-                                style="background: #00bfa6; color: white; border: none;
+                                style="background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%); color: white; border: none;
                                padding: 0.5rem 2.5rem; border-radius: 8px;
                                font-size: 0.95rem; font-weight: 500; cursor: pointer;">
                             Aceptar
                         </button>
                     </div>
+
                 </div>
             </div>
         </div>

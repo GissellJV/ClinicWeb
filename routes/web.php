@@ -436,3 +436,5 @@ Route::patch('/recepcionista/incidentes-ruta/{id}/resolver', [IncidentesRutaCont
 //Informe de enfermeria
 Route::get('/informe-enfermeria', [EnfermeriaController::class, 'informe'])
     ->name('enfermeria.informe');
+
+Route::delete('/promociones/{id}', [PromocionController::class, 'destroy'])->name('promociones.destroy');

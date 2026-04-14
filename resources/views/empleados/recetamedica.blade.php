@@ -4,17 +4,11 @@
     <style>
 
         body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: whitesmoke;
-            display: flex;
             flex-direction: column; /* para que footer esté al final */
             min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background:whitesmoke;
+            display: flex;
         }
 
         .main-container {
@@ -68,19 +62,13 @@
             font-size: 1.1rem;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+            margin-left: 5px;
         }
 
         .btn-generar:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(78, 205, 196, 0.3);
-        }
-
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background:whitesmoke;
-            display: flex;
-
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
         }
 
         @media (max-width: 768px) {
@@ -93,11 +81,21 @@
         .text-info-emphasis{
             font-weight: bold;
         }
+
+        .botones-container{
+            display: flex;
+            gap: 10px;
+        }
+
+        .botones-container button{
+            flex: 1;
+        }
     </style>
-    <br> <br> <br>
+
     <div class="formulario">
         <div class="register-section" style="margin-top: 70px">
             <h1 class="text-center text-info-emphasis">Receta Médica</h1>
+            <br>
         <div class="form-container" >
 
                     <form method="POST" action="{{ route('receta.pdf') }}">
@@ -137,7 +135,7 @@
 
                         <div class="mb-3">
                             <label for="observaciones" class="form-label">Observaciones</label>
-                            <textarea name="observaciones" id="observaciones" class="form-control" placeholder="Indicaciones adicionales (opcional)"></textarea>
+                            <textarea name="observaciones" id="observaciones" class="form-control" placeholder="Indicaciones adicionales "></textarea>
                         </div>
 
                         <div class="form-check mb-3">
@@ -147,8 +145,15 @@
                             </label>
                         </div>
 
-                        <button style="margin-left: 300px; margin-top: -35px" type="submit" class="btn btn-generar">Generar Receta</button>
-                    </form>
+                        <div class="botones-container">
+                            <button type="submit" class="btn-generar">Generar Receta</button>
+
+                            <button type="reset" class="btn-cancel">
+                                Cancelar
+                            </button>
+                        </div>
+
+                      </form>
 
 
         </div>

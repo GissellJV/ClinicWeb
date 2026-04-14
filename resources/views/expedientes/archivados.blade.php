@@ -236,6 +236,13 @@
             }
         }
 
+        .num-cell{
+            font-weight:700;
+            color:#7f8c8d;
+            font-size:.73rem;
+            text-align:center;
+        }
+
 
     </style>
     <div class="container mt-5 pt-5">
@@ -245,19 +252,9 @@
             </div>
         @endif
 
-        <script>
-            setTimeout(function() {
-                let mensaje = document.getElementById('mensaje-exito');
-                if (mensaje) {
-                    mensaje.style.transition = "opacity 0.5s";
-                    mensaje.style.opacity = "0";
 
-                    setTimeout(() => mensaje.remove(), 500);
-                }
-            }, 10000);
-        </script>
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="text-info-emphasis">Expedientes Archivados</h2>
+            <h1 class="text-info-emphasis">Expedientes Archivados</h1>
         </div>
 
         <br>
@@ -270,6 +267,7 @@
             <table id="expedientesTable" class="table table-hover">
                 <thead>
                 <tr>
+                    <th style="width:45px;">#</th>
                     <th>N° Expediente</th>
                     <th>Nombre Completo</th>
                     <th>Teléfono</th>
@@ -280,6 +278,7 @@
                 <tbody class="table-group-divider">
                 @foreach($expedientes as $paciente)
                     <tr>
+                        <td class="num-cell"></td>
                         <td >{{ $paciente->expediente->numero_expediente  ?? 'Sin expediente' }}</td>
                         <td>{{ $paciente->nombres}} {{ $paciente->apellidos }}</td>
                         <td>{{$paciente->telefono}}</td>
@@ -332,24 +331,38 @@
                     zeroRecords: "No se encontraron registros",
                     emptyTable: "No hay expedientes disponibles",
                     paginate: {
-                        first: "Primero",
-                        previous: "Anterior",
-                        next: "Siguiente",
-                        last: "Último"
+                        previous: '<i class="bi bi-chevron-left"></i>',
+                        next: '<i class="bi bi-chevron-right"></i>'
                     }
                 },
+                columnDefs: [
+                    { targets: 0, orderable: false, searchable: false },
+                    { targets: 5, orderable: false, searchable: false },
+                ],
                 pageLength: 10,
                 lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
                 order: [[0, 'desc']], // Ordenar por N° Expediente descendente
-                columnDefs: [
-                    {
-                        targets: 4, // Columna de Acciones
-                        orderable: false,
-                        searchable: false
-                    }
-                ]
+                drawCallback: function () {
+                    const info = this.api().page.info();
+                    this.api()
+                        .column(0, { search: 'applied', order: 'applied', page: 'current' })
+                        .nodes()
+                        .each(function (cell, i) {
+                            cell.innerHTML = '<span class="num-cell">' + (info.start + i + 1) + '</span>';
+                        });
+                }
             });
         });
+
+            setTimeout(function() {
+            let mensaje = document.getElementById('mensaje-exito');
+            if (mensaje) {
+            mensaje.style.transition = "opacity 0.5s";
+            mensaje.style.opacity = "0";
+
+            setTimeout(() => mensaje.remove(), 500);
+        }
+        }, 10000);
     </script>
 
 @endsection

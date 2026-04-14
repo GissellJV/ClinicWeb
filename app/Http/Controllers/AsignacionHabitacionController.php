@@ -7,6 +7,7 @@ use App\Models\Paciente;
 use App\Models\AsignacionHabitacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class AsignacionHabitacionController extends Controller
 {
@@ -146,11 +147,18 @@ class AsignacionHabitacionController extends Controller
         // Validar datos
         $validated = $request->validate([
             'fecha_salida' => 'required|date|before_or_equal:today',
-            'motivo_alta' => 'required',
+            'motivo_alta'  => ['required',
+                Rule::in([
+                    'Recuperación satisfactoria',
+                    'Por solicitud del paciente/familiar',
+                    'Traslado a otra clinica',
+                ]),
+            ],
         ], [
             'fecha_salida.required' => 'La fecha de salida es obligatoria',
             'fecha_salida.before_or_equal' => 'La fecha no puede ser futura',
             'motivo_alta.required' => 'Debe seleccionar un motivo de alta',
+            'motivo_alta.in'=> 'El motivo seleccionado no es válido',
         ]);
 
         DB::beginTransaction();

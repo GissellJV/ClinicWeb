@@ -144,6 +144,8 @@ class PacienteController extends Controller
                 'password.min' => 'La contraseña debe tener mínimo 8 caracteres',
                 'password.regex' => 'Mínimo 8 caracteres, incluye mayúsculas, minúsculas y números',
                 'password.confirmed' => 'Las contraseñas no coinciden',
+                'email.required' => 'El correo es obligatorio',
+                'email.unique' => 'El correo ya ha sido registrado',
             ]);
 
 
@@ -159,7 +161,7 @@ class PacienteController extends Controller
         $nuevoPaciente->save();
 
 
-        return redirect()->route('inicioSesion')->with('mensaje', 'Registro exitoso, Inicia sesión');
+        return redirect()->route('inicioSesion')->with('success', 'Se registro correctamente, Inicie sesión');
     }
 
 
