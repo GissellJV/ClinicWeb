@@ -677,12 +677,7 @@
     </div>
 @endif
 
-@if(session('error'))
-    <div id="globalAlert" class="alert alert-danger alert-dismissible fade show text-center mb-0" role="alert">
-        {{ session('error') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-@endif
+
 
 <nav class="navbar navbar-modern fixed-top">
     <div class="container-fluid d-flex align-items-center justify-content-between">
@@ -890,12 +885,12 @@
                         </a>
                     </li>
                 </ul>
-                    <!-- INCIDENTE EN RUTA-->
-                    <li class="nav-item">
-                        <a class="nav-link offcanvas-nav-link" href="{{ route('incidentes_ruta.index') }}">
-                            <i class="bi bi-exclamation-triangle-fill"></i> Incidentes en Ruta
-                        </a>
-                    </li>
+                <!-- INCIDENTE EN RUTA-->
+                <li class="nav-item">
+                    <a class="nav-link offcanvas-nav-link" href="{{ route('incidentes_ruta.index') }}">
+                        <i class="bi bi-exclamation-triangle-fill"></i> Incidentes en Ruta
+                    </a>
+                </li>
 
 
                 <li class="nav-item">
