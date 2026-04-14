@@ -18,14 +18,9 @@
                 box-sizing: border-box;
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
-@section('contenido')
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Crear Expediente Médico</title>
-        <style>
+
+
+
             * {
                 margin: 0;
                 padding: 0;
@@ -712,31 +707,13 @@
                 font-weight: bold;
             }
         </style>
-    </head>
-    <body>
-    <!-- Botón de navegación navbar-toggler -->
-    <div class="formulario">
-        <br><br><br><br><br>
-        <h1 class="text-center text-info-emphasis">Crear Nuevo Expediente Médico</h1>
-            @media (max-width: 480px) {
-                body {
-                    padding: 10px;
-                }
-            }
-        </style>
-    </head>
+    @section('contenido')
+
     <body>
     <div class="formulario">
         <br><br><br><br><br>
         <h1 class="text-center text-info-emphasis">Crear Nuevo Expediente Médico</h1>
 
-        <div class="form-container" style="margin: 10px auto; max-width: 900px">
-            <div class="expediente-form">
-                @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
         <div class="form-container" style="margin: 10px auto; max-width: 900px">
 
             <div class="expediente-form">
@@ -754,16 +731,6 @@
 
                 <form action="{{ route('expedientes.guardar') }}" method="POST" id="expedienteForm">
                     @csrf
-
-                    <h3 class="section-title">Información del Expediente</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="numero_expediente">Número de Expediente</label>
-                            <div class="input-wrapper">
-                                <input type="text" class="form-control" id="numero_expediente" value="{{ $numero_expediente }}" readonly>
-                            </div>
-                            <small class="form-text text-muted">Generado automáticamente</small>
-                        </div>
                     <!-- Información del Expediente -->
                     <h3 class="section-title">Información del Expediente</h3>
                     <div class="form-row">
@@ -843,17 +810,8 @@
                                 @endif
                             </div>
                         </div>
-                    </div>
 
                     <!-- Signos Vitales -->
-                    <h3 class="section-title">Signos Vitales</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="peso">Peso (kg)</label>
-                            <div class="input-wrapper">
-                                <input type="number" step="0.1" class="form-control" id="peso" name="peso" placeholder="Ej: 70.5">
-                            </div>
-                        </div>
                     <h3 class="section-title">Signos Vitales</h3>
                     <div class="form-row">
                         <div class="form-group">
@@ -932,15 +890,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <h3 class="section-title">Antecedentes</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="alergias">Alergias</label>
-                            <div class="input-wrapper">
-                                <textarea class="form-control" id="alergias" name="alergias" rows="2" placeholder="Lista de alergias conocidas"></textarea>
-                            </div>
-                        </div>
                     <!-- Antecedentes -->
                     <h3 class="section-title">Antecedentes</h3>
                     <div class="form-row">
@@ -961,24 +910,10 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="antecedentes_familiares">Antecedentes Familiares</label>
-                            <div class="input-wrapper">
-                                <textarea class="form-control" id="antecedentes_familiares" name="antecedentes_familiares" rows="3" placeholder="Enfermedades hereditarias o familiares"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <label for="antecedentes_personales">Antecedentes Personales</label>
                             <div class="input-wrapper">
                                 <textarea class="form-control" id="antecedentes_personales" name="antecedentes_personales" rows="3" placeholder="Enfermedades previas, cirugías, etc."></textarea>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label for="observaciones">Observaciones Generales</label>
-                        <div class="input-wrapper">
-                            <textarea class="form-control" id="observaciones" name="observaciones" rows="3" placeholder="Observaciones adicionales"></textarea>
                         </div>
                     </div>
                     <!-- Observaciones -->
@@ -997,19 +932,7 @@
                             Guardar Expediente
                         </button>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
-    @if(!$pacienteSeleccionado)
-        <div class="modal fade modal-selector" id="modalPacientes" tabindex="-1" aria-labelledby="modalPacientesLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-xl">
-                <div class="modal-content selector-content">
-                    <div class="modal-header selector-header">
-                        <h5 class="modal-title" id="modalPacientesLabel">Seleccionar Paciente</h5>
-                        <button type="button" class="btn-close selector-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
                     <!-- BOTONES MEJORADOS -->
                     <div class="button-group">
                         <a href="{{ route('recepcionista.busquedaexpediente') }}" class="btn-cancel">
@@ -1019,52 +942,11 @@
                             Guardar Expediente
                         </button>
                     </div>
+
+    </div>
                 </form>
             </div>
         </div>
-    </div>
-
-                    <div class="modal-body selector-body">
-                        <div class="table-container-modal">
-                            <table id="tablaPacientesModal" class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Identidad</th>
-                                    <th>Nombres</th>
-                                    <th>Acciones</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($pacientes as $paciente)
-                                    <tr>
-                                        <td>{{ $paciente->id }}</td>
-                                        <td>{{ $paciente->numero_identidad ?? 'Sin identidad' }}</td>
-                                        <td>{{ $paciente->nombres }}</td>
-                                        <td>
-                                            <button
-                                                type="button"
-                                                class="btn-modal-seleccionar seleccionar-paciente"
-                                                data-id="{{ $paciente->id }}"
-                                                data-nombre="{{ $paciente->nombres }} - {{ $paciente->numero_identidad }}"
-                                            >
-                                                Seleccionar
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer selector-footer">
-                        <button type="button" class="btn-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
@@ -1137,22 +1019,11 @@
         @endforeach
         @endif
         @endif
-    <script>
+
         // Validación del formulario
         const formulario = document.getElementById('expedienteForm');
         const pacienteSelect = document.getElementById('paciente_id');
 
-        formulario.addEventListener('submit', function(e) {
-            if (!pacienteSelect.value) {
-                e.preventDefault();
-                alert('Por favor, seleccione un paciente');
-                pacienteSelect.focus();
-                return false;
-            }
-        });
-    </script>
-    </body>
-    </html>
         formulario.addEventListener('submit', function(e) {
             @if(!$pacienteSeleccionado)
             if (!pacienteInput.value) {
@@ -1163,6 +1034,4 @@
             @endif
         });
     </script>
-    </body>
-    </html>
 @endsection
