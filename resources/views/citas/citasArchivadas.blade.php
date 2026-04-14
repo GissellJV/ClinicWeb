@@ -662,7 +662,6 @@
         @else
 
             <div class="alert-custom alert-info-custom">
-                <i class="fas fa-box-open"></i>
                 <div>
                     <h5>No tienes citas archivadas</h5>
                 </div>
