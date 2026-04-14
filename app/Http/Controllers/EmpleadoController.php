@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\LoginEmpleado;
 use Illuminate\Support\Carbon;
+use Illuminate\Validation\Rule;
 
 class EmpleadoController extends Controller
 {
@@ -26,7 +27,26 @@ class EmpleadoController extends Controller
 
     public function store(Request $request)
     {
+        //validar datos
         $request->validate([
+            'cargo'  => ['required',
+            Rule::in([
+                'Recepcionista',
+                'Doctor',
+                'Enfermero',
+                'Gerente',
+                'Administrador',
+            ]),
+        ],
+            'departamento'  => ['required',
+                Rule::in([
+                    'Recepción',
+                    'Medicina General',
+                    'Pediatría',
+                    'Cirugía',
+                    'Administración'
+                ])
+            ],
             'nombre' => [
                 'required',
                 'string',
@@ -40,8 +60,6 @@ class EmpleadoController extends Controller
                 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/'
             ],
             'numero_identidad' => 'required|string|size:13|regex:/^\d{4}\d{4}\d{5}$/|unique:empleados,numero_identidad',
-            'cargo' => 'required|string',
-            'departamento' => 'required|string',
             'fecha_ingreso' => [
                 'required',
                 'date',
@@ -64,8 +82,8 @@ class EmpleadoController extends Controller
             'apellido.required' => 'El apellido es obligatorio',
             'apellido.regex' => 'El apellido solo puede contener letras y espacios',
             'apellido.max' => 'El apellido no puede tener más de 50 caracteres',
-            'cargo.required' => 'El cargo es obligatorio',
-            'departamento.required' => 'El departamento es obligatorio',
+            'cargo.in' => 'El cargo es obligatorio',
+            'departamento.in' => 'El departamento es obligatorio',
             'fecha_ingreso.required' => 'La fecha de ingreso es obligatoria',
             'fecha_ingreso.date' => 'La fecha de ingreso debe ser una fecha válida',
             'numero_identidad.required' => 'El número de identidad es obligatorio',
@@ -77,11 +95,12 @@ class EmpleadoController extends Controller
             'password.required' => 'La contraseña es obligatoria',
             'password.min' => 'La contraseña debe tener mínimo 8 caracteres',
             'password.regex' => 'La contraseña debe incluir mayúsculas, minúsculas y números',
-            'genero.required' => 'El género es obligatorio',
+            'genero.in' => 'El género es obligatorio',
             'foto.image' => 'El archivo debe ser debe ser formato jpeg, png o jpg',
             'foto.required' => 'Debe seleccionar una foto',
             'foto.mimes' => 'La foto debe ser formato jpeg, png o jpg',
-            'foto.max' => 'La foto no puede superar los 2MB'
+            'foto.max' => 'La foto no puede superar los 2MB',
+            'email.required' => 'El email es obligatorio',
         ]);
 
         $empleado = Empleado::create([
