@@ -1,12 +1,7 @@
 @extends('layouts.plantillaRecepcion')
 <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
+<title>Crear Expediente Médico</title>
 @section('contenido')
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Crear Expediente Médico</title>
 
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
@@ -18,34 +13,17 @@
                 box-sizing: border-box;
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
-@section('contenido')
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Crear Expediente Médico</title>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            }
+
+
 
             body {
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 background: whitesmoke;
                 min-height: 100vh;
-                padding: 20px;
+                display: flex;
+                flex-direction: column;
             }
-            body {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background:whitesmoke;
 
-                min-height: 100vh;
-                padding: 20px;
-            }
 
             /* Botón de navegación navbar-toggler */
             .navbar-toggler {
@@ -283,12 +261,6 @@
                 color: #2c3e50;
             }
 
-            .button-group {
-                display: flex;
-                gap: 15px;
-                margin-top: 40px;
-                justify-content: flex-end;
-            }
             .full-width {
                 grid-column: 1 / -1;
             }
@@ -302,12 +274,10 @@
             .button-group {
                 display: flex;
                 gap: 1rem;
-                justify-content: flex-end;
-                margin-top: 2rem;
-                padding-top: 1rem;
+                width: 100%;
+
                 border-top: 1px solid #e2e8f0;
             }
-
             .btn {
                 padding: 12px 24px;
                 border: none;
@@ -328,7 +298,7 @@
                 justify-content: center;
                 padding: 0;
                 height: 56px;
-                flex: 0 0 220px;
+                flex: 1;
                 box-sizing: border-box;
                 font-size: 1rem;
                 font-weight: 600;
@@ -348,11 +318,6 @@
                 border: 2px solid #e74c3c;
             }
 
-            .btn-primary {
-                background: #007bff;
-                color: white;
-                border: 1px solid #007bff;
-            }
             .btn-cancel:hover {
                 background: #e74c3c;
                 color: white;
@@ -360,24 +325,10 @@
                 box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
             }
 
-            .btn-primary:hover {
-                background: #0056b3;
-                border-color: #0056b3;
-            }
             .btn-cancel:active {
                 transform: translateY(0);
             }
 
-            .btn-secondary {
-                background: #6c757d;
-                color: white;
-                border: 1px solid #6c757d;
-            }
-
-            .btn-secondary:hover {
-                background: #545b62;
-                border-color: #545b62;
-            }
             /* Botón Guardar */
             .btn-register {
                 background: linear-gradient(135deg, #4ECDC4, #2b8c84);
@@ -582,24 +533,6 @@
                 color: white;
             }
 
-            .btn-cancel-modal {
-                padding: 0.875rem 2rem;
-                background: white;
-                border: 2px solid #131212;
-                border-radius: 8px;
-                color: #221414;
-                font-weight: 600;
-                font-size: 1.05rem;
-                transition: all 0.3s ease;
-            }
-
-            .btn-cancel-modal:hover {
-                background: #dc3545;
-                color: white;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
-            }
-
             .btn-open-selector {
                 padding: 12px 18px;
                 background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
@@ -712,31 +645,10 @@
                 font-weight: bold;
             }
         </style>
-    </head>
-    <body>
-    <!-- Botón de navegación navbar-toggler -->
-    <div class="formulario">
-        <br><br><br><br><br>
-        <h1 class="text-center text-info-emphasis">Crear Nuevo Expediente Médico</h1>
-            @media (max-width: 480px) {
-                body {
-                    padding: 10px;
-                }
-            }
-        </style>
-    </head>
-    <body>
     <div class="formulario">
         <br><br><br><br><br>
         <h1 class="text-center text-info-emphasis">Crear Nuevo Expediente Médico</h1>
 
-        <div class="form-container" style="margin: 10px auto; max-width: 900px">
-            <div class="expediente-form">
-                @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
         <div class="form-container" style="margin: 10px auto; max-width: 900px">
 
             <div class="expediente-form">
@@ -754,16 +666,6 @@
 
                 <form action="{{ route('expedientes.guardar') }}" method="POST" id="expedienteForm">
                     @csrf
-
-                    <h3 class="section-title">Información del Expediente</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="numero_expediente">Número de Expediente</label>
-                            <div class="input-wrapper">
-                                <input type="text" class="form-control" id="numero_expediente" value="{{ $numero_expediente }}" readonly>
-                            </div>
-                            <small class="form-text text-muted">Generado automáticamente</small>
-                        </div>
                     <!-- Información del Expediente -->
                     <h3 class="section-title">Información del Expediente</h3>
                     <div class="form-row">
@@ -817,43 +719,8 @@
                             </div>
                         </div>
                     </div>
-                        <div class="form-group">
-                            @if($pacienteSeleccionado)
-                                <label for="paciente_id"> Paciente </label>
-                            @else
-                                <label for="paciente_id">Seleccionar Paciente *</label>
-                            @endif
-                            <div class="input-wrapper">
-                                @if($pacienteSeleccionado)
-                                    {{-- SI YA EXISTE UN PACIENTE SELECCIONADO, DESDE EL BOTON CREAR EXPEDIENTE--}}
-
-                                    <input type="text" class="form-control"
-                                           value="{{ $pacienteSeleccionado->nombres }} - {{ $pacienteSeleccionado->numero_identidad }}"
-                                           readonly>
-                                    <input type="hidden" name="paciente_id" value="{{ $pacienteSeleccionado->id }}">
-                                @else
-                                    <select class="form-control" id="paciente_id" name="paciente_id" required>
-                                        <option value="">Seleccione un paciente</option>
-                                        @foreach($pacientes as $paciente)
-                                            <option value="{{ $paciente->id }}" {{ $paciente_id == $paciente->id ? 'selected' : '' }}>
-                                                {{ $paciente->nombres }} - {{ $paciente->numero_identidad }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Signos Vitales -->
-                    <h3 class="section-title">Signos Vitales</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="peso">Peso (kg)</label>
-                            <div class="input-wrapper">
-                                <input type="number" step="0.1" class="form-control" id="peso" name="peso" placeholder="Ej: 70.5">
-                            </div>
-                        </div>
                     <h3 class="section-title">Signos Vitales</h3>
                     <div class="form-row">
                         <div class="form-group">
@@ -932,15 +799,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <h3 class="section-title">Antecedentes</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="alergias">Alergias</label>
-                            <div class="input-wrapper">
-                                <textarea class="form-control" id="alergias" name="alergias" rows="2" placeholder="Lista de alergias conocidas"></textarea>
-                            </div>
-                        </div>
                     <!-- Antecedentes -->
                     <h3 class="section-title">Antecedentes</h3>
                     <div class="form-row">
@@ -961,24 +819,10 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="antecedentes_familiares">Antecedentes Familiares</label>
-                            <div class="input-wrapper">
-                                <textarea class="form-control" id="antecedentes_familiares" name="antecedentes_familiares" rows="3" placeholder="Enfermedades hereditarias o familiares"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <label for="antecedentes_personales">Antecedentes Personales</label>
                             <div class="input-wrapper">
                                 <textarea class="form-control" id="antecedentes_personales" name="antecedentes_personales" rows="3" placeholder="Enfermedades previas, cirugías, etc."></textarea>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label for="observaciones">Observaciones Generales</label>
-                        <div class="input-wrapper">
-                            <textarea class="form-control" id="observaciones" name="observaciones" rows="3" placeholder="Observaciones adicionales"></textarea>
                         </div>
                     </div>
                     <!-- Observaciones -->
@@ -987,28 +831,6 @@
                         <div class="input-wrapper">
                             <textarea class="form-control" id="observaciones" name="observaciones" rows="3" placeholder="Observaciones adicionales"></textarea>
                         </div>
-                    </div>
-
-                    <div class="button-group">
-                        <a href="{{ route('recepcionista.busquedaexpediente') }}" class="btn-cancel" style="text-decoration-line: none">
-                            Cancelar
-                        </a>
-                        <button type="submit" class="btn-register">
-                            Guardar Expediente
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    @if(!$pacienteSeleccionado)
-        <div class="modal fade modal-selector" id="modalPacientes" tabindex="-1" aria-labelledby="modalPacientesLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-xl">
-                <div class="modal-content selector-content">
-                    <div class="modal-header selector-header">
-                        <h5 class="modal-title" id="modalPacientesLabel">Seleccionar Paciente</h5>
-                        <button type="button" class="btn-close selector-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <!-- BOTONES MEJORADOS -->
                     <div class="button-group">
@@ -1022,7 +844,14 @@
                 </form>
             </div>
         </div>
-    </div>
+        <!-- Modal de Pacientes -->
+        <div class="modal fade modal-selector" id="modalPacientes" tabindex="-1" aria-labelledby="modalPacientesLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content selector-content">
+                    <div class="modal-header selector-header">
+                        <h5 class="modal-title" id="modalPacientesLabel">Seleccionar Paciente</h5>
+                        <button type="button" class="btn-close selector-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
 
                     <div class="modal-body selector-body">
                         <div class="table-container-modal">
@@ -1032,6 +861,7 @@
                                     <th>ID</th>
                                     <th>Identidad</th>
                                     <th>Nombres</th>
+                                    <th>Apellidos</th>
                                     <th>Acciones</th>
                                 </tr>
                                 </thead>
@@ -1039,14 +869,15 @@
                                 @foreach($pacientes as $paciente)
                                     <tr>
                                         <td>{{ $paciente->id }}</td>
-                                        <td>{{ $paciente->numero_identidad ?? 'Sin identidad' }}</td>
+                                        <td>{{ $paciente->numero_identidad }}</td>
                                         <td>{{ $paciente->nombres }}</td>
+                                        <td>{{ $paciente->apellidos }}</td>
                                         <td>
                                             <button
                                                 type="button"
                                                 class="btn-modal-seleccionar seleccionar-paciente"
                                                 data-id="{{ $paciente->id }}"
-                                                data-nombre="{{ $paciente->nombres }} - {{ $paciente->numero_identidad }}"
+                                                data-nombre="{{ $paciente->nombres }} {{ $paciente->apellidos }}"
                                             >
                                                 Seleccionar
                                             </button>
@@ -1059,13 +890,11 @@
                     </div>
 
                     <div class="modal-footer selector-footer">
-                        <button type="button" class="btn-cancel-modal" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
             </div>
         </div>
-    @endif
-
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
@@ -1073,96 +902,64 @@
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
 
     <script>
-        const formulario = document.getElementById('expedienteForm');
+        document.addEventListener('DOMContentLoaded', function () {
+            const pacienteIdInput = document.getElementById('paciente_id');
+            const pacienteNombreInput = document.getElementById('paciente_nombre');
 
-        @if(!$pacienteSeleccionado)
-        const pacienteInput = document.getElementById('paciente_id');
-        const pacienteNombreInput = document.getElementById('paciente_nombre');
+            const tablaPacientes = $('#tablaPacientesModal').DataTable({
+                responsive: true,
+                autoWidth: false,
+                language: {
+                    processing: "Procesando...",
+                    search: "Buscar:",
+                    lengthMenu: "Mostrar _MENU_ registros",
+                    info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                    infoEmpty: "Mostrando 0 a 0 de 0 registros",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    loadingRecords: "Cargando...",
+                    zeroRecords: "No se encontraron registros",
+                    emptyTable: "No hay pacientes disponibles",
+                    paginate: {
+                        first: "Primero",
+                        previous: "Anterior",
+                        next: "Siguiente",
+                        last: "Último"
+                    }
+                },
+                pageLength: 10,
+                lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
+                columnDefs: [{ targets: 3, orderable: false, searchable: false }]
+            });
 
-        const tablaPacientes = $('#tablaPacientesModal').DataTable({
-            responsive: true,
-            autoWidth: false,
-            language: {
-                processing: "Procesando...",
-                search: "Buscar:",
-                lengthMenu: "Mostrar _MENU_ registros",
-                info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                infoEmpty: "Mostrando 0 a 0 de 0 registros",
-                infoFiltered: "(filtrado de _MAX_ registros totales)",
-                loadingRecords: "Cargando...",
-                zeroRecords: "No se encontraron registros",
-                emptyTable: "No hay pacientes disponibles",
-                paginate: {
-                    first: "Primero",
-                    previous: "Anterior",
-                    next: "Siguiente",
-                    last: "Último"
-                }
-            },
-            pageLength: 10,
-            lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
-            columnDefs: [
-                {
-                    targets: 3,
-                    orderable: false,
-                    searchable: false
-                }
-            ]
-        });
-
-        function enlazarBotonesPaciente() {
             document.querySelectorAll('.seleccionar-paciente').forEach(boton => {
                 boton.addEventListener('click', function () {
-                    pacienteInput.value = this.dataset.id;
+                    pacienteIdInput.value = this.dataset.id;
                     pacienteNombreInput.value = this.dataset.nombre;
 
-                    const modalElement = document.getElementById('modalPacientes');
-                    const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
+                    const modalInstance = bootstrap.Modal.getOrCreateInstance(document.getElementById('modalPacientes'));
                     modalInstance.hide();
                 });
             });
-        }
 
-        enlazarBotonesPaciente();
+            $('#modalPacientes').on('shown.bs.modal', function () {
+                tablaPacientes.columns.adjust().responsive.recalc();
+            });
 
-        $('#modalPacientes').on('shown.bs.modal', function () {
-            tablaPacientes.columns.adjust().responsive.recalc();
-        });
-
-        @if($paciente_id)
-            @foreach($pacientes as $paciente)
-            @if($paciente_id == $paciente->id)
-            pacienteNombreInput.value = @json($paciente->nombres . ' - ' . $paciente->numero_identidad);
-        @endif
-        @endforeach
-        @endif
-        @endif
-    <script>
-        // Validación del formulario
-        const formulario = document.getElementById('expedienteForm');
-        const pacienteSelect = document.getElementById('paciente_id');
-
-        formulario.addEventListener('submit', function(e) {
-            if (!pacienteSelect.value) {
-                e.preventDefault();
-                alert('Por favor, seleccione un paciente');
-                pacienteSelect.focus();
-                return false;
-            }
-        });
-    </script>
-    </body>
-    </html>
-        formulario.addEventListener('submit', function(e) {
-            @if(!$pacienteSeleccionado)
-            if (!pacienteInput.value) {
-                e.preventDefault();
-                alert('Por favor, seleccione un paciente');
-                return false;
-            }
+            @if(old('paciente_id'))
+                @foreach($pacientes as $p)
+                @if(old('paciente_id') == $p->id)
+                pacienteNombreInput.value = @json(trim($p->nombres . ' ' . $p->apellidos));
             @endif
+            @endforeach
+            @endif
+
+            setTimeout(() => {
+                document.querySelectorAll('.alert').forEach(alert => {
+                    alert.style.transition = "opacity 0.5s";
+                    alert.style.opacity = "0";
+                    setTimeout(() => alert.remove(), 500);
+                });
+            }, 2500);
         });
     </script>
-    </body>
-    </html>
 @endsection

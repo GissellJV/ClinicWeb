@@ -345,6 +345,7 @@
                     <table id="historialTable" class="table table-hover">
                         <thead>
                         <tr>
+                            <th>#</th>
                             <th>Fecha</th>
                             <th>Peso</th>
                             <th>Altura</th>
@@ -361,6 +362,7 @@
                         <tbody>
                         @foreach($historiales as $hist)
                             <tr>
+                                <td class="num-cell"></td>
                                 <td>{{ $hist->fecha }}</td>
                                 <td>{{ $hist->peso }}</td>
                                 <td>{{ $hist->altura }}</td>
@@ -408,7 +410,46 @@
                 },
                 pageLength: 10,
                 lengthMenu: [[5,10,25,50,-1],[5,10,25,50,"Todos"]],
-                order: [[0,'desc']]
+                order: [[0,'desc']],
+                columnDefs: [
+                    { targets: 0, orderable: false, searchable: false },
+                    { targets: 4, orderable: false, searchable: false }
+                ],
+                dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
+                drawCallback: function() {
+                    const info = this.api().page.info();
+                    this.api().column(0, { search: 'applied', order: 'applied', page: 'current' })
+                        .nodes().each(function(cell, i) {
+                        cell.innerHTML = '<span style="font-weight:600; color:#4ecdc4;">' + (info.start + i + 1) + '</span>';
+                    });
+                }
+            });
+            // Función para actualizar contadores
+            function actualizarContadores() {
+                let pendientes = 0;
+                let completadas = 0;
+
+                table.rows({search: 'applied'}).every(function() {
+                    const node = this.node();
+                    const estado = $(node).data('estado');
+
+                    if (estado === 'pendiente') {
+                        pendientes++;
+                    } else if (estado === 'completado') {
+                        completadas++;
+                    }
+                });
+
+                $('#pendientesCount').text(pendientes);
+                $('#completadasCount').text(completadas);
+            }
+
+            // Actualizar contadores al cargar
+            actualizarContadores();
+
+            // Actualizar contadores cuando se filtra la tabla
+            table.on('search.dt', function() {
+                actualizarContadores();
             });
         });
     </script>

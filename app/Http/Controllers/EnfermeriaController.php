@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class EnfermeriaController extends Controller
 {
@@ -129,6 +130,8 @@ class EnfermeriaController extends Controller
 
             $meses[] = [
                 'mes' => $inicio->isoFormat('MMMM YYYY'),
+                'mes_num' => $m,
+                'anio' => $year,
                 'pacientes' => $pacientesMes,
                 'incidentes' => $incidentesMes,
                 'medicamentos' => $medicamentosMes,
@@ -141,5 +144,55 @@ class EnfermeriaController extends Controller
             'totalIncidentes',
             'totalMedicamentos'
         ));
+    }
+    public function exportarPdf($mes, $anio)
+    {
+        $pacientes = DB::table('pacientes')
+            ->leftJoin('aplicacion_medicamento', 'pacientes.id', '=', 'aplicacion_medicamento.paciente_id')
+            ->leftJoin('inventario_medicamentos', 'aplicacion_medicamento.inventario_id', '=', 'inventario_medicamentos.id')
+            ->leftJoin('asignaciones_habitaciones', function ($join) {
+                $join->on('pacientes.id', '=', 'asignaciones_habitaciones.paciente_id')
+                    ->where('asignaciones_habitaciones.estado', '=', 'activo');
+            })
+            ->leftJoin('habitaciones', 'asignaciones_habitaciones.habitacion_id', '=', 'habitaciones.id')
+            ->select(
+                'pacientes.id',
+                'pacientes.nombres',
+                'pacientes.apellidos',
+                'habitaciones.id as habitacion',
+                'inventario_medicamentos.nombre as medicamento',
+                'aplicacion_medicamento.cantidad',
+                'aplicacion_medicamento.fecha_aplicacion'
+            )
+            ->where(function ($q) use ($mes, $anio) {
+                $q->whereMonth('aplicacion_medicamento.fecha_aplicacion', $mes)
+                    ->whereYear('aplicacion_medicamento.fecha_aplicacion', $anio);
+            })
+            ->get()
+            ->groupBy('id');
+
+        $incidentes = DB::table('incidentes')
+            ->whereMonth('fecha_hora_incidente', $mes)
+            ->whereYear('fecha_hora_incidente', $anio)
+            ->get()
+            ->groupBy('paciente_id');
+
+        $totalMedicamentos = DB::table('aplicacion_medicamento')
+            ->whereMonth('fecha_aplicacion', $mes)
+            ->whereYear('fecha_aplicacion', $anio)
+            ->sum('cantidad');
+
+        $totalRegistros = $pacientes->count();
+
+        $pdf = Pdf::loadView('pdf.informe_mensual', compact(
+            'pacientes',
+            'mes',
+            'anio',
+            'totalMedicamentos',
+            'totalRegistros',
+            'incidentes',
+        ));
+
+        return $pdf->download("informe_{$mes}_{$anio}.pdf");
     }
 }

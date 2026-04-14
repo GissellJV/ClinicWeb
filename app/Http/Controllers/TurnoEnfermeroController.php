@@ -7,6 +7,8 @@ use App\Models\RolTurnoEnfermero;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+Carbon::setLocale('es');
+
 
 class TurnoEnfermeroController extends Controller
 {
@@ -28,7 +30,7 @@ class TurnoEnfermeroController extends Controller
         $nextMes = $fecha->copy()->addMonth()->month;
         $nextAnio = $fecha->copy()->addMonth()->year;
 
-        $nombreMes = $fecha->translatedFormat('F');
+        $nombreMes = ucfirst($fecha->translatedFormat('F'));
         $diasEnMes = $fecha->daysInMonth;
 
         // SOLO EL ENFERMERO LOGUEADO

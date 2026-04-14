@@ -8,6 +8,8 @@ use App\Models\RolTurnoDoctor;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+Carbon::setLocale('Es');
+
 
 class TurnoController extends Controller
 {
@@ -29,7 +31,7 @@ class TurnoController extends Controller
         $nextMes = $fecha->copy()->addMonth()->month;
         $nextAnio = $fecha->copy()->addMonth()->year;
 
-        $nombreMes = $fecha->translatedFormat('F');
+        $nombreMes = ucfirst($fecha->translatedFormat('F'));
         $diasEnMes = $fecha->daysInMonth;
 
         // DOCTORES

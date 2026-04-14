@@ -3955,8 +3955,8 @@
 
             <!-- Controles -->
             <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
+            <div class="carousel-control-prev"></div>
+            <div class="carousel-control-next"></div>
         </div>
 
         <div class="modal fade" id="deleteModal" tabindex="-1">

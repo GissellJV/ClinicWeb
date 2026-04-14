@@ -10,9 +10,21 @@
         }
         .button-group {
             display: flex;
-            justify-content: flex-end;
+            width: 100%;
             gap: 15px;
             margin-top: 20px;
+        }
+
+        .button-group button {
+            flex: 1;
+            width: 100%;
+        }
+        .btn-guardar,
+        .btn-cancel {
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
         }
         .text-info-emphasis {
 

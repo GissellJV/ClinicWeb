@@ -256,7 +256,7 @@
 
         .edit-icon-overlay {
             position: absolute;
-            bottom: -2px;
+            bottom: 5px;
             right: -2px;
             background: #00bfa6;
             border-radius: 50%;
@@ -464,11 +464,6 @@
                         <i class="bi bi-chat-right-text me-1"></i> Comentarios</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link nav-link-modern" href="{{ route('preguntas.publico') }}">
-                        <i class="bi bi-question-circle me-1"></i> Preguntas Frecuentes</a>
-                </li>
-
                 <!-- Enfermería -->
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-link-glow dropdown-toggle" data-bs-toggle="dropdown">
@@ -517,7 +512,7 @@
                     $empleado = \App\Models\Empleado::find($empleadoId);
                 @endphp
 
-                <div style="position: relative; display: inline-block; margin-right: 8px;">
+                <div style="position: relative; display: flex; align-items: center; margin-right: 9px;">
                     @if($empleado && $empleado->foto)
                         <img src="data:image/jpeg;base64,{{ base64_encode($empleado->foto) }}"
                              alt="Foto"
