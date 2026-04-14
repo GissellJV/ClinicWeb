@@ -597,7 +597,7 @@
     <div class="turnos-page">
         <div class="container-fluid px-4">
 
-            {{-- Header --}}
+            {{-- Encabezado --}}
             <div class="turnos-header">
                 <div class="d-flex flex-wrap justify-content-between align-items-center">
                     <div>
@@ -618,30 +618,21 @@
                 </div>
             </div>
 
-            {{-- Stats --}}
+            {{-- Estadisticas --}}
             <div class="stats-row">
                 <div class="stat-mini" style="border-color: #0077b6;">
-                    <div class="stat-icon" style="background: linear-gradient(135deg, #00b4d8, #0077b6);">
-                        <i class="bi bi-people-fill"></i>
-                    </div>
                     <div>
                         <div class="stat-value">{{ $enfermeros->count() }}</div>
                         <div class="stat-label">Enfermeros</div>
                     </div>
                 </div>
                 <div class="stat-mini" style="border-color: #2ecc71;">
-                    <div class="stat-icon" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
-                        <i class="bi bi-calendar-check"></i>
-                    </div>
                     <div>
                         <div class="stat-value">{{ $diasEnMes }}</div>
                         <div class="stat-label">Días del mes</div>
                     </div>
                 </div>
                 <div class="stat-mini" style="border-color: #9b59b6;">
-                    <div class="stat-icon" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
-                        <i class="bi bi-clock-history"></i>
-                    </div>
                     <div>
                         @php
                             $totalAsignados = 0;
@@ -656,9 +647,6 @@
                     </div>
                 </div>
                 <div class="stat-mini" style="border-color: #e67e22;">
-                    <div class="stat-icon" style="background: linear-gradient(135deg, #e67e22, #d35400);">
-                        <i class="bi bi-exclamation-triangle"></i>
-                    </div>
                     <div>
                         @php
                             $totalVacios = ($enfermeros->count() * $diasEnMes) - $totalAsignados;

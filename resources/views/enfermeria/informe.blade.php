@@ -443,9 +443,11 @@
                             <td><strong style="color:#e74c3c;">{{ $m['incidentes'] }}</strong></td>
                             <td><strong style="color:#27ae60;">{{ $m['medicamentos'] }}</strong></td>
                             <td>
-                                <button class="btn-pdf" disabled>
-                                    <i class="bi bi-file-earmark-pdf"></i> PDF
-                                </button>
+                                <form action="{{ route('pdf.mensual', [$m['mes_num'], $m['anio']]) }}" method="GET" style="display:inline;">
+                                    <button type="submit" class="btn-pdf">
+                                        <i class="bi bi-file-earmark-pdf"></i> PDF
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
