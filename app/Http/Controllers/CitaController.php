@@ -8,6 +8,7 @@ use App\Models\Empleado;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Validation\Rule;
 
 class CitaController extends Controller
 {
@@ -350,9 +351,24 @@ class CitaController extends Controller
                     }
                 }
             ],
-            'hora' => 'required',
-            'motivo' => 'required|string|max:500'
-        ]);
+            'hora'=> [
+                'required',
+                Rule::in(['08:00', '09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00']),
+            ],
+            'tipo_consulta'=> [
+                'required',
+                Rule::in(['Primera vez', 'Control', 'Emergencia', 'Examen']),
+            ],
+            'motivo' => 'required|string|max:500'],
+            [
+                'paciente.required' => 'Debe seleccionar un paciente.',
+                'fecha.required' => 'La fecha es obligatorio.',
+                'especialidad.required' => 'La  especialidad es obligatorio.',
+                'hora.required'          => 'Debe seleccionar una hora.',
+                'hora.in'                => 'La hora seleccionada no es válida.',
+                'tipo_consulta.required' => 'Debe seleccionar un tipo de consulta.',
+                'tipo_consulta.in'       => 'El tipo de consulta seleccionado no es válido.',
+            ]);
 
         // Verificar disponibilidad (ya lo tienes)
         $citaExistente = Cita::where('empleado_id', $request->empleado_id)

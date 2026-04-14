@@ -54,6 +54,7 @@
             font-size: 1.1rem;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+            flex: 1;
         }
 
         .btn-primary:hover {
@@ -71,6 +72,7 @@
             font-weight: 600;
             font-size: 1.1rem;
             transition: all 0.3s ease;
+            flex: 1;
         }
 
         .btn-secondary:hover {
@@ -614,6 +616,23 @@
         }
 
         /* ================= DARK MODE ================= */
+
+        .form-control.is-invalid,
+        .form-select.is-invalid {
+            border-color: #dc3545 !important;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+        }
+
+        .invalid-feedback {
+            display: none;
+        }
+
+        .invalid-feedback.d-block {
+            display: block !important;
+            color: #dc3545;
+            font-size: 0.875em;
+            margin-top: 4px;
+        }
     </style>
 
     <div class="formulario">
@@ -635,10 +654,9 @@
             </div>
         @endif
 
-        <div id="mensajeFormulario" class="alert alert-danger" style="display: none;"></div>
 
         <div class="form-container">
-            <form method="POST" action="{{ route('recepcionista.citas.guardar') }}" id="agendarForm" novalidate>
+            <form method="POST" action="{{ route('recepcionista.citas.guardar') }}" id="agendarForm" >
                 @csrf
 
                 <div class="form-group">
@@ -652,23 +670,29 @@
                             class="form-control"
                             placeholder="Seleccione un paciente"
                             readonly
-                            required
+
                         >
 
                         <button type="button" class="btn btn-open-selector" data-bs-toggle="modal" data-bs-target="#modalPacientes">
                             Buscar
                         </button>
                     </div>
+                    @error('paciente')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group">
                     <label for="especialidad" class="form-label">Especialidad</label>
-                    <select id="especialidad" name="especialidad" class="form-control" required>
+                    <select id="especialidad" name="especialidad" class="form-control" >
                         <option value="">Seleccionar especialidad</option>
                         @foreach($especialidades as $especialidad)
                             <option value="{{ $especialidad }}">{{ $especialidad }}</option>
                         @endforeach
                     </select>
+                    @error('especialidad')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -695,33 +719,42 @@
 
                 <div class="form-group">
                     <label class="form-label" for="fecha">Fecha de la Cita</label>
-                    <input type="date" class="form-control" id="fecha" name="fecha" min="{{ date('Y-m-d') }}" required>
+                    <input type="date" class="form-control" id="fecha" name="fecha" min="{{ date('Y-m-d') }}" >
+                    @error('fecha')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="hora">Hora de la Cita</label>
-                    <select class="form-control" id="hora" name="hora" required>
+                    <select class="form-control" id="hora" name="hora" >
                         <option value="">Seleccionar hora</option>
-                        <option value="08:00">08:00 AM</option>
-                        <option value="09:00">09:00 AM</option>
-                        <option value="10:00">10:00 AM</option>
-                        <option value="11:00">11:00 AM</option>
-                        <option value="14:00">02:00 PM</option>
-                        <option value="15:00">03:00 PM</option>
-                        <option value="16:00">04:00 PM</option>
-                        <option value="17:00">05:00 PM</option>
+                        <option value="08:00" {{ old('hora') == '08:00' ? 'selected' : '' }}>08:00 AM</option>
+                        <option value="09:00" {{ old('hora') == '09:00' ? 'selected' : '' }}>09:00 AM</option>
+                        <option value="10:00" {{ old('hora') == '10:00' ? 'selected' : '' }}>10:00 AM</option>
+                        <option value="11:00" {{ old('hora') == '11:00' ? 'selected' : '' }}>11:00 AM</option>
+                        <option value="14:00" {{ old('hora') == '14:00' ? 'selected' : '' }}>02:00 PM</option>
+                        <option value="15:00" {{ old('hora') == '15:00' ? 'selected' : '' }}>03:00 PM</option>
+                        <option value="16:00" {{ old('hora') == '16:00' ? 'selected' : '' }}>04:00 PM</option>
+                        <option value="17:00" {{ old('hora') == '17:00' ? 'selected' : '' }}>05:00 PM</option>
                     </select>
+                    @error('hora')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="tipo_consulta">Tipo de Consulta</label>
-                    <select class="form-control" id="tipo_consulta" name="tipo_consulta" required>
+                    <select class="form-control" id="tipo_consulta" name="tipo_consulta" >
                         <option value="">Seleccionar tipo</option>
-                        <option value="Primera vez">Primera vez</option>
-                        <option value="Control">Control</option>
-                        <option value="Emergencia">Emergencia</option>
-                        <option value="Examen">Examen</option>
+                        <option value="Primera vez" {{ old('tipo_consulta') == 'Primera vez' ? 'selected' : '' }}>Primera vez</option>
+                        <option value="Control"     {{ old('tipo_consulta') == 'Control'     ? 'selected' : '' }}>Control</option>
+                        <option value="Emergencia"  {{ old('tipo_consulta') == 'Emergencia'  ? 'selected' : '' }}>Emergencia</option>
+                        <option value="Examen"      {{ old('tipo_consulta') == 'Examen'      ? 'selected' : '' }}>Examen</option>
                     </select>
+                    @error('tipo_consulta')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -1035,63 +1068,7 @@
 
             document.getElementById('fecha').min = new Date().toISOString().split('T')[0];
 
-            document.getElementById('agendarForm').addEventListener('submit', function(e) {
-                const fechaCita = document.getElementById('fecha').value;
-                const hoy = new Date().toISOString().split('T')[0];
-                const pacienteId = document.getElementById('paciente_id').value;
-                const doctorId = document.getElementById('empleado_id').value;
-                const especialidad = document.getElementById('especialidad').value;
-                const hora = document.getElementById('hora').value;
-                const motivo = document.getElementById('motivo').value.trim();
 
-                limpiarMensajeFormulario();
-
-                if (!pacienteId) {
-                    e.preventDefault();
-                    mostrarMensajeFormulario('Debe seleccionar un paciente.');
-                    return false;
-                }
-
-                if (!especialidad) {
-                    e.preventDefault();
-                    mostrarMensajeFormulario('Debe seleccionar una especialidad.');
-                    return false;
-                }
-
-                if (!doctorId) {
-                    e.preventDefault();
-                    mostrarMensajeFormulario('Debe seleccionar un doctor.');
-                    return false;
-                }
-
-                if (!fechaCita) {
-                    e.preventDefault();
-                    mostrarMensajeFormulario('Debe seleccionar una fecha para la cita.');
-                    return false;
-                }
-
-                if (fechaCita < hoy) {
-                    e.preventDefault();
-                    mostrarMensajeFormulario('La fecha de la cita no puede ser anterior a hoy.');
-                    return false;
-                }
-
-                if (!hora) {
-                    e.preventDefault();
-                    mostrarMensajeFormulario('Debe seleccionar una hora para la cita.');
-                    return false;
-                }
-
-                if (!motivo) {
-                    e.preventDefault();
-                    mostrarMensajeFormulario('Debe ingresar el motivo de la consulta.');
-                    return false;
-                }
-
-                const submitBtn = this.querySelector('button[type="submit"]');
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Agendando...';
-                submitBtn.disabled = true;
-            });
         });
     </script>
 @endsection
