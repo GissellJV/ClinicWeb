@@ -1477,10 +1477,10 @@
                     <p>¿Estás seguro de que deseas archivar esta cita?</p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
                     <button class="btn-accion btn-archivar" id="btnConfirmarArchivar">
                         Sí, archivar
                     </button>
+                    <button class="btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -1498,10 +1498,10 @@
                     <p>¿Estás seguro de que deseas eliminar esta cita?</p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
                     <button class="btn-modal-danger" id="btnConfirmarEliminar">
                         Sí, eliminar
                     </button>
+                    <button class="btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -1529,10 +1529,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" id="btnConfirmarCancelar" class="btn-modal-danger">
                         Confirmar cancelación
                     </button>
+                    <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -1548,12 +1548,15 @@
                 </div>
                 <div class="modal-body" id="modalReprogramarContenido">
                     <!-- Se llena dinámicamente por JS -->
+                    <div id="alertaReprogramar" class="alert alert-danger mt-3 d-none" role="alert">
+                        Debes seleccionar la nueva fecha y hora.
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn-modal-warning" id="btnConfirmarReprogramar">
+                <div class="modal-footer"><button type="button" class="btn-modal-warning" id="btnConfirmarReprogramar">
                         Guardar cambios
                     </button>
+                    <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Cancelar</button>
+
                 </div>
             </div>
         </div>
@@ -1592,34 +1595,43 @@
         }
 
         function confirmarReprogramacion(id, doctor, fecha, hora) {
+
             document.getElementById('modalReprogramarContenido').innerHTML = `
-                <p>Selecciona la nueva fecha y hora para tu cita</p>
+        <p>Selecciona la nueva fecha y hora para tu cita</p>
 
-                <div class="cita-info-box mb-3">
-                    <strong>Doctor:</strong> ${doctor}<br>
-                    <strong>Fecha actual:</strong> ${fecha}<br>
-                    <strong>Hora actual:</strong> ${hora}
-                </div>
+        <div class="cita-info-box mb-3">
+            <strong>Doctor:</strong> ${doctor}<br>
+            <strong>Fecha actual:</strong> ${fecha}<br>
+            <strong>Hora actual:</strong> ${hora}
+        </div>
 
-                <div class="mb-3">
-                    <label class="form-label"><i class="fas fa-calendar"></i> Nueva Fecha</label>
-                    <input type="date" class="form-control form-control-modal" id="modal_fecha_${id}" required min="{{ date('Y-m-d') }}">
-                </div>
+        <div class="mb-3">
+            <label class="form-label"><i class="fas fa-calendar"></i> Nueva Fecha</label>
+            <input type="date" class="form-control form-control-modal" id="modal_fecha_${id}" required min="{{ date('Y-m-d') }}">
+        </div>
 
-                <div class="mb-3">
-                    <label class="form-label"><i class="fas fa-clock"></i> Nueva Hora</label>
-                    <input type="time" class="form-control form-control-modal" id="modal_hora_${id}" required>
-                </div>
-            `;
+        <div class="mb-3">
+            <label class="form-label"><i class="fas fa-clock"></i> Nueva Hora</label>
+            <input type="time" class="form-control form-control-modal" id="modal_hora_${id}" required>
+        </div>
+
+        <div id="alertaReprogramar_${id}" class="alert alert-danger d-none">
+            Debes seleccionar la nueva fecha y hora.
+        </div>
+    `;
 
             document.getElementById('btnConfirmarReprogramar').onclick = function () {
+
                 let nuevaFecha = document.getElementById('modal_fecha_' + id).value;
                 let nuevaHora = document.getElementById('modal_hora_' + id).value;
+                let alerta = document.getElementById('alertaReprogramar_' + id);
 
                 if (!nuevaFecha || !nuevaHora) {
-                    alert('Por favor complete todos los campos');
+                    alerta.classList.remove('d-none');
                     return;
                 }
+
+                alerta.classList.add('d-none');
 
                 document.getElementById('hidden_nueva_fecha_' + id).value = nuevaFecha;
                 document.getElementById('hidden_nueva_hora_' + id).value = nuevaHora;

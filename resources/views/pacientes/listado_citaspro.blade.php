@@ -149,9 +149,9 @@
         }
 
         /* Anchos fijos por columna */
-        table.dataTable thead th:nth-child(1) { width: 35px; }   /* # */
-        table.dataTable thead th:nth-child(2) { width: 15%; }    /* Paciente */
-        table.dataTable thead th:nth-child(3) { width: 15%; }    /* Doctor */
+        table.dataTable thead th:nth-child(1) { width: 25px; }   /* # */
+        table.dataTable thead th:nth-child(2) { width: 10%; }    /* Paciente */
+        table.dataTable thead th:nth-child(3) { width: 10%; }    /* Doctor */
         table.dataTable thead th:nth-child(4) { width: 88px; }   /* Fecha */
         table.dataTable thead th:nth-child(5) { width: 70px; }   /* Hora */
         table.dataTable thead th:nth-child(6) { width: 10%; }    /* Especialidad */
@@ -164,7 +164,7 @@
             padding: 10px 8px;
             text-align: center;
             font-weight: 700;
-            font-size: 11px;
+            font-size: 14px;
             letter-spacing: 0.3px;
             text-transform: uppercase;
             border-bottom: 2px solid #e0e0e0;
@@ -173,9 +173,6 @@
             white-space: nowrap;
             overflow: hidden;
         }
-
-
-
 
 
         table.dataTable tbody tr {
@@ -192,7 +189,7 @@
             color: #666;
             text-align: center;
             border: none;
-            font-size: 12px;
+            font-size: 14px;
             word-wrap: break-word;
             overflow: hidden;
         }
@@ -604,8 +601,10 @@
                     <th class="text-center">HORA</th>
                     <th class="text-center">ESPECIALIDAD</th>
                     <th class="text-center">ESTADO</th>
+                    <th class="text-center">MOTIVO</th>
                     <th class="text-center">ACCIÓN</th>
                     <th class="text-center"></th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -634,6 +633,7 @@
                         <td>{{ \Carbon\Carbon::parse($cita->fecha)->format('d/m/Y') }}</td>
                         <td><strong>{{ $cita->hora }}</strong></td>
                         <td>{{ $cita->especialidad ?? 'No definida' }}</td>
+
                         <td>
                             <span class="badge
                                 @if($cita->estado == 'pendiente') bg-warning
@@ -641,10 +641,18 @@
                                 @elseif($cita->estado == 'cancelada') bg-danger
                                 @elseif($cita->estado == 'reprogramada') bg-danger
                                 @elseif($cita->estado == 'completada') bg-secondary
+                                @elseif($cita->estado == 'archivada')
                                 @endif">
 
                                 {{ ucfirst($cita->estado) }}
                             </span>
+                        </td>
+                        <td>
+                            @if($cita->estado == 'cancelada')
+                                {{ $cita->motivo_cancelacion ?? 'Sin motivo' }}
+                            @else
+                                —
+                            @endif
                         </td>
                         <td class="action-buttons">
 
@@ -677,10 +685,11 @@
                                 </span>
                             @endif
                         </td>
+
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="text-center py-4">
+                        <td colspan="9" class="text-center py-4">
                             <i class="fas fa-calendar-times fa-2x text-muted mb-3"></i><br>
                             No hay citas programadas
                         </td>
@@ -727,7 +736,7 @@
                 },
                 columnDefs: [
                     { targets: 0, orderable: false, searchable: false },
-                    { targets: [7, 8], orderable: false, searchable: false },
+                    { targets: [8, 9], orderable: false, searchable: false },
                 ],
                 pageLength: 10,
                 lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'Todos']],

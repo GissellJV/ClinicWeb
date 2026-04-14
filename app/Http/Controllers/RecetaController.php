@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\HistorialDiario;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Paciente;
 
 class RecetaController extends Controller
 {
@@ -15,8 +16,9 @@ class RecetaController extends Controller
                 ->with('error', 'Debes iniciar sesión como Doctor');
         }
         $doctor = session('empleado_nombre');
+        $pacientes = Paciente::all();
 
-        return view('empleados.recetamedica' , compact('doctor'));
+        return view('empleados.recetamedica' , compact('doctor', 'pacientes'));
     }
 
     // Genera y descarga el PDF
